@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="workshop, 2026">
+
+
+<title>Freiberg Workshop on Microstructure Analysis | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/workshop26">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mtex-playground.github.io/workshop26#page",
+      "name": "Freiberg Workshop on Microstructure Analysis",
+      "headline": "Freiberg Workshop on Microstructure Analysis",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/workshop26",
+      "mainEntityOfPage": "https://mtex-playground.github.io/workshop26",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/workshop26 -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Workshops navigation"
+           data-sidebar-url="sidebars/workshops_sidebar.html"
+           data-sidebar="workshops_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Freiberg Workshop on Microstructure Analysis</h1>
+    </div>
+
+    
+
+  <p class="page-subtitle">MTEX Workshop 2026</p>
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <!--<div markdown="span" class="alert alert-info" role="alert">
+	<i class="fa fa-info-circle"></i> 
+	<b>Important:</b> Deadline has been extended until 20.02.2026
+</div>-->
+
+<div id="password_access_restriction" class="alert alert-info" role="alert">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	
+	<div id="course_content_default" class="not_hidden">
+		<i class="fa fa-info-circle"></i> 
+	Every registered participant should now have received an email with a password in order to see the course materials. If you have not yet received this email please contact one of the organizers.
+
+	</div>
+	
+	<div id="course_content_access">
+		<i class="fa fa-info-circle"></i> 
+	You are logged in.
+	<a href="https://eu02web.zoom-x.de/j/67477302754?pwd=XLmMUqc4aKJG274GxbeWaUwVeuorQh.1" target="_blank" class="">Enter Workshop zoom session</a>
+
+	</div>
+	
+	<form action="#">
+		<label>Enter the password here:</label>
+		<input id="course_password" type="password" required="" />
+		<a href="#" class="no_icon btn btn-primary" onclick="checkCoursePassword();">Submit</a>
+	</form>
+</div>
+
+<!--*This two-week workshop is accredited as the module <a href="" class="">Introduction into Crystallographic Texture Analysis</a> and
+earns you 5 ECTS points. Participation is possible both in person and
+remotely. You may also join for a single week, or combine on-site and remote
+participation.-->
+
+<p><strong>Week 1 (02.03 - 06.03):</strong> Do you work with EBSD or XRD to analyze microstructures and textures?
+Then this workshop will take your skills to the next level. You will</p>
+
+<ul>
+  <li>gain a deeper crystallographic understanding</li>
+  <li>import, clean, and segment EBSD data with ease</li>
+  <li>explore misorientations and grain boundary networks</li>
+  <li>compute and interpret tensorial properties such as stress, strain, elasticity, and thermal expansion</li>
+  <li>understand and apply parent-grain reconstruction and phase-transformation tools</li>
+  <li>master advanced statistical methods for EBSD analysis</li>
+  <li>become confident with powerful visualization techniques</li>
+  <li>discover that MTEX enables you to do (almost) everything you can imagine with your data</li>
+</ul>
+
+<p><strong>Week 2 (9.03. - 12.03.):</strong> The second week brings together researchers, PhD students, and
+industry practitioners who apply quantitative methods to study crystalline
+microstructures. Participants will present case studies, share workflows, and
+engage in hands-on discussions of real-world data. Invited experts will
+deliver introductory lectures on novel analysis methods — followed by open Q&amp;A
+and breakout sessions. Whether your focus is in metallurgy, geology,
+semiconductors, or beyond, this week is designed to foster cross-disciplinary
+interaction, help you tackle your own data challenges, and spark collaboration
+across academia and practice.</p>
+
+<h2 id="week-1-learning-crystallographic-texture-analysis-with-mtex">Week 1: Learning Crystallographic Texture Analysis with MTEX</h2>
+
+<p>Date: 02.03.2026 - 06.03.2026</p>
+
+<p>During the first week we provide on a daily basis lectures covering the
+principles of EBSD, texture and crystallography and their relation to plastic
+deformation and macroscopic properties. All concepts will be illustrated via
+practical examples during the exercises within MTEX.</p>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseMonday"><b>Monday:</b> EBSD -
+	First Analysis Steps and Crystallographic Background</a>
+			</h4>
+		</div>
+		<div id="collapseMonday" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				<div>
+<!--Monday-->
+<strong>Lecture 0 - General Concepts:</strong>
+<!--<a href="https://videocampus.sachsen.de/m/24eab5953e110fa2eae768bd31eb70d0877d914d403d14f25f5aec82d082bf2186b107e2797207d5f29883543711d151840d694f65eb99b7b2ea687318f2b212" target="_blank" class="">video</a>
+<span class="course_material">, </span>-->
+<a href="https://drive.google.com/file/d/1y0ewXfouvFl1pJnrscxQ6FCO89x2OzD_/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<br />
+Matlab basics and general concepts of MTEX, the class vector3d, spherical coordinates
+<br />
+<br />
+<strong>Lecture 1 - EBSD (Rüdiger Kilian)</strong>
+<a href="https://drive.google.com/file/d/1jCut1nthKIP54mvXzHGVTAG0VC1P-PYp/view?usp=drive_link" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/B2fZyZVQubA" target="_blank" class="course_material">video</a>
+<br />
+principle concept, data import, basic data cleanup, orientation maps, color keys
+<br />
+<br />
+<strong>Exercise 1</strong>
+
+<a href="https://drive.google.com/file/d/1mzHNT9OqBRUsYrCnN6HwC8hqMYA_sYlU/view?usp=sharing" target="_blank" class="course_material">script</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/16mqSRTSzgUYNkuTh8OhggptTU_3AQS47/view?usp=sharing" target="_blank" class="course_material">solution</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/10sNKqMhLJ73Avya2OenyCFh-YjzhYj8z/view?usp=sharing" target="_blank" class="course_material">data</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/sc35Vg_ZsSQ" target="_blank" class="course_material">video</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1h1Z2wWUrwUHzNc0v0EzcrH_YpMywlk5W/view?usp=sharing" target="_blank" class="course_material">filled script</a>
+<br />
+<br />
+
+<em>Lunch</em>
+
+<br />
+<br />
+<strong>Lecture 2 - Orientations and Symmetries (Ralf Hielscher)</strong>
+<a href="https://drive.google.com/file/d/123kVIC7y2E0972m35rIJcgoEmzJJRaS0/view?usp=drive_link" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/WHZyju3lehQ" target="_blank" class="course_material">video</a>
+<br />
+crystal lattice, direct and reciprocal coordinate system, Miller indices,
+zonal axes, crystal shapes, point groups, Laue groups, symmetrically equivalent orientations, 
+pole figures, inverse pole figures, fundamental sectors
+
+<br />
+<br />
+<strong>Exercise 2</strong>
+<a href="https://drive.google.com/file/d/1yxJM0SZkyOJ9KL4vXwYuibBGH8aq9ZCX/view?usp=sharing" target="_blank" class="course_material">script</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1MU1nuEjncs4yXi3w5SgTxQabCDMaU77M/view?usp=sharing" target="_blank" class="course_material">data</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/mgaG0L63yF8" target="_blank" class="course_material">video</a>
+<br />
+<br />
+				</div>
+			</div>
+		</div>
+	</div>
+	<!------------------------------------- TUESDAY ------------------------------------------------------------->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTuesday"><b>Tuesday:</b> Grains - Reconstruction, Analysis and Misorientations</a>
+			</h4>
+		</div>
+		<div id="collapseTuesday" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				<div>
+
+<strong>Lecture 3 - Grains (Morales)</strong>
+<a href="https://drive.google.com/file/d/1nQslyzoC5PyF5aokm76uAtAH2mwL5HgZ/view?usp=drive_link" target="_blank" class="course_material">interactive script</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/XvMfuSdZzb0" target="_blank" class="course_material">video</a>
+<br />
+segmentation, shape properties, orientation properties, grain selection, grain statistics
+<br />
+<br />
+<strong>Exercise 3</strong>
+<a href="https://drive.google.com/file/d/1milibBuyaYKJxH2uHMj22-QJNPS6ThUU/view?usp=drive_link" target="_blank" class="course_material">script</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1LUKY15WQ4H9mN7I13KU2zh6w-IrFpxuD/view?usp=drive_link" target="_blank" class="course_material">solution</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1A6hT418PxhfETOC13nvCnSY5opkGHB2R/view?usp=sharing" target="_blank" class="course_material">filled script</a>
+<!--
+<a href="https://drive.google.com/file/d/1d91FOtsBOqNVXyYm8hsYTlJEY4Q_awdU/view?usp=sharing" target="_blank" class="course_material">script</a>-->
+<span class="course_material">, </span>
+<a href="https://youtu.be/nuND39TU-DE" target="_blank" class="course_material">video</a>
+<br />
+<br />
+<em>Lunch</em>
+<br />
+<br />
+<strong>Lecture 4 - Misorientations and Grain Boundaries (Vivian Tong)</strong>
+<a href="https://drive.google.com/file/d/1ccOJEWGTODi5oWXqYLHdyYDah-Ph-EnU/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<!--{
+<span class="course_material">, </span>
+<a href="" class="course_material">mlx-script</a>-->
+<span class="course_material">, </span>
+<a href="https://youtu.be/Yr4Dn85FpCc" target="_blank" class="course_material">video</a>
+<br />
+grain boundary misorientations, misorientation axis, misorientation angle,
+KAM, GOS, IGMA, twin boundaries, tilt vs. twist
+boundaries, orientation, gradients,  statistics of boundary networks
+<br />
+<br />
+<strong>Exercise 4</strong>
+
+<a href="https://drive.google.com/file/d/1bkSCHs3tkL5RmpGjZpm7MwjFwT6Jrcx7/view?usp=sharing" target="_blank" class="course_material">script</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1u3q4Lm8viPMr7CyTfUrhmhXr3AJtqNak/view?usp=sharing" target="_blank" class="course_material">data</a>
+<!--
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1teNm_JDZ_ZCpo3W_IDzcdIzPD6MWKzu4/view?usp=sharing" target="_blank" class="course_material">mlx-script</a>-->
+<span class="course_material">, </span>
+<a href="https://youtu.be/d978p9BVxXI" target="_blank" class="course_material">video</a>
+<br />
+<br />
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.panel -->
+	<!------------------------------------------------ Wednesday -------------------------------------------------->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseWednesday"><b>Wednesday:</b> Orientation
+				Distribution Function and Excursion</a>
+			</h4>
+		</div>
+		<div id="collapseWednesday" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				<div>
+				
+
+<strong>Lecture 5 - Density Functions (Ralf Hielscher)</strong>
+<a href="https://drive.google.com/file/d/183NYIyeDqGfBvq0lawLlwZJbpxouGeUn/view?usp=sharing" target="_blank" class="course_material">slides 1</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/HR0XcCQj9Jc" target="_blank" class="course_material">video 1</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1sUdK-MK4P-tMWoIUiC7Z56An0Vdl0Ui7/view?usp=sharing" target="_blank" class="course_material">slides 2</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/Q_6jSo-fF4Q" target="_blank" class="course_material">video 2</a>
+<br />
+kernel density estimation, orientation density function, pole density
+function, inverse pole density function, model ODFs, ODF characteristics,
+random sampling, ODF reconstuction from XRD data
+<br />
+<br />
+<strong>Exercise 5</strong>
+<a href="https://drive.google.com/file/d/1fDqI0iqiK-3uAnkdvvNvnkGROgU7UHYv/view?usp=sharing" target="_blank" class="course_material">script</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/eLycRBM8kNk" target="_blank" class="course_material">video</a>
+<br />
+<br />
+<em>Lunch</em>
+<br />
+<br />
+<strong>Excursion: Terra Mineralia (Mineral exhibition)</strong>
+
+				</div>
+			</div>
+		</div>
+	</div>
+    <!------------------------------------- THURSDAY ------------------------------------------------------------->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThursday"><b>Thursday:</b> Data Polishing,
+				Tensorial Properties and Elastic Deformations</a>
+			</h4>
+		</div>
+		<div id="collapseThursday" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				<div>
+<strong>Lecture 6 - How to set up your EBSD map correctly (Vivian Tong)</strong>
+<a href="https://drive.google.com/file/d/1FJw8uQugJv5fY953CQ2kOfQuMjLL9ccb/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/_amq_AgjtlM" target="_blank" class="course_material">video</a>
+<br />
+Correction of spatial coordinates, reference frame alignment, denoising
+<br />
+<br />
+<strong>Exercise 6 - TrueEBSD for intragranular misorientation analysis</strong>
+<a href="https://drive.google.com/file/d/1Sg_WSuA-8FNw8EscT9uFKbp5to6KOW6B/view?usp=sharing" target="_blank" class="course_material">script</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1O3ueXg_JG8t9oDebZ83-6a5-DYNxQ_IE/view?usp=sharing" target="_blank" class="course_material">data</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1tT1Dvr_QDtsVqa2PBq8bk7msD_rAxIk6/view?usp=sharing" target="_blank" class="course_material">metadata</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1uaknaVy05Zi6q0Vc-WCxMKOh5fJZxT8j/view?usp=sharing" target="_blank" class="course_material">questions</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1X7ODIm5TKLCMvQCZpACYM1Seglp-IUs2/view?usp=sharing" target="_blank" class="course_material">answers</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1B33NM-W4VfLgWTOlOmS-3qV3ZxK1bKJD/view?usp=sharing" target="_blank" class="course_material">paper</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/kJPjDmF0J9A" target="_blank" class="course_material">video</a>
+<br />
+<br />
+<em>Lunch</em>
+<br />
+<br />
+<strong>Lecture 7 - Quantitative Microstructure Analysis (Rüdiger Kilian)</strong>
+<a href="https://drive.google.com/file/d/1ewqhwsAFUht1kzGX6gjI5vg40Q7DTnSi/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/Myj8h8gTBzg" target="_blank" class="course_material">video</a>
+<br />
+grain shape, grain boundary and grain size statistics
+<br />
+<br />
+<strong>Exercise 7 - Fabric Analysis</strong>
+<a href="https://drive.google.com/file/d/1UfStXxaidw5nXE2QnsrUbJ1rmNLYQuwi/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1AH-9wdllSkaLS9q6bSSwgBwDFjEqwVWl/view?usp=sharing" target="_blank" class="course_material">data</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/RwH8tG-nOBQ" target="_blank" class="course_material">video</a>
+<br />
+ 			  </div>
+			</div>
+		</div>
+	</div>
+	<!------------------------------------------------- Friday -----------------...----------------->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFriday"><b>Friday:</b>
+				Plastic Deformations, Orientation
+				Relationships and Phase Transition</a>
+			</h4>
+		</div>
+		<div id="collapseFriday" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				<div>
+<strong>Lecture 8 - Tensorial Properties (Louis Morales)</strong>
+<a href="https://drive.google.com/file/d/1QL2kNpT42ulm73VwRq97EoFBlCrUW_Xk/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/w7rrQUfnnUI" target="_blank" class="course_material">video</a>
+<br />
+elasticity, piezoelectratricity
+<br />
+<br />
+<strong>Lecture 9 - Plasticity (Ralf Hielscher)</strong>
+<a href="https://drive.google.com/file/d/10F6Fajps5NLBkpF4bfJsIUg6BMjeeI-W/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/L9it-z3Br9E" target="_blank" class="course_material">video</a>
+<br />
+deformation tensors, slip systems, dislocation systems, Schmid Factor, Taylor factor, combining MTEX with external software like VPSC
+<br />
+<br />
+<em>Lunch</em>
+<br />
+<br />
+<strong>Lecture 10 - Parent Grain Reconstruction (Ralf Hielscher)</strong>
+<a href="https://drive.google.com/file/d/16EGqKp18Ko_z_5T58Y68BCKRjMtgyGQ9/view?usp=sharing" target="_blank" class="course_material">slides</a>
+<span class="course_material">, </span>
+<a href="https://drive.google.com/file/d/1bwpYc843D-qP_Rj0jwLiBXgd3maBSlFI/view?usp=sharing" target="_blank" class="course_material">data</a>
+<span class="course_material">, </span>
+<a href="https://youtu.be/0Z-gvIyKYZg" target="_blank" class="course_material">video</a>
+<br />
+determination of orientation relationships, phase transition, parent grain reconstruction, transformation
+textures, variant selection
+<!--Participants can vote for their topic of interest, e.g.: denoising of EBSD
+maps, dislocation density estimation, weighted Burgers vector, habit planes determination, -->
+<br />
+<br />
+<strong>Free Discussion of Personal Data Sets</strong>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /.panel -->
+</div>
+<!-- /.panel-group -->
+
+<p><strong>Times:</strong> Lecture 1: 8:00 - 9:30, Exercise 1: 10:00 - 11:30, Lecture 2: 13:00-14:30, Exercise 2: 15:00 - 16:30</p>
+
+<h2 id="week-2-mtex-in-applications">Week 2: MTEX in Applications</h2>
+
+<p>Date: 9.03.2026 - 12.03.2026</p>
+
+<p>The second week is a get together of new and experienced MTEX users to share
+their use cases of MTEX, research results and MTEX specific tricks and
+tips. There will be introductory lectures by invited experts that explain
+their workflow in specific applications of MTEX. To encourage discussions we
+plan with slots of 20 minutes talks followed by 10 minute discussions. As we
+expect a very heterogeneous auditorium we kindly ask the participants to keep
+their talks as accessible as possible.</p>
+
+<h3 id="keynote-speakers">Keynote Speakers</h3>
+
+<ul>
+  <li>
+    <p><strong><a href="https://www.mpie.de/person/43193/3079071" target="_blank" class="">Stefan Zaefferer</a></strong> (MPI for sustainable materials Düsseldorf):
+Investigating defect crystallography using diffraction techniques in the SEM</p>
+  </li>
+  <li>
+    <p><strong><a href="https://www.researchgate.net/profile/Zachary-Michels" target="_blank" class="">Zachary D. Michels</a></strong> (University of Minnesota): Grains With Benefits — EBSD maps as a platform for correlative analysis</p>
+  </li>
+  <li>
+    <p><strong><a href="https://tu-freiberg.de/hochdruck/mitarbeiter/ag-angewandte-werkstoffwissenschaft-leineweber" target="_blank" class="">Andreas Leineweber</a></strong> (TU Bergakademie Freiberg): Dealing with complicated crystal structures</p>
+  </li>
+</ul>
+
+<h2 id="time-schedule">Time Schedule</h2>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseMo"><b>Monday:</b></a>
+			</h4>
+		</div>
+		<div id="collapseMo" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				
+<table>
+	<thead>
+		<tr>
+			<th style="text-align: left">Time</th>
+			<th style="text-align: left">Speaker</th>
+			<th style="text-align: left">Title</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align: right">9:00&minus;10:00</td>
+			<td style="text-align: left">Z. Michels</td>
+			<td style="text-align: left">Grains With Benefits — EBSD maps as a platform for correlative analysis
+			<a href="https://youtu.be/Zv1gLdoy_2A" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Coffee</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">10:30&minus;11:00</td>
+			<td style="text-align: left">G. Trullenque</td>
+			<td style="text-align: left">Multidisciplinary Integration and Networking for Increased sustainability and multi-resources valorization of Geothermal Brines
+			<a href="https://youtu.be/uAj3pY_TkIY" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">11:00&minus;11:30</td>
+			<td style="text-align: left">K.	Matsuyama</td>
+			<td style="text-align: left">Applying MTEX to microstructural and intracrystalline analyses of peridotites: Insights into uppermost mantle dynamics
+			<a href="https://youtu.be/2tjnukbZvL0" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">11:30&minus;12:00</td>
+			<td style="text-align: left">L. Morales</td>
+			<td style="text-align: left">
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Lunch</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>			
+		</tr>
+		<tr>
+			<td style="text-align: right">13:30&minus;14:30</td>
+			<td style="text-align: left">U. Faul</td>
+			<td style="text-align: left">Dislocation Density from Conventional EBSD Maps of Silicates
+			<a href="https://youtu.be/3Ado0RLRZSM" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>		
+    	<tr>
+			<td style="text-align: left"><i>Coffee</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>				
+		<tr>
+			<td style="text-align: right">15:00&minus;15:30</td>
+			<td style="text-align: left">V.&nbsp;Tong</td>
+			<td style="text-align: left">TrueEBSD for dummies: a GUI for EBSD map distortion corrections
+			<a href="https://youtu.be/akmZH1UenMo" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">15:30&minus;16:00</td>
+			<td style="text-align: left">R. Kilian</td>
+			<td style="text-align: left">Analysing anisotropic phase distributions</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">16:00&minus;16:30</td>
+			<td style="text-align: left">M. Ortmanns</td>
+			<td style="text-align: left">Influence of initial grain size on quartz deformation and static recovery
+			<a href="https://youtu.be/U-4kDEP2Qls" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"><i>Short walk through Freiberg</i></td>
+		</tr>
+		<tr>
+			<td style="text-align: left">19:00</td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"><i>Dinner at Stadtwirtschaft</i></td>
+		</tr>
+	</tbody>
+</table>
+
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTue"><b>Tuesday:</b></a>
+			</h4>
+		</div>
+		<div id="collapseTue" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				
+<table>
+	<thead>
+		<tr>
+			<th style="text-align: left">Time</th>
+			<th style="text-align: left">Speaker</th>
+			<th style="text-align: left">Title</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align: right">09:00&minus;11:30</td>
+			<td style="text-align: left"><i>Excursion - Silver Mine Freiberg</i></td>
+			<td style="text-align: left"></td>
+		</tr>				
+		<tr>
+			<td style="text-align: left"><i>Lunch</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">13:30&minus;14:30</td>
+			<td style="text-align: left">S. Zaefferer</td>
+			<td style="text-align: left">Investigating defect crystallography using diffraction techniques in the SEM
+			<a href="https://youtu.be/IJH8jgNwgDA" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">14:30&minus;15:00</td>
+			<td style="text-align: left">T. Nyyssönen <i>(online)</i></td>
+			<td style="text-align: left">Three-dimensional shape metrics for martensite and bainite from two-dimensional orientation maps
+			<a href="https://youtu.be/cdhdAKZBKbA" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Coffee</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">15:30&minus;16:00</td>
+			<td style="text-align: left">A. Erlacher</td>							
+			<td style="text-align: left">Complexion transitions in La-doped alumina: microstructural evolution and grain boundary distributions
+			<a href="https://youtu.be/rQHZEJJf3w4" target="_blank" class="course_material">video</a>
+			</td>							
+		</tr>
+		<tr>
+			<td style="text-align: right">16:00&minus;16:30</td>
+			<td style="text-align: left">P.	Kroeker</td>
+			<td style="text-align: left">Characterization of Complex HCP Twinning Mechanisms and Variant Selection Using MTEX
+			<a href="https://youtu.be/WNjbFw9ofBw" target="_blank" class="course_material">video</a>
+			</td>			
+		</tr>
+		<tr>
+			<td style="text-align: right">16:30&minus;17:00</td>
+			<td style="text-align: left">M.	Bolan</td>
+			<td style="text-align: left">Recent developments assessing composition gradient-induced plasticity in expanded austenite
+			<a href="https://youtu.be/SA0MXPCBMec" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseWe"><b>Wednesday:</b></a>
+			</h4>
+		</div>
+		<div id="collapseWe" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				
+<table>
+	<thead>
+		<tr>
+			<th style="text-align: left">Time</th>
+			<th style="text-align: left">Speaker</th>
+			<th style="text-align: left">Title</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align: right">9:00&minus;10:00</td>
+			<td style="text-align: left">R. Hielscher</td>
+			<td style="text-align: left">Modeling and Reconstructing Grain Boundary Normal distributions
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Coffee</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">10:30&minus;11:00</td>
+			<td style="text-align: left">M. Witte <i>(online)</i> </td>
+			<td style="text-align: left">Two new methods for the quantification of steel microstructures with EBSD: Determination of c/a-ratios and misorientation pattern matching
+			<a href="https://youtu.be/zAtQObWwzjk" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">11:00&minus;11:30</td>
+			<td style="text-align: left">T. Philipp <i>(online)</i></td>
+			<td style="text-align: left">Investigation of static recovery and recrystallisation in cold-rolled dual-phase steels</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Lunch</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">13:30&minus;14:30</td>
+			<td style="text-align: left">T.	Vermeij</td>
+			<td style="text-align: left">Identification of crystallographic slip systems using MTEX
+			<a href="https://youtu.be/W2kRGZdfLj0" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">14:30&minus;15:00</td>
+			<td style="text-align: left">M. Theising <i>(online)</i></td>
+			<td style="text-align: left">Using MTEX for the Investigation of Recrystallization in Aluminim Alloys (online)
+			<a href="https://youtu.be/isQggnlrSFk" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+				<tr>
+			<td style="text-align: right">15:00&minus;15:30</td>
+			<td style="text-align: left">S. Lathouwers</td>
+			<td style="text-align: left">In-situ Probing the Thermo-Mechanical Response of L-DED printed Metallic Multi-materials
+			<a href="https://youtu.be/vhnHh7mr-8M" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>		
+			<tr>
+			<td style="text-align: left"><i>Coffee</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">16:00&minus;16:30</td>
+			<td style="text-align: left">F. Safari</td>
+			<td style="text-align: left">canceled</td>
+		</tr>				
+	</tbody>
+</table>
+
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTh"><b>Thursday:</b></a>
+			</h4>
+		</div>
+		<div id="collapseTh" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				
+<table>
+	<thead>
+		<tr>
+			<th style="text-align: left">Time</th>
+			<th style="text-align: left">Speaker</th>
+			<th style="text-align: left">Title</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align: right">9:00&minus;10:00</td>
+			<td style="text-align: left">A. Leineweber</td>
+			<td style="text-align: left">Dealing with complicated crystal structures 
+			<a href="https://youtu.be/FnwHsmbDha0" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Coffee</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>		
+		<tr>
+			<td style="text-align: right">10:30&minus;11:00</td>
+			<td style="text-align: left">A. Ott</td>
+			<td style="text-align: left">Application of a clustering algorithm for efficient texture-informed simulations
+			<a href="https://youtu.be/4XfjhEpkAM4" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">11:00&minus;11:30</td>
+			<td style="text-align: left">L. Richter</td>
+			<td style="text-align: left">Correlative Microscopy - A usecase of EBSD trace analysis with MTEX
+			<a href="https://youtu.be/NGJjbLXFCoY" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: right">11:30&minus;12:00</td>
+			<td style="text-align: left">T. Pöschl</td>
+			<td style="text-align: left"> Robust Approximation of Directional Data
+			<a href="https://youtu.be/Gf3Xr7sWUgo" target="_blank" class="course_material">video</a>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Lunch</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">13:30&minus;14:30</td>
+			<td style="text-align: left">Round&nbsp;Table Discussion</td>
+			<td style="text-align: left"></td>
+		</tr>
+		<tr>
+			<td style="text-align: left"><i>Coffee</i></td>
+			<td style="text-align: left"></td>
+			<td style="text-align: left"></td>
+		</tr>			
+	</tbody>
+</table>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<h2 id="venue">Venue:</h2>
+
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title"> <a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseLocation">
+				<b>Location:</b> TU Freiberg (Saxony), Germany (click for details)</a>
+			</h4>
+		</div>
+		<div id="collapseLocation" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				<div>
+					Please make sure that you are planning to travel to Freiberg (Saxony). There are other cities in Germany with a similar name.
+					<br />
+					Location of the Workshop: <a href="https://maps.app.goo.gl/vipRHyUxNvw5uxPK8" target="_blank" class="">Hörsaalgebäude, Prüferstraße 9</a>
+				</div>
+			</div>
+		</div>	
+	</div>	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title"> <a class="noCrossRef accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseAccomodation">
+				<b>Accommodation:</b> (click for details)</a>
+			</h4>
+		</div>
+		<div id="collapseAccomodation" class="panel-collapse collapse noCrossRef">
+			<div class="panel-body">
+				<div>
+<em>please use the keycode “Professor Hielscher MTEX Workshop”	when booking the rooms</em>			
+<br />
+<br />
+<a href="https://www.hotel-kreller.de" target="_blank" class=""><strong>Hotel Kreller:</strong></a> 80 Euro per night with breakfast, very close
+<br />
+<br />
+<a href="https://www.hotel-am-obermarkt.de" target="_blank" class=""><strong>Hotel am Obermarkt:</strong></a> 79 Euro per night without breakfast, very close
+<br />
+<br />				
+<a href="https://www.elly-hostel.de" target="_blank" class=""><strong>Elly Hostel:</strong></a> 77 Euro per night, with kitchen
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h2 id="registration">Registration:</h2>
+
+<ul>
+  <li>Please register at <a href="https://tickets.acatrain.net/mtex-2026/" target="_blank" class="">https://tickets.acatrain.net/mtex-2026/</a>
+<!--- Deadline for registration is 31st of January 2026--></li>
+</ul>
+
+<h2 id="registration-fee">Registration Fee:</h2>
+<ul>
+  <li>first + second week (presence):  (PhD) students - 400 Euro, other - 600 Euro</li>
+  <li>first + second week (online):  (PhD) students - 200 Euro, other - 300 Euro</li>
+  <li>second week: (PhD) students - 100 Euro, other - 200 Euro</li>
+  <li>Payment includes: Lunch for all days and Excursion fee</li>
+  <li>Registration for students of the TU Freiberg and the University of Halle is free of charge</li>
+</ul>
+
+<h2 id="organizers">Organizers:</h2>
+
+<p><a href="https://tu-freiberg.de/fakultaet1/institute/angewandte-analysis/team/prof-dr-rer-nat-ralf-hielscher" target="_blank" class="">Ralf Hielscher</a> (TU Bergakademie Freiberg),
+<a href="https://geodynamics.geo.uni-halle.de/ruediger-kilian/" target="_blank" class="">Rüdiger Kilian</a> (Universität Halle),
+<a href="https://structuretectonics.org/people/luiz-morales/" target="_blank" class="">Luiz Morales</a> (ETH Zürich),
+<a href="https://scholar.google.co.uk/citations?hl=en&amp;user=GvwErjEAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" class="">Vivian Tong</a> (National Physical Laboratory UK)</p>
+
+<p><a href="https://acatrain.net/" target="_blank" class=""><img class="inline" src="images/icons/acaTrain.jpg" alt="" />
+</a></p>
+
+    
+
+    
+
+    
+    
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

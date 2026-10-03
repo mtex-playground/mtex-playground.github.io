@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Plotting EBSD Maps | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="An EBSD map is a picture of a list. Each measurement gets one small patch at the position it was taken, and the patch is filled with a colour that represents something measured there. The choice of quantity decides what the picture can show.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSDPlotting.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSDPlotting.html#page",
+      "name": "Plotting EBSD Maps",
+      "headline": "Plotting EBSD Maps",
+      "description": "An EBSD map is a picture of a list. Each measurement gets one small patch at the position it was taken, and the patch is filled with a colour that represents something measured there. The choice of quantity decides what the picture can show.",
+      "url": "https://mtex-playground.github.io/EBSDPlotting.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSDPlotting.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSDPlotting.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Plotting EBSD Maps</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Plotting EBSD Maps</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_EBSDPlotting.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/EBSDAnalysis/EBSDPlotting.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>An EBSD map is a picture of a list. Each measurement gets one small patch at the position it was taken, and the patch is filled with a colour that represents something measured there. The choice of quantity decides what the picture can show.</p>
+<p>This page assumes that the data has been <a href="EBSDImport.html">imported</a> and its <a href="EBSDReferenceFrame.html">reference frame</a> has been checked. EBSD maps then follow the same pattern as other MTEX plots: <code class="language-plaintext highlighter-rouge">plot(where, what)</code>. The first argument selects the measurements and their positions. The optional second argument supplies their colours or the values to colour. This page works through phase, property and orientation maps, then combines two of them.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span><span class="p">;</span>
+<span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">mtexdata</span> <span class="n">forsterite</span> <span class="n">silent</span></code></pre></figure>
+<h2 id="2">Phase maps</h2>
+<p>Calling <a href="EBSD.plot.html"><code class="language-plaintext highlighter-rouge">plot</code></a> without a second argument colours the map by phase. This is the quickest way to see what is in the specimen and where.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_01.png" alt="" />
+
+</center>
+<p>This is a peridotite: a forsterite matrix in light blue, with enstatite in green and smaller diopside grains in orange. The white speckle marks the <b>notIndexed</b> phase. Each point is a recorded measurement whose pattern could not be matched to an indexed phase; it is not a missing position. About a quarter of the map is notIndexed. Many of those measurements crowd along grain boundaries. There the beam interaction volume can meet two crystals at once.</p>
+<p>Each phase carries its own colour as an RGB triplet. Leaving this query unterminated displays the triplet assigned to diopside.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Diopside'</span><span class="p">)</span><span class="o">.</span><span class="n">color</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+    0.8549    0.6471    0.1255</code></pre></figure>
+<p>Any RGB triplet can replace it. The function <a href="str2rgb.html"><code class="language-plaintext highlighter-rouge">str2rgb</code></a> saves you looking one up because it turns a colour name into the triplet.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Diopside'</span><span class="p">)</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">str2rgb</span><span class="p">(</span><span class="s1">'salmon'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_02.png" alt="" />
+
+</center>
+<p>Only diopside has changed from orange to salmon. The phase selection and every measurement remain unchanged.</p>
+<p>The notIndexed measurements are white by default, which can read as "nothing here" rather than as data. Giving the phase a colour of its own also puts it in the legend with the indexed phases.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span><span class="p">(</span><span class="s1">'notIndexed'</span><span class="p">)</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">str2rgb</span><span class="p">(</span><span class="s1">'gray'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_03.png" alt="" />
+
+</center>
+<p>The grey pattern is dense along boundaries and sparse inside grains. It is now visible as information about the specimen rather than as a gap in it.</p>
+<h2 id="7">Maps of a measured property</h2>
+<p>Any numerical list with one entry per measurement can be the second argument. An EBSD file usually supplies several such <b>properties</b>. The properties here are <code class="language-plaintext highlighter-rouge">bands</code>, <code class="language-plaintext highlighter-rouge">bc</code>, <code class="language-plaintext highlighter-rouge">bs</code>, <code class="language-plaintext highlighter-rouge">error</code>, <code class="language-plaintext highlighter-rouge">mad</code> and <code class="language-plaintext highlighter-rouge">oldId</code>. Band contrast, <code class="language-plaintext highlighter-rouge">bc</code>, measures how sharp the diffraction pattern was and is often a useful first property to inspect.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">bc</span><span class="p">)</span>
+
+<span class="nb">colormap</span> <span class="nb">gray</span> <span class="c1">% make the image grey-scale</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'band contrast'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_04.png" alt="" />
+
+</center>
+<p>No orientation went into this picture, yet the microstructure is visible. A pattern collected where the beam straddles two crystals is blurred, so many boundaries appear as dark lines. The horizontal banding is an acquisition artefact rather than a feature of the rock. The dark rectangle at the top left is a patch where the patterns were poor throughout.</p>
+<h2 id="9">Maps of the orientation</h2>
+<p>An orientation has three parameters, so it must be mapped to a colour before it can be shown. A deliberately simple attempt plots only its angle. Here that is the smallest symmetry-equivalent rotation from the identity orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">oriAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">),</span><span class="n">oriAngle</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'angle from identity (degree)'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_05.png" alt="" />
+
+</center>
+<p>The grains are recognisable, but only just. The angles run from 20&deg; to 118&deg;, while 91% fall between 70&deg; and 110&deg;. Almost the whole map is squeezed into a narrow band of the colour bar. Two grains with the same angle about different axes also receive the same colour. One number cannot separate a three-parameter quantity.</p>
+<p>The usual answer is an <b>inverse pole figure colour key</b>. An <a href="OrientationInversePoleFigure.html">inverse pole figure</a> fixes a specimen direction and asks which crystal direction lies parallel to it. The key colours the fundamental sector once. It assigns each orientation the colour of its answer.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% define an IPF colour key for forsterite</span>
+<span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">));</span>
+<span class="n">ipfKey</span><span class="o">.</span><span class="n">ipfDirection</span> <span class="o">=</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">;</span>
+
+<span class="c1">% plot its coloured fundamental sector</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ipfKey</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_06.png" alt="" />
+
+</center>
+<p>The sector's three corners are the axes of the forsterite cell. This key uses the specimen normal, <code class="language-plaintext highlighter-rouge">vector3d.Z</code>, as its fixed direction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">colors</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="o">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">),</span><span class="n">colors</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_07.png" alt="" />
+
+</center>
+<p>The nearly uniform patches are grains with similar orientations. Red means that the crystallographic \(c\) axis is near the specimen normal. Green marks the \(a\) axis and blue the \(b\) axis. Intermediate directions are blended according to the key.</p>
+<p>One IPF map still does not encode the full orientation because it tracks only one fixed specimen direction. The colour is a choice, not a measurement, and another key can make the same data look different. <a href="EBSDIPFMap.html">IPF Maps</a> explains those choices. <a href="EBSDAdvancedMaps.html">Advanced Plotting</a> covers keys that answer questions other than "which direction points where".</p>
+<h2 id="13">Two maps in one figure</h2>
+<p>Different maps combine by drawing subsets of the data on top of each other. The option <code class="language-plaintext highlighter-rouge">'faceAlpha'</code> makes the upper layer transparent so that the lower one remains visible.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">bc</span><span class="p">)</span>
+<span class="n">mtexColorMap</span> <span class="n">black2white</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">),</span><span class="n">colors</span><span class="p">,</span><span class="s1">'faceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDPlotting_08.png" alt="" />
+
+</center>
+<p>The band contrast supplies the boundaries and the surface detail, the orientation colours distinguish the grains, and neither layer hides the other.</p>
+<h2 id="15">Further reading</h2>
+<p>
+<a href="https://doi.org/10.1007/978-0-387-88136-2">Schwartz et al. (eds.), Electron Backscatter Diffraction in Materials Science</a>, 2nd ed. (2009). This textbook gives the experimental and analytical background to EBSD measurements and orientation imaging.</p>
+<p>
+<a href="https://doi.org/10.1107/S1600576716012942">Nolze and Hielscher, Orientations - perfectly colored</a>, J. Appl. Cryst. 49 (2016), 1786-1802. This paper explains the trade-offs and unavoidable ambiguities of inverse pole figure colour keys.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSDPlotting.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

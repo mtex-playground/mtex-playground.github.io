@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Grains | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="An orientation map tells you what the crystal lattice is doing at every measured point. It does not tell you where one crystal ends and the next one begins. Grain reconstruction makes that interpretation by grouping connected measurements according to phase and orientation.">
+<link rel="canonical" href="https://mtex-playground.github.io/Grains.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/Grains.html#page",
+      "name": "Grains",
+      "headline": "Grains",
+      "description": "An orientation map tells you what the crystal lattice is doing at every measured point. It does not tell you where one crystal ends and the next one begins. Grain reconstruction makes that interpretation by grouping connected measurements according to phase and orientation.",
+      "url": "https://mtex-playground.github.io/Grains.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/Grains.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/Grains.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Grains</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Grains</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_Grains.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Grains/Grains.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<h2 id="1">From an orientation map to grain objects</h2>
+<p>An orientation map tells you what the crystal lattice is doing at every measured point. It does not tell you where one crystal ends and the next one begins. Grain reconstruction makes that interpretation by grouping connected measurements according to phase and orientation.</p>
+<p>This changes the questions the map can answer. A million measurements can become a few thousand grains, each with a size, shape, mean orientation, and list of neighbours. Questions about grain size, elongation, and contact only become answerable after the boundaries have been defined.</p>
+<p>This chapter assumes that an <a href="EBSDAnalysis.html">EBSD map</a> is familiar. Read <a href="MisorientationTheory.html">Misorientation Theory</a> first if the angle between two crystal orientations is new to you.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% draw the specimen with y up and x to the right</span>
+<span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">mtexdata</span> <span class="n">forsterite</span> <span class="n">silent</span>
+
+<span class="c1">% restrict the map to a subregion of interest</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="nb">inpolygon</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,[</span><span class="mi">5</span> <span class="mi">2</span> <span class="mi">10</span> <span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="o">^</span><span class="mi">3</span><span class="p">));</span>
+
+<span class="c1">% reconstruct grains and store each grain id with its measurements</span>
+<span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'angle'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="c1">% inspect the resulting grain list</span>
+<span class="n">grains</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">grains = grain2d (y↑→x)
+ 
+ Phase  Grains  Pixels     Mineral  Symmetry         Color
+     0       1     258  notIndexed                    none
+     1     107   14093  Forsterite       mmm  LightSkyBlue
+     2      32    1397   Enstatite       mmm  DarkSeaGreen
+     3      71     759    Diopside     12/m1     Goldenrod
+ 
+ boundary segments: 3921 (188891 µm)
+ inner boundary segments: 1 (19 µm)
+ triple points: 250
+ 
+ Properties: meanRotation, GOS</code></pre></figure>
+<p>The displayed <a href="grain2d.grain2d.html">grain2d</a> summary is the first result of reconstruction. One object holds the complete grain list, and its methods act across that list. Its three phase rows contain 210 grain sections: 107 Forsterite, 32 Enstatite, and 71 Diopside. The second output above stores a persistent <code class="language-plaintext highlighter-rouge">grainId</code> with every EBSD measurement. A grain and its measurements can therefore be selected from either side of the relationship.</p>
+<p>Here is that relationship in one picture. The coloured points are the measured Forsterite orientations. The black lines are the boundaries of every indexed grain, including grains of the other indexed phases.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains_01.png" alt="" />
+
+</center>
+<p>Follow one black line through the map. It runs along the interfaces between neighbouring spatial cells assigned to different grains. This is why the line looks stepped when you zoom in. <a href="GrainSmoothing.html">Smoothing</a> is a later measurement decision, not part of reconstruction or a recovery of the unmeasured sub-pixel interface.</p>
+<p>White inside the cropped map is not automatically <code class="language-plaintext highlighter-rouge">notIndexed</code>. The plot only colours Forsterite, whereas the black network includes every indexed phase. A Forsterite measurement with no finite orientation also plots white.</p>
+<h2 id="4">The words used in this chapter</h2>
+<p>
+<b>Grain</b> - a phase-homogeneous, spatially connected region of EBSD pixels produced by segmentation. A phase change between neighbouring pixels is always a grain boundary, so orientation-based segmentation never joins two phases into one grain.</p>
+<p>The angle criterion is local. It decides whether neighbouring pixels of one phase are connected. A chain of accepted neighbours can accumulate orientation change, so two distant pixels in one grain may differ by more than the segmentation angle.</p>
+<p>A <a href="grain2d.grain2d.html">grain2d</a> object describes the section of a grain in the map plane. It is not the complete three-dimensional grain. Inferring three-dimensional size or shape from such sections requires a stereological model.</p>
+<p>
+<b>notIndexed</b> - the phase given to a recorded measurement whose diffraction pattern could not be indexed. A connected <code class="language-plaintext highlighter-rouge">notIndexed</code> area can form its own grain. A patch that is too small or thin to stand alone may instead be absorbed into a neighbouring grain according to the <code class="language-plaintext highlighter-rouge">'alpha'</code> setting. It is a failed indexing result, not an absent scan position.</p>
+<p>
+<b>Grain boundary</b> - a segment between neighbouring EBSD pixels assigned to different grains. The segments are stored as a <a href="grainBoundary.grainBoundary.html">grainBoundary</a> object with its own properties and <a href="GrainBoundaries.html">its own chapter</a>. A <b>phase boundary</b> is not another kind of object. It is a grain boundary whose two neighbouring grains have different phases.</p>
+<p>
+<b>Enclosure</b> - the relationship in which one grain lies entirely inside another. Seen from outside, the containing grain has a hole. Seen from inside, the contained grain is an inclusion. These are the same fact from opposite sides, and the hole is never empty: even a <code class="language-plaintext highlighter-rouge">notIndexed</code> patch is itself a grain.</p>
+<h2 id="5">Recommended reading order</h2>
+<p>Begin with <a href="GrainReconstruction.html">Reconstruction</a>. It explains the segmentation angle, <code class="language-plaintext highlighter-rouge">notIndexed</code> measurements, and the minimum grain size. These choices shape every quantity computed afterwards.</p>
+<p>Continue with <a href="GrainSpatialPlots.html">Plot</a> and <a href="SelectingGrains.html">Select</a>. The second page distinguishes persistent grain IDs from positions in a shortened or reordered grain list.</p>
+<p>The shape route begins with <a href="ShapeParameters.html">Shape Parameters</a> for direct measurements such as area, perimeter, and diameter. Read <a href="GrainSmoothing.html">Smoothing</a> before interpreting outline length, direction, or curvature. The next pages replace each outline by a simpler description: <a href="EllipseBasedParameters.html">an ellipse</a>, <a href="HullBasedParameters.html">a convex hull</a>, or <a href="ProjectionBasedParameters.html">directional projections</a>. Each preserves different information, so choose according to the expected shape.</p>
+<p>
+<a href="GrainOrientationParameters.html">Orientation Parameters</a> describes the mean orientation and the orientation spread inside each grain. <a href="Grain_dispersion_axes.html">Dispersion Axes</a> develops a validation workflow for grains whose orientations appear to follow one dominant rotation. Both build on misorientation rather than boundary shape.</p>
+<p>
+<a href="GrainNeighbours.html">Neighbours</a> changes from a list of grains to their contact network. <a href="GrainMerge.html">Merge</a> then removes selected internal boundaries, for example between a host and a twin domain. The merge page assumes <a href="BoundaryMisorientations.html">Boundary Misorientations</a>, so visit that page in the next chapter before returning.</p>
+<p>For segmentation that a single hard angle cannot describe, continue with <a href="GrainReconstructionAdvanced.html">Advanced Reconstruction</a> and then <a href="GrainReconstructionMCL.html">Markovian Clustering</a>. The latter requires the weighted criteria introduced by the former.</p>
+<p>Finish with <a href="GrainExport.html">Export</a>. It explains which parts of a grain object survive each exchange format. <a href="NeperInterface.html">Neper Interface</a> then connects MTEX grain sections to synthetic polycrystal generation.</p>
+<h2 id="6">Why the segmentation angle is a decision</h2>
+<p>There is no canonical grain reconstruction for every material. A grain in a textbook is a volume of material with a continuous lattice. An EBSD map samples orientations on a plane, so converting those samples into regions requires a rule chosen for the analysis.</p>
+<p>Angles of 10 or 15 degrees are long-standing conventions for separating low- and high-angle boundaries. The Read-Shockley model explains why the energy of a simple low-angle boundary rises with misorientation, but the transition and high-angle energy depend on material and boundary character. The chosen angle is therefore not an independently measured specimen value.</p>
+<p>Deformed material makes the choice especially visible. A bent lattice can accumulate orientation change gradually, so one angle may keep it whole while another splits it into several grains. The literature supports more than one useful grain definition, which is why Advanced Reconstruction and Markovian Clustering offer different answers rather than a universal fix.</p>
+<h2 id="7">What a two-dimensional boundary leaves unknown</h2>
+<p>A physical interface is a structure a few atoms thick. Its macroscopic crystallographic character takes five parameters: three for the misorientation between the crystals and two for the interface-plane normal.</p>
+<p>A polished two-dimensional map supplies the misorientation and the trace where the interface cuts the surface. It does not supply the inclination of each interface plane. Recovering that missing parameter requires 3D data, or a stereological estimate from many boundary traces rather than a claim about one segment.</p>
+<h2 id="8">References</h2>
+<div>
+<ul>
+<li>F. Bachmann, R. Hielscher, and H. Schaeben, <a href="https://doi.org/10.1016/j.ultramic.2011.08.002">Grain Detection from 2d and 3d EBSD Data - Specification of the MTEX Algorithm</a>, <i>Ultramicroscopy</i> 111 (2011), 1720--1733. This paper derives the spatial cells, connectivity, grains, and boundaries used by <code class="language-plaintext highlighter-rouge">calcGrains</code>.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>F. J. Humphreys, <a href="https://doi.org/10.1023/A:1017973432592">Grain and Subgrain Characterisation by Electron Backscatter Diffraction</a>, <i>Journal of Materials Science</i> 36 (2001), 3833--3854. This review compares useful grain definitions and shows why deformed microstructures separate them.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>W. T. Read and W. Shockley, <a href="https://doi.org/10.1103/PhysRev.78.275">Dislocation Models of Crystal Grain Boundaries</a>, <i>Physical Review</i> 78 (1950), 275. This paper develops the classic low-angle boundary-energy model.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>A. P. Sutton and R. W. Balluffi, <a href="https://obnb.uk/p11642002-interfaces-in-crystalline-materials">Interfaces in Crystalline Materials</a>, Clarendon Press, 1995. This textbook develops the structure, thermodynamics, kinetics, and properties of interfaces.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>C.-S. Kim, A. D. Rollett, and G. S. Rohrer, <a href="https://doi.org/10.1016/j.scriptamat.2005.11.071">Grain Boundary Planes: New Dimensions in the Grain Boundary Character Distribution</a>, <i>Scripta Materialia</i> 54 (2006), 1005--1009. It explains the five-parameter description and what a planar EBSD map can observe.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<a href="https://www.iso.org/standard/74309.html">ISO 13067:2020</a>, <i>Microbeam Analysis - Electron Backscatter Diffraction - Measurement of Average Grain Size</i>. The standard distinguishes measurements on a two-dimensional section from inferred three-dimensional grain size and cautions against uncritical interpretation of highly deformed material.</li>
+</ul>
+</div>
+<h2 id="9">Next</h2>
+<p>Grains come from an orientation map, so <a href="EBSDAnalysis.html">EBSD</a> is the preceding chapter. Their segments, chains, and junctions are the subject of the next chapter, <a href="GrainBoundaries.html">Grain Boundaries</a>. To analyse a distribution of grain mean orientations, return to <a href="ODFAnalysis.html">ODF</a>.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/Grains.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

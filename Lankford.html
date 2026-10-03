@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Lankford parameter | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A tensile specimen cut from a rolled sheet can contract differently in its width and thickness directions. The Lankford parameter, also called the Lankford coefficient, R-value, or plastic strain ratio, measures this difference after plastic flow has begun:">
+<link rel="canonical" href="https://mtex-playground.github.io/Lankford.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/Lankford.html#page",
+      "name": "Lankford parameter",
+      "headline": "Lankford parameter",
+      "description": "A tensile specimen cut from a rolled sheet can contract differently in its width and thickness directions. The Lankford parameter, also called the Lankford coefficient, R-value, or plastic strain ratio, measures this difference after plastic flow has begun:",
+      "url": "https://mtex-playground.github.io/Lankford.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/Lankford.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/Lankford.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Lankford parameter</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Lankford parameter</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_Lankford.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Plasticity/Lankford.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>A tensile specimen cut from a rolled sheet can contract differently in its width and thickness directions. The <b>Lankford parameter</b>, also called the Lankford coefficient, R-value, or plastic strain ratio, measures this difference after plastic flow has begun:</p>
+<p>\[R(\theta) = \frac{\epsilon_{\mathrm{width}}^{\mathrm p}} {\epsilon_{\mathrm{thickness}}^{\mathrm p}}.\]</p>
+<p>Here \(\theta\) is the angle between the tensile direction and the rolling direction. Both transverse strains are usually negative, so their ratio is positive. An isotropic incompressible material has \(R=1\), not \(R=0\). A value near zero means that contraction occurs mainly through the sheet thickness, while a large value means that the sheet resists thinning.</p>
+<p>Engineering sheets commonly have R-values from about 1 to 2.5 or higher. Values close to zero, or even slightly negative, can also be reported. These ranges are not universal material classes, and a low R-value should not be interpreted as more isotropic deformation. <code class="language-plaintext highlighter-rouge">calcLankford</code> searches the ordinary tensile-contraction range \(0\leq\rho\leq1\), corresponding to nonnegative model R-values.</p>
+<!--/introduction-->
+<h2 id="1">Why the R-value matters</h2>
+<p>A high average R-value generally improves resistance to thinning during cup drawing, hole expansion, and other sheet-forming operations. This is useful for complex automotive and aerospace parts such as body panels. Variation of \(R(\theta)\) within the sheet plane is a different effect. It promotes nonuniform flow and can produce ears around a drawn cup.</p>
+<p>It is sometimes claimed that a low R-value is preferable when uniform deformation is needed, for example when deep drawing cylindrical containers or cans. That claim confuses normal and planar anisotropy. A high average R-value resists thinning, while small directional variation is what helps a cylindrical cup draw without pronounced ears or uneven thickness that would require trimming.</p>
+<p>Experimentally, tensile specimens are cut at several angles to the rolling direction. Width and thickness strains are measured at a specified length strain in the uniform plastic regime. Using transverse strain divided by axial strain would not give the Lankford parameter.</p>
+<p>MTEX estimates \(R(\theta)\) from crystallographic orientations and a deformation-system model. The calculation uses the equal-strain Taylor theory introduced in <a href="TaylorModel.html">Taylor Model</a>. It predicts a texture contribution to plastic anisotropy rather than replacing a tensile test or accounting for every source of formability.</p>
+<h2 id="2">One ideal Brass orientation</h2>
+<p>Start with the ideal fcc Brass component \((110)[1\bar{1}2]\) and the fcc slip family. The critical resolved shear stress (CRSS) is one for every system, so only crystallographic geometry distinguishes them.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">CS</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'m-3m'</span><span class="p">,[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">],</span><span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'fcc'</span><span class="p">);</span>
+<span class="n">sS</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="o">.</span><span class="n">fcc</span><span class="p">(</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">ori</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">brass</span><span class="p">(</span><span class="n">CS</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">sS = slipSystem (fcc)
+ 
+  u    v    w  | h    k    l CRSS
+  0    1   -1    1    1    1    1</code></pre></figure>
+<p>The Taylor strain path is parameterized by \(\rho=-\epsilon_{\mathrm{width}}^{\mathrm p}/ \epsilon_{\mathrm{length}}^{\mathrm p}\). Plastic incompressibility gives \(R=\rho/(1-\rho)\). The finite grid below therefore tests eleven possible transverse contractions rather than solving for a continuous R-value. Values outside \(0\leq\rho\leq1\) would make one transverse direction extend during the tensile increment and are not accepted by this model.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rho</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">);</span>
+<span class="p">[</span><span class="n">R</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">minM</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcLankford</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span><span class="n">sS</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">,</span><span class="s1">'rho'</span><span class="p">,</span><span class="n">rho</span><span class="p">);</span></code></pre></figure>
+<p>By default, <code class="language-plaintext highlighter-rouge">calcLankford</code> evaluates tensile directions from 0 to 90 degrees in 5 degree steps. Rows of <code class="language-plaintext highlighter-rouge">M</code> correspond to <code class="language-plaintext highlighter-rouge">rho</code> and columns to tensile directions. Plot three columns to compare rolling-direction, diagonal, and transverse-direction tension with Fig. 3.10 of Hosford.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="n">M</span><span class="p">(:,[</span><span class="mi">1</span> <span class="mi">10</span> <span class="mi">19</span><span class="p">])</span><span class="o">.</span><span class="s1">','</span><span class="o">-</span><span class="n">s</span><span class="s1">','</span><span class="n">lineWidth</span><span class="o">'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'{\rho} = -{\epsilon}_w^p / {\epsilon}_l^p'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Taylor factor, M'</span><span class="p">);</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'\theta=0^\circ'</span><span class="p">,</span><span class="s1">'\theta=45^\circ'</span><span class="p">,</span><span class="s1">'\theta=90^\circ'</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'Location'</span><span class="p">,</span><span class="s1">'northeast'</span><span class="p">);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Lankford_01.png" alt="" />
+
+</center>
+<p>The three curves have different minima, so changing the in-plane tensile direction changes the preferred contraction path. At 45 and 90 degrees, the minimum lies at \(\rho=1\) and MTEX reports \(R=\mathrm{Inf}\). This is a boundary result of the sampled strain paths: the model selects zero thickness strain, rather than failing to return a prediction.</p>
+<h2 id="6">Broaden the ideal texture</h2>
+<p>A real sheet does not contain one exact orientation. Model a 10 degree spread around the Brass component with a unimodal orientation distribution function (ODF), which describes the orientation density of the texture.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span> <span class="o">=</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+<span class="p">[</span><span class="n">ROdf</span><span class="p">,</span><span class="n">MOdf</span><span class="p">,</span><span class="n">minMOdf</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcLankford</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="n">sS</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">,</span><span class="s1">'rho'</span><span class="p">,</span><span class="n">rho</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span><span class="n">MOdf</span><span class="p">(:,[</span><span class="mi">1</span> <span class="mi">10</span> <span class="mi">19</span><span class="p">])</span><span class="o">.</span><span class="s1">','</span><span class="o">-</span><span class="n">s</span><span class="s1">','</span><span class="n">lineWidth</span><span class="o">'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'{\rho} = -{\epsilon}_w^p / {\epsilon}_l^p'</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Texture-averaged Taylor factor, M'</span><span class="p">);</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'\theta=0^\circ'</span><span class="p">,</span><span class="s1">'\theta=45^\circ'</span><span class="p">,</span><span class="s1">'\theta=90^\circ'</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'Location'</span><span class="p">,</span><span class="s1">'northeast'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">odf = SO3FunRBF (fcc → y↓→x)
+ 
+  unimodal component
+  kernel: de la Vallee Poussin, halfwidth 10°
+  center: 1 orientations
+ 
+  Bunge Euler angles in degree
+  phi1    Phi   phi2 weight
+    35     45      0      1</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Lankford_02.png" alt="" />
+
+</center>
+<p>The ODF averages the response of nearby orientations. Compare these curves with the sharp-component curves above: their positions and depths change because the minimum now represents the whole texture, not only the ideal Brass orientation.</p>
+<h2 id="8">Estimate the R-value from an EBSD map</h2>
+<p>The final example uses an hcp titanium EBSD map. An EBSD orientation map supplies a texture estimate resolved in space, but this calculation uses one mean orientation and one area weight per reconstructed grain.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">mtexdata</span> <span class="n">titanium</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">CS</span><span class="p">;</span>
+<span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'angle'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ebsd = EBSDhex (y↓→x)
+ 
+ Phase  Orientations           Mineral         Color  Symmetry  Crystal reference frame
+     0    8100 (99%)  Titanium (Alpha)  LightSkyBlue       622        X||a, Y||b*, Z||c
+ 
+ Properties: ci, grainid, iq, sem_signal, oldId
+ Scan unit : um
+ X × Y × Z : [0 → 996] × [0 → 998] × [0 → 0]
+ Normal vector: (0,0,1)
+ Hex grid     :97 × 84</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Lankford_03.png" alt="" />
+
+</center>
+<p>Colour changes show the measured orientation variation, while the black lines show the grains whose mean orientations enter the calculation. Intragranular orientation spread is therefore not represented below.</p>
+<h2 id="10">Choose the hcp deformation systems</h2>
+<p>Taylor theory needs enough independent deformation systems to reproduce an imposed strain. Combine basal, prismatic, and pyramidal slip with compressive twinning. The second argument of each constructor is its relative CRSS, so the values 1, 66, 80, and 100 strongly affect the prediction.</p>
+<p>TODO: MTEX currently symmetrises every deformation system with both shear senses. Consequently, <code class="language-plaintext highlighter-rouge">twinC1</code> acts here as a reversible pseudo-slip family. A polarity-aware implementation is still needed for one-way twinning and detwinning.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">sS</span> <span class="o">=</span> <span class="p">[</span><span class="n">slipSystem</span><span class="o">.</span><span class="n">basal</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">prismatic2A</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span><span class="mi">66</span><span class="p">),</span> <span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">pyramidalCA</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span><span class="mi">80</span><span class="p">),</span> <span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">twinC1</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span><span class="mi">100</span><span class="p">)]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">sS = slipSystem (Titanium (Alpha))
+ size: 1 × 4
+ 
+   U    V    T    W  | H    K    I    L CRSS
+   1    1   -2    0    0    0    0    1    1
+   0    1   -1    0    2   -1   -1    0   66
+   2   -1   -1    3   -1    1    0    1   80
+  -1    1    0   -2   -1    1    0    1  100</code></pre></figure>
+<h2 id="11">Compute the directional response</h2>
+<p>Evaluate tensile directions every 5 degrees from the notional rolling direction, which is the specimen x-axis by default. The specimen z-axis is the sheet normal. Pixel counts provide area weights on this regular map, so larger grains contribute proportionally more to the texture.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">theta</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">90</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">19</span><span class="p">);</span>
+<span class="p">[</span><span class="n">R</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">minM</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcLankford</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">,</span><span class="n">sS</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'weights'</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">,</span><span class="n">R</span><span class="p">,</span><span class="s1">'o-r'</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Angle from rolling direction, \theta (degrees)'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Lankford parameter, R'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Lankford_04.png" alt="" />
+
+</center>
+<p>\(R\) changes in abrupt steps because of the finite \(\rho\) grid that <code class="language-plaintext highlighter-rouge">calcLankford</code> searches. A finer grid resolves the preferred contraction path more closely but costs additional Taylor solves.</p>
+<p>The change between levels is planar anisotropy: specimens cut at different in-plane angles are predicted to contract by different width to thickness ratios. Here \(R_0=0.25\), \(R_{45}=0.66667\), and \(R_{90}=0.42857\). Read these values together with the assumed CRSS values.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">,</span><span class="n">minM</span><span class="p">,</span><span class="s1">'o-b'</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Angle from rolling direction, \theta (degrees)'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Minimum normalized plastic work, min(M)'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Lankford_05.png" alt="" />
+
+</center>
+<p>
+<code class="language-plaintext highlighter-rouge">M</code> is the CRSS-weighted slip activity per unit imposed strain. It is the normalized plastic work used to select the contraction path. When every CRSS is one, as in the Brass example, it equals the geometric Taylor factor. Its angular variation need not follow \(R(\theta)\) because the path and the work needed to achieve it are different outputs.</p>
+<h2 id="14">Average and planar anisotropy</h2>
+<p>Three standard values summarize the 0, 45, and 90 degree predictions. The normal anisotropy ratio, also written \(\bar R\), <code class="language-plaintext highlighter-rouge">Ravg</code>, or \(r_m\), measures resistance to thickness contraction. Values at or above one indicate resistance to thinning; values below one indicate that thinning is the preferred transverse flow direction and raise the risk of failure in drawing operations.</p>
+<p>A normalization pitfall is to multiply the weighted sum by one half. The following expression gives 1.0060 for this map, which is twice the standard average and must not be used as \(\bar R\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">twiceRbar</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">R</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">R</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">twiceRbar =
+    1.0060</code></pre></figure>
+<p>Divide the weighted sum by four. For this map, the correctly normalized value is \(\bar R=0.50298\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">Rbar</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">R</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">R</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Rbar =
+    0.5030</code></pre></figure>
+<p>The planar anisotropy parameter \(\Delta R\) measures the difference between the 0/90 degree response and the 45 degree response. A value of zero is commonly used as an indicator of the fourfold earing tendency in an orthotropic rolled sheet. A value near zero suppresses that contribution, but it neither requires equal R-values at every angle nor guarantees an ear-free cup.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">deltaR</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">R</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">R</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">deltaR =
+   -0.3274</code></pre></figure>
+<p>Here \(\Delta R=-0.32738\). Its sign says that the predicted 45 degree R-value is larger than the average of the 0 and 90 degree values.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Close generated figures before the reference section.</span>
+<span class="nb">close</span> <span class="nb">all</span></code></pre></figure>
+<h2 id="18">References</h2>
+<div>
+<ul>
+<li>W. T. Lankford, S. C. Snyder, and J. A. Bauscher, <i>New criteria for predicting the press performance of deep drawing sheets</i>, <i>Transactions of the American Society for Metals</i> 42 (1950), 1197--1231, introduces the plastic strain ratio as a criterion for sheet drawability.</li>
+<li>W. F. Hosford, <i>The Mechanics of Crystals and Textured Polycrystals</i>, Oxford University Press, 1993, develops the Taylor-model construction and gives the ideal-Brass curves reproduced in the first example.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/Lankford.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

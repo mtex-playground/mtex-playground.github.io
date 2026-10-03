@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Subgrain Boundaries | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/SubGrainBoundaries_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SubGrainBoundaries_py.html#page",
+      "name": "Subgrain Boundaries",
+      "headline": "Subgrain Boundaries",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/SubGrainBoundaries_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SubGrainBoundaries_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SubGrainBoundaries_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Subgrain Boundaries</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/SubGrainBoundaries.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GrainBoundaries/SubGrainBoundaries.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A grain is a phase-homogeneous, spatially connected region of EBSD pixels produced by
+segmentation. A <em>subgrain boundary</em> lies inside such a grain. A <em>low-angle boundary</em> is
+instead defined by its misorientation angle. The two ideas usually overlap, but they are
+not synonyms.</p>
+
+<p>Low-angle boundaries can be described as arrays of dislocations. Their energy and
+structure change with misorientation until the dislocation cores begin to overlap. The
+conventional transition to high-angle boundaries lies between about 5 and 15 degrees,
+depending on the material. Above it, the energy depends less strongly on angle apart
+from <a href="CSLBoundaries_py.html">special orientations</a> with lower energy.</p>
+
+<p>Deformation stores dislocations inside grains. During recovery, some of them organize
+into walls that divide a grain into subgrains. This page shows how MTEX records, draws,
+and measures those walls.</p>
+
+<p>The page assumes that the EBSD map has already been segmented in principle. See
+<a href="GrainReconstruction_py.html">Grain Reconstruction</a> for that step.
+<a href="BoundaryProperties_py.html">Grain Boundary Properties</a> introduces boundary segments and
+connected components. See <a href="BoundaryMisorientations_py.html">Misorientations at Grain Boundaries</a>
+for the distinction between crystal-frame and specimen-frame axes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># use the rolling-direction frame carried by the ferrite specimen
+</span><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+
+<span class="c1"># load a deformed ferrite map
+</span><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'ferrite'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="reconstruct-grains-and-their-internal-boundaries">Reconstruct grains and their internal boundaries</h2>
+
+<p>A single segmentation threshold has to choose between grain scale and subgrain scale. At
+10 degrees the low-angle walls are missed. At 1 degree the same walls divide the map
+into many separate grains.</p>
+
+<p><a href="EBSD.calcGrains.html">calcGrains</a> accepts both thresholds at once. The first value
+separates grains, while the second records boundaries whose two pixels remain in the
+same grain as <code class="language-plaintext highlighter-rouge">innerBoundary</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">highAngle</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">lowAngle</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="p">[</span><span class="n">highAngle</span><span class="p">,</span> <span class="n">lowAngle</span><span class="p">],</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># remove the pixel staircase before measuring boundary lengths
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="what-innerboundary-means">What <code class="language-plaintext highlighter-rouge">innerBoundary</code> means</h2>
+
+<p>An inner boundary is a topological result, not a second angle filter. MTEX marks a pixel
+pair as a boundary and then reconstructs connected grains. Two pixels can remain in the
+same grain through another path even when their direct misorientation exceeds the
+high-angle threshold.</p>
+
+<p>The strict low-angle selection therefore applies the angle criterion explicitly. The
+printed table keeps the distinction visible.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">innerAngle</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span>
+<span class="n">isLowAngle</span> <span class="o">=</span> <span class="n">innerAngle</span> <span class="o">&lt;=</span> <span class="n">highAngle</span>
+<span class="n">subGB</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">[</span><span class="n">isLowAngle</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="s">"grainBoundarySegments"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">23</span><span class="n">s</span><span class="si">}{</span><span class="s">"innerBoundarySegments"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">23</span><span class="n">s</span><span class="si">}{</span><span class="s">"strictLowAngleSegments"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">24</span><span class="n">s</span><span class="si">}</span><span class="s">'</span>
+      <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="s">"innerSegmentsAboveHighAngle"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">29</span><span class="n">s</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">)</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">23</span><span class="n">d</span><span class="si">}{</span><span class="nb">len</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">)</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">23</span><span class="n">d</span><span class="si">}{</span><span class="nb">len</span><span class="p">(</span><span class="n">subGB</span><span class="p">)</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">24</span><span class="n">d</span><span class="si">}</span><span class="s">'</span>
+      <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">isLowAngle</span><span class="p">)</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">29</span><span class="n">d</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  grainBoundarySegments  innerBoundarySegments  strictLowAngleSegments  innerSegmentsAboveHighAngle
+                  15724                  31027                   30565                          462
+</code></pre></div></div>
+
+<h2 id="draw-the-subgrain-boundary-network">Draw the subgrain-boundary network</h2>
+
+<p>The table reports 15,738 boundary segments between grains and 31,037 inner boundary
+segments. Of the latter, 30,577 satisfy the strict low-angle selection and 460 exceed 10
+degrees for the topological reason above. Default boundary smoothing simplifies and
+resamples the network, so these are post-smoothing segment counts rather than physical
+lengths.</p>
+
+<p>Drawing the inner boundaries with a transparency that follows their misorientation
+angle keeps the strongest walls visible and lets the weakest fade out.</p>
+
+<p>Compute the IPF colours explicitly so that the map does not print an unrelated
+automatic-colour-key message.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsdIndexed</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">]</span>
+<span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">ebsdIndexed</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">ipfColor</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ebsdIndexed</span><span class="p">.</span><span class="n">orientations</span><span class="p">)</span>
+
+<span class="c1"># make stronger low-angle boundaries more opaque
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">subGB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsdIndexed</span><span class="p">,</span> <span class="n">ipfColor</span><span class="p">,</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">subGB</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">edgeAlpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'blue'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SubGrainBoundaries-5.png" /></center>
+
+<p>Black lines separate grains. Blue lines are the strictly selected low-angle boundaries
+within them. Strong walls cross some grain interiors, while other grains contain almost
+none. The contrast may reflect heterogeneous deformation, but short isolated lines may
+also be noise.</p>
+
+<h2 id="normalize-the-amount-within-each-grain">Normalize the amount within each grain</h2>
+
+<p><a href="grain2d.subBoundarySize.html">subBoundarySize</a> counts inner-boundary segments belonging
+to each grain. Its optional logical selection keeps only the strict low-angle
+population. Dividing by the number of pixels removes most of the effect of grain size
+within this one map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">segmentDensity</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">subBoundarySize</span><span class="p">(</span><span class="n">isLowAngle</span><span class="p">)</span> <span class="o">/</span> <span class="n">grains</span><span class="p">.</span><span class="n">numPixel</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">segmentDensity</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'segments per pixel'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SubGrainBoundaries-6.png" /></center>
+
+<p>Grains crossed by many blue walls have the largest segment-per-pixel values. This ratio
+is useful within one regular grid, but it changes with pixel spacing and should not be
+compared between acquisitions.</p>
+
+<p>The physical-unit alternative uses <a href="grain2d.subBoundaryLength.html">subBoundaryLength</a>.
+Dividing the selected length by <a href="grain2d.area.html">area</a> gives boundary length per
+area, here in inverse micrometres.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lengthDensity</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">subBoundaryLength</span><span class="p">(</span><span class="n">isLowAngle</span><span class="p">)</span> <span class="o">/</span> <span class="n">grains</span><span class="p">.</span><span class="n">area</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">lengthDensity</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'boundary length / area (1/µm)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SubGrainBoundaries-7.png" /></center>
+
+<p>The length-density map singles out the same grains as the count-density map. The two
+measures are nearly proportional on this regular grid. Length per area is the quantity
+to report because it has physical units. It removes the direct segment-count
+dependence, but detection still depends on step size, angular precision, thresholds, and
+smoothing.</p>
+
+<h2 id="misorientation-axes-of-the-low-angle-boundaries">Misorientation axes of the low-angle boundaries</h2>
+
+<p>The misorientation axis describes the rotation across a wall. Its relation to the
+boundary plane distinguishes tilt, twist, and mixed character. It is not generally the
+line direction of every dislocation in the wall.</p>
+
+<p>The density estimate below is weighted by segment length, so resampling a long wall into
+more segments does not give it extra influence. A 5 degree kernel smooths the discrete
+axes into a distribution.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">axisDensity</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">subGB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">axis</span><span class="p">(),</span> <span class="n">weights</span><span class="o">=</span><span class="n">subGB</span><span class="p">.</span><span class="n">segLength</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">axisDensity</span><span class="p">,</span> <span class="n">fundamentalRegion</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'small'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SubGrainBoundaries-8.png" /></center>
+
+<p>The colour scale spans about 0.83 to 1.20 multiples of random distribution (mrd), where
+1 is uniform. This ferrite analysis therefore resolves no strong preferred crystal-frame
+rotation axis. Compare the two clear maxima in the forsterite example of
+<a href="TiltAndTwistBoundaries_py.html">Tilt and Twist Boundaries</a>. That page also computes the
+axes in specimen coordinates and compares them with traces.</p>
+
+<p>A nearly uniform result is not proof that the physical axes are random. Most boundaries
+here are only a few degrees across, where small EBSD orientation errors can cause large
+axis errors. Interpret low-angle axes as a population and check the acquisition
+precision.</p>
+
+<h2 id="networks-and-isolated-segments">Networks and isolated segments</h2>
+
+<p>A wall crossing a grain and a few isolated segments above 1 degree have different
+physical meanings. <code class="language-plaintext highlighter-rouge">componentSize</code> gives each segment the number of segments in its
+connected group. Here a dataset-specific cutoff of 50 segments separates larger networks
+from shorter features.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">isNetwork</span> <span class="o">=</span> <span class="n">subGB</span><span class="p">.</span><span class="n">componentSize</span> <span class="o">&gt;</span> <span class="mi">50</span>
+<span class="n">allInnerIsNetwork</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">.</span><span class="n">componentSize</span> <span class="o">&gt;</span> <span class="mi">50</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Segments in components above 50: </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">isNetwork</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">% of the strict '</span>
+      <span class="sa">f</span><span class="s">'low-angle set; </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">allInnerIsNetwork</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">% of all inner boundaries'</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsdIndexed</span><span class="p">,</span> <span class="n">ipfColor</span><span class="p">,</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">subGB</span><span class="p">[</span><span class="n">isNetwork</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">edgeAlpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">[</span><span class="n">isNetwork</span><span class="p">],</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'blue'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">subGB</span><span class="p">[</span><span class="o">~</span><span class="n">isNetwork</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">edgeAlpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">[</span><span class="o">~</span><span class="n">isNetwork</span><span class="p">],</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'red'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Segments in components above 50: 28.8% of the strict low-angle set; 30.3% of all inner boundaries
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SubGrainBoundaries-9.png" /></center>
+
+<p>Blue marks continuous structures, often running across a grain and meeting its boundary
+at both ends. Red marks short components. Many are likely orientation noise crossing the
+1 degree threshold, although a short component is not proof of noise.</p>
+
+<p>The strict selection puts 29.1 percent of its segments in components above 50. Counting
+every inner boundary gives 30.8 percent, or about the 31 percent obtained without the
+explicit angle filter. Both populations are counted by the density maps above, and that
+is worth remembering before reading much into a small difference between two grains. The
+50-segment cutoff itself changes with resampling and step size, so choose it again for a
+new map.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>F. Bachmann, R. Hielscher, and H. Schaeben,
+<a href="https://doi.org/10.1016/j.ultramic.2011.08.002">Grain Detection from 2d and 3d EBSD Data - Specification of the MTEX Algorithm</a>,
+<em>Ultramicroscopy</em> 111 (2011), 1720-1733. This paper defines the spatial reconstruction
+on which <code class="language-plaintext highlighter-rouge">calcGrains</code> is based.</li>
+  <li>W. T. Read and W. Shockley,
+<a href="https://doi.org/10.1103/PhysRev.78.275">Dislocation Models of Crystal Grain Boundaries</a>,
+<em>Physical Review</em> 78 (1950), 275-289. This is the classical dislocation model for
+low-angle boundary energy.</li>
+  <li>F. J. Humphreys and M. Hatherly,
+<a href="https://doi.org/10.1016/C2009-0-07986-0"><em>Recrystallization and Related Annealing Phenomena</em></a>,
+2nd ed., Pergamon, 2004. Chapters on the deformed state and recovery place subgrains in
+their microstructural context.</li>
+  <li>D. J. Prior,
+<a href="https://doi.org/10.1046/j.1365-2818.1999.00572.x">Problems in Determining the Misorientation Axes, for Small Angular Misorientations, Using EBSD</a>,
+<em>Journal of Microscopy</em> 195 (1999), 217-225. This paper quantifies the loss of axis
+precision at small angles.</li>
+  <li>J. Wheeler <em>et al.</em>,
+<a href="https://doi.org/10.1016/j.tecto.2003.08.007">From Geometry to Dynamics of Microstructure: Using Boundary Lengths to Quantify Boundary Misorientations and Anisotropy</a>,
+<em>Tectonophysics</em> 376 (2003), 19-35. It motivates length-weighted boundary statistics.</li>
+  <li>S. Demouchy, <a href="https://doi.org/10.5194/ejm-33-249-2021">Defects in Olivine</a>,
+<em>European Journal of Mineralogy</em> 33 (2021), 249-282. Section 5.2.1 and Figure 8 review
+low-angle walls and illustrate tilt and twist boundaries.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="TiltAndTwistBoundaries_py.html">Tilt and Twist Boundaries</a> to compare the
+misorientation axis with the boundary trace. For deformation measured at every EBSD point
+rather than only at detected walls, see <a href="EBSDKAM_py.html">Kernel Average Misorientation</a> and
+<a href="EBSDGROD_py.html">Grain Reference Orientation Deviation</a>.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">calcGrains</code> writes the grain of every measurement into the map it was given, so
+MATLAB’s <code class="language-plaintext highlighter-rouge">[grains, ebsd] = calcGrains(ebsd, ...)</code> is one assignment here. MATLAB’s
+<code class="language-plaintext highlighter-rouge">table</code> is a printed line.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SubGrainBoundaries_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

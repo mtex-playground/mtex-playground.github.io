@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Reference Frame Alignment | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="An EBSD map records where each measurement was taken and how the crystal there is oriented. Positions and orientations are meaningful together only when they are expressed in the same specimen frame.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSDReferenceFrame.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSDReferenceFrame.html#page",
+      "name": "Reference Frame Alignment",
+      "headline": "Reference Frame Alignment",
+      "description": "An EBSD map records where each measurement was taken and how the crystal there is oriented. Positions and orientations are meaningful together only when they are expressed in the same specimen frame.",
+      "url": "https://mtex-playground.github.io/EBSDReferenceFrame.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSDReferenceFrame.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSDReferenceFrame.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Reference Frame Alignment</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Reference Frame Alignment</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_EBSDReferenceFrame.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/EBSDAnalysis/EBSDReferenceFrame.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>An EBSD map records where each measurement was taken and how the crystal there is oriented. Positions and orientations are meaningful together only when they are expressed in the same <b>specimen frame</b>.</p>
+<p>A <b>reference frame</b> is the coordinate system in which data are expressed. It has an identity, a basis and a default convention for drawing it. A specimen frame describes the sample, whereas a <b>crystal frame</b> is fixed to a phase's lattice. Point-group symmetry is attached to a frame but is not the frame itself. See <a href="CrystalReferenceSystem.html">Crystal Reference Frame</a> for that distinction.</p>
+<p>An <a href="OrientationDefinition.html">orientation</a> maps a crystal frame into a specimen frame. In an EBSD file its numerical representation is usually a triplet of Euler angles. The positions are \(x\), \(y\) coordinates in the map. If those two parts use different specimen frames, every result that combines them is wrong: a grain shape against its crystal, or a pole figure against the map. The numbers themselves do not reveal the error.</p>
+<p>MTEX therefore uses one invariant: <b>the Euler angles refer to the map frame</b>. The \(x\) and \(z\) axes of the map are exactly the axes about which the Bunge Euler rotations are defined. Data that arrives otherwise should be corrected during import.</p>
+<p>Read <a href="EBSDImport.html">Importing EBSD Data</a> first if <code class="language-plaintext highlighter-rouge">EBSD.load</code> is new to you. This page explains the frame decision that import cannot make for you. <a href="AxesAlignment.html">On Screen Coordinate System Alignment</a> treats plotting conventions in more detail.</p>
+<h2 id="2">The two specimen frames in a data file</h2>
+<p>A vendor file may use one specimen frame for map positions and another for Euler angles. The EDAX export dialog shows the mismatch plainly.</p>
+<p>
+<center>
+<img class="inline" src="images/edax_coordinate_systems.png" alt="" />
+
+</center>
+</p>
+<p>The blue axes \(x\) and \(y\) describe the map coordinates. The red axes \(A_1\), \(A_2\), \(A_3\) describe the frame used by the Euler angles and hence by every pole figure computed from them. None of the four settings makes those axes coincide. Oxford and Bruker files present the same problem with different alignments.</p>
+<p>Establish the physical specimen frame before choosing a setting. An asymmetric mark on the sample can link its directions to the SEM image, while a crystal of known orientation checks the link from the diffraction pattern to the lattice. Repeat this calibration when the microscope, detector or acquisition convention changes. Do not choose a correction merely because its map resembles the vendor display.</p>
+<p>EDAX numbers the alignments 1 to 4. Setting 2 is by far the most common, but an <code class="language-plaintext highlighter-rouge">.ang</code> file does not store the setting. MTEX therefore assumes setting 2 and reports that assumption when none is supplied. State the setting explicitly when it is known, or pass <code class="language-plaintext highlighter-rouge">'setting',0</code> when the two frames already coincide and no correction is required.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">specimenFrame</span><span class="o">.</span><span class="n">specimen</span><span class="o">.</span><span class="n">makeDefault</span><span class="p">;</span>
+<span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↓→x'</span><span class="p">);</span>
+
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">([</span><span class="n">mtexEBSDPath</span> <span class="nb">filesep</span> <span class="s1">'olivineopticalmap.ang'</span><span class="p">],</span><span class="s1">'setting'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="n">EulerCorrection</span> <span class="o">=</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">EulerCorrection</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">EulerCorrection = rotation
+ 
+  Bunge Euler angles in degree
+  phi1  Phi phi2
+   315  180   45</code></pre></figure>
+<p>The displayed rotation is the import's audit record: it is the correction selected by setting 2. Keeping the object itself silent avoids printing phase and property details that do not answer the frame question.</p>
+<p>A format without a numbered catalogue takes the correction directly. <code class="language-plaintext highlighter-rouge">EulerCorrection</code> is the rotation that maps the Euler-angle frame onto the map frame:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="nb">fileName</span><span class="p">,</span><span class="s1">'EulerCorrection'</span><span class="p">,</span><span class="n">rotation</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">xvector</span><span class="p">,</span><span class="n">xvector</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="o">-</span><span class="n">zvector</span><span class="p">))</span></code></pre></figure>
+<p>This correction changes the imported orientations so that position and orientation agree. It is not a plotting command. The small indicator in the corner of the following map is switched on by <code class="language-plaintext highlighter-rouge">'refFrame','on'</code>. It states the current screen layout: \(x\) points east, \(y\) south and \(z\) into the screen.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'refFrame'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDReferenceFrame_01.png" alt="" />
+
+</center>
+<h2 id="4">Screen layout is a different question</h2>
+<p>A map need not appear on screen as it did in the commercial software. Whether the picture is upside down is a choice of display. Whether the map and orientations are aligned with the specimen is a question of correctness, and only the latter can invalidate the analysis.</p>
+<p>A <b>plotting convention</b> states how a reference frame is laid out on screen. It never changes the data. Passing <code class="language-plaintext highlighter-rouge">'how2plot'</code> to one plot changes that plot alone.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% draw x down and y east for this plot only</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'how2plot'</span><span class="p">,</span><span class="s1">'x↓→y'</span><span class="p">,</span><span class="s1">'refFrame'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDReferenceFrame_02.png" alt="" />
+
+</center>
+<p>The two screen directions are unchanged, but the axes drawn along them have swapped: \(x\) now runs down and \(y\) to the right. The picture is therefore reflected about the diagonal from top left to bottom right. The large red grain that was at the right edge is now at the bottom left, and the corner indicator has flipped from \(z\) into the screen to \(z\) out of it. Every grain kept its colour, because neither coordinates nor orientations changed.</p>
+<p>To change the convention for a whole session, use <code class="language-plaintext highlighter-rouge">plottingConvention.default</code> as at the top of this page.</p>
+<p>Imported data initially uses the generic specimen frame with axes \(X\), \(Y\), \(Z\). Once their physical meaning is known, the frame can instead be named as a rolling frame with RD, TD, ND, or as a geological frame. See <a href="AxesAlignment.html">Named Reference Frames</a> for that step.</p>
+<h2 id="6">Check the alignment against the specimen</h2>
+<p>No value stored in the map can prove that its absolute frame is correct. The check must use independent knowledge of the material or specimen. The most direct test for this olivine map is to draw each large grain's crystal shape at the measured orientation and compare crystal habit with grain shape.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% reconstruct grains</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">);</span>
+
+<span class="c1">% use the crystal shape for olivine</span>
+<span class="n">cS</span> <span class="o">=</span> <span class="n">crystalShape</span><span class="o">.</span><span class="n">olivine</span><span class="p">;</span>
+
+<span class="c1">% select large grains and show the count used below</span>
+<span class="n">largeGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span><span class="o">&gt;</span><span class="mi">500</span><span class="p">);</span>
+<span class="n">numLargeGrains</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">largeGrains</span><span class="p">)</span>
+
+<span class="c1">% draw the measured orientations and overlay the crystal shapes</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'refFrame'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'se'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">largeGrains</span><span class="p">,</span><span class="n">cS</span><span class="p">,</span><span class="s1">'colored'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span> <span class="n">off</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">numLargeGrains =
+     8</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDReferenceFrame_03.png" alt="" />
+
+</center>
+<p>Eight grains pass the size threshold. Most are nearly equant and say little, but the elongated grain at the right edge carries an elongated crystal pointing the same way. That agreement is expected for this rock. It is useful evidence only because the olivine habit is known independently; equant grains or a material without shape-preferred orientation would not provide the same check. A wrong frame would turn or mirror the crystals systematically against the grains.</p>
+<p>A second check compares a pole figure with a known specimen direction or feature such as foliation, lineation, RD, TD or ND.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'O'</span><span class="p">)</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'O'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDReferenceFrame_04.png" alt="" />
+
+</center>
+<p>Pole figures describe directions in the specimen, so MTEX draws them in the same frame as the map: \(x\) east and \(y\) south here. A direction read from the map is therefore the same direction in the pole figure. The three plots contain sharp maxima rather than an even covering, so the specimen is textured. The strongest (010) maximum lies on the eastern rim, along the map's \(x\) axis.</p>
+<p>Texture alone does not certify the frame. This maximum becomes a check only when an independent observation says that the corresponding crystal direction should align with that specimen direction.</p>
+<h2 id="9">Change the map coordinates alone</h2>
+<p>The following three operations are diagnostic demonstrations after a consistent import. They show why an incorrect result can still look ordinary. Rotating only the map coordinates flips or turns the picture while leaving the orientations unchanged. This is useful when the map was recorded mirrored with respect to the specimen.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rot</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">yvector</span><span class="p">,</span><span class="mi">180</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">ebsd_rot</span> <span class="o">=</span> <span class="nb">rotate</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">rot</span><span class="p">,</span><span class="s1">'keepEuler'</span><span class="p">);</span>
+
+<span class="c1">% reconstruct grains</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd_rot</span><span class="p">);</span>
+
+<span class="c1">% select only large grains</span>
+<span class="n">largeGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span><span class="o">&gt;</span><span class="mi">500</span><span class="p">);</span>
+
+<span class="c1">% put the reference-frame indicator where no crystal covers it</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd_rot</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">),</span><span class="n">ebsd_rot</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'refFrame'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'ne'</span><span class="p">)</span>
+
+<span class="c1">% overlay the crystal shapes</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">largeGrains</span><span class="p">,</span><span class="n">cS</span><span class="p">,</span><span class="s1">'colored'</span><span class="p">)</span>
+<span class="nb">legend</span> <span class="n">off</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDReferenceFrame_05.png" alt="" />
+
+</center>
+<p>The map is mirrored left to right. The large red grain has moved from the right edge to the left, while each crystal is drawn as before at the mirrored position of its grain. The two frames have been pulled apart on purpose, yet the result still looks like an ordinary map. That is what a wrongly imported data set looks like, and why the correction belongs at import.</p>
+<h2 id="11">Change the Euler angles alone</h2>
+<p>The opposite operation keeps the coordinates and turns only the orientations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd_rot</span> <span class="o">=</span> <span class="nb">rotate</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">rot</span><span class="p">,</span><span class="s1">'keepXY'</span><span class="p">);</span>
+
+<span class="c1">% reconstruct grains</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd_rot</span><span class="p">);</span>
+
+<span class="c1">% select only large grains</span>
+<span class="n">largeGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span><span class="o">&gt;</span><span class="mi">500</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd_rot</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">),</span><span class="n">ebsd_rot</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'refFrame'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'se'</span><span class="p">)</span>
+
+<span class="c1">% overlay the crystal shapes</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">largeGrains</span><span class="p">,</span><span class="n">cS</span><span class="p">,</span><span class="s1">'colored'</span><span class="p">)</span>
+<span class="nb">legend</span> <span class="n">off</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDReferenceFrame_06.png" alt="" />
+
+</center>
+<p>The grains remain where they were, while the crystals turn. The colours do not change: the key asks which crystal direction points along \(z\), this rotation sends that direction to its opposite, and olivine has an inversion centre. Colour alone therefore cannot reveal this frame error. Only a quantity with directional shape can do so.</p>
+<h2 id="13">Rotate coordinates and orientations together</h2>
+<p>Rotating both parts keeps the data self-consistent and moves the map as a whole. This active rotation is appropriate when the specimen really is to be reoriented by a known amount, for example to correct different mounting angles before several maps are compared. Translation is handled by <a href="EBSD.shift.html"><code class="language-plaintext highlighter-rouge">shift</code></a> and rotation by <a href="EBSD.rotate.html"><code class="language-plaintext highlighter-rouge">rotate</code></a>.</p>
+<p>This is distinct from a <b>frame change</b>, which re-expresses the same physical object in another reference frame without moving it. Naming an already calibrated frame and actively rotating data are not substitutes for one another.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% define a five degree rotation about z</span>
+<span class="n">rot</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">zvector</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="c1">% rotate positions and orientations together</span>
+<span class="n">ebsd_rot</span> <span class="o">=</span> <span class="nb">rotate</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">rot</span><span class="p">);</span>
+
+<span class="c1">% reconstruct grains</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd_rot</span><span class="p">);</span>
+
+<span class="c1">% select only large grains</span>
+<span class="n">largeGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span><span class="o">&gt;</span><span class="mi">500</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd_rot</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">),</span><span class="n">ebsd_rot</span><span class="p">(</span><span class="s1">'olivine'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'refFrame'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'se'</span><span class="p">)</span>
+
+<span class="c1">% overlay the crystal shapes</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">largeGrains</span><span class="p">,</span><span class="n">cS</span><span class="p">,</span><span class="s1">'colored'</span><span class="p">)</span>
+<span class="nb">legend</span> <span class="n">off</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDReferenceFrame_07.png" alt="" />
+
+</center>
+<p>The whole map is tilted by five degrees and the crystals move with it, so they still fit their grains.</p>
+<h2 id="15">Further reading</h2>
+<div>
+<ul>
+<li>T.B. Britton et al., <a href="https://doi.org/10.1016/j.matchar.2016.04.008">Tutorial: crystal orientations and EBSD - or which way is up?</a>, Materials Characterization 117 (2016), 113-126. The paper gives practical tests for linking the specimen, map, diffraction-pattern and crystal frames.</li>
+<li>
+<a href="https://www.iso.org/standard/82749.html">ISO 24173:2024</a>, Microbeam analysis - Guidelines for orientation measurement using electron backscatter diffraction, covers instrument calibration and reproducible orientation measurement.</li>
+<li>The <a href="https://github.com/oinanoanalysis/h5oina/blob/master/H5OINAFile.md#definition-of-coordinate-systems">Oxford Instruments H5OINA specification</a> defines its microscope, sample, crystal and detector frames and states which one each stored field uses.</li>
+<li>G. Nolze, <a href="https://doi.org/10.1002/crat.201400427">Euler angles and crystal symmetry</a>, Crystal Research and Technology 50 (2015), 188-201, explains why identical physical orientations can have different Euler triplets when frame and symmetry conventions differ.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSDReferenceFrame.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Defocusing Estimated with the ODF | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/PoleFigureDefocusing_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/PoleFigureDefocusing_py.html#page",
+      "name": "Defocusing Estimated with the ODF",
+      "headline": "Defocusing Estimated with the ODF",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/PoleFigureDefocusing_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/PoleFigureDefocusing_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/PoleFigureDefocusing_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Defocusing Estimated with the ODF</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/PoleFigureDefocusing.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/PoleFigureAnalysis/PoleFigureDefocusing.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>Tilting a specimen in a texture goniometer costs intensity. The irradiated spot stretches
+over the surface, part of it leaves the sample or the field of view of the detector, and
+in a Bragg-Brentano setup the diffraction line broadens out of the receiving slit. The
+loss grows with the tilt and depends on the Bragg angle. Measured pole figures that are
+not corrected for it look like a texture that weakens towards the rim.</p>
+
+<p>The classical correction divides the measurement by a defocusing curve from a random
+sample. This page shows a different route: the defocusing is a factor in the model of
+the measurement, \(I_i(r) \approx \alpha_i\, d_i(r)\, (\mathcal{R}f)(h_i, r)\), and a curve of
+a few parameters is estimated together with the ODF. It assumes the reconstruction of
+<a href="PoleFigure2ODF_py.html">ODF Estimation</a> and the corrections of
+<a href="PoleFigureCorrection_py.html">Data Correction</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># the measurements are not yet in the data repository; they are read from this folder
+</span><span class="n">pname</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">'~/Downloads/PF_Cu/'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="the-measurement">The measurement</h2>
+
+<p>Three pole figures of a copper sheet, {111}, {200} and {220}, were measured on a
+PANalytical X’Pert with Cu radiation in parallel beam geometry: crossed slits on the
+primary side and a parallel plate collimator of 0.27° in front of the detector. The tilt
+runs from 0° to 90° in steps of 3°, the azimuth in steps of 3°. Each pole figure has a
+second scan 3° below its Bragg angle, the intensity off the peak.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'m-3m'</span><span class="p">,</span> <span class="n">mineral</span><span class="o">=</span><span class="s">'Copper'</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">[</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)]</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'111'</span><span class="p">,</span> <span class="s">'200'</span><span class="p">,</span> <span class="s">'220'</span><span class="p">]</span>
+<span class="n">peak</span> <span class="o">=</span> <span class="n">loadPoleFigure</span><span class="p">([</span><span class="n">pname</span> <span class="o">+</span> <span class="sa">f</span><span class="s">'PF_Cu_</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s">_3deg.xrdml'</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">names</span><span class="p">],</span> <span class="n">h</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">offPeak</span> <span class="o">=</span> <span class="n">loadPoleFigure</span><span class="p">([</span><span class="n">pname</span> <span class="o">+</span> <span class="sa">f</span><span class="s">'PF_Cu_</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s">_3deg_BG.xrdml'</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">names</span><span class="p">],</span> <span class="n">h</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+
+<span class="c1"># the Bragg angles of the peaks and of the scans off them
+</span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">43.36</span><span class="p">,</span> <span class="mf">50.50</span><span class="p">,</span> <span class="mf">74.20</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">thetaOff</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">degree</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">peak</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureDefocusing-2.png" /></center>
+
+<p>The raw counts show a cube texture: the {200} maximum at the centre and the four {111}
+and {220} maxima of the cube orientation. All three pole figures fade towards the rim,
+the {111} and {200} more than the {220}.</p>
+
+<h2 id="what-the-scans-off-the-peak-are">What the scans off the peak are</h2>
+
+<p>The scan off the peak is two things at once. It is the background under the peak, which
+the peak scan counts as well and which is subtracted. And it comes from the irradiated
+sample, so it loses intensity with the tilt as the diffracted signal does: its decay is a
+measurement of the defocusing curve. The mean of every ring shows it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">ringMeans</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">allR</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">theta</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span><span class="p">)</span>
+  <span class="n">I</span> <span class="o">=</span> <span class="n">pf</span><span class="p">.</span><span class="n">allI</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">ravel</span><span class="p">()</span>
+  <span class="n">chi</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">unique</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">chi</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">I</span><span class="p">[</span><span class="n">t</span> <span class="o">==</span> <span class="n">c</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">chi</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+  <span class="n">chi</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">ringMeans</span><span class="p">(</span><span class="n">offPeak</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+  <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">chi</span><span class="p">,</span> <span class="n">m</span> <span class="o">/</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s">'off peak </span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'tilt χ in degrees'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'ring mean / value at χ = 0'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureDefocusing-3.png" /></center>
+
+<p>The three curves stay near one up to about 40°, fall to about a half at 75° and to zero
+at 90°. The {220} curve, the one at the largest Bragg angle, falls last. This is the loss
+of a parallel beam instrument: the beam footprint stretches by \(1/(\sin\theta\cos\chi)\)
+and spills over the edge of the sample.</p>
+
+<p>The scan at 90° holds almost nothing, and the rings above 84° carry little information;
+the analysis keeps \(\chi \le 84°\). Subtracting the background gives the net intensities.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">keep</span> <span class="o">=</span> <span class="n">peak</span><span class="p">.</span><span class="n">r</span><span class="p">.</span><span class="n">theta</span> <span class="o">&lt;=</span> <span class="mi">84</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">pf</span> <span class="o">=</span> <span class="n">correct</span><span class="p">(</span><span class="n">peak</span><span class="p">[</span><span class="n">keep</span><span class="p">],</span> <span class="n">background</span><span class="o">=</span><span class="n">offPeak</span><span class="p">[</span><span class="n">keep</span><span class="p">])</span>
+<span class="n">off</span> <span class="o">=</span> <span class="n">offPeak</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureDefocusing-4.png" /></center>
+
+<h2 id="a-factor-in-the-model-not-a-division-of-the-data">A factor in the model, not a division of the data</h2>
+
+<p>Dividing the net intensities by a curve \(d(\chi)\) multiplies their counting noise by
+\(1/d\): at \(\chi = 84°\), where \(d \approx 0.07\), by a factor of fourteen. The least squares
+fit of the ODF then weights these points as much as the well measured ones. Keeping the
+curve in the model instead, as the intensity \(\alpha_i\, d_i(r)\, (\mathcal{R}f)(h_i, r)\)
+predicts, leaves the data as measured.</p>
+
+<p><a href="PoleFigure.calcODF.html">calcODF</a> takes such a factor with <code class="language-plaintext highlighter-rouge">factor=</code>: one array per pole
+figure, a pole figure of factors, or a <code class="language-plaintext highlighter-rouge">defocusingModel</code> whose parameters it estimates.
+A model is a function \(d(p; r, \theta)\) of a few parameters \(p\); its scale is the
+normalisation \(\alpha_i\) of each pole figure, so it only has to fix the shape. The
+shape used here is</p>
+
+\[d(\chi, \theta) = 1 - \exp\!\left(-\left(\frac{\cos\chi\,\sqrt{\sin\theta}}{a}\right)^{b}\right),\]
+
+<p>a curve near one at small tilts that falls to zero at 90°, earlier for smaller Bragg
+angles. It describes the three curves above to about two percent.</p>
+
+<p>The fits below weight each point by its counting noise (<code class="language-plaintext highlighter-rouge">intensityWeights=True</code>) and run
+30 iterations. Their misfit is measured in units of the counting noise: \(\chi^2/N\) is the
+mean squared residual divided by the variance of the counts, one for a model that leaves
+nothing but noise.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># the variance of a net intensity: the counts of the peak and of the background scan
+</span><span class="n">variance</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">I</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span> <span class="o">+</span> <span class="n">B</span><span class="p">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">I</span><span class="p">,</span> <span class="n">B</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">peak</span><span class="p">[</span><span class="n">keep</span><span class="p">].</span><span class="n">allI</span><span class="p">,</span> <span class="n">off</span><span class="p">.</span><span class="n">allI</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">misfit</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odf</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+  <span class="c1"># the residual of alpha_i d_i(r) (R f)(h_i, r), alpha_i in closed form, in units of the noise
+</span>  <span class="n">d</span> <span class="o">=</span> <span class="n">factor</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="n">defocusingModel</span><span class="p">)</span> <span class="k">else</span> <span class="n">factor</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">numPF</span><span class="p">):</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">real</span><span class="p">(</span><span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">pf</span><span class="p">.</span><span class="n">allH</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">pf</span><span class="p">.</span><span class="n">allR</span><span class="p">[</span><span class="n">k</span><span class="p">]).</span><span class="n">allI</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">P</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">P</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">pf</span><span class="p">.</span><span class="n">allI</span><span class="p">[</span><span class="n">k</span><span class="p">].</span><span class="n">ravel</span><span class="p">(),</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">variance</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span> <span class="o">@</span> <span class="n">m</span> <span class="o">/</span> <span class="p">((</span><span class="n">m</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span> <span class="o">@</span> <span class="n">m</span><span class="p">)</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">chi2</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">res</span><span class="p">])</span>
+
+<span class="n">fit</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">intensityWeights</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">minIter</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">maxIter</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">odfNone</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="o">**</span><span class="n">fit</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'no correction: chi2/N = </span><span class="si">{</span><span class="n">chi2</span><span class="p">(</span><span class="n">misfit</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odfNone</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span><span class="si">:</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>no correction: chi2/N = 422
+</code></pre></div></div>
+
+<p>Without a correction the misfit is several hundred times the counting noise.</p>
+
+<h2 id="three-ways-to-the-curve">Three ways to the curve</h2>
+
+<p><strong>(a) From the scans off the peak alone.</strong> A model holds measurements of the factor as its
+data, each pole figure at its own Bragg angle; <code class="language-plaintext highlighter-rouge">fit()</code> fits the shape to them, each scan
+with its own scale. The curve is then fixed in the reconstruction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">modelA</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">.</span><span class="n">weibull</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">off</span><span class="p">,</span> <span class="n">dataTheta</span><span class="o">=</span><span class="n">thetaOff</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">odfA</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="n">modelA</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">pf</span><span class="p">),</span> <span class="o">**</span><span class="n">fit</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'(a) a = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelA</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, b = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelA</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, chi2/N = </span><span class="si">{</span><span class="n">chi2</span><span class="p">(</span><span class="n">misfit</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odfA</span><span class="p">,</span> <span class="n">modelA</span><span class="p">))</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(a) a = 0.245, b = 1.365, chi2/N = 56.2
+</code></pre></div></div>
+
+<p><strong>(b) Together with the ODF from the peaks.</strong> With a model as <code class="language-plaintext highlighter-rouge">factor</code>, <code class="language-plaintext highlighter-rouge">calcODF</code>
+alternates its iteration with a least squares step in the parameters at the current ODF,
+until they settle, and leaves the fitted parameters in the model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">modelB</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">.</span><span class="n">weibull</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">odfB</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="n">modelB</span><span class="p">,</span> <span class="o">**</span><span class="n">fit</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'(b) a = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelB</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, b = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelB</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, chi2/N = </span><span class="si">{</span><span class="n">chi2</span><span class="p">(</span><span class="n">misfit</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odfB</span><span class="p">,</span> <span class="n">modelB</span><span class="p">))</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(b) a = 0.310, b = 1.665, chi2/N = 33.9
+</code></pre></div></div>
+
+<p><strong>(c) From both.</strong> A model with data enters the parameter step with the peaks and its
+data together, a point of the data weighing as a measured one.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">modelC</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">.</span><span class="n">weibull</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">off</span><span class="p">,</span> <span class="n">dataTheta</span><span class="o">=</span><span class="n">thetaOff</span><span class="p">)</span>
+<span class="n">odfC</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="n">modelC</span><span class="p">,</span> <span class="o">**</span><span class="n">fit</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'(c) a = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelC</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, b = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelC</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, chi2/N = </span><span class="si">{</span><span class="n">chi2</span><span class="p">(</span><span class="n">misfit</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odfC</span><span class="p">,</span> <span class="n">modelC</span><span class="p">))</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(c) a = 0.300, b = 1.638, chi2/N = 32.7
+</code></pre></div></div>
+
+<p>The curve from the background alone lowers the misfit by almost an order of magnitude,
+from 422 to 56. Fitted with the ODF it drops by a further 40 percent, to 34 and 33. The
+joint curve is steeper than the background’s:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chi</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">byPolar</span><span class="p">(</span><span class="n">chi</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">chi</span><span class="p">.</span><span class="n">size</span><span class="p">))</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">PoleFigure</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">chi</span><span class="p">.</span><span class="n">size</span><span class="p">)])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<span class="n">c0</span><span class="p">,</span> <span class="n">m0</span> <span class="o">=</span> <span class="n">ringMeans</span><span class="p">(</span><span class="n">off</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">m0</span> <span class="o">/</span> <span class="n">m0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">'k.'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'off peak 111, measured'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">((</span><span class="s">'(a) background'</span><span class="p">,</span> <span class="n">modelA</span><span class="p">),</span> <span class="p">(</span><span class="s">'(b) joint'</span><span class="p">,</span> <span class="n">modelB</span><span class="p">),</span> <span class="p">(</span><span class="s">'(c) both'</span><span class="p">,</span> <span class="n">modelC</span><span class="p">)):</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">f</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">p</span><span class="p">,</span> <span class="n">theta</span><span class="p">[:</span><span class="mi">1</span><span class="p">]).</span><span class="nb">eval</span><span class="p">(</span><span class="n">one</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">chi</span><span class="p">,</span> <span class="n">d</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'tilt χ in degrees'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'defocusing of {111}'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureDefocusing-9.png" /></center>
+
+<p>The diffracted intensity falls off faster than the intensity off the peak. In the joint
+fit (c) the shared curve follows the peaks and leaves a misfit of a few noise units on the
+background. The two signals do not reach the detector the same way: part of the
+background is scattered in every direction and is cut differently by the collimator, and
+some of it is the tail of the textured peak itself. The background is a good first guess
+of the curve, not its measurement.</p>
+
+<h2 id="is-the-curve-determined-by-the-data">Is the curve determined by the data?</h2>
+
+<p>A curve of \(\chi\) alone could in principle be traded against the ODF: an axially
+symmetric texture changes the pole figures with \(\chi\) alone as well. What prevents it is
+that one curve has to serve several pole figures of the same ODF. The test is a
+simulation: counts are drawn from the reconstructed ODF times a known curve, and the
+fit starts from wrong parameters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">modelTrue</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">.</span><span class="n">weibull</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelB</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">modelB</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+  <span class="n">I</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">numPF</span><span class="p">):</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">real</span><span class="p">(</span><span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odfB</span><span class="p">,</span> <span class="n">pf</span><span class="p">.</span><span class="n">allH</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">pf</span><span class="p">.</span><span class="n">allR</span><span class="p">[</span><span class="n">k</span><span class="p">]).</span><span class="n">allI</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">lam</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">P</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">allI</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">P</span><span class="p">)</span>
+    <span class="n">I</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">rng</span><span class="p">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">PoleFigure</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">allH</span><span class="p">,</span> <span class="n">pf</span><span class="p">.</span><span class="n">allR</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">((</span><span class="s">'the fitted curve'</span><span class="p">,</span> <span class="n">modelTrue</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">pf</span><span class="p">)),</span> <span class="p">(</span><span class="s">'no loss'</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">size</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">pf</span><span class="p">.</span><span class="n">allR</span><span class="p">])):</span>
+  <span class="n">start</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">.</span><span class="n">weibull</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+  <span class="n">calcODF</span><span class="p">(</span><span class="n">simulate</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">factor</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="o">**</span><span class="n">fit</span><span class="p">)</span>
+  <span class="n">dd</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">f</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">p</span><span class="p">,</span> <span class="n">theta</span><span class="p">[:</span><span class="mi">1</span><span class="p">]).</span><span class="nb">eval</span><span class="p">(</span><span class="n">one</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'simulated with </span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="mi">16</span><span class="n">s</span><span class="si">}</span><span class="s">: fitted d(111) at 30°, 60°, 80° = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">((</span><span class="n">dd</span> <span class="o">/</span> <span class="n">dd</span><span class="p">[</span><span class="mi">0</span><span class="p">])[[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">]],</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'the fitted curve itself:'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">((</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">])(</span><span class="n">defocusingModel</span><span class="p">(</span><span class="n">modelTrue</span><span class="p">.</span><span class="n">f</span><span class="p">,</span> <span class="n">modelTrue</span><span class="p">.</span><span class="n">p</span><span class="p">,</span> <span class="n">theta</span><span class="p">[:</span><span class="mi">1</span><span class="p">]).</span><span class="nb">eval</span><span class="p">(</span><span class="n">one</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">]],</span> <span class="mi">2</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>simulated with the fitted curve: fitted d(111) at 30°, 60°, 80° = [0.95 0.65 0.16]
+simulated with no loss         : fitted d(111) at 30°, 60°, 80° = [1. 1. 1.]
+the fitted curve itself: [0.95 0.65 0.16]
+</code></pre></div></div>
+
+<p>The known curve comes back from the wrong start, and data without any loss give a flat
+curve: the joint fit neither misses the defocusing nor invents one. The same test passes
+on the two titanium data sets below.</p>
+
+<p>What this does not allow is a free curve for each pole figure. A spline with seven knots
+per pole figure lowers the misfit further but bends the {220} curve above one, absorbing
+misfit of the ODF; the curve has to be the same function of \(\chi\) and \(\theta\) for all
+pole figures, with the dependence on \(\theta\) fixed by the model.</p>
+
+<h2 id="resolution-and-what-is-left">Resolution, and what is left</h2>
+
+<p>The cube texture of the sheet is sharper than a kernel of 5° resolves. At 3° the misfit
+drops by almost a half; the defocusing parameters stay where they were.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fit3</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">fit</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">3</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">3</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">model3</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">.</span><span class="n">weibull</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">off</span><span class="p">,</span> <span class="n">dataTheta</span><span class="o">=</span><span class="n">thetaOff</span><span class="p">)</span>
+<span class="n">odf3</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="n">model3</span><span class="p">,</span> <span class="o">**</span><span class="n">fit3</span><span class="p">)</span>
+<span class="n">res3</span> <span class="o">=</span> <span class="n">misfit</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odf3</span><span class="p">,</span> <span class="n">model3</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'3 degrees: a = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">model3</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, b = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">model3</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">, chi2/N = </span><span class="si">{</span><span class="n">chi2</span><span class="p">(</span><span class="n">res3</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">,</span>
+      <span class="s">'('</span> <span class="o">+</span> <span class="s">', '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">res3</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">'</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">+</span> <span class="s">')'</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">PoleFigure</span><span class="p">(</span><span class="n">pf</span><span class="p">.</span><span class="n">allH</span><span class="p">,</span> <span class="n">pf</span><span class="p">.</span><span class="n">allR</span><span class="p">,</span> <span class="n">res3</span><span class="p">),</span> <span class="n">colorRange</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span> <span class="n">colormap</span><span class="o">=</span><span class="s">'blue2red'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'residual / σ'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3 degrees: a = 0.295, b = 1.663, chi2/N = 19.5 (111 29.8, 200 13.9, 220 14.7)
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureDefocusing-11.png" /></center>
+
+<p>The residuals in units of the counting noise are within a few units over most of the
+pole figures. What is left sits at the sharp cube poles and, for {111}, in a ring near
+the rim with a twofold pattern in the azimuth. A misalignment of the goniometer, a zero
+offset of \(\chi\) or of \(\omega\), would show up at the poles as well. Fitted as two more
+parameters, by moving the operator to the shifted directions, both come out below 0.1° at
+3° and change the misfit by less than one percent; the shift of half a degree a 5° fit
+finds is the coarse kernel, not the goniometer.</p>
+
+<p>The ODF itself is what the correction is for:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori</span> <span class="o">=</span> <span class="p">{</span><span class="s">'cube'</span><span class="p">:</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span>
+       <span class="s">'copper'</span><span class="p">:</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">90</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">35</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">45</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span>
+       <span class="s">'brass'</span><span class="p">:</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">35</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">45</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span>
+       <span class="s">'S'</span><span class="p">:</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">59</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">37</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">63</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)}</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'             texture index '</span> <span class="o">+</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">7</span><span class="n">s</span><span class="si">}</span><span class="s">'</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ori</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">odf</span> <span class="ow">in</span> <span class="p">((</span><span class="s">'none'</span><span class="p">,</span> <span class="n">odfNone</span><span class="p">),</span> <span class="p">(</span><span class="s">'(a) 5°'</span><span class="p">,</span> <span class="n">odfA</span><span class="p">),</span> <span class="p">(</span><span class="s">'(b) 5°'</span><span class="p">,</span> <span class="n">odfB</span><span class="p">),</span> <span class="p">(</span><span class="s">'(c) 5°'</span><span class="p">,</span> <span class="n">odfC</span><span class="p">),</span> <span class="p">(</span><span class="s">'(c) 3°'</span><span class="p">,</span> <span class="n">odf3</span><span class="p">)):</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="mi">12</span><span class="n">s</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">real</span><span class="p">(</span><span class="n">textureIndex</span><span class="p">(</span><span class="n">odf</span><span class="p">)))</span><span class="si">:</span><span class="mf">14.2</span><span class="n">f</span><span class="si">}</span><span class="s"> '</span> <span class="o">+</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">real</span><span class="p">(</span><span class="n">odf</span><span class="p">(</span><span class="n">o</span><span class="p">)))</span><span class="si">:</span><span class="mf">7.2</span><span class="n">f</span><span class="si">}</span><span class="s">'</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">ori</span><span class="p">.</span><span class="n">values</span><span class="p">()))</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>             texture index    cube  copper   brass       S
+none                   4.34   48.34    2.32    1.43    2.54
+(a) 5°                 4.10   47.40    1.08    0.43    2.22
+(b) 5°                 3.96   44.36    1.10    0.35    2.34
+(c) 5°                 4.07   45.83    1.03    0.35    2.28
+(c) 3°                 4.41   62.56    1.14    0.39    2.04
+</code></pre></div></div>
+
+<p>Without the correction the copper component comes out twice and the brass component three
+to four times as strong as with it, and the texture index is too high: the intensity
+missing at the rim is read as texture. The three corrections agree with each other far
+better than with no correction, within a few tenths on the weak components. The cube
+maximum rises from 45 to 63 at 3°: a 5° kernel does not resolve it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">odf3</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureDefocusing-13.png" /></center>
+
+<h2 id="a-model-of-ones-own-the-footprint-on-a-rectangular-sample">A model of one’s own: the footprint on a rectangular sample</h2>
+
+<p>Off the peak the rings are not quite flat in the azimuth: above 60° tilt they carry a
+twofold and a fourfold modulation of 5 to 15 percent, at the same azimuth in all three
+scans. A rectangular sample does that: the stretched footprint spills over its corners
+when the long axis of the footprint points at them. Any function of the specimen
+directions can be a model, the azimuth included. Here a Gaussian beam of widths
+\(\sigma_{eq}, \sigma_{ax}\) (relative to the half side of the sample) meets a rectangle of
+aspect \(q\) turned by \(\varphi_0\); the factor is the part of the footprint on the sample.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xg</span><span class="p">,</span> <span class="n">wg</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">polynomial</span><span class="p">.</span><span class="n">legendre</span><span class="p">.</span><span class="n">leggauss</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">footprint</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+  <span class="c1"># p = log sigma_eq, log sigma_ax, log q, phi0
+</span>  <span class="n">seq</span><span class="p">,</span> <span class="n">sax</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">phi0</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+  <span class="n">cx</span><span class="p">,</span> <span class="n">sx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">theta</span><span class="p">).</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">theta</span><span class="p">).</span><span class="n">ravel</span><span class="p">()</span>
+  <span class="n">st</span><span class="p">,</span> <span class="n">ct</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+  <span class="c1"># the footprint on the surface: the beam cross section mapped by the tilted surface
+</span>  <span class="c1"># (s1 along the tilt axis, s2 across it), its covariance C
+</span>  <span class="n">eqx</span><span class="p">,</span> <span class="n">eq2</span> <span class="o">=</span> <span class="n">st</span> <span class="o">/</span> <span class="n">seq</span><span class="p">,</span> <span class="p">(</span><span class="n">ct</span> <span class="o">*</span> <span class="n">sx</span><span class="p">)</span> <span class="o">/</span> <span class="n">seq</span>       <span class="c1"># the equatorial beam coordinate of s1, s2
+</span>  <span class="n">ax2</span> <span class="o">=</span> <span class="n">cx</span> <span class="o">/</span> <span class="n">sax</span>                             <span class="c1"># the axial beam coordinate of s2
+</span>  <span class="n">Q11</span><span class="p">,</span> <span class="n">Q12</span><span class="p">,</span> <span class="n">Q22</span> <span class="o">=</span> <span class="n">eqx</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">cx</span><span class="p">,</span> <span class="n">eqx</span> <span class="o">*</span> <span class="n">eq2</span><span class="p">,</span> <span class="n">eq2</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ax2</span> <span class="o">**</span> <span class="mi">2</span>
+  <span class="n">det</span> <span class="o">=</span> <span class="n">Q11</span> <span class="o">*</span> <span class="n">Q22</span> <span class="o">-</span> <span class="n">Q12</span> <span class="o">**</span> <span class="mi">2</span>
+  <span class="n">C11</span><span class="p">,</span> <span class="n">C12</span><span class="p">,</span> <span class="n">C22</span> <span class="o">=</span> <span class="n">Q22</span> <span class="o">/</span> <span class="n">det</span><span class="p">,</span> <span class="o">-</span><span class="n">Q12</span> <span class="o">/</span> <span class="n">det</span><span class="p">,</span> <span class="n">Q11</span> <span class="o">/</span> <span class="n">det</span>
+  <span class="c1"># turned with the sample
+</span>  <span class="n">a</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">rho</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span> <span class="o">+</span> <span class="n">phi0</span>
+  <span class="n">c</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">Sxx</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">C11</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">C12</span> <span class="o">+</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">C22</span>
+  <span class="n">Sxy</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="n">C11</span> <span class="o">-</span> <span class="n">C22</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">c</span> <span class="o">*</span> <span class="n">c</span> <span class="o">-</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="n">C12</span>
+  <span class="n">Syy</span> <span class="o">=</span> <span class="n">s</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">C11</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">C12</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">c</span> <span class="o">*</span> <span class="n">C22</span>
+  <span class="c1"># the mass of N(0, S) inside |x| &lt; 1, |y| &lt; q, by Gauss-Legendre over x
+</span>  <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">ndtr</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">xg</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span>
+  <span class="n">mu</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">Sxy</span> <span class="o">/</span> <span class="n">Sxx</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">Syy</span> <span class="o">-</span> <span class="n">Sxy</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">Sxx</span><span class="p">,</span> <span class="mf">1e-300</span><span class="p">))</span>
+  <span class="n">px</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">Sxx</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">Sxx</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">wg</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">px</span> <span class="o">*</span> <span class="p">(</span><span class="n">ndtr</span><span class="p">((</span><span class="n">q</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sd</span><span class="p">)</span> <span class="o">-</span> <span class="n">ndtr</span><span class="p">((</span><span class="o">-</span><span class="n">q</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sd</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">foot</span> <span class="o">=</span> <span class="n">defocusingModel</span><span class="p">(</span><span class="n">footprint</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.1</span><span class="p">),</span> <span class="mf">1.6</span><span class="p">],</span> <span class="n">theta</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">off</span><span class="p">,</span> <span class="n">dataTheta</span><span class="o">=</span><span class="n">thetaOff</span><span class="p">).</span><span class="n">fit</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'beam widths'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">foot</span><span class="p">.</span><span class="n">p</span><span class="p">[:</span><span class="mi">2</span><span class="p">]),</span> <span class="mi">3</span><span class="p">),</span> <span class="s">'aspect'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">foot</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="mi">3</span><span class="p">),</span>
+      <span class="s">'turned by'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">foot</span><span class="p">.</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">%</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s">'°'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">((</span><span class="s">'weibull'</span><span class="p">,</span> <span class="n">defocusingModel</span><span class="p">.</span><span class="n">weibull</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">off</span><span class="p">,</span> <span class="n">dataTheta</span><span class="o">=</span><span class="n">thetaOff</span><span class="p">).</span><span class="n">fit</span><span class="p">()),</span> <span class="p">(</span><span class="s">'footprint'</span><span class="p">,</span> <span class="n">foot</span><span class="p">)):</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">residual</span><span class="p">(</span><span class="n">intensityWeights</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="n">off</span><span class="p">.</span><span class="n">allI</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="mi">10</span><span class="n">s</span><span class="si">}</span><span class="s"> fits the scans off the peak to chi2/N = </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">r</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">I</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span> <span class="k">for</span> <span class="n">I</span> <span class="ow">in</span> <span class="n">off</span><span class="p">.</span><span class="n">allI</span><span class="p">]),</span> <span class="mi">1</span><span class="p">))</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beam widths [0.284 0.231] aspect 1.135 turned by 91.3 °
+weibull    fits the scans off the peak to chi2/N = 1.94
+footprint  fits the scans off the peak to chi2/N = 1.36
+</code></pre></div></div>
+
+<p>The footprint describes the background almost to its counting noise, the curve of \(\chi\)
+alone does not. On the peaks the two are equal: estimated with the ODF from the peaks at
+3°, the footprint leaves \(\chi^2/N\) at 19.8, the curve of \(\chi\) alone 18.9. The twofold
+pattern of the {111} residual is not the sample’s shape.</p>
+
+<h2 id="two-more-data-sets">Two more data sets</h2>
+
+<p>The same analysis on two titanium data sets found on the same computer:</p>
+
+<ul>
+  <li><strong>α-titanium, Co radiation, parallel plate collimator</strong>, the reflections 0002, 10-10,
+10-11 and 11-20 to \(\chi = 70°\), with one background value per ring 2° to 4° beside the
+peak. The texture is weak (texture index 1.05). The misfit drops from 77 without a
+correction to 7.7 with the curve of the background (a) and to 4.9 with the joint curve
+(b) or (c); the background takes little part in (c), 60 values against 4320.</li>
+  <li><strong>α-titanium, Cu radiation, receiving slit</strong>, 0002, 10-10, 10-11 and 10-12 to 85°, with
+a powder measured on the same reflections. Here the loss is the Bragg-Brentano
+broadening of the line out of the slit, and the model of
+SchulzDefocusingKernel, a line
+broadened by \(k\cos\theta\tan\chi\) and blurred, fits a little better than the curve
+above. The misfit drops from 41 to 4.1, and the texture index from 4.0 to 2.1: the
+falling intensity had been read as texture. The powder is not random: its rings rise
+with \(\chi\) by up to a factor of 2.6 at even counting noise in the azimuth, a weak
+fibre texture. Divided out or as a fixed factor it lowers the misfit only to 27.</li>
+</ul>
+
+<p>On both the simulation test above recovers a known curve and gives a flat one for data
+without loss.</p>
+
+<h2 id="summary">Summary</h2>
+
+<ul>
+  <li>The scans off the peak are subtracted as background and give a first estimate of the
+defocusing curve.</li>
+  <li>The curve belongs in the model, <code class="language-plaintext highlighter-rouge">calcODF(pf, factor=...)</code>; dividing it out amplifies the
+counting noise where it is small.</li>
+  <li>A curve of two parameters, the same function of \(\chi\) and \(\theta\) for all pole
+figures, is determined by the pole figures themselves, <code class="language-plaintext highlighter-rouge">factor=defocusingModel(...)</code>;
+with the background as the model’s data the estimate uses both.</li>
+  <li>A random sample measured for the correction is only as good as its randomness.</li>
+  <li>Resolve the texture before reading the remaining misfit: here the step from 5° to 3°
+mattered more than the shape of the curve or the alignment.</li>
+</ul>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/PoleFigureDefocusing_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

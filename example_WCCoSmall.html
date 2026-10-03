@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>TrueEBSD distortion correction in under a minute | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="Authors: Vivian Tong; Stefan Olovsj&amp;ouml;, Seco Tools AB, R&amp;amp;D Materials and Technology, 737 82 Fagersta, Sweden. Contact: vivian.tong@extern.tu-freiberg.de">
+<link rel="canonical" href="https://mtex-playground.github.io/example_WCCoSmall.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/example_WCCoSmall.html#page",
+      "name": "TrueEBSD distortion correction in under a minute",
+      "headline": "TrueEBSD distortion correction in under a minute",
+      "description": "Authors: Vivian Tong; Stefan Olovsj&ouml;, Seco Tools AB, R&amp;D Materials and Technology, 737 82 Fagersta, Sweden. Contact: vivian.tong@extern.tu-freiberg.de",
+      "url": "https://mtex-playground.github.io/example_WCCoSmall.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/example_WCCoSmall.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/example_WCCoSmall.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Examples navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">TrueEBSD distortion correction in under a minute</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+      This HTML was auto-generated from MATLAB code.
+      To make changes, update the MATLAB code and republish this document.
+    -->
+<title>TrueEBSD distortion correction in under a minute</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_example_WCCoSmall.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/examples/blob/master/TrueEBSD/example_WCCoSmall.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>Authors: Vivian Tong; Stefan Olovsj&ouml;, Seco Tools AB, R&amp;D Materials and Technology, 737 82 Fagersta, Sweden. Contact: <a href="mailto:vivian.tong@extern.tu-freiberg.de">vivian.tong@extern.tu-freiberg.de</a>
+</p>
+<p>An EBSD map and an SEM image of the same area never quite line up: the beam drifts during the scan, the camera moves between acquisitions, the specimen is tilted. TrueEBSD corrects that, so every pixel of the map and every pixel of the images refer to the same point on the sample.</p>
+<p>This is the short version of <a href="example_WCCo.html">TrueEBSD on a WC-Co composite</a> &mdash; the same five maps and the same four distortions, on a cut-down copy of the dataset, so it finishes in under a minute instead of twenty. Read the full page for what each step means and how to tune it.</p>
+<p>This script needs the TrueEBSD toolbox, which is <b>not</b> part of MTEX and is distributed separately under Apache-2.0: <a href="https://github.com/vtvivian/mtex-trueebsd">https://github.com/vtvivian/mtex-trueebsd</a>
+</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">addpath</span><span class="p">(</span><span class="nb">genpath</span><span class="p">(</span><span class="s1">'&lt;path to mtex-trueEbsd&gt;'</span><span class="p">))</span></code></pre></figure>
+<!--/introduction--><h2 id="1">The data</h2>
+<p>
+<code class="language-plaintext highlighter-rouge">trueEbsdWCCoSmall</code> is the centre half of the full WC-Co field of view, coarsened by four: a 20.4 x 15.3 &micro;m area with WC grains about 12 px across. Small enough to be quick, still large enough for every distortion to be measurable. <code class="language-plaintext highlighter-rouge">makeWCCoSmall.m</code> in the TrueEBSD toolbox shows how it was cut, and why simply coarsening the whole field does not work.</p>
+<p>As in the full dataset the four SEM images are in <code class="language-plaintext highlighter-rouge">ebsd.opt.trueEbsdImgs</code>, and <code class="language-plaintext highlighter-rouge">pixSzImg</code> is their pixel size in microns.</p>
+<p>TrueEBSD needs to know which way round each picture is stored before it can compare them pixel by pixel. Here it works that out for itself: the map and the images were collected in one session and stored the same way, which is the usual case. <a href="example_WCCoFrames.html">The frames page</a> is the case where they were not.</p>
+<p>The convention set here only decides which way up the figures come out. It has no effect on the correction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↓→x'</span><span class="p">)</span>
+
+<span class="n">mtexdata</span> <span class="n">trueEbsdWCCoSmall</span>
+
+<span class="nb">display</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">trueEbsdImgs</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = plottingConvention (y↓→x)
+ 
+ebsd = EBSDsquare (y↓→x)
+ 
+ Phase  Orientations     Mineral         Color  Symmetry  Crystal reference frame
+     0    89 (0.72%)  notIndexed          none                                   
+     1   11180 (91%)         W C  LightSkyBlue      -6m2        X||a*, Y||b, Z||c
+     2    991 (8.1%)      Co-fcc  DarkSeaGreen      m-3m                         
+     3    28 (0.23%)      Co-hcp     Goldenrod     6/mmm        X||a*, Y||b, Z||c
+ 
+ Properties: bc, bs, bands, MAD, quality, oldId
+ Scan unit : um
+ X x Y x Z : [10 → 30] x [8 → 23] x [0 → 0]
+ Normal vector: (0,0,1)
+ Square grid  :96 x 128
+ source: trueEbsdWCCo, centre half of the field of view, coarsened 4x
+ madeBy: trueEBSD tools/makeWCCoSmall.m
+ 
+  struct with fields:
+
+       fsdB3: [192×256×3 double]
+       fsdT3: [192×256 double]
+       fsdT1: [192×256 double]
+      fsdT10: [192×256 double]
+    pixSzImg: 0.0795</code></pre></figure>
+<h2 id="2">Build the sequence</h2>
+<p>TrueEBSD does not jump straight from the EBSD map to the reference image. It steps through the images one pair at a time, correcting one kind of distortion at each step &mdash; which is why there are four images rather than one. Each pair differs by something simple enough to model, where the map and the final image differ by everything at once.</p>
+<p>So the order matters. It runs from the <b>most</b> distorted to the ground truth, and each entry names the distortion between itself and the <b>next</b> one: <code class="language-plaintext highlighter-rouge">'shift-drift'</code> for beam drift plus a rigid offset, <code class="language-plaintext highlighter-rouge">'shift'</code> for the camera moving, <code class="language-plaintext highlighter-rouge">'tilt'</code> for the specimen tilt seen at a different kV, and <code class="language-plaintext highlighter-rouge">'true'</code> where nothing separates the pair because it came from one beam scan. The reference is the last one.</p>
+<p>
+<code class="language-plaintext highlighter-rouge">'name'</code> is what each image is called once it is attached to the map at the end, so the result reads as <code class="language-plaintext highlighter-rouge">ebsd.fsdT1</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% a light box filter first — cross-correlation dislikes noise</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">opt</span><span class="o">.</span><span class="n">trueEbsdImgs</span><span class="p">;</span>
+<span class="n">img</span><span class="o">.</span><span class="n">fsdB3</span>  <span class="o">=</span> <span class="nb">rescale</span><span class="p">(</span><span class="n">imboxfilt</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdB3</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span>
+<span class="n">img</span><span class="o">.</span><span class="n">fsdT3</span>  <span class="o">=</span> <span class="nb">rescale</span><span class="p">(</span><span class="n">imboxfilt</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdT3</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span>
+<span class="n">img</span><span class="o">.</span><span class="n">fsdT1</span>  <span class="o">=</span> <span class="nb">rescale</span><span class="p">(</span><span class="n">imboxfilt</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdT1</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span>
+<span class="n">img</span><span class="o">.</span><span class="n">fsdT10</span> <span class="o">=</span> <span class="nb">rescale</span><span class="p">(</span><span class="n">imboxfilt</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdT10</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span>
+
+<span class="n">imgList</span> <span class="o">=</span> <span class="n">createArray</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">'distortedImg'</span><span class="p">);</span>
+<span class="n">imgList</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">distortedImg</span><span class="p">(</span><span class="s1">'bc'</span><span class="p">,</span><span class="s1">'shift-drift'</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span><span class="s1">'bcImg'</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'highContrast'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'edgePadWidth'</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">imgList</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">distortedImg</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdB3</span><span class="p">,</span> <span class="s1">'true'</span><span class="p">,</span>  <span class="s1">'dxy'</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span><span class="s1">'fsdB3'</span><span class="p">,</span>  <span class="s1">'highContrast'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'edgePadWidth'</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+<span class="n">imgList</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">distortedImg</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdT3</span><span class="p">,</span> <span class="s1">'shift'</span><span class="p">,</span> <span class="s1">'dxy'</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span><span class="s1">'fsdT3'</span><span class="p">,</span>  <span class="s1">'highContrast'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'edgePadWidth'</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+<span class="n">imgList</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="n">distortedImg</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdT1</span><span class="p">,</span> <span class="s1">'tilt'</span><span class="p">,</span>  <span class="s1">'dxy'</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span><span class="s1">'fsdT1'</span><span class="p">,</span>  <span class="s1">'highContrast'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'edgePadWidth'</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+<span class="n">imgList</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="n">distortedImg</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">fsdT10</span><span class="p">,</span><span class="s1">'true'</span><span class="p">,</span>  <span class="s1">'dxy'</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span><span class="s1">'fsdT10'</span><span class="p">,</span> <span class="s1">'highContrast'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="s1">'edgePadWidth'</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span></code></pre></figure>
+<p>The job holds the whole workflow, and each step below adds to it. Building it also checks that the sequence really is stored one consistent way round.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span> <span class="o">=</span> <span class="n">trueEbsd</span><span class="p">(</span><span class="n">imgList</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">job = trueEbsd (as imported)
+ 
+            image   distortion  shift  residual
+ 1       96 x 128  shift-drift      -         -
+ 2  192 x 256 x 3         true      -         -
+ 3      192 x 256        shift      -         -
+ 4      192 x 256         tilt      -         -
+ 5      192 x 256         true      -         -</code></pre></figure>
+<p>Plot the sequence to check the images really do cover the same area. Note how different the contrasts look &mdash; that is why matching is done on edges rather than on grey values.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">imgList</span><span class="p">,</span><span class="s1">'TrueEBSD starting image sequence'</span><span class="p">)</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/example_WCCoSmall_01.png" alt="" />
+
+</center>
+<h2 id="5">Put everything on one pixel grid</h2>
+<p>The map is on a 0.159 &micro;m grid and the images on 0.0795 &micro;m. <code class="language-plaintext highlighter-rouge">pixelSizeMatch</code> resamples them all onto the finest one, so pixel (i,j) means roughly the same place in each.</p>
+<p>Images are interpolated linearly. EBSD data is not: orientations and phase labels have no meaningful average, so the nearest measured point is used.</p>
+<p>Nothing has been corrected yet &mdash; this is only bookkeeping.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pixSzIn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">% target pixel length in microns, or 0 for the smallest present</span>
+<span class="n">job</span><span class="o">.</span><span class="n">pixelSizeMatch</span><span class="p">(</span><span class="n">pixSzIn</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">using default pixel size of 0.079501 um, minimum from imgList
+ 
+ans = trueEbsd (pixel size matched)
+ 
+            image   distortion  shift  residual
+ 1      192 x 256  shift-drift      -         -
+ 2  192 x 256 x 3         true      -         -
+ 3      192 x 256        shift      -         -
+ 4      192 x 256         tilt      -         -
+ 5      192 x 256         true      -         -
+ 
+ common grid: 192 x 256 at 0.08 µm</code></pre></figure>
+<p>The resampled sequence is in <code class="language-plaintext highlighter-rouge">job.resizedList</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">resizedList</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = distortedImg (y↓→x)
+ 
+            image    pixel  frame   distortion  contrast                 EBSD
+ 1      192 x 256  0.08 µm   y↓→x  shift-drift      high  W C, Co-fcc, Co-hcp
+ 2  192 x 256 x 3  0.08 µm   y↓→x         true      high                    -
+ 3      192 x 256  0.08 µm   y↓→x        shift      high                    -
+ 4      192 x 256  0.08 µm   y↓→x         tilt      high                    -
+ 5      192 x 256  0.08 µm   y↓→x         true      high                    -</code></pre></figure>
+<h2 id="7">Adjust the matching windows</h2>
+<p>Distortions are measured by cutting both images of a pair into small boxes and cross-correlating each box with its partner. That gives a local shift at each box, and those shifts are fitted to the distortion model.</p>
+<p>Two settings control it, both in <b>pixels</b>, so they have to be written after <code class="language-plaintext highlighter-rouge">pixelSizeMatch</code> and before <code class="language-plaintext highlighter-rouge">calcDistortion</code>:</p>
+<div>
+<ul>
+<li>
+<code class="language-plaintext highlighter-rouge">ROISize</code> &mdash; the box width, a power of two. Rule of thumb: at least four times the shift you expect. The shifts here are a few pixels, so 64 is comfortable.</li>
+<li>
+<code class="language-plaintext highlighter-rouge">NumROI</code> &mdash; how many boxes across and down.</li>
+</ul>
+</div>
+<p>This is also where the page's speed comes from. The matching is the entire runtime, and it costs roughly the number of boxes times the square of the box width, so the defaults &mdash; chosen for a full-size map &mdash; are finer than this small grid needs.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">nRows</span> <span class="o">=</span> <span class="nb">size</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">img</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">nCols</span> <span class="o">=</span> <span class="nb">size</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">img</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">)</span>
+    <span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">ROISize</span>  <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+    <span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">NumROI</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">NumROI</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="n">nRows</span><span class="p">/</span><span class="n">nCols</span><span class="p">);</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">% the last map is the reference — nothing correlates against it</span>
+<span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">ROISize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">% correlate raw values where the images already share contrast, and edge</span>
+<span class="c1">% transforms where they do not</span>
+<span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">xcfImg</span> <span class="o">=</span> <span class="s1">'img'</span><span class="p">;</span>
+<span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">xcfImg</span> <span class="o">=</span> <span class="s1">'img'</span><span class="p">;</span>
+<span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">setXCF</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">xcfImg</span> <span class="o">=</span> <span class="s1">'img'</span><span class="p">;</span></code></pre></figure>
+<h2 id="8">Measure the distortion</h2>
+<p>These are the pictures that will actually be matched: edge transforms where <code class="language-plaintext highlighter-rouge">xcfImg</code> is <code class="language-plaintext highlighter-rouge">'edge'</code>, grey values where it is <code class="language-plaintext highlighter-rouge">'img'</code>. A band contrast map and a backscatter image have nothing in common as grey values, but their grain boundaries fall in the same places &mdash; which is why edges are the default.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">resizedList</span><span class="p">,</span><span class="s1">'TrueEBSD image sequence for cross-correlation'</span><span class="p">,</span><span class="s1">'xcf'</span><span class="p">)</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/example_WCCoSmall_02.png" alt="" />
+
+</center>
+<p>
+<code class="language-plaintext highlighter-rouge">'fitErr'</code> re-measures the shifts <b>after</b> each correction and reports what is left over. That residual is how you tell whether it worked: around a pixel or less is good.</p>
+<p>If a residual comes out above two pixels, TrueEBSD doubles the box size and tries again, repeating until it comes down or the box outgrows the image. The boxes set above are large enough that this does not happen here &mdash; the full <a href="example_WCCo.html">WC-Co page</a> undersizes one deliberately to show it.</p>
+<p>Steps marked <code class="language-plaintext highlighter-rouge">'true'</code> are skipped: nothing separates that pair, so their shift is taken as zero whatever the residual says.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">calcDistortion</span><span class="p">(</span><span class="s1">'fitErr'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">fitting the distortion across 5 maps, 4 hops
+
+  hop   distortion    model               ROI      shift   residual
+  2→1   shift-drift   poly11            64 px    3.73 px
+                      linearinterp      64 px    1.83 px
+                      after fitting                         1.61 px
+  3→2   true          not correlated        -    0.00 px
+                      not fitted                            1.52 px
+  4→3   shift         poly11            64 px    3.18 px
+Warning: Iteration limit reached for robust fitting. 
+                      after fitting                         0.33 px
+  5→4   tilt          projective        64 px    3.63 px
+                      poly11            64 px    0.44 px
+                      poly22            64 px    0.31 px
+                      after fitting                         0.31 px
+
+ 
+ans = trueEbsd (shifts calculated)
+ 
+            image   distortion    shift  residual
+ 1      192 x 256  shift-drift     1 px    1.6 px
+ 2  192 x 256 x 3         true     0 px    1.5 px
+ 3      192 x 256        shift   3.2 px   0.33 px
+ 4      192 x 256         tilt  0.34 px   0.31 px
+ 5      192 x 256         true        -         -
+ 
+ common grid: 192 x 256 at 0.08 µm</code></pre></figure>
+<h2 id="10">Correct it</h2>
+<p>Each map is now moved by the shifts of every step between it and the reference. The reference itself does not move.</p>
+<p>Resampling is nearest-neighbour throughout, so no orientation and no phase label is ever invented by averaging two real measurements.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">undistort</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">undistortedList</span><span class="p">,</span><span class="s1">'TrueEBSD image sequence after alignment'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = trueEbsd (undistorted)
+ 
+            image   distortion    shift  residual
+ 1      192 x 256  shift-drift     1 px    1.6 px
+ 2  192 x 256 x 3         true     0 px    1.5 px
+ 3      192 x 256        shift   3.2 px   0.33 px
+ 4      192 x 256         tilt  0.34 px   0.31 px
+ 5      192 x 256         true        -         -
+ 
+ common grid: 192 x 256 at 0.08 µm</code></pre></figure>
+<center>
+<img class="inline" src="figures/example_WCCoSmall_03.png" alt="" />
+
+</center>
+<h2 id="11">Use the result</h2>
+<p>Every image is now attached to the EBSD map as a per-pixel property, under the <code class="language-plaintext highlighter-rouge">'name'</code> given earlier. So <code class="language-plaintext highlighter-rouge">ebsd.fsdT1</code> is just another map property, and <code class="language-plaintext highlighter-rouge">plot(ebsd,ebsd.fsdT1)</code> works like any other plot &mdash; no conversion, and it stays with the map through cropping, gridding and indexing.</p>
+<p>Plotting them back onto the map is also the quickest check that nothing came out the wrong way round.</p>
+<p>
+<code class="language-plaintext highlighter-rouge">fsdB3</code> is a colour image and keeps all three channels. Plotting onto a map needs one value per pixel, so it is averaged to grey here.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsdOut</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">undistortedList</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">ebsd</span><span class="p">;</span>
+
+<span class="nb">figure</span>
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdOut</span><span class="p">(</span><span class="s1">'W C'</span><span class="p">),</span> <span class="n">ebsdOut</span><span class="p">(</span><span class="s1">'W C'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span> <span class="s1">'coordinates'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Undistorted MTEX EBSD map (WC IPF out of screen)'</span><span class="p">,</span><span class="s1">'Color'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">undistortedList</span><span class="p">)</span>
+
+  <span class="n">im</span> <span class="o">=</span> <span class="n">ebsdOut</span><span class="o">.</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">undistortedList</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">);</span>
+  <span class="k">if</span> <span class="nb">size</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">im</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="n">im</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="k">end</span>
+
+  <span class="n">nextAxis</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">ebsdOut</span><span class="p">,</span> <span class="n">im</span><span class="p">,</span> <span class="s1">'coordinates'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">)</span>
+  <span class="n">mtexColorMap</span> <span class="nb">gray</span>
+  <span class="nb">title</span><span class="p">([</span><span class="s1">'Undistorted '</span> <span class="n">job</span><span class="o">.</span><span class="n">undistortedList</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">],</span><span class="s1">'Color'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">)</span>
+<span class="k">end</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/example_WCCoSmall_04.png" alt="" />
+
+</center>
+<h2 id="12">Finish</h2>
+<p>The map and the images now overlay pixel for pixel, and <code class="language-plaintext highlighter-rouge">ebsdOut</code> is an ordinary MTEX EBSD map that happens to carry four SEM images as properties. Anything you would normally do with a map works from here &mdash; including turning a thresholded image into a phase, which is what <a href="example_copper.html">the copper page</a> does with its voids.</p>
+<p>Run <a href="example_WCCo.html">the full page</a> for the same workflow at full resolution over the whole field of view.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/example_WCCoSmall.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

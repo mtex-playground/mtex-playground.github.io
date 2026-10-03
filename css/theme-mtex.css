@@ -1,0 +1,340 @@
+
+@import url("theme.css");
+
+
+@font-face {
+  font-family: "JuliaMono";
+  src: url("../fonts/JuliaMono-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Nur Jekyll/Rouge plaintext output blocks */
+figure.highlight code.language-plaintext,
+figure.highlight code[data-lang="plaintext"],
+div.highlight code.language-plaintext,
+div.highlight code[data-lang="plaintext"] {
+  font-family: "JuliaMono", monospace;
+}
+
+h1.post-title-main {
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1.15;
+  margin-bottom: 0.25em;
+}
+
+
+.page-subtitle {
+  font-size: 1.5rem;      /* slightly smaller than title */
+  font-weight: 300;       /* lighter, elegant look */
+  color: #666;            /* softer grey tone */
+  margin-top: 0em; 
+}
+
+/* theme color usages  */
+.summary {
+    color: var(--text-grayed);
+    border-left: 5px solid var(--text-darker);
+    font-size:16px;
+}
+
+h3 {color: var(--text-darker); }
+h4 {color: var(--text-grayed); }
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: var(--primary);
+    color: var(--text-inverse);
+}
+
+.nav > li.active > a { background-color: var(--primary); }
+
+.nav > li > a:hover { background-color: var(--primary); }
+
+.nav > li > a {
+    color: var(--primary);
+    background-color: var(--text-inverse);
+}
+
+div.navbar-collapse .dropdown-menu > li > a:hover { background-color: var(--primary); }
+
+.nav li.thirdlevel > a {
+    background-color: var(--text-inverse) !important;
+    color: var(--highlight);
+    font-weight: bold;
+}
+
+a[data-toggle="tooltip"] {
+    color: var(--primary);
+    font-style: italic;
+    cursor: default;
+}
+
+.navbar-inverse {
+    background-color: var(--primary);
+    border-color: var(--text-grayed);
+}
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand { color: var(--text-inverse); }
+
+.navbar-inverse .navbar-nav>li>a:hover, a.fa.fa-home.fa-lg.navbar-brand:hover { color: var(--text-inverse); }
+
+a.navbar-brand:hover { color: var(--text-inverse); }
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus { color: var(--highlight); }
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: var(--highlight);
+    color: var(--text-inverse);
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form { border-color: var(--primary) !important; }
+
+.btn-primary {
+    color: var(--text-inverse);
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    color: var(--primary);
+    background-color: var(--text-inverse);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.printTitle { color: var(--highlight) !important; }
+
+.anchorjs-link:hover { color: var(--highlight-hover); }
+
+div.sidebarTitle { color: var(--text-darker); }
+
+li.sidebarTitle {
+    margin-top: 20px;
+    font-weight: normal;
+    font-size: 130%;
+    color: var(--text-darker);
+    margin-bottom: 10px;
+    margin-left: 5px;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover { background-color: var(--highlight); }
+
+.navbar-inverse .navbar-toggle { border-color: var(--primary); }
+
+/* ---------------------------------------------------------------- site search
+   Markup comes from _includes/search_box.html (nav dropdown) and
+   pages/search/search.md (full page); behaviour from js/mtex-search.js. */
+
+.ms-nav { position: relative; float: right; }
+
+.ms-form { margin: 0; }
+
+.ms-nav-input {
+    width: 150px;
+    margin: 10px 0 10px 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--primary);
+    border-radius: 3px;
+    background-color: #fff;
+    color: var(--text-darker);
+    transition: width .2s ease-in-out;
+}
+
+.ms-nav-input:focus {
+    width: 260px;
+    outline: none;
+    border-color: var(--highlight);
+}
+
+.ms-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    z-index: 1000;
+    width: 460px;
+    max-width: 90vw;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    text-align: left;
+}
+
+/* full-page results */
+.ms-page { max-width: 900px; }
+
+.ms-page-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 130%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.ms-page-input:focus { outline: none; border-color: var(--primary); }
+
+.ms-count { margin: 12px 2px; color: #777; font-size: 90%; }
+
+.ms-results { margin: 0; padding: 0; list-style: none; }
+
+/* customstyles.css:95 `.post-content ol li` sets margin:10px 0, which pushes
+   each row away from its own separator and makes the list look loose. That
+   selector is (0,1,2), so this one has to out-specify it -- hence the extra
+   class. Margin only: the padding of .ms-group below must survive. */
+.ms-page ol.ms-results > li,
+.ms-form ul.ms-dropdown > li { margin: 0; list-style: none; }
+
+.ms-group {
+    padding: 14px 12px 4px;
+    font-size: 85%;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #999;
+    border-bottom: 1px solid #eee;
+}
+
+.ms-result { border-bottom: 1px solid #f0f0f0; }
+
+.ms-result > a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: var(--text-darker);
+}
+
+/* Title, stem and badge on one non-wrapping line, with the badge pushed right
+   so it forms a straight column instead of trailing each title at a ragged
+   offset. nowrap matters: under flex-wrap the badge drops to a second line
+   before the title ever shrinks, leaving rows at uneven heights. */
+.ms-head {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    column-gap: 10px;
+}
+
+.ms-result > a:hover,
+.ms-result.ms-active > a {
+    background-color: #f2faf8;
+    text-decoration: none;
+}
+
+/* Shrink and ellipsis rather than push the badge onto a second line, which
+   would leave the rows at uneven heights. */
+.ms-title {
+    color: var(--primary);
+    font-weight: 600;
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ms-result > a:hover .ms-title { color: var(--highlight); }
+
+.ms-desc {
+    display: block;
+    margin-top: 2px;
+    font-size: 88%;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ms-badge {
+    flex: 0 0 auto;
+    margin-left: auto;      /* pushed to the right edge; .ms-head's gap keeps
+                               a minimum separation when the title fills the row */
+    padding: 1px 6px;
+    font-size: 74%;
+    border-radius: 8px;
+    background-color: #eee;
+    color: #666;
+    white-space: nowrap;
+}
+
+.ms-badge-documentation { background-color: #e2f1ee; color: #15776a; }
+.ms-badge-examples      { background-color: #fdf0dd; color: #97671a; }
+
+.ms-results mark,
+.ms-dropdown mark {
+    padding: 0;
+    background-color: #ffee9e;
+    color: inherit;
+}
+
+.ms-empty,
+.ms-more { padding: 10px 12px; color: #777; }
+
+.ms-more { border-top: 1px solid #eee; text-align: center; }
+
+@media (max-width: 767px) {
+    .ms-nav-input,
+    .ms-nav-input:focus { width: 100%; margin-left: 0; }
+    .ms-dropdown { position: static; width: 100%; box-shadow: none; }
+}
+
+.ms-path {
+    font-size: 78%;
+    color: #aaa;
+    font-family: monospace;
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Attribution footer on generated pages (_includes/custom/citation.html).
+   Set apart from the page body without competing with it: the point is that a
+   reader -- and a crawler reading the text -- finds the citation, not that the
+   block draws the eye away from the documentation above it. */
+.mtex-attribution {
+    margin: 3em 0 1em;
+    padding: 1em 1.2em;
+    border-top: 3px solid var(--primary);
+    background-color: #f7f7f7;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.mtex-attribution p { margin-bottom: 0.7em; }
+
+.mtex-attribution-ref {
+    padding-left: 1.2em;
+    text-indent: -1.2em;   /* hanging indent, as in a reference list */
+}
+
+.mtex-attribution-bib { margin-bottom: 0.7em; }
+
+.mtex-attribution-bib summary {
+    cursor: pointer;
+    color: var(--highlight);
+    font-size: 13px;
+}
+
+.mtex-attribution-bib pre {
+    margin-top: 0.6em;
+    font-size: 12px;
+    background-color: var(--white);
+}
+
+.mtex-attribution-fine {
+    font-size: 13px;
+    color: var(--text-grayed);
+    margin-bottom: 0;
+}

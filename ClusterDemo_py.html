@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Clustering directions and orientations | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/ClusterDemo_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/ClusterDemo_py.html#page",
+      "name": "Clustering directions and orientations",
+      "headline": "Clustering directions and orientations",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/ClusterDemo_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/ClusterDemo_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/ClusterDemo_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Clustering directions and orientations</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/ClusterDemo.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GeneralConcepts/ClusterDemo.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A cluster is a group of observations that lie close together in the space of the data.
+Clustering assigns each observation to a group without requiring the groups to be named in
+advance.</p>
+
+<p>MTEX can cluster directions and orientations while respecting their geometry and symmetry.
+This is different from <a href="DensityEstimation_py.html">density estimation</a>, which constructs a
+continuous density from discrete observations. Here the result is one integer label per
+observation and one representative center per cluster.</p>
+
+<h2 id="cluster-directional-data">Cluster directional data</h2>
+
+<p>We start with directions sampled from a squared smiley function. Squaring the function
+concentrates the sample around its eyes and mouth while retaining points between those
+features.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">S2F</span> <span class="o">=</span> <span class="n">S2Fun</span><span class="p">.</span><span class="n">smiley</span><span class="p">()</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">S2F</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+
+<span class="n">scatter</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">markerAlpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ClusterDemo-1.png" /></center>
+
+<h2 id="read-the-cluster-result">Read the cluster result</h2>
+
+<p>For directions, <a href="vector3d.calcCluster.html">calcCluster</a> uses CLASSIX by default. The array
+<code class="language-plaintext highlighter-rouge">cInd</code> has one integer cluster label for every input direction, counted from zero. The
+entries of <code class="language-plaintext highlighter-rouge">center</code> are the corresponding mean directions.</p>
+
+<p>Cluster labels are identifiers, not ranks: cluster 0 is not intrinsically more important
+than cluster 1. We use the labels only to assign colors, <code class="language-plaintext highlighter-rouge">ind2color</code> counting from one, and
+then mark each returned center.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cInd</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="n">calcCluster</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">ind2color</span><span class="p">(</span><span class="n">cInd</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">markerAlpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ClusterDemo-2.png" /></center>
+
+<h2 id="tune-the-grouping">Tune the grouping</h2>
+
+<p>The colored regions follow the separated strokes of the smiley, while the centers sit inside
+the densest parts of those regions. CLASSIX first forms local groups and then merges nearby
+groups into clusters.</p>
+
+<p>Two options control how readily this happens. Increasing <code class="language-plaintext highlighter-rouge">radius</code> makes the local groups
+coarser and usually produces fewer clusters. The <code class="language-plaintext highlighter-rouge">minPoints</code> option sets the size below
+which tiny groups are merged into neighboring clusters. If the automatic result is too
+fragmented, increase <code class="language-plaintext highlighter-rouge">radius</code>; if isolated specks survive, increase <code class="language-plaintext highlighter-rouge">minPoints</code>. The port
+estimates the radius itself, from the distances to the tenth nearest neighbours, so no
+further package is needed.</p>
+
+<h2 id="respect-antipodal-symmetry">Respect antipodal symmetry</h2>
+
+<p>Antipodal directions identify a direction <code class="language-plaintext highlighter-rouge">v</code> with its opposite <code class="language-plaintext highlighter-rouge">-v</code>. Setting the
+<code class="language-plaintext highlighter-rouge">antipodal</code> property tells MTEX to measure proximity with this equivalence in mind.</p>
+
+<p>The smiley sample on its own cannot show this. No feature of it lies opposite another, so
+identifying <code class="language-plaintext highlighter-rouge">v</code> with <code class="language-plaintext highlighter-rouge">-v</code> has nothing to merge. Add the opposite of every sampled direction,
+and each feature gains one.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vSym</span> <span class="o">=</span> <span class="n">cat</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">-</span><span class="n">v</span><span class="p">)</span>
+
+<span class="n">cInd</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="n">calcCluster</span><span class="p">(</span><span class="n">vSym</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">vSym</span><span class="p">,</span> <span class="n">ind2color</span><span class="p">(</span><span class="n">cInd</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ClusterDemo-3.png" /></center>
+
+<p>The two discs are the upper and the lower hemisphere. Read as ordinary directions, the
+sample falls into eight clusters. Every feature of the smiley and every one of their
+opposites carries a color of its own.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vSym</span><span class="p">.</span><span class="n">antipodal</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">cInd</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="n">calcCluster</span><span class="p">(</span><span class="n">vSym</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">vSym</span><span class="p">,</span> <span class="n">ind2color</span><span class="p">(</span><span class="n">cInd</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">markerAlpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ClusterDemo-4.png" /></center>
+
+<p>One disc is left, and four clusters, each exactly twice the size of before. Every feature
+has been merged with the one opposite it. The two eyes stay apart, because one eye is not
+the opposite of the other.</p>
+
+<p>The blue cluster reaches the rim of the disc at the top and at the bottom. Those are
+opposite directions, and they now share a label. This is a change in the meaning of a
+direction, not merely a change in how the same labels are drawn.</p>
+
+<h2 id="build-an-orientation-example">Build an orientation example</h2>
+
+<p>The same idea applies in orientation space. We construct an orientation distribution
+function (ODF) with a broad fibre component and a compact unimodal component.
+<a href="OptimalKernel_py.html">Kernel selection</a> explains how the halfwidth controls smoothing when an
+ODF is estimated from observations.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'432'</span><span class="p">)</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.7</span> <span class="o">*</span> <span class="n">fibreODF</span><span class="p">(</span><span class="n">fibre</span><span class="p">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">cs</span><span class="p">),</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+       <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)))</span>
+
+<span class="n">ori</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="compare-the-model-with-its-sample">Compare the model with its sample</h2>
+
+<p>Filled contours show sections through the model ODF. The points are the sampled
+orientations drawn over every section.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'white2black'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">add2all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">markerAlpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ClusterDemo-6.png" /></center>
+
+<p>Notice the narrow concentration of points around the compact peak and the elongated
+concentration along the fibre. These are the two structures the clustering step should
+distinguish.</p>
+
+<h2 id="cluster-the-orientations">Cluster the orientations</h2>
+
+<p>Orientation clustering does not use CLASSIX unless it is selected explicitly. The embedding
+used by this method accounts for crystal symmetry, so symmetrically equivalent
+representations of an orientation receive the same cluster label. The call supplies the
+radius and the minimum cluster size, as the text above says of this example.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cId</span><span class="p">,</span> <span class="n">center</span> <span class="o">=</span> <span class="n">calcCluster</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'classix'</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">minPoints</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plotSection</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">ind2color</span><span class="p">(</span><span class="n">cId</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">markerAlpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ClusterDemo-7.png" /></center>
+
+<p>The dominant color follows the fibre and another color collects the compact unimodal
+portion. The annotated centers summarize the returned groups; they do not replace the full
+within-cluster spread visible here.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>X. Chen and S. Güttel, <a href="https://doi.org/10.1016/j.patcog.2024.110298">Fast and explainable clustering based on
+sorting</a>, <em>Pattern Recognition</em> 150 (2024),
+110298, introduces the CLASSIX algorithm and its radius and minimum-size controls.</li>
+</ul>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/ClusterDemo_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

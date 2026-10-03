@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Orientation-Dependent Functions | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/SO3FunConcept_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SO3FunConcept_py.html#page",
+      "name": "Orientation-Dependent Functions",
+      "headline": "Orientation-Dependent Functions",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/SO3FunConcept_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SO3FunConcept_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SO3FunConcept_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Orientation-Dependent Functions</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/SO3FunConcept.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/SO3Functions/SO3FunConcept.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>An orientation-dependent function assigns a numerical value to every rotation or crystal
+orientation. The set of rotations is the rotation group \(SO(3)\), which gives the MTEX class
+<code class="language-plaintext highlighter-rouge">SO3Fun</code> its name.</p>
+
+<p>An important example is the <a href="ODFTheory_py.html">orientation density function (ODF)</a>. It
+assigns a density to each crystal orientation in a specimen. Other examples include the
+Schmid factor and the Taylor factor as functions of crystal orientation.</p>
+
+<h2 id="a-first-orientation-dependent-function">A First Orientation-Dependent Function</h2>
+
+<p>MTEX represents a scalar function on \(SO(3)\) by an object of type <a href="SO3Fun.SO3Fun.html">SO3Fun</a>.
+Its symmetries determine which rotations represent the same argument.</p>
+
+<p>Consider the smallest rotational angle between an orientation and the identity, including
+its cubic symmetry equivalents. The <a href="orientation.angle.html">angle</a> command returns this
+angle in radians. Dividing by <code class="language-plaintext highlighter-rouge">degree</code> makes the function value a number in degrees.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># define cubic crystal symmetry
+</span><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'432'</span><span class="p">)</span>
+
+<span class="c1"># wrap the angle formula in an SO3Fun
+</span><span class="n">SO3F</span> <span class="o">=</span> <span class="n">SO3FunHandle</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ori</span><span class="p">:</span> <span class="n">angle</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">SO3F</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHandle (432 → y↓→x)
+  bandwidth hint: 64
+</code></pre></div></div>
+
+<h2 id="evaluate-the-function">Evaluate the Function</h2>
+
+<p><code class="language-plaintext highlighter-rouge">SO3FunHandle</code> turns a Python function into an <code class="language-plaintext highlighter-rouge">SO3Fun</code>. The variable <code class="language-plaintext highlighter-rouge">SO3F</code> now stores
+the formula together with its symmetry.</p>
+
+<p>Use <a href="SO3FunHandle.eval.html">eval</a> to evaluate it at one or many orientations. Here the
+input is fixed so that the result is reproducible.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">ori</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>orientation (432 → y↓→x)
+  Bunge Euler angles in degree
+  phi1  Phi  phi2
+    20   30    10
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angleInDegrees</span> <span class="o">=</span> <span class="n">SO3F</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span>
+<span class="n">angleInDegrees</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>42.1812
+</code></pre></div></div>
+
+<p>The returned scalar is the smallest angle, in degrees, among the symmetrically equivalent
+representatives of <code class="language-plaintext highlighter-rouge">ori</code>. The next page develops this construction and the other ways to
+define an <code class="language-plaintext highlighter-rouge">SO3Fun</code>.</p>
+
+<h2 id="plot-euler-angle-sections">Plot Euler-Angle Sections</h2>
+
+<p>A scalar function on \(SO(3)\) depends on three coordinates. MTEX can show it as a stack of
+sections at fixed third Euler angle \(\varphi_2\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">SO3F</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConcept-4.png" /></center>
+
+<p>Each panel covers the first two Euler angles at one value of \(\varphi_2\). The colour
+changes within and between panels because the smallest symmetry-reduced angle depends on
+all three Euler angles.</p>
+
+<h2 id="plot-axisangle-sections">Plot Axis–Angle Sections</h2>
+
+<p>The same function is especially simple in axis–angle coordinates. Each section fixes the
+rotational angle and varies the rotational axis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">SO3F</span><span class="p">,</span> <span class="s">'axisAngle'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="s">'pcolor'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConcept-5.png" /></center>
+
+<p>Every panel has one colour because <code class="language-plaintext highlighter-rouge">SO3F</code> returns the angle that labels that panel. A
+rotation by one of these angles may have any axis, so each angle fills the whole sphere
+and needs an upper and a lower panel. The two section plots show the same function in
+different coordinates; neither changes the underlying data.</p>
+
+<h2 id="analyse-an-orientation-dependent-function">Analyse an Orientation-Dependent Function</h2>
+
+<p>The common <code class="language-plaintext highlighter-rouge">SO3Fun</code> interface provides arithmetic, integration, differentiation and
+searches for extrema. For this angle function, a local maximum is an orientation farthest
+from a cubic symmetry equivalent of the identity.</p>
+
+<p>The <a href="SO3Fun.max.html">max</a> command below requests up to ten distinct local maxima. The
+<code class="language-plaintext highlighter-rouge">accuracy</code> option controls the final angular search tolerance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">value</span><span class="p">,</span> <span class="n">oriMax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">SO3F</span><span class="p">,</span> <span class="n">numLocal</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">accuracy</span><span class="o">=</span><span class="mf">0.001</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">value</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([62.7994, 62.7994, 62.7994, 62.7993, 62.7993, 62.7993])
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oriMax</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>orientation (432 → y↓→x)
+  size: 6
+  Bunge Euler angles in degree
+  phi1  Phi  phi2
+   270   45    45
+    45   45   270
+   135   45   180
+   215   60   125
+   180   45   135
+   360   45   315
+</code></pre></div></div>
+
+<p>The calculation finds exactly six symmetrically inequivalent maxima. Their function
+values are about 62.799 degrees, and their positions are the vertices of the fundamental
+region in orientation space.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">=</span> <span class="n">ind2color</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">oriMax</span><span class="p">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="n">numSym</span><span class="p">(</span><span class="n">cs</span><span class="p">),</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">oriMax</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">(),</span> <span class="n">color</span><span class="p">,</span> <span class="s">'axisAngle'</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">fundamentalRegion</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConcept-8.png" /></center>
+
+<p>The six colours distinguish the six maxima. The markers lie on the outer vertices because
+those points have the greatest possible distance from the identity after cubic symmetry
+has been taken into account.</p>
+
+<h2 id="representations-of-orientation-dependent-functions">Representations of Orientation-Dependent Functions</h2>
+
+<p>MTEX can store a function in several ways. The representation controls how the function
+is constructed and how expensive an operation is, but all representations share the
+<code class="language-plaintext highlighter-rouge">SO3Fun</code> interface.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>representation</th>
+      <th>MTEX class or documentation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>harmonic series expansion</td>
+      <td><a href="SO3FunHarmonicRepresentation_py.html">SO3FunHarmonic</a></td>
+    </tr>
+    <tr>
+      <td>superposition of radial functions</td>
+      <td><a href="RadialODFs_py.html">SO3FunRBF</a></td>
+    </tr>
+    <tr>
+      <td>superposition of fibre elements</td>
+      <td><a href="FibreODFs_py.html">SO3FunCBF</a></td>
+    </tr>
+    <tr>
+      <td>Bingham distribution</td>
+      <td><a href="BinghamODFs_py.html">SO3FunBingham</a></td>
+    </tr>
+    <tr>
+      <td>sum of different components</td>
+      <td><code class="language-plaintext highlighter-rouge">SO3FunComposition</code></td>
+    </tr>
+    <tr>
+      <td>formula evaluated on demand</td>
+      <td><code class="language-plaintext highlighter-rouge">SO3FunHandle</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Thus functions with different internal representations can be added, multiplied,
+averaged, integrated or differentiated through the same API.</p>
+
+<h2 id="related-function-types">Related Function Types</h2>
+
+<p><a href="SO3FunVectorField_py.html">SO3VectorField</a> assigns a vector instead of a scalar to each
+rotation. <a href="SO3Kernels_py.html">SO3Kernel</a> represents a radial function whose value depends
+only on rotational angle.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>H.-J. Bunge, <a href="https://doi.org/10.1016/C2013-0-11769-2">Texture Analysis in Materials Science: Mathematical Methods</a>,
+Butterworths, 1982, develops the orientation-space and ODF framework used here.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="SO3FunDefinition_py.html">Defining Orientation-Dependent Functions</a> to
+construct functions from formulas, harmonic coefficients and sampled values.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>The maxima lie within \(10^{-4}\) degree of the vertices of the fundamental region, where the
+region’s faces meet; the symmetric copies of one maximum are therefore folded onto
+different equivalent vertices of the region’s surface, which the plot shows in the colour
+of that maximum, where MATLAB’s run shows one marker per maximum. MATLAB lists the maxima
+in other symmetric equivalents.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SO3FunConcept_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

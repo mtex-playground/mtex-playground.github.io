@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Spherical Density Estimation | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A long list of measured directions is often easier to interpret as a smooth density on the sphere. High values identify directions that occur more often than they would in a uniform population.">
+<link rel="canonical" href="https://mtex-playground.github.io/VectorsDensityEstimation.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/VectorsDensityEstimation.html#page",
+      "name": "Spherical Density Estimation",
+      "headline": "Spherical Density Estimation",
+      "description": "A long list of measured directions is often easier to interpret as a smooth density on the sphere. High values identify directions that occur more often than they would in a uniform population.",
+      "url": "https://mtex-playground.github.io/VectorsDensityEstimation.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/VectorsDensityEstimation.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/VectorsDensityEstimation.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Spherical Density Estimation</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Spherical Density Estimation</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_VectorsDensityEstimation.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Vectors/VectorsDensityEstimation.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>A long list of measured directions is often easier to interpret as a smooth density on the sphere. High values identify directions that occur more often than they would in a uniform population.</p>
+<p>This page applies kernel density estimation to <code class="language-plaintext highlighter-rouge">vector3d</code> data. It assumes the vector construction from <a href="VectorDefinition.html">Defining Three-Dimensional Vectors</a>, the direction-axis distinction from <a href="VectorsAxes.html">Axes and Antipodal Symmetry</a>, and the plots introduced in <a href="SphericalProjections.html">Spherical Projections</a>. The general statistical idea is developed in <a href="DensityEstimation.html">Density Estimation</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">From Measured Axes to a Density</h2>
+<p>The forsterite example map supplies one crystallographic c-axis for every indexed Forsterite pixel.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">mtexdata</span> <span class="n">forsterite</span> <span class="n">silent</span>
+
+<span class="n">cAxes</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span> <span class="o">*</span> <span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">)</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cAxis</span><span class="p">;</span>
+<span class="n">numCAxes</span> <span class="o">=</span> <span class="nb">numel</span><span class="p">(</span><span class="n">cAxes</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">numCAxes =
+      152345</code></pre></figure>
+<p>The calculation uses 152345 axes. One <code class="language-plaintext highlighter-rouge">vector3d</code> variable holds the entire list, which is why the object summary itself is suppressed above.</p>
+<p>A crystallographic c-axis is an unoriented line: <code class="language-plaintext highlighter-rouge">c</code> and <code class="language-plaintext highlighter-rouge">-c</code> represent the same physical axis. The <code class="language-plaintext highlighter-rouge">antipodal</code> flag records that assumption.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cAxes</span><span class="o">.</span><span class="n">antipodal</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'none'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerEdgeAlpha'</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_01.png" alt="" />
+
+</center>
+<p>The projected sphere is almost covered by markers. Some concentrations are visible, but their relative strengths cannot be read from this overlap.</p>
+<p> <a href="vector3d.calcDensity.html"><code class="language-plaintext highlighter-rouge">calcDensity</code></a> replaces the point cloud by a continuous spherical function.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pdf</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">cAxes</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">pdf = S2FunHarmonic (y↑→x)
+  bandwidth: 25
+  antipodal: true</code></pre></figure>
+<p>The summary identifies a harmonic spherical function with bandwidth 25. It also reports <code class="language-plaintext highlighter-rouge">antipodal: true</code> because the estimate inherited the axis symmetry of <code class="language-plaintext highlighter-rouge">cAxes</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_02.png" alt="" />
+
+</center>
+<p>The upper- and lower-hemisphere patterns repeat through the centre of the sphere. Their unequal colour levels show the concentrations hidden by the scatter plot.</p>
+<p>Overlaying the observations checks that the high-density regions coincide with the most crowded parts of the point cloud.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">contourf</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<span class="n">mtexColorMap</span> <span class="n">LaboTeX</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'none'</span><span class="p">,</span><span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerEdgeAlpha'</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_03.png" alt="" />
+
+</center>
+<p>The darkest clusters of points lie inside the highest filled contours. The estimate summarizes their concentration without inventing a new location for a peak.</p>
+<p>MTEX normalizes the density to have mean value one.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pdfMean</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">pdfMean =
+     1</code></pre></figure>
+<p>Values are therefore multiples of uniform density (m.u.d.). A value of 3 means three times the density expected from uniformly distributed axes. It is not the fraction of axes at one exact direction; fractions require integration over a finite region.</p>
+<h2 id="9">Choosing the Halfwidth</h2>
+<p>The kernel halfwidth controls how far each observation is spread. The <code class="language-plaintext highlighter-rouge">'halfwidth'</code> option defaults to 10 degrees for <code class="language-plaintext highlighter-rouge">vector3d.calcDensity</code>. Compare four choices on the same axes.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">hw</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span> <span class="mi">5</span> <span class="mi">10</span> <span class="mi">20</span><span class="p">]</span> <span class="o">*</span> <span class="nb">degree</span><span class="p">;</span>
+<span class="n">mtexFig</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span> <span class="mi">4</span><span class="p">]);</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">hw</span><span class="p">)</span>
+
+  <span class="nb">plot</span><span class="p">(</span><span class="n">calcDensity</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="n">hw</span><span class="p">(</span><span class="n">k</span><span class="p">)),</span><span class="s1">'upper'</span><span class="p">)</span>
+  <span class="n">mtexTitle</span><span class="p">([</span><span class="s1">'\('</span> <span class="n">xnum2str</span><span class="p">(</span><span class="n">hw</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">)</span> <span class="s1">'^{\circ}\)'</span><span class="p">])</span>
+
+  <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="n">hw</span><span class="p">),</span> <span class="n">nextAxis</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+<span class="n">mtexFig</span><span class="o">.</span><span class="n">drawNow</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_04.png" alt="" />
+
+</center>
+<p>At 2.5 degrees the estimate contains many narrow peaks. At 20 degrees those peaks have merged into broad regions. A small halfwidth can preserve measurement-scale variation, while a large one can erase real structure. Neither choice is automatically more accurate.</p>
+<p>The halfwidth also sets the harmonic bandwidth needed to represent the kernel. Print both the peak density and bandwidth for the four estimates.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">hw</span><span class="p">)</span>
+  <span class="n">pdfK</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="n">hw</span><span class="p">(</span><span class="n">k</span><span class="p">));</span>
+  <span class="nb">disp</span><span class="p">([</span><span class="s1">'halfwidth: '</span> <span class="n">xnum2str</span><span class="p">(</span><span class="n">hw</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">)</span> <span class="n">mtexdegchar</span> <span class="k">...</span>
+    <span class="s1">' -&gt; maximum: '</span> <span class="n">xnum2str</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">pdfK</span><span class="p">))</span> <span class="s1">' mud'</span> <span class="k">...</span>
+    <span class="s1">', bandwidth: '</span> <span class="n">xnum2str</span><span class="p">(</span><span class="n">pdfK</span><span class="o">.</span><span class="nb">bandwidth</span><span class="p">)])</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">halfwidth: 2.5° -&gt; maximum: 14 mud, bandwidth: 92
+halfwidth: 5° -&gt; maximum: 5.7 mud, bandwidth: 48
+halfwidth: 10° -&gt; maximum: 3.8 mud, bandwidth: 25
+halfwidth: 20° -&gt; maximum: 2.5 mud, bandwidth: 13</code></pre></figure>
+<p>Across this sweep the maximum falls from 14 to 2.5 m.u.d., while the bandwidth falls from 92 to 13. A sharper estimate is more expensive as well as more sensitive to fine-scale variation.</p>
+<p>The relevant sample size is the number of independent observations, not merely the number of pixels. Neighbouring EBSD pixels are spatially correlated because many sample the same grain. MTEX does not select a halfwidth automatically for directional data. For orientation data, <a href="EBSD2ODF.html">ODF Estimation from EBSD Data</a> explains this dependence and <a href="OptimalKernel.html">Optimal Kernel Selection</a> describes automatic methods.</p>
+<h2 id="12">Weighting Changes the Question</h2>
+<p>A grain is a phase-homogeneous, spatially connected region of EBSD pixels produced by segmentation. Reconstruct the map with an example 10 degree misorientation threshold, then keep the Forsterite grains.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'angle'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">);</span>
+
+<span class="c1">% one c-axis per grain</span>
+<span class="n">cAxesGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="n">meanOrientation</span> <span class="o">*</span> <span class="n">grains</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">cAxis</span><span class="p">;</span>
+<span class="n">cAxesGrains</span><span class="o">.</span><span class="n">antipodal</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="n">numGrainAxes</span> <span class="o">=</span> <span class="nb">numel</span><span class="p">(</span><span class="n">cAxesGrains</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">numGrainAxes =
+        1151</code></pre></figure>
+<p>The reconstruction gives 1151 Forsterite grain axes instead of 152345 pixel axes. Giving each grain one vote describes the distribution of grains. Weighting by sectional grain area describes the mapped material area, which is the question answered by equal pixel weights on this regular scan.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">mtexFig</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span> <span class="mi">3</span><span class="p">]);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'one pixel - one vote'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">calcDensity</span><span class="p">(</span><span class="n">cAxesGrains</span><span class="p">),</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'one grain - one vote'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">calcDensity</span><span class="p">(</span><span class="n">cAxesGrains</span><span class="p">,</span><span class="s1">'weights'</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="nb">area</span><span class="p">),</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'weighted by grain area'</span><span class="p">)</span>
+
+<span class="n">setColorRange</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span>
+<span class="n">mtexFig</span><span class="o">.</span><span class="n">drawNow</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_05.png" alt="" />
+
+</center>
+<p>With a common colour range, equal grain weights give the flattest panel. Area weighting restores the main concentrations of the pixel estimate, although replacing every grain by its mean orientation removes the within-grain spread. The scientifically correct weights depend on whether the population of interest is grains, mapped area, or something else.</p>
+<h2 id="15">Working with the Density Function</h2>
+<p>A density is an <a href="S2FunConcept.html"><code class="language-plaintext highlighter-rouge">S2Fun</code></a>, so it can be evaluated, integrated, searched for peaks, combined with other spherical functions, and sampled. <a href="S2FunOperations.html">Operations on Spherical Functions</a> develops that common interface.</p>
+<p>First find the global maximum.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">globalDensity</span><span class="p">,</span><span class="n">globalPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">globalDensity =
+    3.7532
+ 
+globalPos = vector3d (y↑→x)
+ antipodal: true
+       x      y      z
+  -0.295 -0.941  0.166</code></pre></figure>
+<p>The output gives both the density and the specimen direction where it is attained. The <code class="language-plaintext highlighter-rouge">'numLocal'</code> option requests several distinct local maxima.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">localDensity</span><span class="p">,</span><span class="n">localPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span><span class="s1">'numLocal'</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">localDensity =
+    3.7532
+    3.7026
+    2.9869
+ 
+localPos = vector3d (y↑→x)
+ size: 3 × 1
+ antipodal: true
+        x       y       z
+   -0.295  -0.941   0.166
+  -0.0541  -0.668   0.742
+    0.114   0.833   0.541</code></pre></figure>
+<p>The first local maximum is the global one. Integrate the density within 20 degrees of that axis using <a href="S2Fun.volume.html"><code class="language-plaintext highlighter-rouge">volume</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">smoothedFraction</span> <span class="o">=</span> <span class="nb">volume</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span><span class="n">localPos</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="mi">20</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">smoothedFraction =
+    0.1723</code></pre></figure>
+<p>The smoothed estimate assigns 0.1723, or 17.23 percent, of the population to that axial neighbourhood. Count the original axes in the same region.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">observedFraction</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,</span><span class="n">localPos</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">observedFraction =
+    0.1890</code></pre></figure>
+<p>The direct count is 0.1890, or 18.90 percent. Smoothing moves some density across the boundary of the 20 degree neighbourhood, so the two questions do not have to give the same answer.</p>
+<p>Evaluate the density at the three specimen basis directions.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">basisDensities</span> <span class="o">=</span> <span class="n">pdf</span><span class="o">.</span><span class="nb">eval</span><span class="p">([</span><span class="n">xvector</span><span class="p">,</span><span class="n">yvector</span><span class="p">,</span><span class="n">zvector</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">basisDensities =
+    0.4580
+    1.6142
+    1.2212</code></pre></figure>
+<p>Among X, Y and Z, the Y direction has the largest density in this example. If only these values are needed, pass the evaluation directions directly:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">f</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,[</span><span class="n">xvector</span><span class="p">,</span><span class="n">yvector</span><span class="p">,</span><span class="n">zvector</span><span class="p">])</span></code></pre></figure>
+<p>A random sample from the estimate can replace the large point cloud in a simulation or exploratory plot.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">vRand</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span><span class="mi">500</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">vRand</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_06.png" alt="" />
+
+</center>
+<p>The 500 black points follow the same broad concentrations as the coloured density, but retain the sampling variation expected from a finite draw. They are simulated representatives, not a lossless compression of the original 152345 measurements.</p>
+<h2 id="22">Crystal Directions and Symmetry</h2>
+<p>The previous density lives in the specimen reference frame. An inverse pole density instead fixes a specimen direction and asks which crystal directions are parallel to it. Express specimen Z in the crystal frame of every Forsterite orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">h</span> <span class="o">=</span> <span class="nb">inv</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">)</span> <span class="o">.*</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">;</span></code></pre></figure>
+<p>The result is a <code class="language-plaintext highlighter-rouge">Miller</code> array carrying the Forsterite crystal symmetry. <a href="Miller.calcDensity.html"><code class="language-plaintext highlighter-rouge">Miller.calcDensity</code></a> transfers that symmetry to the density automatically.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ipdf</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">h</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ipdf = S2FunHarmonicSym (Forsterite)
+  bandwidth: 25
+  antipodal: true</code></pre></figure>
+<p>The summary identifies an antipodal <code class="language-plaintext highlighter-rouge">S2FunHarmonicSym</code>. Plotting only the fundamental sector shows every symmetry-inequivalent crystal direction once.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ipdf</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_07.png" alt="" />
+
+</center>
+<p>The coloured sector contains the complete inverse pole density without repeating symmetry-related directions. The <code class="language-plaintext highlighter-rouge">'noSymmetry'</code> option disables crystal symmetrization when that is deliberately required.</p>
+<h2 id="26">Choosing a Different Kernel</h2>
+<p>The default is the non-negative <a href="S2DeLaValleePoussinKernel.html">de la Vallee Poussin kernel</a>. Its finite harmonic expansion avoids truncation ringing. The <code class="language-plaintext highlighter-rouge">'kernel'</code> option also accepts other <a href="S2Kernels.html">spherical kernels</a>.</p>
+<p>Compare the default 10 degree kernel with a <a href="S2DirichletKernel.html">Dirichlet kernel</a> truncated at bandwidth 12.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">psi1</span> <span class="o">=</span> <span class="n">S2DeLaValleePoussinKernel</span><span class="p">(</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">psi2</span> <span class="o">=</span> <span class="n">S2DirichletKernel</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">psi1</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">psi2</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">])</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'de la Vallee Poussin'</span><span class="p">,</span><span class="s1">'Dirichlet'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_08.png" alt="" />
+
+</center>
+<p>The de la Vallee Poussin curve decreases without crossing zero. The Dirichlet curve oscillates above and below zero, and those negative lobes pass into a density estimate made with it.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pdf2</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,</span><span class="s1">'kernel'</span><span class="p">,</span><span class="n">psi2</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">pdf2</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span>
+
+<span class="n">minimumDirichletDensity</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">pdf2</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">minimumDirichletDensity =
+   -0.4029</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_09.png" alt="" />
+
+</center>
+<p>The minimum is -0.4029, which is not a valid probability density. Non-negative kernels are therefore the appropriate default for density estimation. A Dirichlet kernel remains useful for operations where exact harmonic truncation, rather than non-negativity, is the objective.</p>
+<h2 id="29">Density Estimation While Plotting</h2>
+<p>Smooth plotting options for a large <code class="language-plaintext highlighter-rouge">vector3d</code> list perform density estimation internally. The <code class="language-plaintext highlighter-rouge">'contourf'</code>, <code class="language-plaintext highlighter-rouge">'smooth'</code> and <code class="language-plaintext highlighter-rouge">'pcolor'</code> modes use a 5 degree halfwidth when none is supplied.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">cAxes</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span> <span class="n">LaboTeX</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/VectorsDensityEstimation_10.png" alt="" />
+
+</center>
+<p>This 5 degree plot is sharper than the explicit 10 degree estimate <code class="language-plaintext highlighter-rouge">pdf</code>. Use <a href="vector3d.calcDensity.html"><code class="language-plaintext highlighter-rouge">calcDensity</code></a> explicitly when the density itself, its weights, its kernel, or a reproducible smoothing choice matters.</p>
+<h2 id="31">The Maths Behind the Estimate</h2>
+<p>Let \(v_n\) be unit directions with non-negative weights \(w_n\), and let \(\psi\) be a normalized radial kernel. MTEX computes the weighted kernel estimate</p>
+<p>\[f(v) = \frac{1}{\sum_{n=1}^{N}w_n} \sum_{n=1}^{N} w_n\,\psi(v\mathbin{\cdot}v_n).\]</p>
+<p>Equal weights reduce the denominator to \(N\). For axial input, the result is symmetrized so that \(f(v)=f(-v)\). The normalization makes the mean of \(f\) equal to one under MTEX's uniform spherical measure.</p>
+<p>The estimate is a model of an unknown population density, not the unknown density itself. Decreasing the halfwidth reduces smoothing bias but raises sampling variation; increasing it does the reverse.</p>
+<h2 id="32">Further Reading</h2>
+<div>
+<ul>
+<li>K. V. Mardia and P. E. Jupp, <a href="https://doi.org/10.1002/9780470316979">Directional Statistics</a>, Wiley, 1999, treats probability models and inference for both directions and axes.</li>
+<li>P. Hall, G. S. Watson and J. Cabrera, <a href="https://doi.org/10.1093/biomet/74.4.751">Kernel density estimation with spherical data</a>, <i>Biometrika</i> 74 (1987), 751-762, develops the bias, variance and loss of spherical kernel estimators.</li>
+<li>H. Schaeben and K. G. van den Boogaart, <a href="https://doi.org/10.1016/S0040-1951(03)00190-2">Spherical harmonics in texture analysis</a>, <i>Tectonophysics</i> 370 (2003), 253-268, connects spherical kernels, harmonic representations and texture analysis.</li>
+</ul>
+</div>
+<h2 id="33">Next</h2>
+<p>Continue with <a href="SphericalFunctions.html">Spherical Functions</a> to work with densities as mathematical objects. Use <a href="EBSD2ODF.html">ODF Estimation from EBSD Data</a> when the input is a list of orientations rather than directions, and <a href="ODFTutorial.html">the ODF tutorial</a> for the complete texture workflow.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/VectorsDensityEstimation.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

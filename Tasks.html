@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="MTEX documentation, Tasks">
+
+
+<title>Tasks | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/Tasks.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mtex-playground.github.io/Tasks.html#page",
+      "name": "Tasks",
+      "headline": "Tasks",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/Tasks.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/Tasks.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/Tasks.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+</head>
+
+<body class="mx-body">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+<main class="mx-page">
+
+
+
+
+<div class="mx-wrap">
+  <div class="mx-pagehead">
+    <div class="mx-eyebrow">Documentation · Tasks</div>
+    <h1>How do I do it?</h1>
+    <p>The practical pages, ordered along a typical analysis from import to figures.</p>
+  </div>
+  <div class="mx-chapters">
+    
+    <a class="mx-tile" href="ImportExport.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/EBSDReferenceFrame_02.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Import, export and reference frames</h3><p>Load EBSD, pole figure, orientation and tensor data, set the reference frames, and write results back out.</p><span class="mx-small">4 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="EBSDAnalysis.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/EBSDFilling_02.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Preparing EBSD maps</h3><p>Select phases and regions, fill and denoise maps, regrid, and handle pseudo-symmetry.</p><span class="mx-small">2 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="CorrelatingMaps.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/EBSDMapsAndImages_02.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Correlating maps and images</h3><p>Align EBSD maps with SEM images and other maps, and correct distortions.</p><span class="mx-small">1 pages · 4 case studies</span></div>
+    </a>
+    
+    <a class="mx-tile" href="OrientationMaps.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/EBSDIPFMap_04.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Orientation maps</h3><p>Colour maps by orientation or property, choose colour keys, and plot orientation populations.</p><span class="mx-small">3 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="Grains.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/GrainReconstruction_02.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Grains</h3><p>Reconstruct grains, select and merge them, and work with their neighbours.</p><span class="mx-small">1 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="GrainShape.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/EllipseBasedParameters_02.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Grain size and shape</h3><p>Area, perimeter, fitted ellipses, convex hulls and projections of grains.</p><span class="mx-small">2 pages · 1 case study</span></div>
+    </a>
+    
+    <a class="mx-tile" href="OrientationSpread.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/EBSDKAM_03.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Orientation spread and dislocations</h3><p>KAM, GROD, GOS, orientation profiles, GND density and weighted Burgers vectors.</p><span class="mx-small">7 pages · 1 case study</span></div>
+    </a>
+    
+    <a class="mx-tile" href="GrainBoundaries.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/BoundaryPlots_03.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Grain boundaries</h3><p>Select, plot and classify boundaries: CSL, twins, subgrains, curvature, triple points.</p><span class="mx-small">5 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="TextureFromEBSD.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/EBSD2ODF_03.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Texture from EBSD</h3><p>Estimate ODFs and direction densities from individual orientations.</p><span class="mx-small">4 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="PoleFigureAnalysis.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/PoleFigure2ODF_03.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Texture from pole figures</h3><p>Correct X-ray and neutron pole figures and reconstruct the ODF.</p><span class="mx-small">3 pages · 7 case studies</span></div>
+    </a>
+    
+    <a class="mx-tile" href="ODFAnalysis.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/SigmaSections_06.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Describing and plotting textures</h3><p>Model textures, plot them in pole figures and sections, and measure components and strength.</p><span class="mx-small">2 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="Tensors.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/WaveVelocities_03.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Physical properties</h3><p>Tensor arithmetic and averages, wave velocities, piezoelectricity, optics, magnetism.</p><span class="mx-small">3 pages · 3 case studies</span></div>
+    </a>
+    
+    <a class="mx-tile" href="Plasticity.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/TaylorModel_03.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Plasticity and texture evolution</h3><p>Taylor and Sachs models, slip transmission, twinning and texture evolution.</p><span class="mx-small">2 pages · 3 case studies</span></div>
+    </a>
+    
+    <a class="mx-tile" href="PhaseTransitions.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/MaParentGrainReconstruction_05.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Parent grains and phase transformations</h3><p>Fit orientation relationships, reconstruct parent grains and predict transformation textures.</p><span class="mx-small">4 pages · 2 case studies</span></div>
+    </a>
+    
+    <a class="mx-tile" href="EBSD3Analysis.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/Grains3D_02.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>3D data</h3><p>Volume EBSD, three-dimensional grains, their boundaries, size and sections.</p><span class="mx-small">2 pages</span></div>
+    </a>
+    
+    <a class="mx-tile" href="Plotting.html">
+      <div class="mx-tile-im"><img loading="lazy" src="figures/Annotations_03.png" alt=""></div>
+      <div class="mx-tile-cap"><h3>Figures</h3><p>Plot types, projections, alignment, colour ranges, annotations and export.</p><span class="mx-small">3 pages</span></div>
+    </a>
+    
+  </div>
+  
+</div>
+
+
+</main>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

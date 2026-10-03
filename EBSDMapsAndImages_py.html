@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>EBSD Maps and SEM Images | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSDMapsAndImages_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSDMapsAndImages_py.html#page",
+      "name": "EBSD Maps and SEM Images",
+      "headline": "EBSD Maps and SEM Images",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/EBSDMapsAndImages_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSDMapsAndImages_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSDMapsAndImages_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">EBSD Maps and SEM Images</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/EBSDMapsAndImages.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/EBSDAnalysis/EBSDMapsAndImages.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>An EBSD map and a forescatter or backscattered-electron (BSE) image can record the same
+area of a specimen. Each is a raster: a rectangular array whose entries sample that area.</p>
+
+<p>Comparing the two requires two independent questions to be answered:</p>
+
+<ul>
+  <li>where on the specimen each raster sits - its
+<a href="referenceFrame.referenceFrame.html">reference frame</a></li>
+  <li>which specimen direction each array index follows - its
+<a href="gridLayout.gridLayout.html">layout</a></li>
+</ul>
+
+<p>A reference frame is the coordinate system in which data are expressed. Its identity,
+basis and plotting convention say what the axes mean and how they are drawn. A layout
+instead says what <code class="language-plaintext highlighter-rouge">img[i, j]</code> means: the direction in which the row index <code class="language-plaintext highlighter-rouge">i</code> and column
+index <code class="language-plaintext highlighter-rouge">j</code> increase.</p>
+
+<p>Read <a href="EBSDGrid_py.html">Gridded EBSD Data</a> first if matrix-shaped EBSD data is new to you.
+<a href="EBSDReferenceFrame_py.html">Reference Frame Alignment</a> explains how map coordinates and
+Euler angles are related.</p>
+
+<p>This page uses an EBSD map and four forescatter images of the same 20 × 15 micron WC-Co
+area. It first reconciles their frames, then their layouts, and finally their pixel grids.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↓→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'trueEbsdWCCoSmall'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">img</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'trueEbsdImgs'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="put-the-map-and-images-in-one-sequence">Put the Map and Images in One Sequence</h2>
+
+<p>A <a href="mapImage.mapImage.html">mapImage</a> combines a raster with the geometry that locates it.
+The geometry consists of the centre position of pixel <code class="language-plaintext highlighter-rouge">(0, 0)</code>, one step vector for each
+array dimension and a reference frame.</p>
+
+<p>Passing an EBSD map supplies that geometry from the map. A plain image has only its pixel
+size here. MTEX initially gives it an independent frame. The map channel and the SEM
+images then form one <code class="language-plaintext highlighter-rouge">mapImageList</code> rather than two different container types.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imgList</span> <span class="o">=</span> <span class="n">mapImageList</span><span class="p">([</span><span class="n">mapImage</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'bcImg'</span><span class="p">),</span>
+                        <span class="n">mapImage</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">fsdT1</span><span class="p">,</span> <span class="n">dxy</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'fsdT1'</span><span class="p">),</span>
+                        <span class="n">mapImage</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">fsdT10</span><span class="p">,</span> <span class="n">dxy</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'fsdT10'</span><span class="p">)])</span>
+<span class="n">imgList</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mapImage (y↓→x)
+
+     image      pixel      frame   layout    name    EBSD
+  0  96 × 128   0.159 µm   y↓→x    row↓→col  bcImg   W C, Co-fcc, Co-hcp
+  1  192 × 256  0.0795 µm  iY↓→iX  row↓→col  fsdT1   -
+  2  192 × 256  0.0795 µm  iY↓→iX  row↓→col  fsdT10  -
+</code></pre></div></div>
+
+<p>The table reports image size, pixel size, frame and layout for every entry. The EBSD
+band-contrast channel is coarser than the two forescatter images, but all three initially
+have the same screen alignment.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">imgList</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDMapsAndImages-7.png" /></center>
+
+<p>The same grain outlines appear upright and in the same part of all three panels. Their
+grey values need not match because the three imaging signals measure different contrast.</p>
+
+<h2 id="what-an-image-does-not-know">What an Image Does Not Know</h2>
+
+<p>The map entry brings the map’s specimen frame with it. Its display names the specimen
+axes and states their screen directions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imgList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">frame</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>specimenFrame (specimen, y↓→x)
+</code></pre></div></div>
+
+<p>A plain image array cannot reveal which specimen direction its horizontal axis follows.
+Until that relation is supplied, MTEX uses a separate frame. Its axes <code class="language-plaintext highlighter-rouge">iX</code>, <code class="language-plaintext highlighter-rouge">iY</code> and <code class="language-plaintext highlighter-rouge">iZ</code>
+expose rather than hide that independence.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imgList</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">frame</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>specimenFrame (image, iY↓→iX)
+</code></pre></div></div>
+
+<h2 id="two-pictures-that-disagree">Two Pictures That Disagree</h2>
+
+<p>The original data were collected in one session, so the images above agree. To construct
+the other case, rotate the EBSD map through 90 degrees. This represents a stage rotation
+between the map and image acquisitions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">rotate</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="mi">90</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">imgList</span> <span class="o">=</span> <span class="n">mapImageList</span><span class="p">([</span><span class="n">mapImage</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'bcImg'</span><span class="p">),</span>
+                        <span class="n">mapImage</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">fsdT1</span><span class="p">,</span> <span class="n">dxy</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'fsdT1'</span><span class="p">),</span>
+                        <span class="n">mapImage</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">fsdT10</span><span class="p">,</span> <span class="n">dxy</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'fsdT10'</span><span class="p">)])</span>
+<span class="n">imgList</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mapImage (y↓→x)
+
+     image      pixel      frame   layout    name    EBSD
+  0  96 × 128   0.159 µm   y↓→x    row←↓col  bcImg   W C, Co-fcc, Co-hcp
+  1  192 × 256  0.0795 µm  iY↓→iX  row↓→col  fsdT1   -
+  2  192 × 256  0.0795 µm  iY↓→iX  row↓→col  fsdT10  -
+</code></pre></div></div>
+
+<p>The rotation moved the data, not the recorded convention, so all three frame columns
+still read down-then-right. MATLAB stores the rotated map anew in its default layout, a
+128 × 96 array, and its table shows nothing but the interchanged size. The map here keeps
+its 96 × 128 array and turns its layout with the positions: its rows now run against x and
+its columns along y, the <code class="language-plaintext highlighter-rouge">row←↓col</code> of the layout column, the one sign in the table that
+the three rasters have fallen out of step.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">imgList</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDMapsAndImages-11.png" /></center>
+
+<p>The pictures show it plainly. The EBSD panel now stands upright beside two
+landscape images and occupies a different specimen extent, while the frame indicators in
+the corners still read the same arrangement in all three panels.</p>
+
+<h2 id="establish-the-frame-relation-on-screen">Establish the Frame Relation on Screen</h2>
+
+<p>A plotting convention states how a reference frame is laid out on screen. It never
+changes the data. Set the map frame so that its x axis points up and its y axis points
+right. The image frames keep their original setting.</p>
+
+<p>This alignment is experimental information. No inspection of the array values can recover
+it. Use acquisition metadata or a known specimen feature.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsdFrame</span> <span class="o">=</span> <span class="n">imgList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">frame</span>
+<span class="n">ebsdFrame</span><span class="p">.</span><span class="n">how2plot</span> <span class="o">=</span> <span class="s">'x↑→y'</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">imgList</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDMapsAndImages-12.png" /></center>
+
+<p>The corresponding grain outlines are now the same way up. Changing <code class="language-plaintext highlighter-rouge">how2plot</code> only
+established how the two frames appear on screen. It has not yet expressed the images in
+the map frame.</p>
+
+<p><a href="orientation.byScreenAlignment.html">byScreenAlignment</a> records the assertion that the
+plotted frames are physically aligned.
+<a href="mapImage.transformReferenceFrame.html">transformReferenceFrame</a> then re-expresses every
+entry in the map frame.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imgList</span> <span class="o">=</span> <span class="n">transformReferenceFrame</span><span class="p">(</span><span class="n">imgList</span><span class="p">,</span> <span class="n">ebsdFrame</span><span class="p">,</span> <span class="s">'byScreenAlignment'</span><span class="p">)</span>
+<span class="n">imgList</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mapImage (x↑→y)
+
+     image      pixel      frame  layout    name    EBSD
+  0  96 × 128   0.159 µm   x↑→y   row↓→col  bcImg   W C, Co-fcc, Co-hcp
+  1  192 × 256  0.0795 µm  x↑→y   row↓→col  fsdT1   -
+  2  192 × 256  0.0795 µm  x↑→y   row↓→col  fsdT10  -
+</code></pre></div></div>
+
+<p>The new table shows one common frame and the corresponding layouts. This operation only
+transposes or flips the arrays and updates their geometry; it does not resample any
+values.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">imgList</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDMapsAndImages-14.png" /></center>
+
+<p>The panels remain the same way up after the frame change. That unchanged appearance is the
+point. The arrays and their frame labels changed together, while the physical pictures did
+not.</p>
+
+<h2 id="how-the-array-is-stored">How the Array Is Stored</h2>
+
+<p>In MATLAB the transformed table also shows that the map changed from 128 × 96 back to
+96 × 128; here it was already stored with its rows against x, which is the layout the
+map frame is drawn in, so it kept its array. This is the second question, and it is
+independent of the specimen frame.</p>
+
+<p>A <a href="gridLayout.gridLayout.html">gridLayout</a> contains two directions. The first is the
+direction in which the row index advances, and the second is the direction in which the
+column index advances.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">imgList</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">layout</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gridLayout
+  row: (-1, 0, 0)
+  col: (0, 1, 0)
+</code></pre></div></div>
+
+<p>Every <code class="language-plaintext highlighter-rouge">mapImage</code> states its layout, and so does every gridded EBSD map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span><span class="p">.</span><span class="n">layout</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gridLayout
+  row: (-1, 0, 0)
+  col: (0, 1, 0)
+</code></pre></div></div>
+
+<h2 id="put-a-map-in-an-image-layout">Put a Map in an Image Layout</h2>
+
+<p><a href="EBSD.gridify.html">gridify</a> accepts a layout and stores a square-grid map in that
+order. <a href="EBSDGrid_py.html">Gridded EBSD Data</a> introduces the named layouts <code class="language-plaintext highlighter-rouge">'columnMajor'</code>
+and <code class="language-plaintext highlighter-rouge">'rowMajor'</code>. Give any other signed pair of axis directions as a <code class="language-plaintext highlighter-rouge">gridLayout</code>.</p>
+
+<p>Start again from the imported map. Suppose the detector was mounted a quarter turn from
+the scan. Its rows run against x and its columns along y.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'trueEbsdWCCoSmall'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">gL</span> <span class="o">=</span> <span class="n">gridLayout</span><span class="p">(</span><span class="o">-</span><span class="n">xvector</span><span class="p">,</span> <span class="n">yvector</span><span class="p">)</span>
+<span class="n">gL</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gridLayout
+  row: (-1, 0, 0)
+  col: (0, 1, 0)
+</code></pre></div></div>
+
+<p>Store the map in that layout and display its resulting matrix shape.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsdI</span> <span class="o">=</span> <span class="n">gridify</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">gL</span><span class="p">)</span>
+
+<span class="n">ebsdI</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(128, 96)
+</code></pre></div></div>
+
+<p>No measurement was resampled or invented. On the same square lattice, a layout change
+applies only a transpose and two possible flips. It is safe for orientation data. For this
+pair the result is exactly a quarter turn.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">ebsdI</span><span class="p">.</span><span class="n">bc</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>True
+</code></pre></div></div>
+
+<p>Returning to the original layout is exact as well.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">gridify</span><span class="p">(</span><span class="n">ebsdI</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">layout</span><span class="p">).</span><span class="n">bc</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>True
+</code></pre></div></div>
+
+<p>The specimen has not moved. A layout changes how measurements are stored, not where they
+are. MTEX adjusts the screen mapping, so both maps still plot the same way up.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">newMtexFigure</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'gray'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'as imported'</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsdI</span><span class="p">,</span> <span class="n">ebsdI</span><span class="p">.</span><span class="n">bc</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'gray'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'row ||-x, col ||y'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDMapsAndImages-21.png" /></center>
+
+<p>The same WC grains occupy the same screen positions in both panels even though the two
+band-contrast matrices are quarter-turn permutations.</p>
+
+<h2 id="compare-the-rasters-pixel-by-pixel">Compare the Rasters Pixel by Pixel</h2>
+
+<p>Agreeing frames and layouts makes the rasters geometrically comparable, but pixel-wise
+operations also require one common grid. The EBSD spacing is 0.159 micron here, whereas
+the image spacing is 0.0795 micron.</p>
+
+<p><a href="mapImage.interp.html">interp</a> samples an image at arbitrary positions. A bare array
+carries no physical origin, so state where the centre of its first pixel lies. The origin
+and pixel size must use the same length unit as the EBSD positions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mgI</span> <span class="o">=</span> <span class="n">mapImage</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">fsdT1</span><span class="p">,</span> <span class="n">dxy</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">pixSzImg</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">ebsd</span><span class="p">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="n">ebsd</span><span class="p">.</span><span class="n">fsdT1</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">mgI</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">pos</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The image is now a per-pixel property: one value per measurement point, indexed and subset
+in lockstep with the map. It travels through cropping, gridding and indexing with the EBSD
+data. The two channels can now be passed side by side to image-processing tools.</p>
+
+<p>Image values are interpolated linearly by default, and positions outside the image return
+<code class="language-plaintext highlighter-rouge">NaN</code>. No EBSD orientation is interpolated in this step.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">newMtexFigure</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'band contrast'</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">fsdT1</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'forescatter on EBSD grid'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'gray'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDMapsAndImages-23.png" /></center>
+
+<p>The same grain-scale features occupy roughly the same places in both panels. Their edges do
+not overlay perfectly, which shows that matching frames, layouts, origins and pixel sizes is
+necessary but not sufficient.</p>
+
+<h2 id="from-bookkeeping-to-registration">From Bookkeeping to Registration</h2>
+
+<p>Beam drift during a scan, camera motion between acquisitions and specimen tilt all change
+positions continuously. They are not layout problems. Each is a
+<a href="EBSDSpatialTransform_py.html">spatial transform</a> that can be fitted from corresponding image
+features and then removed.</p>
+
+<p><a href="EBSDTrueEbsd_py.html">TrueEBSD Distortion Correction</a> performs that workflow. It starts with
+exactly the sequence built here: entries that agree about the specimen frame, array order
+and pixel grid.</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<p>Britton et al., <a href="https://doi.org/10.1016/j.matchar.2016.04.008"><em>Tutorial: Crystal orientations and EBSD - or which way is
+up?</em></a>. <em>Materials Characterization</em> 117
+(2016), 113-126. The paper gives a practical calibration of specimen, diffraction-pattern
+and crystal frames.</p>
+
+<p><a href="https://www.iso.org/standard/82749.html">ISO 24173:2024</a>, <em>Microbeam analysis -
+Guidelines for orientation measurement using electron backscatter diffraction</em>. The
+standard covers specimen preparation, instrument configuration, calibration and
+acquisition.</p>
+
+<p>Tong and Britton, <a href="https://doi.org/10.1016/j.ultramic.2020.113130"><em>TrueEBSD: Correcting spatial distortions in electron backscatter
+diffraction maps</em></a>. <em>Ultramicroscopy</em> 221
+(2021), 113130. The paper describes the method used by the next tutorial.</p>
+
+<p>Zitová and Flusser, <a href="https://doi.org/10.1016/S0262-8856(03)00137-9"><em>Image registration methods: a
+survey</em></a>. <em>Image and Vision Computing</em> 21
+(2003), 977-1000. The survey relates feature detection, matching, transform fitting and
+resampling.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>A list of images is a <code class="language-plaintext highlighter-rouge">mapImageList</code>, a Python list that displays as MATLAB’s table of a
+<code class="language-plaintext highlighter-rouge">mapImage</code> array; <code class="language-plaintext highlighter-rouge">rescale</code>, <code class="language-plaintext highlighter-rouge">imboxfilt</code>, <code class="language-plaintext highlighter-rouge">transformReferenceFrame</code> and <code class="language-plaintext highlighter-rouge">plot</code> take one
+image or a list. Pixels are counted from zero, so the origin is the centre of pixel
+<code class="language-plaintext highlighter-rouge">(0, 0)</code>. Moving a map never reorders its arrays: <code class="language-plaintext highlighter-rouge">rotate</code> keeps the array of a gridded map
+and turns its layout with the positions, where MATLAB stores the rotated map anew in its
+default layout. A new order is asked for explicitly, by <code class="language-plaintext highlighter-rouge">gridify(ebsd, gL)</code> or
+<code class="language-plaintext highlighter-rouge">transformReferenceFrame</code>.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSDMapsAndImages_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

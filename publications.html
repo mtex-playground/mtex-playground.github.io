@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="MTEX publications, cite MTEX, papers, BibTeX">
+
+
+<title>Publications | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/publications.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mtex-playground.github.io/publications.html#page",
+      "name": "Publications",
+      "headline": "Publications",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/publications.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/publications.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/publications.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+</head>
+
+<body class="mx-body">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+<main class="mx-page">
+
+
+<div class="mx-wrap">
+  <div class="mx-pagehead">
+    <div class="mx-eyebrow">Publications</div>
+    <h1>The papers behind MTEX</h1>
+    <p>If MTEX was part of your research, please cite the paper that describes the method you used. Most of them come with the MTEX scripts that draw their figures.</p>
+  </div>
+
+  <div class="mx-citing">
+    <div class="mx-citing-main">
+      <h2>Citing MTEX in general</h2>
+      <p class="mx-citing-ref">F. Bachmann, R. Hielscher, H. Schaeben: <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>. Solid State Phenomena 160, 63-68 (2010). <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63">doi:10.4028/www.scientific.net/SSP.160.63</a></p>
+<pre class="mx-citing-bib"><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+    </div>
+    <div class="mx-citing-for">
+      <h2>Which paper for what</h2>
+      <ul>
+        
+        <li><a href="#texture-analysis-with-mtex-free-and-open-source-software-toolbox"><span>MTEX in general</span><small>Bachmann et al. 2010</small></a></li>
+        
+        <li><a href="#a-unified-framework-for-grain-boundary-distributions-in-textured-materials"><span>Grain boundary distributions</span><small>Hielscher et al. 2026</small></a></li>
+        
+        <li><a href="#on-the-role-of-the-double-fourier-sphere-method-in-fast-algorithms-on-so-3"><span>Fast harmonic transforms on SO(3)</span><small>Hielscher &amp; Wünsche 2026</small></a></li>
+        
+        <li><a href="#habit-plane-determination-from-reconstructed-parent-phase-orientation-maps"><span>Habit planes</span><small>Nyyssönen et al. 2023</small></a></li>
+        
+        <li><a href="#parent-grain-reconstruction-from-partially-or-fully-transformed-microstructures-in-mtex"><span>Parent grain reconstruction</span><small>Niessen et al. 2022</small></a></li>
+        
+        <li><a href="#locally-isometric-embeddings-of-quotients-of-the-rotation-group-modulo-finite-symmetries"><span>Embeddings of orientations</span><small>Hielscher &amp; Lippert 2021</small></a></li>
+        
+        <li><a href="#gazing-at-crystal-balls-electron-backscatter-diffraction-pattern-analysis-and-cross-correlation-on-the-sphere"><span>Kikuchi pattern analysis</span><small>Hielscher et al. 2019</small></a></li>
+        
+        <li><a href="#denoising-of-crystal-orientation-maps"><span>Denoising EBSD maps</span><small>Hielscher et al. 2019</small></a></li>
+        
+        <li><a href="#on-three-dimensional-misorientation-spaces"><span>Misorientation spaces</span><small>Krakow et al. 2017</small></a></li>
+        
+        <li><a href="#orientations-perfectly-colored"><span>Orientation colour keys</span><small>Nolze &amp; Hielscher 2016</small></a></li>
+        
+        <li><a href="#descriptive-tools-for-the-analysis-of-texture-projects-with-large-datasets-using-mtex-strength-symmetry-and-components"><span>Texture strength and components</span><small>Mainprice et al. 2014</small></a></li>
+        
+        <li><a href="#calculating-anisotropic-physical-properties-from-texture-data-using-the-mtex-open-source-package"><span>Tensors and physical properties</span><small>Mainprice et al. 2011</small></a></li>
+        
+        <li><a href="#grain-detection-from-2d-and-3d-ebsd-data-specification-of-the-mtex-algorithm"><span>Grain reconstruction</span><small>Bachmann et al. 2011</small></a></li>
+        
+        <li><a href="#inferential-statistics-of-electron-backscatter-diffraction-data-from-within-individual-crystalline-grains"><span>Orientation statistics within grains</span><small>Bachmann et al. 2010</small></a></li>
+        
+        <li><a href="#a-novel-pole-figure-inversion-method-specification-of-the-mtex-algorithm"><span>ODFs from pole figures</span><small>Hielscher &amp; Schaeben 2008</small></a></li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+  <div class="mx-pubs">
+    
+    <section class="mx-pubyear">
+      <h2>2026</h2>
+      <div>
+        
+        <article class="mx-pub" id="a-harmonic-framework-for-vector-fields-and-differential-operators-on-so-3">
+          <h3><a href="https://arxiv.org/abs/2608.21235">A harmonic framework for vector fields and differential operators on SO(3)</a></h3>
+          <p>R. Hielscher, E. Wünsche<br><i>Preprint</i></p>
+          <div class="mx-pub-links">
+            
+            <a href="https://arxiv.org/abs/2608.21235">arXiv:2608.21235</a>
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/HarmonicVectorFieldRepresentationOnSO3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="a-unified-framework-for-grain-boundary-distributions-in-textured-materials">
+          <h3><a href="https://arxiv.org/abs/2604.17997">A unified framework for grain boundary distributions in textured materials</a></h3>
+          <p>R. Hielscher, R. Kilian, E. Wünsche, K. Marquardt<br><i>Preprint</i></p>
+          <div class="mx-pub-links">
+            
+            <a href="https://arxiv.org/abs/2604.17997">arXiv:2604.17997</a>
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/GBDistributions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="three-dimensional-shape-metrics-for-martensite-and-bainite-from-two-dimensional-orientation-maps">
+          <h3><a href="https://doi.org/10.1016/j.actamat.2026.122306">Three-dimensional shape metrics for martensite and bainite from two-dimensional orientation maps</a></h3>
+          <p>T. Nyyssönen, A. Ståhlkrantz, A. A. Gazder, R. Hielscher, F. Niessen<br><i>Acta Materialia 313, 122306</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.actamat.2026.122306">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="on-the-role-of-the-double-fourier-sphere-method-in-fast-algorithms-on-so-3">
+          <h3><a href="https://doi.org/10.1016/j.acha.2026.101907">On the role of the double Fourier sphere method in fast algorithms on SO(3)</a></h3>
+          <p>R. Hielscher, E. Wünsche<br><i>Applied and Computational Harmonic Analysis 85, 101907</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.acha.2026.101907">DOI</a>
+            <a href="https://arxiv.org/abs/2602.06677">arXiv:2602.06677</a>
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/DFSMethodonSO3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2024</h2>
+      <div>
+        
+        <article class="mx-pub" id="an-optimal-ansatz-space-for-moving-least-squares-approximation-on-spheres">
+          <h3><a href="https://doi.org/10.1007/s10444-024-10201-z">An optimal ansatz space for moving least squares approximation on spheres</a></h3>
+          <p>R. Hielscher, T. Pöschl<br><i>Advances in Computational Mathematics 50, 107</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1007/s10444-024-10201-z">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/MLSonSpheres"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2023</h2>
+      <div>
+        
+        <article class="mx-pub" id="habit-plane-determination-from-reconstructed-parent-phase-orientation-maps">
+          <h3><a href="https://doi.org/10.1016/j.actamat.2023.119035">Habit plane determination from reconstructed parent phase orientation maps</a></h3>
+          <p>T. Nyyssönen, A. A. Gazder, R. Hielscher, F. Niessen<br><i>Acta Materialia 255, 119035</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.actamat.2023.119035">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/habitPlane"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="approximating-the-derivative-of-manifold-valued-functions">
+          <h3><a href="https://doi.org/10.1016/j.jat.2022.105832">Approximating the derivative of manifold-valued functions</a></h3>
+          <p>R. Hielscher, L. Lippert<br><i>Journal of Approximation Theory 285, 105832</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.jat.2022.105832">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/manifoldValuedApproximation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2022</h2>
+      <div>
+        
+        <article class="mx-pub" id="the-variant-graph-approach-to-improved-parent-grain-reconstruction">
+          <h3><a href="https://doi.org/10.1016/j.mtla.2022.101399">The variant graph approach to improved parent grain reconstruction</a></h3>
+          <p>R. Hielscher, T. Nyyssönen, F. Niessen, A. A. Gazder<br><i>Materialia 22, 101399</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.mtla.2022.101399">DOI</a>
+            <a href="https://arxiv.org/abs/2201.02103">arXiv:2201.02103</a>
+            
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="parent-grain-reconstruction-from-partially-or-fully-transformed-microstructures-in-mtex">
+          <h3><a href="https://doi.org/10.1107/S1600576721011560">Parent grain reconstruction from partially or fully transformed microstructures in MTEX</a></h3>
+          <p>F. Niessen, T. Nyyssönen, A. A. Gazder, R. Hielscher<br><i>Journal of Applied Crystallography 55, 180–194</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1107/S1600576721011560">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/ParentGrainReconstruction"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="interplay-between-habit-plane-and-orientation-relationship-in-an-electron-backscatter-diffraction-analysis-using-the-example-of-η-al8fe3-in-η-al5fe2">
+          <h3><a href="https://doi.org/10.3390/cryst12060813">Interplay between habit plane and orientation relationship in an electron backscatter diffraction analysis: using the example of η′-Al<sub>8</sub>Fe<sub>3</sub> in η-Al<sub>5</sub>Fe<sub>2</sub></a></h3>
+          <p>H. Becker, R. Hielscher, A. Leineweber<br><i>Crystals 12, 813</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.3390/cryst12060813">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/EtaHabitPlane"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2021</h2>
+      <div>
+        
+        <article class="mx-pub" id="locally-isometric-embeddings-of-quotients-of-the-rotation-group-modulo-finite-symmetries">
+          <h3><a href="https://doi.org/10.1016/j.jmva.2021.104764">Locally isometric embeddings of quotients of the rotation group modulo finite symmetries</a></h3>
+          <p>R. Hielscher, L. Lippert<br><i>Journal of Multivariate Analysis 185, 104764</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.jmva.2021.104764">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2019</h2>
+      <div>
+        
+        <article class="mx-pub" id="gazing-at-crystal-balls-electron-backscatter-diffraction-pattern-analysis-and-cross-correlation-on-the-sphere">
+          <h3><a href="https://doi.org/10.1016/j.ultramic.2019.112836">Gazing at crystal balls: electron backscatter diffraction pattern analysis and cross correlation on the sphere</a></h3>
+          <p>R. Hielscher, F. Bartel, T. B. Britton<br><i>Ultramicroscopy 207, 112836</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.ultramic.2019.112836">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/GazingAtCrystalBalls"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="denoising-of-crystal-orientation-maps">
+          <h3><a href="https://doi.org/10.1107/S1600576719009075">Denoising of crystal orientation maps</a></h3>
+          <p>R. Hielscher, C. Silbermann, E. Schmidl, J. Ihlemann<br><i>Journal of Applied Crystallography 52, 984–996</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1107/S1600576719009075">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/DenoisingCrystalOrientationMaps"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2017</h2>
+      <div>
+        
+        <article class="mx-pub" id="on-three-dimensional-misorientation-spaces">
+          <h3><a href="https://doi.org/10.1098/rspa.2017.0274">On three-dimensional misorientation spaces</a></h3>
+          <p>R. Krakow, R. J. Bennett, D. N. Johnstone, Z. Vukmanovic, W. Solano-Alvarez, S. J. Lainé, J. F. Einsle, P. A. Midgley, C. M. F. Rae, R. Hielscher<br><i>Proceedings of the Royal Society A 473, 20170274</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1098/rspa.2017.0274">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/3dMisorientationSpace"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2016</h2>
+      <div>
+        
+        <article class="mx-pub" id="orientations-perfectly-colored">
+          <h3><a href="https://doi.org/10.1107/S1600576716012942">Orientations – perfectly colored</a></h3>
+          <p>G. Nolze, R. Hielscher<br><i>Journal of Applied Crystallography 49, 1786–1802</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1107/S1600576716012942">DOI</a>
+            
+            <a class="mx-pub-scripts" href="https://github.com/mtex-toolbox/mtex-paper/tree/master/orientationsPerfectlyColored"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" /></svg>MTEX scripts</a>
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2014</h2>
+      <div>
+        
+        <article class="mx-pub" id="descriptive-tools-for-the-analysis-of-texture-projects-with-large-datasets-using-mtex-strength-symmetry-and-components">
+          <h3><a href="https://doi.org/10.1144/SP409.8">Descriptive tools for the analysis of texture projects with large datasets using MTEX: strength, symmetry and components</a></h3>
+          <p>D. Mainprice, F. Bachmann, R. Hielscher, H. Schaeben<br><i>Geological Society, London, Special Publications 409, 251–271</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1144/SP409.8">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="calculating-anisotropic-piezoelectric-properties-from-texture-data-using-the-mtex-open-source-package">
+          <h3><a href="https://doi.org/10.1144/SP409.2">Calculating anisotropic piezoelectric properties from texture data using the MTEX open source package</a></h3>
+          <p>D. Mainprice, F. Bachmann, R. Hielscher, H. Schaeben, G. E. Lloyd<br><i>Geological Society, London, Special Publications 409, 223–249</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1144/SP409.2">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2011</h2>
+      <div>
+        
+        <article class="mx-pub" id="calculating-anisotropic-physical-properties-from-texture-data-using-the-mtex-open-source-package">
+          <h3><a href="https://doi.org/10.1144/SP360.10">Calculating anisotropic physical properties from texture data using the MTEX open source package</a></h3>
+          <p>D. Mainprice, R. Hielscher, H. Schaeben<br><i>Geological Society, London, Special Publications 360, 175–192</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1144/SP360.10">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="grain-detection-from-2d-and-3d-ebsd-data-specification-of-the-mtex-algorithm">
+          <h3><a href="https://doi.org/10.1016/j.ultramic.2011.08.002">Grain detection from 2d and 3d EBSD data – specification of the MTEX algorithm</a></h3>
+          <p>F. Bachmann, R. Hielscher, H. Schaeben<br><i>Ultramicroscopy 111, 1720–1733</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1016/j.ultramic.2011.08.002">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2010</h2>
+      <div>
+        
+        <article class="mx-pub" id="inferential-statistics-of-electron-backscatter-diffraction-data-from-within-individual-crystalline-grains">
+          <h3><a href="https://doi.org/10.1107/S002188981003027X">Inferential statistics of electron backscatter diffraction data from within individual crystalline grains</a></h3>
+          <p>F. Bachmann, R. Hielscher, P. E. Jupp, W. Pantleon, H. Schaeben, E. Wegert<br><i>Journal of Applied Crystallography 43, 1338–1355</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1107/S002188981003027X">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="texture-analysis-with-mtex-free-and-open-source-software-toolbox">
+          <h3><a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63">Texture analysis with MTEX – free and open source software toolbox</a></h3>
+          <p>F. Bachmann, R. Hielscher, H. Schaeben<br><i>Solid State Phenomena 160, 63–68</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+        <article class="mx-pub" id="orientation-distribution-within-a-single-hematite-crystal">
+          <h3><a href="https://doi.org/10.1007/s11004-010-9271-z">Orientation distribution within a single hematite crystal</a></h3>
+          <p>R. Hielscher, H. Schaeben, H. Siemes<br><i>Mathematical Geosciences 42, 359–375</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1007/s11004-010-9271-z">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+    <section class="mx-pubyear">
+      <h2>2008</h2>
+      <div>
+        
+        <article class="mx-pub" id="a-novel-pole-figure-inversion-method-specification-of-the-mtex-algorithm">
+          <h3><a href="https://doi.org/10.1107/S0021889808030112">A novel pole figure inversion method: specification of the MTEX algorithm</a></h3>
+          <p>R. Hielscher, H. Schaeben<br><i>Journal of Applied Crystallography 41, 1024–1037</i></p>
+          <div class="mx-pub-links">
+            <a href="https://doi.org/10.1107/S0021889808030112">DOI</a>
+            
+            
+          </div>
+        </article>
+        
+      </div>
+    </section>
+    
+  </div>
+</div>
+
+</main>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

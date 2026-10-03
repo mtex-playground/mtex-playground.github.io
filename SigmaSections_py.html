@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Sigma Sections | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/SigmaSections_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SigmaSections_py.html#page",
+      "name": "Sigma Sections",
+      "headline": "Sigma Sections",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/SigmaSections_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SigmaSections_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SigmaSections_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Sigma Sections</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/SigmaSections.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/ODFAnalysis/SigmaSections.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>Sigma sections are two-dimensional slices through orientation space. They separate the
+specimen direction of a chosen crystal axis from the remaining rotation about that axis.
+This makes them especially useful for trigonal, tetragonal, and hexagonal textures with
+one distinguished axis.</p>
+
+<p>This page assumes the distinction between sections and projections from
+<a href="ODFPlot_py.html">Visualizing ODFs</a>. The classical alternative is introduced in
+<a href="EulerAngleSections_py.html">Euler Angle Sections</a>, and crystal directions are introduced
+in <a href="CrystalDirections_py.html">Crystal Directions</a>.</p>
+
+<p>A <em>plotting convention</em> states how the specimen reference frame appears on screen. The
+convention below draws specimen Y upward and specimen X to the right. It does not
+rotate the ODF or change its reference frame.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># the model ODF of the page, defined here so that the first plot can be read as an unknown texture
+</span><span class="k">def</span> <span class="nf">secretODF</span><span class="p">(</span><span class="n">CS</span><span class="p">):</span>
+  <span class="n">ori</span> <span class="o">=</span> <span class="n">cat</span><span class="p">(</span><span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">CS</span><span class="p">),</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">70</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">CS</span><span class="p">),</span>
+            <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">80</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">CS</span><span class="p">),</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">90</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">90</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">CS</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="a-texture-that-is-hard-to-read-in-euler-sections">A Texture That Is Hard to Read in Euler Sections</h2>
+
+<p>The model ODF contains several localized components. Its definition is kept at the top
+of the script so that the first plot can be read as an unknown texture. The plot uses
+classical sections of constant third Bunge angle \(\varphi_2\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="s">'Ti-Titanium-alpha.cif'</span><span class="p">)</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="n">secretODF</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+
+<span class="n">plotSection</span><span class="p">(</span><span class="n">odf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-5.png" /></center>
+
+<p>Try to answer three questions from the Euler sections.</p>
+
+<ol>
+  <li>How many components make up the ODF?</li>
+  <li>What would its c-axis pole figure look like?</li>
+  <li>What would its a-axis pole figure look like?</li>
+</ol>
+
+<p>The components are spread across the Euler panels, so their number and pole-figure
+paths are difficult to recognize. Sigma sections reorganize the same orientation
+coordinates around the distinguished axis.</p>
+
+<h2 id="the-coordinates-of-a-sigma-section">The Coordinates of a Sigma Section</h2>
+
+<p>Let an orientation \(g\) have Bunge Euler angles \((\varphi_1,\Phi,\varphi_2)\). For this
+hexagonal crystal, the polar coordinates \((\Phi,\varphi_1)\) locate \(g\vec c^*\) in the
+specimen pole figure. The third Euler angle controls the remaining rotation about this
+transformed axis.</p>
+
+<p><a href="sigmaSections.html">sigmaSections</a> uses \(\vec h_1=\vec c^*\) for the pole position and
+\(\vec h_2=\vec a\) for the remaining rotation. Direct \(\vec c\) and reciprocal \(\vec c^*\)
+are parallel in this example. The distinction matters for a general lattice.</p>
+
+<p>At each pole position \(\vec r=g\vec h_1\), MTEX supplies a tangent reference direction
+\(\mathbf{v}_{\mathrm{ref}}(\vec r)\). The section angle is the signed angle about
+\(\vec r\) from that reference direction to \(g\vec h_2\),</p>
+
+\[\sigma = \angle_{\vec r}\left(\mathbf{v}_{\mathrm{ref}}(\vec r), g\vec h_2\right).\]
+
+<p>Hexagonal symmetry makes rotations separated by \(60^{\circ}\) equivalent for the default
+axes. MTEX therefore uses six sections spanning one \(60^{\circ}\) period. First inspect
+the section at \(\sigma=0^{\circ}\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oS</span> <span class="o">=</span> <span class="n">sigmaSections</span><span class="p">(</span><span class="n">odf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">odf</span><span class="p">.</span><span class="n">SS</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">oS</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-6.png" /></center>
+
+<p>Each position in the disc gives the specimen direction of \(\vec c^*\). The small
+background arrow gives the local reference direction for \(\vec a\). Together, the
+position and arrow specify an orientation.</p>
+
+<p><a href="orientation.map.html">orientation.map</a> constructs two orientations with known axis
+alignments. The first maps \(\vec c\) to specimen Z and \(\vec a\) to specimen X.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori1</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">cs</span><span class="p">.</span><span class="n">cAxis</span><span class="p">,</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">Z</span><span class="p">,</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">,</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The second maps \(\vec c\) to specimen X and \(\vec a\) to specimen negative Z.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori2</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">cs</span><span class="p">.</span><span class="n">cAxis</span><span class="p">,</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">,</span> <span class="o">-</span><span class="n">vector3d</span><span class="p">.</span><span class="n">Z</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">quiver</span><span class="p">(</span><span class="n">ori1</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">(),</span> <span class="n">ori1</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">()</span> <span class="o">*</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">quiver</span><span class="p">(</span><span class="n">ori2</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">(),</span> <span class="n">ori2</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">()</span> <span class="o">*</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-8.png" /></center>
+
+<p>The first orientation lies at the centre because its c-axis points along Z. The second
+lies at specimen X and at specimen -X. <code class="language-plaintext highlighter-rouge">symmetrise</code> draws all six symmetry-equivalent
+a-axes at each position, so every marker is a six-pointed star; one ray of each star
+follows the small background arrow.</p>
+
+<h2 id="following-orientations-through-all-sections">Following Orientations Through All Sections</h2>
+
+<p>Orientations whose a-axes make other angles with the reference field belong in other
+panels, each drawn with the background arrows rotated. Construct the default
+six-section geometry and add three orientations with their transformed a-axes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oS</span> <span class="o">=</span> <span class="n">sigmaSections</span><span class="p">(</span><span class="n">odf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">odf</span><span class="p">.</span><span class="n">SS</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">oS</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+
+<span class="n">ori1</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">40</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">ori2</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">200</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">80</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">110</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">ori3</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">40</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">quiver</span><span class="p">(</span><span class="n">ori1</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">(),</span> <span class="n">ori1</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">()</span> <span class="o">*</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">quiver</span><span class="p">(</span><span class="n">ori2</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">(),</span> <span class="n">ori2</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">()</span> <span class="o">*</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">quiver</span><span class="p">(</span><span class="n">ori3</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">(),</span> <span class="n">ori3</span><span class="p">.</span><span class="n">symmetrise</span><span class="p">()</span> <span class="o">*</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'blue'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-9.png" /></center>
+
+<p>Each coloured star of a-axes appears only in the panel that contains its orientation:
+blue at \(\sigma=10^{\circ}\), red at \(30^{\circ}\) and green at \(40^{\circ}\). The same
+orientations can be drawn as crystal shapes instead of arrows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cS</span> <span class="o">=</span> <span class="n">crystalShape</span><span class="p">.</span><span class="nb">hex</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+<span class="n">ori</span> <span class="o">=</span> <span class="n">cat</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span> <span class="n">ori2</span><span class="p">,</span> <span class="n">ori3</span><span class="p">)</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">ori</span> <span class="o">*</span> <span class="n">cS</span><span class="p">),</span> <span class="n">oS</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-10.png" /></center>
+
+<p>The crystal shapes make both parts of the coordinate visible. The crystal at the centre
+of the \(\sigma=10^{\circ}\) panel is seen down its c-axis and appears as a regular
+hexagon; the other two tilt with their c-axis, and their basal edges follow the rotation
+assigned to their panel.</p>
+
+<h2 id="reading-the-model-odf">Reading the Model ODF</h2>
+
+<p>Plot the model from the first section with the same sigma geometry.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">oS</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-11.png" /></center>
+
+<p>Four compact maxima are now distinct, one to a panel. The maximum in the
+\(\sigma=30^{\circ}\) panel sits at the centre: its c-axis is parallel to specimen Z and
+its a-axis parallel to specimen Y. In the panels at \(40^{\circ}\), \(50^{\circ}\) and
+\(0^{\circ}\) the c-axis turns towards X in steps of \(30^{\circ}\) while the a-axis turns
+towards Z.</p>
+
+<p>This reading predicts a c-axis girdle from Z to X and a complementary a-axis girdle.
+The two pole figures confirm those paths.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">cat</span><span class="p">(</span><span class="n">cs</span><span class="p">.</span><span class="n">cAxis</span><span class="p">,</span> <span class="n">cs</span><span class="p">.</span><span class="n">aAxis</span><span class="p">))</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-12.png" /></center>
+
+<p>The pole figures show the predicted girdles, but they give only the axis directions and
+not the rotation about them. A pole figure integrates the ODF along an
+<a href="OrientationFibre_py.html">orientation fibre</a>, whereas a sigma section evaluates the ODF
+on one slice. A section is therefore not a pole figure with some intensity removed.</p>
+
+<h2 id="why-the-pole-position-alone-is-not-enough">Why the Pole Position Alone Is Not Enough</h2>
+
+<p>The c-axis pole figure has four maxima of about 11.5 mrd, at \(0^{\circ}\), \(30^{\circ}\),
+\(60^{\circ}\) and \(90^{\circ}\) from specimen Z. The last one lies on the rim and is
+drawn at both ends of it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cs</span><span class="p">))</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-13.png" /></center>
+
+<p>The pole figure stops there. The earlier sigma plot puts each of the four maxima into a
+different panel, so each of them carries a different rotation about its c-axis.</p>
+
+<p>The rim maximum is one component, not a fibre. Along the rim the ODF density is 32 mrd
+at \(\sigma=0^{\circ}\), 23 mrd in the two neighbouring panels and 1.4 mrd at
+\(\sigma=30^{\circ}\); that spread is the \(10^{\circ}\) halfwidth of the model kernel. A
+fibre would keep the same rim density in every panel, because the rotation about that
+c-axis would be free. Confirm a fibre by evaluating the ODF along the corresponding
+orientation fibre as shown in <a href="ODFPlot_py.html">Visualizing ODFs</a>. The pole figure alone
+cannot make either distinction.</p>
+
+<h2 id="customizing-the-axes-and-reference-field">Customizing the Axes and Reference Field</h2>
+
+<p>Reusing a <code class="language-plaintext highlighter-rouge">sigmaSections</code> object keeps the same geometry across plots. Change <code class="language-plaintext highlighter-rouge">h2</code> to
+measure the section angle with the \((10\bar10)\) direction instead of the default
+a-axis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oS</span> <span class="o">=</span> <span class="n">sigmaSections</span><span class="p">(</span><span class="n">odf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">odf</span><span class="p">.</span><span class="n">SS</span><span class="p">)</span>
+<span class="n">oS</span><span class="p">.</span><span class="n">h2</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+
+<span class="n">plotSection</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">oS</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-14.png" /></center>
+
+<p>The density represents the same ODF, but its features move between panels because the
+second direction now defines a different angular coordinate. The reference field itself
+can also be replaced, for example by</p>
+
+<p><code class="language-plaintext highlighter-rouge">oS.referenceField = S2VectorField.polar(xvector)</code></p>
+
+<p>The new field changes the zero of the section angle across the disc. It does not rotate
+the ODF.</p>
+
+<h2 id="splitting-a-different-pole-figure">Splitting a Different Pole Figure</h2>
+
+<p>The property <code class="language-plaintext highlighter-rouge">h1</code> chooses which crystal-direction pole figure supplies the positions in
+the panels. The second direction <code class="language-plaintext highlighter-rouge">h2</code> must be orthogonal to <code class="language-plaintext highlighter-rouge">h1</code> so that it can measure
+rotation about the pole direction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oS</span><span class="p">.</span><span class="n">h1</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'hkil'</span><span class="p">,</span> <span class="n">odf</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">oS</span><span class="p">.</span><span class="n">h2</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">odf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="s">'UVTW'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The new <code class="language-plaintext highlighter-rouge">h1</code> is not a crystal symmetry axis. Its rotation has no reduced \(60^{\circ}\)
+period, so the sections must cover the full \(360^{\circ}\). Twelve panels keep that full
+range readable.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oS</span><span class="p">.</span><span class="n">omega</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">331</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span> <span class="o">*</span> <span class="n">degree</span>
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">oS</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SigmaSections-17.png" /></center>
+
+<p>The final gallery now places \(g\vec h_1\), rather than \(g\vec c^*\), in each panel. The
+background arrows show the chosen zero direction for \(g\vec h_2\), and the panel labels
+give its rotation about \(g\vec h_1\).</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li>S. Matthies, K. Helming, and K. Kunze,
+<a href="https://doi.org/10.1002/pssb.2221570105">On the Representation of Orientation Distributions in Texture Analysis by Sigma-Sections. I</a>,
+<em>physica status solidi (b)</em> 157 (1990), 71–83, develops the general geometry and
+interpretation of sigma sections.</li>
+  <li>S. Matthies, K. Helming, and K. Kunze,
+<a href="https://doi.org/10.1002/pssb.2221570202">On the Representation of Orientation Distributions in Texture Analysis by Sigma-Sections. II</a>,
+<em>physica status solidi (b)</em> 157 (1990), 489–507, treats crystal and specimen
+symmetry and gives worked examples.</li>
+  <li>H.-J. Bunge, <a href="https://doi.org/10.1016/C2013-0-11769-2">Texture Analysis in Materials Science: Mathematical Methods</a>,
+Butterworths, English ed., 1982, develops ODFs, pole figures, and classical Euler
+sections.</li>
+  <li>D. Chateigner, L. Lutterotti, and M. Morales,
+<a href="https://doi.org/10.1107/97809553602060000968">Quantitative Texture Analysis and Combined Analysis</a>,
+<em>International Tables for Crystallography H</em>, ch. 5.3, 2019, relates Euler
+coordinates, ODFs, and pole-figure projections in a common reference-frame
+description.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Compare the other section families and their shared options in
+<a href="EulerAngleSections_py.html">Euler Angle Sections</a>. Continue with
+<a href="ODFPoleFigure_py.html">Pole Figures</a> to study the projection that a sigma section uses as
+its positional coordinate. Then use <a href="ODFComponents_py.html">Component Analysis</a> to
+quantify the maxima found in a section plot.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>The local function MATLAB keeps at the end of its script is defined at the top here, as
+Python needs it before its call. The reference field of a section object is the method
+<code class="language-plaintext highlighter-rouge">oS.referenceField(r)</code>; replacing it by another field is not ported, so that example
+stays as prose. The section values are set through <code class="language-plaintext highlighter-rouge">oS.omega</code> or <code class="language-plaintext highlighter-rouge">oS.sigma</code>.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SigmaSections_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

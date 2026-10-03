@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Importing EBSD Data | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="An EBSD map represents a list of measurements, whatever layout the file uses on disk. Each measurement has a position, a phase and an orientation. Importing turns that list into an EBSD variable and supplies the crystallography and reference frames needed to interpret it.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSDImport.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSDImport.html#page",
+      "name": "Importing EBSD Data",
+      "headline": "Importing EBSD Data",
+      "description": "An EBSD map represents a list of measurements, whatever layout the file uses on disk. Each measurement has a position, a phase and an orientation. Importing turns that list into an EBSD variable and supplies the crystallography and reference frames needed to interpret it.",
+      "url": "https://mtex-playground.github.io/EBSDImport.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSDImport.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSDImport.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Importing EBSD Data</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Importing EBSD Data</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_EBSDImport.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/EBSDAnalysis/EBSDImport.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>An EBSD map represents a list of measurements, whatever layout the file uses on disk. Each measurement has a position, a phase and an orientation. Importing turns that list into an <a href="EBSD.EBSD.html">EBSD</a> variable and supplies the crystallography and reference frames needed to interpret it.</p>
+<p>Before starting, identify the specimen directions and check the phase names, lattice parameters and crystal-axis alignments reported by the acquisition software. <a href="OrientationDefinition.html">Orientations</a> explains how an orientation relates the crystal and specimen frames.</p>
+<p> <a href="EBSD.load.html"><code class="language-plaintext highlighter-rouge">EBSD.load</code></a> chooses the interface from the file extension. The first import needs only a filename.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↓→x'</span><span class="p">);</span>
+
+<span class="nb">fileName</span> <span class="o">=</span> <span class="p">[</span><span class="n">mtexEBSDPath</span> <span class="nb">filesep</span> <span class="s1">'EMSphinx.h5'</span><span class="p">];</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="nb">fileName</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">════════════════════════════════════════════════════════════════════════════════
+HDF5 CONFIGURATION LOADED
+├── Manufacturer : EMSphInx
+├── Data sets    : 4
+│   ▸ [1] Scan 1/EBSD
+│     [2] Scan 2/EBSD
+│     [3] Scan 3/EBSD
+│     [4] Scan 4/EBSD
+└── Pick one by EBSD.load(fname,'dataSet',4) or 'dataSet','Scan 4/EBSD'
+════════════════════════════════════════════════════════════════════════════════
+ 
+ebsd = EBSDsquare (y↓→x, row↓→col)
+ 
+ Phase  Orientations           Mineral         Color  Symmetry  Crystal reference frame
+     0  2148 (0.44%)    Fe(alpha-iron)  LightSkyBlue      m-3m                         
+     1  478052 (99%)    Fe(gamma-iron)  DarkSeaGreen      m-3m                         
+     2     4940 (1%)  Co(alpha-cobalt)     Goldenrod     6/mmm        X||a, Y||b*, Z||c
+ 
+ Properties: IQ, Metric, oldId
+ Scan unit : um
+ X × Y × Z : [0 → 382] × [0 → 203] × [0 → 0]
+ Normal vector: (0,0,1)
+ Square grid  :508 × 955
+ dataSet: /Scan 1/EBSD
+ dataSets: Scan 1/EBSD Scan 2/EBSD Scan 3/EBSD Scan 4/EBSD</code></pre></figure>
+<p>Read this display once. It is the inventory for everything that follows. The file contains four scans, and the triangle in the data-set list marks the first as the one imported. Three indexed phases arrived with lattice parameters, and the cobalt phase states its crystal-axis alignment. Two phases are cubic, and 99% of the measurements are gamma iron. The square grid has 508 &times; 955 cells and covers about 382 &times; 203 microns.</p>
+<p>The display also lists <code class="language-plaintext highlighter-rouge">IQ</code>, <code class="language-plaintext highlighter-rouge">Metric</code> and <code class="language-plaintext highlighter-rouge">oldId</code> as <b>properties</b>. A property has one value per measurement and is subset together with the map. By contrast, the selected HDF5 path and the file header are scan-level <b>options</b> under <code class="language-plaintext highlighter-rouge">ebsd.opt</code>; they are not resized by a selection.</p>
+<p>A phase map is the quickest check that the scan footprint and phase inventory are plausible.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDImport_01.png" alt="" />
+
+</center>
+<p>Almost the entire map has the gamma-iron phase colour, as the 99% figure predicts. The sparse alpha-iron and cobalt measurements remain visible against it, so a wrong phase identifier would not be hidden by the total.</p>
+<p>This variable is the starting point for <a href="GrainReconstruction.html">grain reconstruction</a>, <a href="EBSD2ODF.html">ODF estimation</a> and <a href="Misorientations.html">misorientation analysis</a>.</p>
+<h2 id="4">What Import Cannot Guess</h2>
+<p>A <b>reference frame</b> is the coordinate system in which data are expressed. Two reference frames can be involved in an EBSD measurement: the frame of the map coordinates and the frame used for the Euler angles. Vendors align them differently, and a file does not always record their relationship.</p>
+<p>The failure mode is quiet. A map imported with the wrong relationship still plots, still reconstructs into grains and still yields pole figures. Those results are simply rotated or mirrored with respect to the specimen, and no number in the data set reveals the mistake.</p>
+<p>A <b>plotting convention</b> only states how a reference frame is laid out on screen. Changing it can turn the displayed map, but it cannot repair an incorrect relationship between the two frames. Supply that relationship during import, then follow <a href="EBSDReferenceFrame.html">Reference Frame Alignment</a> to validate it against a known specimen direction or microstructural feature.</p>
+<h2 id="5">The Import Wizard</h2>
+<p>The wizard is the interactive route through those choices. Start it with <a href="import_wizard.html"><code class="language-plaintext highlighter-rouge">import_wizard</code></a>. It works with EBSD, pole figure and ODF data.</p>
+<p>
+<center>
+<img class="inline" src="images/importWizard.png" alt="" />
+
+</center>
+</p>
+<p>Notice how the selected data set at lower left, the phase table across the top, and the map and Euler coordinate selectors at upper right are shown together. Changing an alignment redraws the map, so you can compare the result with the specimen rather than guess a vendor convention.</p>
+<p>The wizard can create the variable directly, but its more useful output is an import script. The script records every choice, runs without the wizard and provides a reproducible start for the rest of the analysis.</p>
+<h2 id="6">The Import Script</h2>
+<p>The essential part of a generated script is shown below. It records the phases, the screen alignment, the source file, the frame correction and a first plot.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% crystal symmetry</span>
+<span class="n">csList</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">notIndexed</span><span class="p">(),</span> <span class="k">...</span>
+  <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'m-3m'</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.8665</span> <span class="mf">2.8665</span> <span class="mf">2.8665</span><span class="p">],</span> <span class="k">...</span>
+    <span class="s1">'mineral'</span><span class="p">,</span> <span class="s1">'Fe(alpha-iron)'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="s1">'LightSkyBlue'</span><span class="p">),</span> <span class="k">...</span>
+  <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'m-3m'</span><span class="p">,</span> <span class="p">[</span><span class="mf">3.591</span> <span class="mf">3.591</span> <span class="mf">3.591</span><span class="p">],</span> <span class="k">...</span>
+    <span class="s1">'mineral'</span><span class="p">,</span> <span class="s1">'Fe(gamma-iron)'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="s1">'DarkSeaGreen'</span><span class="p">),</span> <span class="k">...</span>
+  <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'6/mmm'</span><span class="p">,</span> <span class="p">[</span><span class="mf">2.5071</span> <span class="mf">2.5071</span> <span class="mf">4.0686</span><span class="p">],</span> <span class="k">...</span>
+    <span class="s1">'mineral'</span><span class="p">,</span> <span class="s1">'Co(alpha-cobalt)'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="s1">'Goldenrod'</span><span class="p">,</span> <span class="k">...</span>
+    <span class="s1">'X||a'</span><span class="p">,</span> <span class="s1">'Y||b*'</span><span class="p">,</span> <span class="s1">'Z||c'</span><span class="p">)</span>
+<span class="p">];</span>
+
+<span class="c1">% how the map is aligned on screen</span>
+<span class="n">pC</span> <span class="o">=</span> <span class="n">plottingConvention</span><span class="p">(</span><span class="s1">'y↓→x'</span><span class="p">);</span>
+
+<span class="c1">% path to files</span>
+<span class="n">pname</span> <span class="o">=</span> <span class="n">mtexEBSDPath</span><span class="p">;</span>
+
+<span class="c1">% which files to be imported</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="p">[</span><span class="n">pname</span> <span class="nb">filesep</span> <span class="s1">'EMSphinx.h5'</span><span class="p">];</span>
+
+<span class="c1">% rotates the Euler angle reference frame onto the map reference frame</span>
+<span class="n">EulerCorrection</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">xvector</span><span class="p">,</span><span class="n">xvector</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="o">-</span><span class="n">zvector</span><span class="p">);</span>
+
+<span class="c1">% create an EBSD variable containing the data</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="n">csList</span><span class="p">,</span><span class="s1">'dataSet'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'EulerCorrection'</span><span class="p">,</span><span class="n">EulerCorrection</span><span class="p">,</span><span class="n">pC</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span>
+
+<span class="c1">% everything derived later that states no frame of its own follows this</span>
+<span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↓→x'</span><span class="p">);</span></code></pre></figure>
+<p>The crystal-symmetry calls state both a point group and a crystal frame. For cobalt, the X parallel a, Y parallel b-star and Z parallel c choices align the Cartesian crystal frame with the lattice basis; they are not part of the 6/mmm point group.</p>
+<p>
+<code class="language-plaintext highlighter-rouge">EulerCorrection</code> is a frame change from the Euler-angle frame to the map frame. Here it maps Euler \(x\) onto map \(x\) and Euler \(z\) onto minus map \(z\). This is the correction for a map with \(y\) pointing down when the Euler angles were measured with \(y\) pointing up.</p>
+<p>The convention <code class="language-plaintext highlighter-rouge">pC</code> is also passed into the import. Data in a named specimen frame carries that frame's plotting convention and would not otherwise follow a later session default.</p>
+<p>The wizard ends with an orientation plot. Unlike the phase map above, this plot checks that orientations and positions have arrived together as a spatially coherent map.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fe(gamma-iron)'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fe(gamma-iron)'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDImport_02.png" alt="" />
+
+</center>
+<p>Coherent elongated domains and smooth colour changes inside them show that the orientations have not been scrambled across the scan. An equally coherent map can still be rotated or mirrored, so this picture alone does not validate the reference frame. Use the known-direction tests on <a href="EBSDReferenceFrame.html">Reference Frame Alignment</a> for that.</p>
+<h2 id="9">Supported Data Formats</h2>
+<p>
+   <table class="usertable">
+      <tr>
+         <td>
+               <p>
+                  <a href="loadEBSD_ang.html">.ang</a>
+               </p>
+         </td>
+         <td>
+               <p>EDAX and EMSphInx text files</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="loadEBSD_ctf.html">.ctf</a>
+               </p>
+         </td>
+         <td>
+               <p>Oxford / HKL text files</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="loadEBSD_osc.html">.osc</a>
+               </p>
+         </td>
+         <td>
+               <p>EDAX binary files</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="loadEBSD_crc.html">.crc, .cpr</a>
+               </p>
+         </td>
+         <td>
+               <p>Oxford binary files</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="loadEBSD_h5.html">HDF5</a>
+               </p>
+         </td>
+         <td>
+               <p>.h5, .hdf5, .oh5, .h5oina, .edaxh5 and .dream3d</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="loadEBSD_generic.html">generic text</a>
+               </p>
+         </td>
+         <td>
+               <p>columns in a user-defined order</p>
+         </td>
+      </tr>
+   </table>
+</p>
+<p>The HDF5 interface reads Bruker, EDAX, Oxford, ThermoFisher, EMsoft and EMSphInx layouts. Prefer a documented, non-proprietary format when the acquisition software offers one. A published specification preserves the units, hierarchy and coordinate definitions needed to read the data later. Add a new HDF5 layout through the JSON configuration described in <a href="EBSDInterfaceHDF5.html">HDF5 Interface</a> rather than writing another HDF5 reader.</p>
+<p>The generic loader is the fallback for a text file that no vendor interface recognises. If it contains Euler angles, a phase and spatial coordinates as columns,</p>
+<pre>alpha_1 beta_1 gamma_1 phase_1 x_1 y_1
+alpha_2 beta_2 gamma_2 phase_2 x_2 y_2
+alpha_3 beta_3 gamma_3 phase_3 x_3 y_3
+.       .      .       .       .   .
+alpha_M beta_M gamma_M phase_M x_M y_M</pre>
+<p>then the wizard lets you assign each column. Orientations without spatial coordinates do not form a map; import them as described in <a href="OrientationImport.html">Importing Orientations</a>.</p>
+<h2 id="10">HDF5 Files With Several Data Sets</h2>
+<p>An HDF5 project file can hold more than one map. EDAX paths commonly contain <code class="language-plaintext highlighter-rouge">Area N/OIM Map N</code>, Oxford uses numbered slices, and EMSphInx uses <code class="language-plaintext highlighter-rouge">Scan N</code>. The opening import prints every available data set and marks the selected one. When no selection is supplied, the first entry is imported.</p>
+<p>Select another by its one-based number or by an unambiguous part of its name.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="s1">'dataSet'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="s1">'dataSet'</span><span class="p">,</span><span class="s1">'OIM Map 7'</span><span class="p">)</span></code></pre></figure>
+<p>The full imported HDF5 path is the scan-level option <code class="language-plaintext highlighter-rouge">ebsd.opt.dataSet</code>. The short names of all choices are stored in <code class="language-plaintext highlighter-rouge">ebsd.opt.dataSets</code>.</p>
+<p>To inspect a large file without reading its per-pixel arrays, use</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="s1">'headerOnly'</span><span class="p">)</span></code></pre></figure>
+<p>This returns an empty measurement list but still fills the phase list, phase map and <code class="language-plaintext highlighter-rouge">ebsd.opt.header</code>. A header is the scan-level information from the file preamble, such as acquisition settings and vendor records. Its field names retain the vendor's native layout; MTEX does not impose a common header schema. The available HDF5 data sets are listed as well.</p>
+<p>The import wizard uses this lightweight preview below its file browser. Selecting a row then imports that data set.</p>
+<h2 id="11">Raw and Post-Processed Data</h2>
+<p>An Oxford <code class="language-plaintext highlighter-rouge">h5oina</code> file may store the same map twice: as recorded by the detector under <code class="language-plaintext highlighter-rouge">EBSD</code> and after vendor processing under <code class="language-plaintext highlighter-rouge">Data Processing</code>. They are two data sets of one file. MTEX lists them together and puts the processed version first.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>                        <span class="c1">% post-processed</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="s1">'dataSet'</span><span class="p">,</span><span class="s1">'EBSD'</span><span class="p">)</span>       <span class="c1">% as recorded</span></code></pre></figure>
+<p>The recorded version usually retains more per-pixel properties, such as band contrast, band slope, pattern quality and pattern-centre values. The processed version may retain fewer properties but includes the vendor's bad-pixel cleanup. Both refer to the same specimen frame, so their orientations can be compared directly.</p>
+<p>A file that was never processed contains the recorded version alone and lists one data set per map.</p>
+<h2 id="12">Writing Your Own Interface</h2>
+<p>A format not covered above needs a loader function. The established name is <code class="language-plaintext highlighter-rouge">loadEBSD_xxx.m</code>, and the loaders in <code class="language-plaintext highlighter-rouge">mtex/interfaces</code> are examples. Return an <a href="EBSD.EBSD.html">EBSD</a> variable and call the new function directly while developing it.</p>
+<p>Current <code class="language-plaintext highlighter-rouge">EBSD.load</code> dispatch is explicit: placing a function in that folder does not by itself register a new extension. Full integration also requires adding the extension to <code class="language-plaintext highlighter-rouge">EBSDExtensions</code> and a dispatch case to <code class="language-plaintext highlighter-rouge">EBSD.load</code>. The import wizard uses the same extension list to decide which files it offers as EBSD data.</p>
+<h2 id="13">References</h2>
+<div>
+<ul>
+<li>A. J. Schwartz, M. Kumar, B. L. Adams and D. P. Field, editors, <a href="https://doi.org/10.1007/978-0-387-88136-2">Electron Backscatter Diffraction in Materials Science</a>, second edition, Springer, 2009, develops EBSD measurement, calibration and orientation mapping.</li>
+<li>T. B. Britton et al., <a href="https://doi.org/10.1016/j.matchar.2016.04.008">Tutorial: Crystal orientations and EBSD -- Or which way is up?</a>, <i>Materials Characterization</i> 117, 113--126, 2016, gives a practical calibration chain between detector, scan, specimen and crystal frames.</li>
+<li>
+<a href="https://www.iso.org/standard/82749.html">ISO 24173:2024</a>, <i>Microbeam analysis -- Guidelines for orientation measurement using electron backscatter diffraction</i>, specifies current guidance for reproducible orientation measurements, including specimen alignment and calibration.</li>
+<li>M. A. Jackson et al., <a href="https://doi.org/10.1186/2193-9772-3-4">h5ebsd: an archival data format for electron back-scatter diffraction data sets</a>, <i>Integrating Materials and Manufacturing Innovation</i> 3, 44--55, 2014, defines a vendor-neutral HDF5 archival layout.</li>
+<li>The <a href="https://github.com/oinanoanalysis/h5oina/blob/master/H5OINAFile.md">Oxford Instruments NanoAnalysis HDF5 File Specification</a> documents the public <code class="language-plaintext highlighter-rouge">h5oina</code> hierarchy, units and coordinate systems used by that format.</li>
+</ul>
+</div>
+<h2 id="14">Next</h2>
+<p>Continue with <a href="EBSDReferenceFrame.html">Reference Frame Alignment</a> before trusting any specimen-relative result. Then use <a href="EBSDPlotting.html">Plotting</a> to inspect map quantities and <a href="EBSDSelect.html">Selecting EBSD Data</a> to restrict the measurement list. <a href="EBSDExport.html">Exporting EBSD Data</a> covers writing the checked map back to disk.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSDImport.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

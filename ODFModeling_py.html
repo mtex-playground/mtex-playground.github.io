@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>ODF Modeling | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/ODFModeling_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/ODFModeling_py.html#page",
+      "name": "ODF Modeling",
+      "headline": "ODF Modeling",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/ODFModeling_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/ODFModeling_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/ODFModeling_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">ODF Modeling</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/ODFModeling.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/ODFAnalysis/ODFModeling.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>An orientation distribution function (ODF) does not have to come from a measurement. A
+<em>model ODF</em> is built from a few chosen ingredients: a preferred orientation and its
+spread, a fibre, or a mixture of these. Because its ingredients are known, a model ODF
+can serve as a reference for measured textures, as a starting point for
+texture-evolution simulations, or as test data with a known answer.</p>
+
+<p>This page assumes the normalization and multiples of a random distribution (mrd)
+introduced in <a href="ODFTheory_py.html">ODF Theory</a>. Every ODF in MTEX follows the
+<a href="SO3FunConcept_py.html">SO3Fun</a> interface for functions on the rotation group \(SO(3)\). The
+physical model and its numerical representation are related, but they are not the same
+choice:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>construction</th>
+      <th>meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="RadialODFs_py.html">uniform</a></td>
+      <td>constant, the untextured reference</td>
+    </tr>
+    <tr>
+      <td><a href="RadialODFs_py.html">unimodal</a></td>
+      <td>a radial peak about one orientation</td>
+    </tr>
+    <tr>
+      <td><a href="RadialODFs_py.html">multimodal</a></td>
+      <td>several radial peaks</td>
+    </tr>
+    <tr>
+      <td><a href="FibreODFs_py.html">fibre</a></td>
+      <td>a peak spread along a curve in orientation space</td>
+    </tr>
+    <tr>
+      <td><a href="BinghamODFs_py.html">Bingham</a></td>
+      <td>a parametric peak with three independent spreads</td>
+    </tr>
+    <tr>
+      <td><a href="SO3FunHarmonicRepresentation_py.html">harmonic representation</a></td>
+      <td>a series expansion, the classical form used for pole figure inversion</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Harmonic names a representation, not another physical peak shape. The current
+<a href="PoleFigure.calcODF.html">calcODF</a> normally returns a radial-basis ODF. It can then be
+converted to a harmonic series. All of these objects share one interface for
+evaluation, plotting, scaling, and addition. This is why components with different
+representations can be mixed in one model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="the-uniform-odf">The Uniform ODF</h2>
+
+<p>The simplest model is the constant function</p>
+
+\[f(g) = 1,\quad g \in SO(3).\]
+
+<p>It needs only the crystal and specimen symmetries. The returned summary is useful here:
+it records both symmetries and identifies the constant component.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'cubic'</span><span class="p">)</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="n">specimenFrame</span><span class="p">(</span><span class="s">'orthorhombic'</span><span class="p">)</span>
+
+<span class="n">odf</span> <span class="o">=</span> <span class="n">uniformODF</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span>
+<span class="n">odf</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunRBF (m3̅m → y↑→x)
+  uniform component
+    weight: 1
+</code></pre></div></div>
+
+<p>A value of 1 mrd everywhere is an untextured specimen. This uniform ODF is the reference
+against which every other mrd value is measured.</p>
+
+<h2 id="a-single-component">A Single Component</h2>
+
+<p>A unimodal ODF is a peak about one preferred orientation. A <a href="SO3Kernels_py.html">kernel</a>
+sets the shape, and its halfwidth sets the angular distance at which the kernel falls
+to half its maximum. The halfwidth is a spread parameter, not a cutoff: the component
+continues beyond that angle.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psi</span> <span class="o">=</span> <span class="n">SO3vonMisesFisherKernel</span><span class="p">(</span><span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">mod1</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byMiller</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span>
+
+<span class="n">odf1</span> <span class="o">=</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">mod1</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
+<span class="n">odf1</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunRBF (m3̅m → y↑→x)
+  unimodal component
+    kernel: von Mises Fisher, halfwidth 10°
+    center: 1 orientation
+    weight: 1
+    Bunge Euler angles in degree
+    phi1   Phi  phi2  weight
+     297  48.2  26.6       1
+</code></pre></div></div>
+
+<p>The summary records the kernel, centre, and component weight. The maximum sits at the
+preferred orientation and its symmetry-equivalent copies. Its value measures
+concentration rather than volume fraction. A narrower normalized peak has a higher
+maximum because its mean must remain one.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odfMax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">odf1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">odfMax</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>15.9612
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span> <span class="n">cat</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)),</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">colorRange</span><span class="o">=</span><span class="s">'equal'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ODFModeling-6.png" /></center>
+
+<p>The localized spots are projections of one preferred orientation and its
+symmetry-equivalent copies. They are not separate components.</p>
+
+<h2 id="mixtures">Mixtures</h2>
+
+<p>ODFs are added and scaled like functions, so a textured component can sit on a uniform
+background. The classical Santa Fe standard is 27 percent of the component above and 73
+percent uniform background.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf</span> <span class="o">=</span> <span class="mf">0.73</span> <span class="o">*</span> <span class="n">uniformODF</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.27</span> <span class="o">*</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">mod1</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
+<span class="n">odf</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunRBF (m3̅m → y↑→x)
+  uniform component
+    weight: 0.73
+  unimodal component
+    kernel: von Mises Fisher, halfwidth 10°
+    center: 1 orientation
+    weight: 0.27
+    Bunge Euler angles in degree
+    phi1   Phi  phi2  weight
+     297  48.2  26.6    0.27
+</code></pre></div></div>
+
+<p>The printed summary separates the uniform and unimodal terms. Both are individually
+normalized, so their coefficients act as mixture volume fractions. They must add up to
+one if the mixture is to remain normalized.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mean</span><span class="p">(</span><span class="n">odf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+</code></pre></div></div>
+
+<p>The mean is 1. The component peaks may overlap in orientation space, but the
+coefficients still describe the fractions assigned to the two terms. They are not
+volumes of disjoint regions drawn around the maxima.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">cat</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)),</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">colorRange</span><span class="o">=</span><span class="s">'equal'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ODFModeling-9.png" /></center>
+
+<p>The uniform term contributes a 0.73 mrd background, while the unimodal term produces the
+spots. This known model is commonly used to test pole figure inversion;
+<a href="PoleFigureSantaFe_py.html">The Santa Fe Example</a> simulates pole figures from it and scores
+the reconstruction against the answer.</p>
+
+<h2 id="rotating-a-model">Rotating a Model</h2>
+
+<p><a href="SO3Fun.rotate.html">rotate</a> actively moves a model relative to the specimen axes. By
+default, the rotation acts on the specimen side of every component orientation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odfRot</span> <span class="o">=</span> <span class="n">rotate</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">.</span><span class="n">Z</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">))</span>
+
+<span class="n">plotPF</span><span class="p">(</span><span class="n">odfRot</span><span class="p">,</span> <span class="n">cat</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)),</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">colorRange</span><span class="o">=</span><span class="s">'equal'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: Rotating an ODF with specimen symmetry will remove the specimen symmetry
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/ODFModeling-10.png" /></center>
+
+<p>Compared with the preceding pole figures, every feature turns by \(30^\circ\) about the
+centre. The original <code class="language-plaintext highlighter-rouge">mmm</code> specimen symmetry was tied to x, y, and z. It is no longer
+coordinate-aligned after this rotation, so MTEX drops the specimen-symmetry label and
+issues a warning. The physical twofold axes have rotated with the texture.</p>
+
+<p>A frame change is different: it re-expresses the same physical texture in another
+reference frame and leaves the texture itself untouched. Use
+<a href="SO3Fun.transformReferenceFrame.html">transformReferenceFrame</a> when the crystal frame
+changes. The corresponding coordinate transformation is inverse to an active rotation.</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://doi.org/10.1016/C2013-0-11769-2">Bunge, Texture Analysis in Materials Science</a> develops the mathematical foundations of ODFs and their representations.</li>
+  <li><a href="https://doi.org/10.1515/9783112736173">Matthies, Vinel, and Helming, Standard Distributions in Texture Analysis</a> is an atlas of cubic-orthorhombic model textures.</li>
+  <li><a href="https://doi.org/10.1063/1.1714396">Roe (1965)</a> gives the classical harmonic solution of the pole figure inversion problem.</li>
+  <li><a href="https://doi.org/10.1023/B:MATG.0000048799.56445.59">Kunze and Schaeben (2004)</a> develop quaternion Bingham distributions for texture analysis.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="ODFPlot_py.html">Plotting an ODF</a> compares the views used to inspect these models. The
+model-family pages begin with <a href="RadialODFs_py.html">Radial ODFs</a>.
+<a href="FibreODFs_py.html">Fibre ODFs</a> and <a href="BinghamODFs_py.html">Bingham ODFs</a> cover the other shapes
+listed above. <a href="RandomSampling_py.html">Random Sampling</a> turns a model back into discrete
+orientations, while <a href="ODFCharacteristics_py.html">Properties</a> extracts the numbers that
+describe any ODF.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>The sum of a uniform and a unimodal radial function stays one <code class="language-plaintext highlighter-rouge">SO3FunRBF</code>, as in MATLAB;
+the port lists the uniform part and the kernel centres in its display without MATLAB’s
+table of Euler angles. <code class="language-plaintext highlighter-rouge">max(odf)</code> returns the pair of the value and the orientation.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/ODFModeling_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

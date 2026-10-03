@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>ODF Estimation from EBSD Data | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSD2ODF_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSD2ODF_py.html#page",
+      "name": "ODF Estimation from EBSD Data",
+      "headline": "ODF Estimation from EBSD Data",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/EBSD2ODF_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSD2ODF_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSD2ODF_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">ODF Estimation from EBSD Data</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/EBSD2ODF.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/EBSDAnalysis/EBSD2ODF.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>An EBSD map records one orientation at every indexed measurement. That is a finite list
+of points, and a plot of that list shows where orientations occur but not how many.
+Answering <em>how much</em> of the specimen sits near an orientation needs a continuous
+density, and this page estimates one.</p>
+
+<p>The page assumes phase selection from <a href="EBSDSelect_py.html">Select EBSD Data</a> and the
+scatter plots of <a href="EBSDOrientationPlots_py.html">Plotting Individual Orientations</a>. A
+<em>reference frame</em> is the coordinate system in which the data are expressed. Check it as
+described in <a href="EBSDReferenceFrame_py.html">Reference Frame</a> before reading a specimen
+direction from any figure below.</p>
+
+<p>A <em>plotting convention</em> states how that frame is laid out on screen. The convention
+below draws specimen Y upward and specimen X to the right. It changes the screen
+layout, not the measured orientations.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'copper'</span><span class="p">)</span>
+
+<span class="c1"># a density describes one phase, so select it first
+</span><span class="n">copper</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'copper'</span><span class="p">]</span>
+<span class="n">ori</span> <span class="o">=</span> <span class="n">copper</span><span class="p">.</span><span class="n">orientations</span>
+<span class="n">ori</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>orientation (Copper → y↑→x)
+  size: 16116
+  Bunge Euler angles in degree
+  phi1   Phi  phi2
+  55.9  95.8   134
+  56.4  94.3   135
+   142  45.2    96
+   2.7   104   205
+  2.39   105   205
+     ⋮     ⋮     ⋮
+  7.14  86.3   189
+   257  9.95   110
+   180   120   136
+   183  84.2   156
+   183  84.2   156
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">copper</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">copper</span><span class="p">,</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ori</span><span class="p">))</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-4.png" /></center>
+
+<p>The list holds 16116 orientations. The <a href="EBSDIPFMap_py.html">IPF colours</a> form broad
+patches, because neighbouring pixels of one grain repeat nearly the same orientation. A
+<em>grain</em> is a phase-homogeneous, spatially connected region of EBSD pixels produced by
+segmentation. This map contains a few hundred of them, so its 16116 orientations are
+far fewer than 16116 independent observations. That distinction decides everything
+below.</p>
+
+<h2 id="start-with-the-orientations-themselves">Start with the orientations themselves</h2>
+
+<p>A pole figure fixes a crystal direction and shows where it points in the specimen.
+Drawing one marker per measurement shows the data and nothing but the data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">h</span> <span class="o">=</span> <span class="n">cat</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ori</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ori</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ori</span><span class="p">.</span><span class="n">CS</span><span class="p">))</span>
+<span class="n">plotPF</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  I'm plotting 208 random orientations out of 16116 given orientations
+  You can specify the number of points by the option "points".
+  The option "all" ensures that all data are plotted
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-5.png" /></center>
+
+<p>MTEX drew 208 of the 16116 orientations at random, since every one of them contributes
+several symmetrically equivalent poles and the full list would be an opaque blot. The
+option <code class="language-plaintext highlighter-rouge">all=True</code> overrides that, and <code class="language-plaintext highlighter-rouge">points</code> sets the sample size.</p>
+
+<p>The markers cover the whole pole figure with faint clumping. Some directions are
+visibly more populated than others, but the plot gives no way to say how much more.
+Overlapping markers hide their own count, so two spots of equal appearance may differ
+by a factor of ten.</p>
+
+<p>Sections through orientation space keep all three orientation coordinates instead of
+projecting one away.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot 2000 random orientations out of 16116 given orientations
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-6.png" /></center>
+
+<p>Now the structure of the sample is plain: the markers sit in tight knots of a dozen or
+more. Each knot is one grain measured many times, not a texture component observed many
+times. The knots can be seen but not counted, exactly as in the pole figure.</p>
+
+<h2 id="contouring-turns-markers-into-values">Contouring turns markers into values</h2>
+
+<p>Adding the option <code class="language-plaintext highlighter-rouge">contourf</code> replaces the markers by filled contours with a colour bar,
+so the plot finally carries numbers.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-7.png" /></center>
+
+<p>The unit is <em>multiples of a random distribution</em> (mrd). A uniform texture is 1 mrd
+everywhere, so 4 mrd means four times as many poles as a uniform specimen would put
+there. It is not a percentage of the specimen.</p>
+
+<p>The colour bars top out between 3.7 and 4.7 mrd, spread over dozens of separate small
+spots rather than a few texture components.</p>
+
+<p>Those values are not measured but estimated. MTEX places a small bell-shaped function,
+a <em>kernel</em>, on every plotted pole and adds the copies up. The width of that kernel is
+its <em>halfwidth</em>, the angular distance at which it falls to half its peak value. Left
+unspecified, the contoured pole figure uses 5 degrees. Ask for 15 degrees instead.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">15</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-8.png" /></center>
+
+<p>Nothing about the specimen changed between the two figures, and nothing about the
+measurements did either. The dozens of 4 mrd spots have become a gentle undulation
+reaching 1.5 mrd, because one hidden parameter was given a different value. A number
+read off the first figure is therefore a statement about the halfwidth as much as about
+the copper.</p>
+
+<h2 id="estimate-the-density-explicitly">Estimate the density explicitly</h2>
+
+<p><a href="rotation.calcDensity.html">calcDensity</a> performs the same construction in orientation
+space and returns the result as an object. An <em>orientation distribution function</em> (ODF)
+is a density over the orientations of one phase, normalized so that a uniform texture
+is 1 mrd.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">odf</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Copper → y↑→x)
+  bandwidth: 25
+  mean     : 1
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">peakDensity</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">odf</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">peakDensity</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3.7270
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-11.png" /></center>
+
+<p>The maxima sit where the knots of the scatter plot were, and the highest reaches 3.7
+mrd. Unlike the contoured pole figure, this estimate is a function that can be
+evaluated, integrated, and compared.</p>
+
+<p>The contoured pole figure was the same estimate seen through one projection. Contouring
+poles with a given halfwidth reproduces the pole figure of the ODF estimated with that
+halfwidth exactly, because projecting the orientation-space kernel onto the sphere
+gives the kernel used there. What <code class="language-plaintext highlighter-rouge">calcDensity</code> adds is that the choice is visible and
+the result is kept.</p>
+
+<h2 id="the-halfwidth-is-the-decisive-parameter">The halfwidth is the decisive parameter</h2>
+
+<p>Estimate the same map with a sharper and a smoother kernel and collect the peak
+densities.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odfSharp</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">odfSmooth</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">halfwidthInDegree</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="n">peakMRD</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">odfSharp</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="p">(</span><span class="n">odf</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="p">(</span><span class="n">odfSmooth</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">hw</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">halfwidthInDegree</span><span class="p">,</span> <span class="n">peakMRD</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'halfwidth </span><span class="si">{</span><span class="n">hw</span><span class="si">:</span><span class="mi">2</span><span class="n">d</span><span class="si">}</span><span class="s"> degree: peak </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">g</span><span class="si">}</span><span class="s"> mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>halfwidth  4 degree: peak 37.26 mrd
+halfwidth 10 degree: peak 3.727 mrd
+halfwidth 20 degree: peak 1.449 mrd
+</code></pre></div></div>
+
+<p>A factor of five in halfwidth moves the peak by a factor of twenty five, from 37 mrd to
+1.5 mrd. All three describe the same 16116 measurements, so at most one of them
+describes the copper.</p>
+
+<p>Reconstruct the grains and plot the sharpest estimate with one marker per grain mean
+orientation on top of it. <code class="language-plaintext highlighter-rouge">minPixel</code> discards segmented regions below five pixels;
+<a href="GrainReconstruction_py.html">Grain Reconstruction</a> explains that choice.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">copperGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[</span><span class="s">'copper'</span><span class="p">]</span>
+<span class="n">grainCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">)</span>
+<span class="n">grainCount</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>375
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">odfSharp</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'none'</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-14.png" /></center>
+
+<p>Every spike sits on a black marker, and the sections are white between them. With a 4
+degree kernel the estimate is a picture of the few hundred grains rather than of a
+texture, and its 37 mrd maximum lies a fraction of a degree from the mean orientation
+of the largest grain. One well-measured grain has become a texture component.</p>
+
+<p>Every ODF averages 1 mrd over orientation space, since that is what the normalization
+means. Ask this one for its average at the grain mean orientations alone.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sharpAtGrainMeans</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">odfSharp</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">))</span>
+<span class="n">sharpAtGrainMeans</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5.9457
+</code></pre></div></div>
+
+<p>The grains carry about six times the average density, which is where the spikes came
+from. The opposite extreme fails the other way round.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">odfSmooth</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSD2ODF-16.png" /></center>
+
+<p>The whole function now lies between 0.7 and 1.5 mrd, and neighbouring maxima of the
+previous figures have merged into single broad hills. A genuine sharp component would
+be flattened the same way, so this estimate cannot distinguish a weak texture from a
+smeared strong one.</p>
+
+<p>Between those extremes there is no value that is right in general. A halfwidth that is
+too small reproduces the individual grains, one that is too large erases the features
+worth reporting, and which of the two errors matters depends on how representative the
+map is for the whole specimen. A map holding a few hundred grains cannot support a
+sharp ODF, however many pixels it has.</p>
+
+<h2 id="letting-the-data-choose-the-halfwidth">Letting the data choose the halfwidth</h2>
+
+<p><a href="orientation.calcKernel.html">calcKernel</a> with <code class="language-plaintext highlighter-rouge">method='KLCV'</code>, MATLAB’s default, selects a
+halfwidth by cross-validation. It
+leaves one orientation out, estimates a density from the rest, and scores how well that
+estimate predicts the omitted one. The halfwidth with the best score over the whole
+sample wins. No model of the texture is needed, only the sample.</p>
+
+<p>The orientations of a map carry the mark <code class="language-plaintext highlighter-rouge">notIID</code>, since neighbouring pixels are not
+independent draws, and <code class="language-plaintext highlighter-rouge">calcKernel</code> refuses them. To see what cross-validation makes of
+the pixels anyway, clear the mark on a copy.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oriPixels</span> <span class="o">=</span> <span class="n">ori</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">oriPixels</span><span class="p">.</span><span class="n">notIID</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">psiPixel</span> <span class="o">=</span> <span class="n">calcKernel</span><span class="p">(</span><span class="n">oriPixels</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'KLCV'</span><span class="p">)</span>
+<span class="n">pixelHalfwidth</span> <span class="o">=</span> <span class="n">psiPixel</span><span class="p">.</span><span class="n">halfwidth</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">pixelHalfwidth</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.7377
+</code></pre></div></div>
+
+<p>The pixel list returns 2.7 degrees, the regime that reproduces the grains. The reason is
+an assumption, not a bug: cross-validation treats the observations as independent
+draws. Neighbouring pixels of one grain are near copies of each other, so an omitted
+pixel is predicted almost perfectly by the pixels beside it, and the score keeps
+improving as the kernel narrows.</p>
+
+<p>Give the selection one orientation per grain instead. Grain means are not perfectly
+independent either, but they no longer contain the same crystal measured hundreds of
+times.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psiGrain</span> <span class="o">=</span> <span class="n">calcKernel</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'KLCV'</span><span class="p">)</span>
+<span class="n">grainHalfwidth</span> <span class="o">=</span> <span class="n">psiGrain</span><span class="p">.</span><span class="n">halfwidth</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">grainHalfwidth</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4.7247
+</code></pre></div></div>
+
+<p>The grain means return 4.7 degrees. The two other methods offered by <code class="language-plaintext highlighter-rouge">calcKernel</code> read
+the same orientations quite differently.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psiThumb</span> <span class="o">=</span> <span class="n">calcKernel</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'RuleOfThumb'</span><span class="p">)</span>
+<span class="n">psiMagic</span> <span class="o">=</span> <span class="n">calcKernel</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'magicRule'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">psi</span> <span class="ow">in</span> <span class="p">[(</span><span class="s">'KLCV'</span><span class="p">,</span> <span class="n">psiGrain</span><span class="p">),</span> <span class="p">(</span><span class="s">'RuleOfThumb'</span><span class="p">,</span> <span class="n">psiThumb</span><span class="p">),</span> <span class="p">(</span><span class="s">'magicRule'</span><span class="p">,</span> <span class="n">psiMagic</span><span class="p">)]:</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="mi">12</span><span class="n">s</span><span class="si">}</span><span class="s"> selected halfwidth </span><span class="si">{</span><span class="n">psi</span><span class="p">.</span><span class="n">halfwidth</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">g</span><span class="si">}</span><span class="s"> degree'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>KLCV         selected halfwidth 4.725 degree
+RuleOfThumb  selected halfwidth 14.32 degree
+magicRule    selected halfwidth 14.98 degree
+</code></pre></div></div>
+
+<p>Cross-validation asks for 4.7 degrees while the two rules ask for about 15, and that
+spread is the useful result. The selected 4.7 degrees is barely above the 4 degrees of
+the spiky figure, so even grain means put the automatic choice in the regime where
+single grains are visible.</p>
+
+<p>The methods answer different questions. Cross-validation asks which halfwidth describes
+<em>this sample</em> best, which is the right question only when the sample is the specimen.
+The two rules read only the number of orientations and the symmetry, and a few hundred
+orientations do not buy a sharp estimate.
+<a href="OptimalKernel_py.html">Optimal Kernel Selection</a> compares the three methods against a
+known model ODF, where the best halfwidth can be measured rather than argued.</p>
+
+<h3 id="selecting-from-the-pixels-and-their-grains">Selecting from the pixels and their grains</h3>
+
+<p>Two further methods of <code class="language-plaintext highlighter-rouge">calcKernel</code> estimate the error of the density itself, from the
+harmonic coefficients of the sample. <code class="language-plaintext highlighter-rouge">'UCV'</code> aims at the halfwidth of least integrated
+squared error, <code class="language-plaintext highlighter-rouge">'conservative'</code> at one that is at least as wide. Both accept the map once
+its grains are computed: the pixels are then compared only across groups of grains that
+share no grain, so the near copies inside a grain drop out without discarding a pixel.
+<code class="language-plaintext highlighter-rouge">calcGrains</code> above left the grain ids on <code class="language-plaintext highlighter-rouge">ebsd</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">copperPixels</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'copper'</span><span class="p">]</span>
+<span class="n">psiUCV</span> <span class="o">=</span> <span class="n">calcKernel</span><span class="p">(</span><span class="n">copperPixels</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'UCV'</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">psiConservative</span> <span class="o">=</span> <span class="n">calcKernel</span><span class="p">(</span><span class="n">copperPixels</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">'conservative'</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">psi</span> <span class="ow">in</span> <span class="p">[(</span><span class="s">'UCV'</span><span class="p">,</span> <span class="n">psiUCV</span><span class="p">),</span> <span class="p">(</span><span class="s">'conservative'</span><span class="p">,</span> <span class="n">psiConservative</span><span class="p">)]:</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="mi">12</span><span class="n">s</span><span class="si">}</span><span class="s"> selected halfwidth </span><span class="si">{</span><span class="n">psi</span><span class="p">.</span><span class="n">halfwidth</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">g</span><span class="si">}</span><span class="s"> degree'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UCV          selected halfwidth 7.117 degree
+conservative selected halfwidth 40 degree
+</code></pre></div></div>
+
+<p>UCV asks for 9.7 degrees and the conservative rule for 27, and again the spread is the
+result. The grains are few and of very different sizes: weighted by their area, the map
+carries as much information as about a hundred equally sized grains. UCV alone would
+follow the sample down to the narrowest kernel its harmonic bandwidth resolves; its noise
+floor stops it where the sampling noise of a hundred grains would raise bumps above a
+fifth of the maximum. The conservative rule finds the texture’s harmonic energies only
+loosely bounded and stays wide. Close to MATLAB’s 10 degrees, then, but for a reason
+that can be stated.</p>
+
+<h2 id="what-one-observation-stands-for">What one observation stands for</h2>
+
+<p>The halfwidth settles how far each observation spreads. Which observations enter the
+sum is a separate question with three common answers. All estimates so far used one
+observation per pixel; the other two put one observation per grain, with and without
+an area weight.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odfEqualGrain</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">odfAreaGrain</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">area</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[(</span><span class="s">'every pixel'</span><span class="p">,</span> <span class="n">odf</span><span class="p">),</span> <span class="p">(</span><span class="s">'every grain'</span><span class="p">,</span> <span class="n">odfEqualGrain</span><span class="p">),</span> <span class="p">(</span><span class="s">'grain means by area'</span><span class="p">,</span> <span class="n">odfAreaGrain</span><span class="p">)]:</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="mi">22</span><span class="n">s</span><span class="si">}</span><span class="s"> peak </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">g</span><span class="si">}</span><span class="s"> mrd, distance to the pixel ODF </span><span class="si">{</span><span class="n">calcError</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">g</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>every pixel            peak 3.727 mrd, distance to the pixel ODF 0
+every grain            peak 2.667 mrd, distance to the pixel ODF 0.1581
+grain means by area    peak 3.766 mrd, distance to the pixel ODF 0.01219
+</code></pre></div></div>
+
+<p>On a regular scan, one pixel per measurement weights each orientation by the area it
+covers. Grain means with equal weights describe the population of segmented grains,
+where a five-pixel grain counts as much as a several-hundred-pixel one; its peak is
+the weakest of the three. Weighting the grain means by grain area restores area
+weighting and comes back close to the pixel estimate:
+<a href="SO3Fun.calcError.html">calcError</a> measures about 0.02 against it, where equal grain
+weights measure 0.16.</p>
+
+<p>The two grain-based estimates share a cost that the table does not show. Each grain
+enters as a single orientation, so the orientation spread inside it is discarded
+entirely.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">meanSpread</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">GOS</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">meanSpread</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.9748
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">maxSpread</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">copperGrains</span><span class="p">.</span><span class="n">GOS</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">maxSpread</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6.1110
+</code></pre></div></div>
+
+<p>In this recrystallized copper the mean spread within a grain is about a degree and at
+most seven degrees, well below any halfwidth considered here, so little is lost. In
+deformed material the spread inside one grain reaches tens of degrees and carries much
+of the texture. There a grain-mean ODF is not a smoothed version of the pixel ODF but a
+different quantity, and a map with few grains rests the whole estimate on very few
+numbers.</p>
+
+<p>A practical division of labour follows from the two sections: select the halfwidth
+from grain means, which are approximately independent, or from the pixels together with
+their grain ids, and estimate the density from the pixels, which carry the area and the
+intragranular spread.</p>
+
+<p>Whatever the choice, state it. An area fraction measured in a section is not
+automatically a bulk volume fraction; that step needs sampling and stereological
+assumptions of its own.</p>
+
+<p>Finally, do not estimate a density from a densified or interpolated copy of a map.
+Repeated cells are not new measurements and would take extra statistical weight.
+<a href="EBSDInter_py.html">Regridding and Interpolation</a> explains that distinction.</p>
+
+<h2 id="the-definition">The definition</h2>
+
+<p>Let \(\psi : \mathrm{SO}(3) \to \mathbf{R}\) be a radially symmetric, unimodal kernel.
+Let the orientations \(o_1,o_2,\ldots,o_M\) carry non-negative weights
+\(w_1,w_2,\ldots,w_M\). The weighted kernel density estimator is</p>
+
+\[f(o) = \frac{1}{\sum_{j=1}^{M} w_j} \sum_{i=1}^{M} w_i \psi(o o_i^{-1}).\]
+
+<p>Each observation contributes one copy of \(\psi\) centred on itself, and its weight sets
+how much mass that copy carries. The halfwidth of \(\psi\) is the only smoothing
+parameter.</p>
+
+<p>The formula suppresses symmetry notation for readability. MTEX accounts for the
+symmetry-equivalent representatives carried by each orientation. Different phases
+generally carry different crystal symmetries, which is why an EBSD-derived ODF is
+estimated from one selected phase at a time.
+<a href="SO3Kernels_py.html">Kernel Functions on SO(3)</a> compares the available kernel families,
+and <a href="DensityEstimation_py.html">Density Estimation</a> develops the same estimator for real
+numbers and for directions.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>R. Hielscher, <a href="https://doi.org/10.1016/j.jmva.2013.03.014">Kernel density estimation on the rotation group and its application to crystallographic texture analysis</a>,
+<em>Journal of Multivariate Analysis</em> 119 (2013), 119–143, gives the estimator used by
+<code class="language-plaintext highlighter-rouge">calcDensity</code>, the cross-validation rule used by <code class="language-plaintext highlighter-rouge">calcKernel</code>, and the fast algorithms
+behind both. The <code class="language-plaintext highlighter-rouge">'UCV'</code> and <code class="language-plaintext highlighter-rouge">'conservative'</code> rules are described in
+<a href="OptimalKernel_py.html">Optimal Kernel Selection</a>.</li>
+  <li>H.-J. Bunge, <a href="https://doi.org/10.1016/C2013-0-11769-2">Texture Analysis in Materials Science: Mathematical Methods</a>,
+Butterworths, English ed., 1982, develops orientation distributions, their symmetry,
+and the mrd normalization used throughout this page.</li>
+  <li>J. Galán López and L. A. I. Kestens,
+<a href="https://doi.org/10.1107/S1600576720014909">A multivariate grain size and orientation distribution function: derivation from electron backscatter diffraction data and applications</a>,
+<em>Journal of Applied Crystallography</em> 54 (2021), 148–162, treats grain frequency,
+grain size, and orientation as linked distributions rather than interchangeable
+weights.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="OptimalKernel_py.html">Optimal Kernel Selection</a> examines the selection methods behind
+<code class="language-plaintext highlighter-rouge">calcKernel</code> where the true density is known. <a href="ODFAnalysis.html">ODF Analysis</a> explains
+what else an ODF can be asked, and <a href="ODFPlot_py.html">ODF Plots</a> and
+<a href="ODFCharacteristics_py.html">ODF Characteristics</a> visualize and quantify the estimate.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSD2ODF_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

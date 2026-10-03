@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Theory of Misorientations | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="An orientation says how one crystal sits in the specimen. A misorientation says how two crystals sit relative to each other. It is a coordinate transform from one crystal frame into the other, so the specimen frame drops out.">
+<link rel="canonical" href="https://mtex-playground.github.io/MisorientationTheory.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/MisorientationTheory.html#page",
+      "name": "Theory of Misorientations",
+      "headline": "Theory of Misorientations",
+      "description": "An orientation says how one crystal sits in the specimen. A misorientation says how two crystals sit relative to each other. It is a coordinate transform from one crystal frame into the other, so the specimen frame drops out.",
+      "url": "https://mtex-playground.github.io/MisorientationTheory.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/MisorientationTheory.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/MisorientationTheory.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Theory of Misorientations</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Theory of Misorientations</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_MisorientationTheory.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Misorientations/MisorientationTheory.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>An <a href="OrientationDefinition.html">orientation</a> says how one crystal sits in the specimen. A <b>misorientation</b> says how two crystals sit relative to each other. It is a coordinate transform from one crystal frame into the other, so the specimen frame drops out.</p>
+<p>Misorientations describe grain boundaries, twins, phase transformations, and orientation gradients inside a deformed grain. The two crystals may belong to the same phase or to different phases.</p>
+<p>This page assumes that orientations map crystal coordinates to specimen coordinates. Review <a href="DefinitionAsCoordinateTransform.html">Orientations as Coordinate Transforms</a> if the order of composed transforms is unfamiliar.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Two Grains to Work With</h2>
+<p>The example is an EBSD map of magnesium containing extension twins. The map first has to be divided into <a href="GrainReconstruction.html">grains</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">mtexdata</span> <span class="n">twins</span> <span class="n">silent</span>
+
+<span class="c1">% use only proper symmetry operations, which are rotations</span>
+<span class="n">ebsd</span><span class="p">(</span><span class="s1">'M'</span><span class="p">)</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="s1">'M'</span><span class="p">)</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">properGroup</span><span class="p">;</span>
+
+<span class="c1">% compute and smooth the grains</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'threshold'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="n">CS</span><span class="p">;</span></code></pre></figure>
+<p>The two labelled grains share the white boundary. Their adjacency makes the relative orientation a grain-boundary misorientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">,</span><span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">([</span><span class="mi">57</span><span class="p">,</span><span class="mi">58</span><span class="p">])</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'edgecolor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="nb">text</span><span class="p">(</span><span class="n">grains</span><span class="p">([</span><span class="mi">57</span><span class="p">,</span><span class="mi">58</span><span class="p">]),{</span><span class="s1">'1'</span><span class="p">,</span><span class="s1">'2'</span><span class="p">})</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/MisorientationTheory_01.png" alt="" />
+
+</center>
+<p>Their mean orientations are the two inputs used below.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori1</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="mi">57</span><span class="p">)</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">;</span>
+<span class="n">ori2</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="mi">58</span><span class="p">)</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">;</span></code></pre></figure>
+<h2 id="5">Misorientation Angle and Disorientation</h2>
+<p>The smallest rotation angle separating the two crystal orientations is</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">disorientationAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">ori2</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">disorientationAngle =
+   85.7299</code></pre></figure>
+<p>A crystal orientation has many symmetrically equivalent descriptions. MTEX compares all proper-symmetry pairs and returns the smallest angle. This minimum is the <b>disorientation angle</b>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori2Equivalent</span> <span class="o">=</span> <span class="n">ori2</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">(</span><span class="s1">'proper'</span><span class="p">);</span>
+<span class="n">symmetryAwareRange</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">ori2Equivalent</span><span class="p">)),</span><span class="k">...</span>
+  <span class="nb">max</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">ori2Equivalent</span><span class="p">))]</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">symmetryAwareRange =
+   85.7299   85.7299</code></pre></figure>
+<p>Every symmetry-aware comparison therefore returns the same value. If symmetry is ignored, the same representatives span many rotation angles.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rawAngleRange</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">ori2Equivalent</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">)),</span><span class="k">...</span>
+  <span class="nb">max</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">ori2Equivalent</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">))]</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">rawAngleRange =
+   85.7299  179.8286</code></pre></figure>
+<h2 id="8">The Directed Misorientation</h2>
+<p>A full misorientation contains an axis as well as an angle, and it has a direction. Since <code class="language-plaintext highlighter-rouge">ori1</code> and <code class="language-plaintext highlighter-rouge">ori2</code> both map crystal coordinates to specimen coordinates, the product below maps coordinates of grain 2 into grain 1.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">mori</span> <span class="o">=</span> <span class="nb">inv</span><span class="p">(</span><span class="n">ori1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ori2</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">mori = misorientation (Magnesium → Magnesium)
+ 
+  Bunge Euler angles in degree
+     phi1     Phi    phi2
+  149.583 94.2717 150.165</code></pre></figure>
+<p>The displayed object is one representative of all equivalent rotations. Its raw angle is not necessarily the disorientation angle.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rawRepresentativeAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">mori</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">rawRepresentativeAngle =
+  107.9164</code></pre></figure>
+<p> <a href="orientation.project2FundamentalRegion.html"><code class="language-plaintext highlighter-rouge">project2FundamentalRegion</code></a> chooses the representative in the fundamental region, where each physical relationship appears once.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">disori</span> <span class="o">=</span> <span class="n">project2FundamentalRegion</span><span class="p">(</span><span class="n">mori</span><span class="p">);</span>
+<span class="n">fundamentalRegionAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">disori</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">fundamentalRegionAngle =
+   85.7299</code></pre></figure>
+<p>The raw representative is about \(107.9^\circ\), whereas the representative in the fundamental region has the \(85.7^\circ\) disorientation angle.</p>
+<p>Applying <code class="language-plaintext highlighter-rouge">mori</code> to a plane normal expressed in grain 2 returns that normal expressed in grain 1. Here \(\{11\bar20\}\) of grain 2 is parallel to \(\{2\bar1\bar10\}\) of grain 1.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">round</span><span class="p">(</span><span class="n">mori</span> <span class="o">*</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = Miller (Magnesium)
+  h  k  i  l
+  2 -1 -1  0</code></pre></figure>
+<p>The inverse misorientation maps from grain 1 back into grain 2.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">round</span><span class="p">(</span><span class="nb">inv</span><span class="p">(</span><span class="n">mori</span><span class="p">)</span> <span class="o">*</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = Miller (Magnesium)
+  h  k  i  l
+  1  1 -2  0</code></pre></figure>
+<h2 id="13">Coincident Lattice Planes</h2>
+<p>The relationship lies near several coincidences between major lattice planes. The large markers are planes of grain 2 mapped into grain 1. The small labelled markers are planes already expressed in grain 1.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">m</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">CS</span><span class="p">);</span>
+
+<span class="c1">% plot the major planes of grain 2 in the frame of grain 1</span>
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="k">for</span> <span class="n">im</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">mori</span> <span class="o">*</span> <span class="n">m</span><span class="p">(</span><span class="n">im</span><span class="p">)</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="k">...</span>
+    <span class="s1">'DisplayName'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="n">m</span><span class="p">(</span><span class="n">im</span><span class="p">),</span><span class="s1">'LaTex'</span><span class="p">),</span><span class="s1">'noLabel'</span><span class="p">,</span><span class="k">...</span>
+    <span class="s1">'upper'</span><span class="p">,</span><span class="s1">'textBelowMarker'</span><span class="p">)</span>
+  <span class="nb">hold</span> <span class="n">on</span>
+<span class="k">end</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="c1">% label the corresponding planes of grain 1</span>
+<span class="n">mm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">unique</span><span class="p">(</span><span class="n">mori</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">),</span><span class="s1">'maxHKL'</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">mm</span><span class="p">,</span><span class="s1">'labeled'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'textBelowMarker'</span><span class="p">)</span>
+
+<span class="nb">legend</span><span class="p">({},</span><span class="s1">'location'</span><span class="p">,</span><span class="s1">'southoutside'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">,</span><span class="s1">'numColumns'</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/MisorientationTheory_02.png" alt="" />
+
+</center>
+<p>Two pairs lie almost on top of each other: \(\{11\bar20\}\) on \(\{11\bar20\}\) and \(\{\bar1011\}\) on \(\{\bar1011\}\). Their angular separations are about half a degree and a fifth of a degree.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">nearCoincidenceError</span> <span class="o">=</span> <span class="p">[</span><span class="k">...</span>
+  <span class="nb">angle</span><span class="p">(</span><span class="n">mori</span><span class="o">*</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">));</span><span class="k">...</span>
+  <span class="nb">angle</span><span class="p">(</span><span class="n">mori</span><span class="o">*</span><span class="n">Miller</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">))]</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">nearCoincidenceError =
+    0.4592
+    0.1766</code></pre></figure>
+<p>Two further pairs are close without coinciding. The prism plane \(\{1\bar100\}\) maps near the basal plane \((0001)\), and the basal plane maps near the prism plane. Both separations are about \(4.3^\circ\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">crossPlaneError</span> <span class="o">=</span> <span class="p">[</span><span class="k">...</span>
+  <span class="nb">angle</span><span class="p">(</span><span class="n">mori</span><span class="o">*</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">));</span><span class="k">...</span>
+  <span class="nb">angle</span><span class="p">(</span><span class="n">mori</span><span class="o">*</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">))]</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">crossPlaneError =
+    4.2748
+    4.2919</code></pre></figure>
+<h2 id="16">A Useful 90 Degree Approximation</h2>
+<p>The exact relationship that forces the first two chosen correspondences is the transform taking \(\{11\bar20\}\) to \(\{2\bar1\bar10\}\) and \([0001]\) to \([01\bar10]\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">coincidenceMori</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">coincidenceMori = misorientation (Magnesium → Magnesium)
+ 
+ (0001) || (011̅0)   [11̅00] || [0001]</code></pre></figure>
+<p>It is a rotation by exactly \(90^\circ\) about a prism axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">round</span><span class="p">(</span><span class="n">coincidenceMori</span><span class="o">.</span><span class="nb">axis</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = Miller (Magnesium)
+  h  k  i  l
+  2 -1 -1  0</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">coincidenceAngle</span> <span class="o">=</span> <span class="n">coincidenceMori</span><span class="o">.</span><span class="nb">angle</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">coincidenceAngle =
+    90</code></pre></figure>
+<p>In the corresponding plot, the pairs forced by the construction now coincide exactly. This is a useful geometric approximation, but it is not the ideal magnesium extension-twin relationship.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% plot the approximation in place of the measured misorientation</span>
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="k">for</span> <span class="n">im</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">coincidenceMori</span> <span class="o">*</span> <span class="n">m</span><span class="p">(</span><span class="n">im</span><span class="p">)</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="k">...</span>
+    <span class="s1">'DisplayName'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="n">m</span><span class="p">(</span><span class="n">im</span><span class="p">),</span><span class="s1">'LaTex'</span><span class="p">),</span><span class="s1">'noLabel'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+  <span class="nb">hold</span> <span class="n">on</span>
+<span class="k">end</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="c1">% label the corresponding planes in the other crystal</span>
+<span class="n">mm</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">unique</span><span class="p">(</span><span class="n">coincidenceMori</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">),</span><span class="s1">'maxHKL'</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">mm</span><span class="p">,</span><span class="s1">'labeled'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="nb">legend</span><span class="p">({},</span><span class="s1">'location'</span><span class="p">,</span><span class="s1">'southoutside'</span><span class="p">,</span><span class="s1">'FontSize'</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="s1">'Interpreter'</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">,</span><span class="s1">'numColumns'</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/MisorientationTheory_03.png" alt="" />
+
+</center>
+<h2 id="20">The Magnesium Extension Twin</h2>
+<p>The physical twin relationship is defined by a twin plane and an in-plane direction. Its disorientation is \(86.3^\circ\) about a prism axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">twinning</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">twinning = misorientation (Magnesium → Magnesium)
+ 
+ (101̅1̅) || (011̅1)   [011̅1] || [11̅01]</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">twinAxis</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">twinning</span><span class="o">.</span><span class="nb">axis</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">twinAxis = Miller (Magnesium)
+  h  k  i  l
+  1  1 -2  0</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">twinAngle</span> <span class="o">=</span> <span class="n">twinning</span><span class="o">.</span><span class="nb">angle</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">twinAngle =
+   86.2992</code></pre></figure>
+<p>A textbook may instead describe this twin as a \(180^\circ\) rotation about the twin axis. That is a symmetrically equivalent representative of the same misorientation, obtained by asking for the largest rotation angle.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">twinMaximumAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">twinning</span><span class="p">,</span><span class="s1">'max'</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">twinMaximumAngle =
+   180</code></pre></figure>
+<p>The measured grain pair is \(0.7^\circ\) from the ideal twin. The 90 degree coincidence approximation is \(3.7^\circ\) from it.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">twinDeviation</span> <span class="o">=</span> <span class="p">[</span><span class="nb">angle</span><span class="p">(</span><span class="n">mori</span><span class="p">,</span><span class="n">twinning</span><span class="p">),</span><span class="k">...</span>
+  <span class="nb">angle</span><span class="p">(</span><span class="n">coincidenceMori</span><span class="p">,</span><span class="n">twinning</span><span class="p">)]</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">twinDeviation =
+    0.7322    3.7008</code></pre></figure>
+<h2 id="25">Finding the Twin Boundaries</h2>
+<p>A boundary close to the ideal relationship is a candidate twin boundary. The threshold is an analyst choice and compares the complete misorientation, including its axis, rather than the angle alone.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% select only magnesium to magnesium grain boundaries</span>
+<span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'Magnesium'</span><span class="p">,</span><span class="s1">'Magnesium'</span><span class="p">);</span>
+
+<span class="c1">% test the complete misorientation against the ideal twin</span>
+<span class="n">isTwinning</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">gB</span><span class="o">.</span><span class="n">misorientation</span><span class="p">,</span><span class="n">twinning</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">;</span>
+
+<span class="c1">% plot the grains and highlight candidate twin boundaries</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">,</span><span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">gB</span><span class="p">(</span><span class="n">isTwinning</span><span class="p">),</span><span class="s1">'edgecolor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/MisorientationTheory_04.png" alt="" />
+
+</center>
+<p>The white traces follow the thin lamellae visible in the orientation map. This spatial agreement supports the crystallographic classification, but a threshold match alone does not prove the deformation mechanism. <a href="TwinningBoundaries.html">Twinning Analysis</a> shows how to infer the ideal relationship from a boundary population instead of assuming it.</p>
+<p>Segment counts depend on how a boundary was sampled, so the fraction is weighted by trace length. Candidate twins make up about half the boundary length in this map.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">twinLengthFraction</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gB</span><span class="p">(</span><span class="n">isTwinning</span><span class="p">)</span><span class="o">.</span><span class="n">segLength</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">gB</span><span class="o">.</span><span class="n">segLength</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">twinLengthFraction =
+    0.4902</code></pre></figure>
+<h2 id="27">Reading a Population of Misorientations</h2>
+<p>The misorientations of all boundary segments can be reduced to an angle distribution. The sharp peak just below \(90^\circ\) is the twin population found above.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span>
+<span class="n">plotAngleDistribution</span><span class="p">(</span><span class="n">gB</span><span class="o">.</span><span class="n">misorientation</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/MisorientationTheory_05.png" alt="" />
+
+</center>
+<p>This boundary distribution is correlated because only neighbouring grains are paired. <a href="AngleDistributionFunction.html">Angle Distribution</a> compares it with the uncorrelated distribution from the texture and with the distribution expected for uniformly random orientations.</p>
+<p>The same population can instead be reduced to its axes.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotAxisDistribution</span><span class="p">(</span><span class="n">gB</span><span class="o">.</span><span class="n">misorientation</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/MisorientationTheory_06.png" alt="" />
+
+</center>
+<p>The axes concentrate on \(\left&lt;\bar12\bar10\right&gt;\), the prism-axis family of the ideal twin. These axes are expressed in crystal coordinates; <a href="AxisDistributionFunction.html">Axis Distribution</a> also explains axes in specimen coordinates and the random reference distribution.</p>
+<h2 id="30">Misorientations Between Two Phases</h2>
+<p>A phase transformation relates crystals with different symmetries. The first symmetry of the misorientation belongs to the parent phase and the second belongs to the child phase.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">CS_Mag</span> <span class="o">=</span> <span class="n">loadCIF</span><span class="p">(</span><span class="s1">'Magnetite'</span><span class="p">);</span>
+<span class="n">CS_Hem</span> <span class="o">=</span> <span class="n">loadCIF</span><span class="p">(</span><span class="s1">'Hematite'</span><span class="p">);</span></code></pre></figure>
+<p>A reported magnetite-to-hematite relationship has \(\{111\}_{m} \parallel \{0001\}_{h}\) and \(\{\bar101\}_{m} \parallel \{10\bar10\}_{h}\). These two parallelisms are exactly the input expected by <a href="orientation.map.html"><code class="language-plaintext highlighter-rouge">orientation.map</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">Mag2Hem</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS_Mag</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS_Hem</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS_Mag</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS_Hem</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Mag2Hem = misorientation (Magnetite → Hematite)
+ 
+ (011̅) || (01̅10)   [111] || [0001]</code></pre></figure>
+<p>Consider one magnetite parent orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori_Mag</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS_Mag</span><span class="p">);</span></code></pre></figure>
+<p>Applying every symmetrically equivalent parent description creates 48 child descriptions, but only 8 child orientations are distinct. The duplicates come from symmetry operations that leave the \(\{111\}\) axis in place and therefore do not create a new child orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">allChildDescriptions</span> <span class="o">=</span> <span class="n">symmetrise</span><span class="p">(</span><span class="n">ori_Mag</span><span class="p">)</span> <span class="o">*</span> <span class="nb">inv</span><span class="p">(</span><span class="n">Mag2Hem</span><span class="p">);</span>
+<span class="n">variantCounts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">length</span><span class="p">(</span><span class="n">allChildDescriptions</span><span class="p">),</span><span class="k">...</span>
+  <span class="nb">length</span><span class="p">(</span><span class="nb">unique</span><span class="p">(</span><span class="n">allChildDescriptions</span><span class="p">))]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">variantCounts =
+    48     8</code></pre></figure>
+<p>A <b>variant</b> is one crystallographically equivalent child orientation predicted from a single parent orientation through a known orientation relationship. <a href="orientation.variants.html"><code class="language-plaintext highlighter-rouge">variants</code></a> removes duplicate descriptions directly.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">childVariants</span> <span class="o">=</span> <span class="n">variants</span><span class="p">(</span><span class="n">Mag2Hem</span><span class="p">,</span><span class="n">ori_Mag</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">childVariants = orientation (Hematite → y↑→x)
+  size: 1 × 8
+ 
+  Bunge Euler angles in degree
+  phi1     Phi    phi2
+   135 54.7356      60
+   315 125.264     120
+    45 54.7356     300
+   225 125.264     240
+   225 54.7356      60
+    45 125.264     120
+   135 125.264       0
+   315 54.7356     180</code></pre></figure>
+<p>The pole figure contains eight discrete child orientations rather than one. A transformed parent grain may therefore contain several child orientations related by the same parent-to-child relationship.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotPDF</span><span class="p">(</span><span class="n">childVariants</span><span class="p">,</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">CS_Hem</span><span class="p">))</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/MisorientationTheory_07.png" alt="" />
+
+</center>
+<h2 id="36">The Maths Behind the Transform</h2>
+<p>Let \(\mathbf{G}_1\) and \(\mathbf{G}_2\) be the matrices of <code class="language-plaintext highlighter-rouge">ori1</code> and <code class="language-plaintext highlighter-rouge">ori2</code>. A direction with crystal-2 components \(\mathbf{h}_2\) has specimen components \(\mathbf{r}=\mathbf{G}_2\mathbf{h}_2\). Its components in the frame of crystal 1 are therefore</p>
+<p>\[ \mathbf{h}_1 = \mathbf{G}_1^{-1}\mathbf{r} = \mathbf{G}_1^{-1}\mathbf{G}_2\mathbf{h}_2. \]</p>
+<p>This is why <code class="language-plaintext highlighter-rouge">inv(ori1) * ori2</code> maps crystal 2 into crystal 1. Reversing the order gives the inverse map.</p>
+<p>Proper symmetry operations may multiply this transform from both sides without changing the physical crystal relationship. The fundamental region retains one representative from that equivalent set. For a same-phase grain boundary, swapping the two grains also replaces the transform by its inverse; <a href="MisorientationGrainExchangeSym.html">grain exchange symmetry</a> develops that additional equivalence.</p>
+<h2 id="37">References</h2>
+<div>
+<ul>
+<li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>, Springer, 2004, develops rotation space, symmetry, and misorientation angle and axis distributions.</li>
+<li>J.K. Mackenzie, <a href="https://doi.org/10.1093/biomet/45.1-2.229">Second paper on statistics associated with the random disorientation of cubes</a>, <i>Biometrika</i> 45 (1958), 229-240, derives the cubic random-disorientation angle distribution.</li>
+<li>J.W. Christian and S. Mahajan, <a href="https://doi.org/10.1016/0079-6425(94)00007-7">Deformation twinning</a>, <i>Progress in Materials Science</i> 39 (1995), 1-157, reviews twin modes and their crystallography.</li>
+<li>L.A. Bursill and R.L. Withers, <a href="https://doi.org/10.1107/S0021889879012486">On the multiple orientation relationships between hematite and magnetite</a>, <i>Journal of Applied Crystallography</i> 12 (1979), 287-294, reports the iron-oxide orientation relationships used above.</li>
+<li>
+<a href="https://www.iso.org/standard/82749.html">ISO 24173:2024</a>, <i>Microbeam analysis -- Guidelines for orientation measurement using electron backscatter diffraction</i>, gives guidance for reproducible EBSD orientation measurements.</li>
+</ul>
+</div>
+<h2 id="38">Next</h2>
+<p>The next page explains <a href="MisorientationGrainExchangeSym.html">Grain Exchange Symmetry</a>. A whole distribution of misorientations, represented as a density rather than a list, is the <a href="MisorientationDistributionFunction.html">Misorientation Distribution Function</a>. Applying a parent-to-child relationship throughout a map leads to <a href="MaParentGrainReconstruction.html">Parent Grain Reconstruction</a>.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/MisorientationTheory.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

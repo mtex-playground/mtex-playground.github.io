@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Crystal Geometry | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A lattice basis is a set of three vectors whose integer combinations generate all translation points. A crystal structure repeats a motif at those points.">
+<link rel="canonical" href="https://mtex-playground.github.io/CrystalGeometry.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/CrystalGeometry.html#page",
+      "name": "Crystal Geometry",
+      "headline": "Crystal Geometry",
+      "description": "A lattice basis is a set of three vectors whose integer combinations generate all translation points. A crystal structure repeats a motif at those points.",
+      "url": "https://mtex-playground.github.io/CrystalGeometry.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/CrystalGeometry.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/CrystalGeometry.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Crystal Geometry</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Crystal Geometry</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_CrystalGeometry.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/CrystalGeometry/CrystalGeometry.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>A lattice basis is a set of three vectors whose integer combinations generate all translation points. A crystal structure repeats a motif at those points.</p>
+<p>Three related descriptions determine how MTEX computes with the structure: the lattice metric, the crystal frame, and the crystal symmetry.</p>
+<p>The <b>lattice metric</b> gives the lengths and angles of the lattice basis. A <b>crystal frame</b> is the Cartesian reference frame fixed to that basis. A <b>symmetry</b> is the point group under which crystal data are invariant. MTEX represents all three together in a <a href="crystalSymmetry.crystalSymmetry.html"><code class="language-plaintext highlighter-rouge">crystalSymmetry</code></a> object, but they are not interchangeable.</p>
+<p>This chapter assumes the vector and spherical-plot ideas introduced in <a href="Vectors.html">Vectors</a>. <a href="NotationAndConventions.html">Notation and Conventions</a> collects the notation, angle units, and reference-frame conventions used throughout MTEX.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">One Direction and Its Symmetry Family</h2>
+<p>A crystal can look the same after more than one operation. For point group <code class="language-plaintext highlighter-rouge">m-3m</code>, for example, a ninety-degree rotation about a cube axis leaves the structure indistinguishable. These operations form the crystal symmetry and must be respected whenever crystal directions or orientations are compared.</p>
+<p>The indices \([111]\) select one direction relative to the named lattice axes. A <a href="Miller.Miller.html"><code class="language-plaintext highlighter-rouge">Miller</code></a> object denotes this one indexed vector, not its whole symmetry family.</p>
+<p>Symmetry associates \([111]\) with seven other directions. Together the eight are the \(\langle111\rangle\) family for <code class="language-plaintext highlighter-rouge">m-3m</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'m-3m'</span><span class="p">);</span>
+<span class="n">d111</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">);</span>
+<span class="n">family111</span> <span class="o">=</span> <span class="n">d111</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">(</span><span class="s1">'unique'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">family111 = Miller (m3̅m)
+ size: 8 × 1
+   u  v  w
+   1  1  1
+  -1 -1 -1
+   1  1 -1
+  -1 -1  1
+  -1  1  1
+   1 -1 -1
+   1 -1  1
+  -1  1 -1</code></pre></figure>
+<p>The output lists eight distinct directed members. A calculation must be explicit about whether it uses the indexed direction or this complete family. Opposite members remain different directed vectors unless the calculation explicitly requests antipodal equivalence.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">family111</span><span class="p">,</span><span class="s1">'labeled'</span><span class="p">,</span><span class="s1">'grid'</span><span class="p">,</span><span class="s1">'backgroundColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalGeometry_01.png" alt="" />
+
+</center>
+<p>Four blue markers lie in the upper hemisphere and four in the lower. Their labels exhaust the symmetry-equivalent sign combinations of \([111]\).</p>
+<p>The <code class="language-plaintext highlighter-rouge">'unique'</code> option matters here. Without it, <code class="language-plaintext highlighter-rouge">symmetrise</code> returns one entry per symmetry operation, which is 48 for this point group. The eight distinct directions would therefore appear repeatedly.</p>
+<h2 id="5">Lattice, Crystal Frame, and Plotting Convention</h2>
+<p>The lattice metric can permit more symmetry than the motif placed in its cell. The declared point group must describe the crystal structure, not merely the shape of the unit cell.</p>
+<p>A reference frame is the coordinate system in which data are expressed. The crystal frame fixes how the labelled lattice basis is embedded in Cartesian axes. Two data sources can therefore use the same point group and metric but express their data in differently aligned crystal frames.</p>
+<p>A <b>plotting convention</b> states how a reference frame is laid out on screen. Importers may also use that layout as a relation between frames. Changing only the plotting convention moves a drawing; it does not repair a wrong crystal frame or rotate the physical crystal.</p>
+<h2 id="6">Directions and Planes Use Dual Bases</h2>
+<p>A direction in a crystal and a plane in a crystal are written differently and belong to dual bases. Direct-lattice directions use \([uvw]\), while lattice-plane normals use \((hkl)\) and the reciprocal basis.</p>
+<p>In a cubic lattice, the \([111]\) direction happens to be perpendicular to the \((111)\) plane. Cubic geometry is therefore a bad place to learn the difference. In a monoclinic lattice they are not generally perpendicular, and confusing the two silently gives the wrong answer.</p>
+<p>In the schematic, red points mark lattice translations and the blue motif repeats with them. Notice that the direct axis \(\vec a\) and reciprocal axis \(\vec a^*\) are not parallel.</p>
+<p>
+<center>
+<img class="inline" src="images/latticeReciprocalBasis.png" alt="" />
+
+</center>
+</p>
+<h2 id="7">Point Groups, Space Groups, and Laue Groups</h2>
+<p>Three classifications occur throughout crystallography. The operations in a <b>point group</b> share a fixed point and may include rotations, mirrors, and inversion. There are 32 crystallographic point-group types.</p>
+<p>A <b>space group</b> also contains translations and operations with translational parts, such as screw rotations and glide reflections. There are 230 space-group types. A <b>Laue group</b> is the point group with inversion added, and there are 11 Laue classes.</p>
+<p>Under Friedel's law, conventional diffraction intensities cannot distinguish a reflection from its opposite. Diffraction symmetry is therefore commonly described by the Laue group. Dynamical and resonant diffraction can reveal departures from Friedel's law.</p>
+<p>MTEX stores point groups, and accepts a space-group symbol or number by reducing it to the corresponding point group. A <code class="language-plaintext highlighter-rouge">crystalSymmetry</code> does not store translational centring, screw or glide components, an atomic motif, or structure factors.</p>
+<h2 id="8">Follow the Chapter</h2>
+<p>
+<a href="CrystalSymmetries.html">Crystal Symmetries</a> defines point groups in MTEX from Hermann--Mauguin and Schoenflies symbols, with lattice parameters or space-group identifiers, and from crystallographic information files.</p>
+<p>
+<a href="CrystalDirections.html">Miller Indices</a> introduces direct-lattice directions and reciprocal-lattice plane normals. <a href="LatticeMetric.html">Lattice Metric and Plane Geometry</a> adds the unit cell, reciprocal basis, the constraints of the seven crystal systems, physical lengths, and interplanar spacings. <a href="CrystalOperations.html">Operations</a> then develops symmetry orbits, multiplicities, angles, incidence tests, and zone axes. Its <code class="language-plaintext highlighter-rouge">'noSymmetry'</code> option is the one to reach for when an angle looks smaller than the geometry you intended.</p>
+<p>Two pages separate conventions that are easily confused. A point group says which operations exist; it does not say how lattice axes are embedded in Cartesian ones. Nor does it say which physical lattice vectors a source calls \(\vec a\), \(\vec b\), and \(\vec c\). <a href="CrystalReferenceSystem.html">The Crystal Reference Frame</a> and <a href="SymmetryAlignment.html">Changing Crystal-Axis Settings</a> make those choices explicit. If data imported from two sources disagree by a rotation that looks like nothing physical, a crystal-frame or axis-setting mismatch is almost always why.</p>
+<p>
+<a href="CrystalShapes.html">Crystal Shapes</a> and <a href="CrystalShapeSmorf.html">Advanced Crystal Shapes</a> construct idealized crystal habits. MTEX also uses these polyhedra as orientation glyphs. Rotating such a glyph is the most direct way to see what an orientation means: how a crystal is placed in the specimen.</p>
+<p>Constructing a shape requires only the Miller-index ideas introduced in this chapter. The examples that place shapes as orientation glyphs assume <a href="OrientationDefinition.html">Orientations</a>, which follows this chapter.</p>
+<p>
+<a href="FundamentalSector.html">Fundamental Sector</a> is the counterpart of the opening figure. Since symmetry makes many directions equivalent, one patch of the sphere can hold a representative of every distinct family. An inverse pole figure is drawn on that patch.</p>
+<p>
+<a href="QuasiCrystals.html">Quasi Symmetries</a> covers finite point symmetries that no periodic lattice can have. It does not model quasiperiodic translations or higher-dimensional indexing.</p>
+<h2 id="9">How Crystal Geometry Connects to MTEX</h2>
+<p>An <a href="OrientationDefinition.html">orientation</a> maps a crystal frame into a specimen frame. Directions without a crystal attached are <a href="Vectors.html">Vectors</a>. Physical properties that depend on crystal direction are represented by <a href="Tensors.html">Tensors</a>.</p>
+<p>Geometry used in deformation is developed in <a href="SlipSystems.html">Slip Systems</a> and <a href="DislocationSystems.html">Dislocation Systems</a>. Twin relationships are treated in <a href="Twinning.html">Twinning</a>, and geometry connecting two phases begins with <a href="ParentChildVariants.html">Parent-Child Variants</a>.</p>
+<h2 id="10">References</h2>
+<div>
+<ul>
+<li>Th. Hahn, H. Klapper, U. M&uuml;ller, and M. I. Aroyo, <a href="https://doi.org/10.1107/97809553602060000930">Point groups and crystal classes</a>, <i>International Tables for Crystallography A</i>, ch. 3.2, 2016, defines the point-group classification and notation used here.</li>
+<li>B. Souvignier, <a href="https://doi.org/10.1107/97809553602060000921">A general introduction to space groups</a>, <i>International Tables for Crystallography A</i>, ch. 1.3, 2016, relates lattices, metrics, point groups, space groups, crystal systems, and Bravais types.</li>
+<li>C. Hammond, <a href="https://doi.org/10.1093/acprof:oso/9780198738671.001.0001">The Basics of Crystallography and Diffraction</a>, 4th ed., Oxford University Press, 2015, introduces lattices, reciprocal space, symmetry, and diffraction.</li>
+<li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>, Springer, 2004, develops symmetry reduction for directions and orientations in texture analysis.</li>
+<li>The International Union of Crystallography, <a href="https://dictionary.iucr.org/Friedel%27s_law">Friedel's law</a>, states the usual diffraction equivalence and its resonant-scattering exception. R. Beanland et al., <a href="https://doi.org/10.1107/S0108767313010143">Digital electron diffraction - seeing the whole picture</a>, <i>Acta Crystallographica A</i> 69, 427--434, 2013, discusses its breakdown under dynamical electron diffraction.</li>
+</ul>
+</div>
+<h2 id="11">Next</h2>
+<p>Begin with <a href="CrystalSymmetries.html">Crystal Symmetries</a>, then follow the chapter in the order above. After crystal geometry, <a href="CrystalOrientations.html">Orientations</a> places the crystal in a specimen.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/CrystalGeometry.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Generate synthetic EBSD data and calculate dislocation density for olivine | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="The simulated example represents the olivine single crystal 7506 (Durham and Goetze, 1977), deformed in the [110]c orientation for which the compression direction bisects the angle between [100] and [010]. The simulated section replicates the plane strain section, i.e. in the figures below the compr">
+<link rel="canonical" href="https://mtex-playground.github.io/SynEBSD.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SynEBSD.html#page",
+      "name": "Generate synthetic EBSD data and calculate dislocation density for olivine",
+      "headline": "Generate synthetic EBSD data and calculate dislocation density for olivine",
+      "description": "The simulated example represents the olivine single crystal 7506 (Durham and Goetze, 1977), deformed in the [110]c orientation for which the compression direction bisects the angle between [100] and [010]. The simulated section replicates the plane strain section, i.e. in the figures below the compr",
+      "url": "https://mtex-playground.github.io/SynEBSD.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SynEBSD.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SynEBSD.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Examples navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Generate synthetic EBSD data and calculate dislocation density for olivine</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+      This HTML was auto-generated from MATLAB code.
+      To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Generate synthetic EBSD data and calculate dislocation density for olivine</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_SynEBSD.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/examples/blob/master/ExPlasticity/SynEBSD.m">
+    edit page</a>
+    author: Ulrich Faul, MIT</font>
+<div>
+<!--introduction-->
+<p>The simulated example represents the olivine single crystal 7506 (Durham and Goetze, 1977), deformed in the [110]c orientation for which the compression direction bisects the angle between [100] and [010]. The simulated section replicates the plane strain section, i.e. in the figures below the compression direction is top to bottom in the plane of the figures. The scripts for calculation of dislocation density can be used with acquired EBSD data after denoising.</p>
+<!--/introduction-->
+<h2 id="1">Generate text file containing EBSD data on a regular grid</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% CSa defines properties of phases. By default 'notIndexed' is phase 0.</span>
+<span class="n">CSa</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'notIndexed'</span><span class="p">,</span><span class="k">...</span>
+  <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'mmm'</span><span class="p">,</span> <span class="p">[</span><span class="mf">4.756</span> <span class="mf">10.207</span> <span class="mf">5.98</span><span class="p">],</span> <span class="s1">'mineral'</span><span class="p">,</span> <span class="s1">'Forsterite'</span><span class="p">)};</span>
+
+<span class="c1">% This makes it easier to add angular gradients.</span>
+
+<span class="c1">% Set grid dimensions.</span>
+<span class="c1">%</span>
+<span class="n">lx</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">ly</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<span class="n">sizem</span> <span class="o">=</span> <span class="n">lx</span> <span class="o">*</span><span class="n">ly</span><span class="p">;</span>
+
+<span class="c1">% initialize matrices</span>
+<span class="p">[</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">]</span> <span class="o">=</span> <span class="nb">meshgrid</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">lx</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="n">ly</span><span class="p">);</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">yy</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">% Set Euler angles.</span>
+<span class="c1">% 0 180 45: replicates orientation of axes relative to angular changes in</span>
+<span class="c1">% x and y as for 7506. z is perpendicular to the plane of the section.</span>
+
+<span class="c1">% Add angular gradients to ph1</span>
+<span class="n">ph1</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="p">(</span><span class="n">xx</span><span class="o">-</span><span class="n">yy</span><span class="p">)</span> <span class="o">*</span> <span class="nb">degree</span><span class="p">;</span>
+<span class="n">rot</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byEuler</span><span class="p">(</span><span class="n">ph1</span><span class="p">,</span><span class="mi">180</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">45</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">EBSD</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span><span class="n">rot</span><span class="p">,</span><span class="nb">ones</span><span class="p">(</span><span class="nb">numel</span><span class="p">(</span><span class="n">rot</span><span class="p">),</span><span class="mi">1</span><span class="p">),</span><span class="n">CSa</span><span class="p">,</span><span class="nb">struct</span><span class="p">);</span>
+
+
+<span class="c1">% generate grain</span>
+<span class="n">segang</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">;</span> <span class="c1">% define angle to identify grains</span>
+<span class="n">subang</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="nb">degree</span><span class="p">;</span> <span class="c1">% angle for sub boundaries (V5.5)</span>
+
+<span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'threshold'</span><span class="p">,[</span><span class="n">subang</span> <span class="n">segang</span><span class="p">],</span><span class="s1">'unitCell'</span><span class="p">);</span>
+
+<span class="c1">% Plot orientation gradient and show crystal axes</span>
+<span class="c1">% Color mean orientation as white and scale maximum saturation to fit the maximum misorientation angle</span>
+<span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfHSVKey</span><span class="p">(</span><span class="n">ebsd</span><span class="p">);</span>
+<span class="n">ipfKey</span><span class="o">.</span><span class="n">inversePoleFigureDirection</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">)</span> <span class="o">*</span> <span class="n">ipfKey</span><span class="o">.</span><span class="n">whiteCenter</span><span class="p">;</span>
+<span class="n">ipfKey</span><span class="o">.</span><span class="n">maxAngle</span> <span class="o">=</span> <span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">;</span> <span class="c1">% adjust to magnitude of gradient</span>
+
+<span class="c1">% select the grain for plotting of axes</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">CS</span><span class="p">;</span>
+<span class="n">gsel</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">dira</span> <span class="o">=</span> <span class="n">gsel</span><span class="o">.</span><span class="n">meanOrientation</span> <span class="o">*</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">gsel</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span>
+<span class="n">dirb</span> <span class="o">=</span> <span class="n">gsel</span><span class="o">.</span><span class="n">meanOrientation</span> <span class="o">*</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">gsel</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span>
+<span class="n">dirc</span> <span class="o">=</span> <span class="n">gsel</span><span class="o">.</span><span class="n">meanOrientation</span> <span class="o">*</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">gsel</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span>
+<span class="c1">% lenght of plotted arrows</span>
+<span class="n">len</span> <span class="o">=</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">gsel</span><span class="o">.</span><span class="n">diameter</span><span class="p">;</span>
+
+<span class="nb">figure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ipfKey</span><span class="o">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">))</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">ha</span> <span class="o">=</span> <span class="nb">quiver</span><span class="p">(</span><span class="n">gsel</span><span class="p">,</span><span class="n">dira</span><span class="p">,</span><span class="n">len</span><span class="o">.*</span><span class="n">dira</span><span class="p">,</span><span class="s1">'autoScale'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">);</span>
+<span class="n">ha</span><span class="o">.</span><span class="n">Color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">;</span> <span class="n">ha</span><span class="o">.</span><span class="n">LineWidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">hb</span> <span class="o">=</span> <span class="nb">quiver</span><span class="p">(</span><span class="n">gsel</span><span class="p">,</span><span class="n">dirb</span><span class="p">,</span><span class="s1">'autoScale'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">);</span>
+<span class="n">hb</span><span class="o">.</span><span class="n">Color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">;</span> <span class="n">hb</span><span class="o">.</span><span class="n">LineWidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">hc</span> <span class="o">=</span> <span class="nb">quiver</span><span class="p">(</span><span class="n">gsel</span><span class="p">,</span><span class="n">dirc</span><span class="p">,</span><span class="s1">'autoScale'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">);</span>
+<span class="n">hc</span><span class="o">.</span><span class="n">Color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">;</span> <span class="n">hc</span><span class="o">.</span><span class="n">LineWidth</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/SynEBSD_01.png" alt="" />
+
+</center>
+<h2 id="2">Define dislocation types for olivine with 3 orthogonal Burgers vectors</h2>
+<p>For lattices other than cubic and hexagonal MTEX takes the Burgers vector length of a screw dislocation to be the full unit cell dimension, and warns that it could not determine it automatically. For the primitive orthorhombic cell of olivine that default is the value we want - the lengths come out as a, b and c - so the warning can be ignored here.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Define edge dislocations</span>
+<span class="n">sSo1</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'hkl'</span><span class="p">));</span>
+<span class="n">sSo2</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'hkl'</span><span class="p">));</span>
+<span class="n">sSo3</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'hkl'</span><span class="p">));</span>
+<span class="n">sSo4</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'hkl'</span><span class="p">));</span>
+<span class="n">sSo5</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'hkl'</span><span class="p">));</span>
+<span class="n">sSo6</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'hkl'</span><span class="p">));</span>
+
+<span class="c1">%assemble</span>
+<span class="n">sSo</span> <span class="o">=</span> <span class="nb">cat</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="n">sSo1</span><span class="p">,</span><span class="n">sSo2</span><span class="p">,</span><span class="n">sSo3</span><span class="p">,</span><span class="n">sSo4</span><span class="p">,</span><span class="n">sSo5</span><span class="p">,</span><span class="n">sSo6</span><span class="p">);</span>
+
+<span class="c1">% to create dislocation systems need to symmetrise slip system</span>
+<span class="n">sSs</span><span class="o">=</span><span class="n">sSo</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">(</span><span class="s1">'antipodal'</span><span class="p">);</span>
+
+<span class="c1">% Screw dislocations are generated by dislocationSystem</span>
+<span class="n">dSo</span><span class="o">=</span><span class="n">dislocationSystem</span><span class="p">(</span><span class="n">sSs</span><span class="p">);</span>
+
+<span class="c1">% Normalized dislocation energies from Heinisch et al. Table 2</span>
+<span class="n">dSo</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.73</span><span class="p">;</span> <span class="mf">0.74</span><span class="p">;</span> <span class="mf">1.0</span><span class="p">;</span> <span class="mf">0.88</span><span class="p">;</span> <span class="mf">2.36</span><span class="p">;</span> <span class="mf">2.64</span><span class="p">;</span> <span class="mf">0.65</span><span class="p">;</span> <span class="mf">1.91</span><span class="p">;</span> <span class="mf">0.46</span><span class="p">];</span>
+
+<span class="nb">clear</span> <span class="n">sSo6</span> <span class="n">sSo5</span> <span class="n">sSo4</span> <span class="n">sSo3</span> <span class="n">sSo2</span> <span class="n">sSo1</span> <span class="n">sSo</span> <span class="n">sSs</span>
+<span class="c1">% Show dislocation types and their energy. Note that Burgers vector and</span>
+<span class="c1">% line vector directions are shown, not the glide plane. Also note order.</span>
+<span class="n">dSo</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Warning: I could not determine the correct length of the Burgers vector.
+Please adjust it manually. 
+Warning: I could not determine the correct length of the Burgers vector.
+Please adjust it manually. 
+ 
+dSo = dislocationSystem
+ mineral: Forsterite (mmm)
+ edge dislocations : 6 × 1
+ Burgers vector  line vector  energy  length
+      [1  0  0]    [0  0  1]    0.73    4.76
+      [1  0  0]    [0 -1  0]    0.74    4.76
+      [0  0  1]    [0  1  0]       1    5.98
+      [0  0  1]   [-1  0  0]    0.88    5.98
+      [0  1  0]    [0  0 -1]    2.36   10.21
+      [0  1  0]    [1  0  0]    2.64   10.21
+ 
+ screw dislocations: 3 × 1
+ Burgers vector  energy  length
+      [0  0  1]    0.65    5.98
+      [0  1  0]    1.91   10.21
+      [1  0  0]    0.46    4.76</code></pre></figure>
+<h2 id="3">Calculate dislocation density</h2>
+<p>
+<b>Acquired data needs to be denoised first!</b>
+</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% reshape EBSD data on a regular square grid</span>
+<span class="p">[</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">newId</span><span class="p">]</span> <span class="o">=</span> <span class="n">gridify</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'fo'</span><span class="p">));</span>
+<span class="c1">% compute curvature tensors</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="n">ebsdG</span><span class="o">.</span><span class="n">curvature</span><span class="p">;</span>
+<span class="c1">% dislocation tensor is in crystal coordinates, need to rotate it into</span>
+<span class="c1">% specimen coordinates</span>
+<span class="n">dSRot</span> <span class="o">=</span> <span class="n">ebsdG</span><span class="o">.</span><span class="n">orientations</span> <span class="o">*</span> <span class="n">dSo</span><span class="p">;</span>
+<span class="c1">% fit dislocation to curvature tensor. Dislocation density rho is 9 column</span>
+<span class="c1">% vector. factor normalizes from acquisition step size in micron to /m2</span>
+<span class="p">[</span><span class="n">rho</span><span class="p">,</span><span class="nb">factor</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitDislocationSystems</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">dSRot</span><span class="p">);</span>
+
+<span class="c1">% Calculate dislocation density for individual dislocation types</span>
+<span class="c1">% Distributions are non-Gaussian, use median to represent each type</span>
+<span class="c1">% rho is initiated with NaN, omit for median</span>
+<span class="n">dti</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">rho</span><span class="p">));</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="mi">9</span>
+  <span class="n">dti</span><span class="p">(:,</span><span class="n">ii</span><span class="p">)</span> <span class="o">=</span> <span class="nb">factor</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rho</span><span class="p">(:,</span><span class="n">ii</span><span class="p">)</span> <span class="o">.*</span> <span class="n">dSRot</span><span class="p">(:,</span><span class="n">ii</span><span class="p">)</span><span class="o">.</span><span class="n">u</span><span class="p">);</span>
+  <span class="n">dSlip</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">=</span><span class="nb">median</span><span class="p">(</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ii</span><span class="p">),</span><span class="s1">'omitnan'</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="c1">% sum dislocation types to total dislocation density gnd</span>
+<span class="n">gnd</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">dti</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="c1">% median of total dislocation density for a map</span>
+<span class="n">rhoAll</span> <span class="o">=</span> <span class="nb">median</span><span class="p">(</span><span class="n">gnd</span><span class="p">,</span><span class="s1">'omitnan'</span><span class="p">)</span>
+
+<span class="c1">% Reorder individual dislocation types for display in the sequence:</span>
+<span class="c1">%[100](010) [100](001) [001](100) [001](010) [100]s [001]s [010](100) [010](001) [010]</span>
+<span class="n">rhoSlip</span> <span class="o">=</span> <span class="nb">round</span><span class="p">([</span><span class="n">dSlip</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">),</span> <span class="n">dSlip</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span> <span class="n">dSlip</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="n">dSlip</span><span class="p">(</span><span class="mi">5</span><span class="p">:</span><span class="mi">6</span><span class="p">),</span> <span class="n">dSlip</span><span class="p">(</span><span class="mi">8</span><span class="p">)],</span><span class="mi">3</span><span class="p">,</span><span class="s1">'significant'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">rhoAll =
+   3.9366e+12
+rhoSlip =
+   1.0e+12 *
+  Columns 1 through 7
+    3.7900    0.0000         0         0    0.0000    0.0000    0.1490
+  Columns 8 through 9
+    0.0000    0.0000</code></pre></figure>
+<h2 id="4">Plot map of dislocation density</h2>
+<p>supersizeme is an optional function that scales the font sizes of all text elements in a figure. It can be downloaded from <a href="https://www.mathworks.com/matlabcentral/fileexchange/67644-supersizeme-varargin-">https://www.mathworks.com/matlabcentral/fileexchange/67644-supersizeme-varargin-</a> increasing the fontsize is useful for presentations and publications</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span>
+<span class="c1">% increasing the font size requires additional space around figure</span>
+<span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'outerPlotSpacing'</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">gnd</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'edgecolor'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'notIndexed'</span><span class="p">),</span><span class="s1">'FaceColor'</span><span class="p">,[</span><span class="mf">0.8</span> <span class="mf">0.8</span> <span class="mf">0.8</span><span class="p">]);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">innerBoundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="s1">'edgeColor'</span><span class="p">,</span><span class="s1">'r'</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="c1">% Adjust limits of color scale to show structure</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="mf">1e12</span> <span class="mf">1.1e14</span><span class="p">]);</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'Dislocation density, m^{-2}'</span><span class="p">,</span><span class="s1">'fontSize'</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'off'</span><span class="p">)</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/SynEBSD_02.png" alt="" />
+
+</center>
+<h2 id="5">Plot dislocation densities for individual dislocation types</h2>
+<p>Order of dislocation types generated by dislocationSystem</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Dislocation type</span>
+<span class="c1">% [100](010) [100](001) [001](100) [001](010) [100]s [001]s [010](100) [010](001) [010]s</span>
+
+<span class="c1">% Corresponding column in rho</span>
+<span class="c1">%     1          2          3         4         9      7        5        6          8</span>
+
+<span class="c1">% Assign label for plotting of individual slip systems</span>
+<span class="n">slab</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"[100](010)"</span><span class="p">,</span><span class="s2">"[100](001)"</span><span class="p">,</span><span class="s2">"[001](100)"</span><span class="p">,</span><span class="s2">"[001](010)"</span><span class="p">,</span><span class="s2">"[010](100)"</span><span class="p">,</span><span class="s2">"[010](001)"</span><span class="p">,</span><span class="k">...</span>
+    <span class="s2">"[001] screw"</span><span class="p">,</span><span class="s2">"[010] screw"</span><span class="p">,</span><span class="s2">"[100] screw"</span><span class="p">];</span>
+
+<span class="c1">% set color scale for plots</span>
+<span class="n">mind</span> <span class="o">=</span> <span class="mf">5e10</span><span class="p">;</span> <span class="n">maxd</span> <span class="o">=</span> <span class="mf">1e13</span><span class="p">;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="c1">% linewidth for gb</span>
+
+<span class="nb">figure</span>
+<span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'nrows'</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">'ncols'</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">'outerPlotSpacing'</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">))</span><span class="c1">%,'micronbar','off')</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdG</span><span class="p">,</span><span class="n">dti</span><span class="p">(:,</span><span class="n">ind</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'ColorScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'CLim'</span><span class="p">,[</span><span class="n">mind</span> <span class="n">maxd</span><span class="p">]);</span>
+<span class="nb">hold</span> <span class="n">on</span><span class="p">;</span> <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="n">db</span><span class="p">);</span> <span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">title</span><span class="p">(</span><span class="n">slab</span><span class="p">(</span><span class="n">ind</span><span class="p">),</span><span class="s1">'FontWeight'</span><span class="p">,</span><span class="s1">'normal'</span><span class="p">,</span><span class="s1">'fontsize'</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'Dislocation density, m^{-2}'</span><span class="p">,</span><span class="s1">'fontSize'</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/SynEBSD_03.png" alt="" />
+
+</center>
+<h2 id="6">References</h2>
+<p>Durham, WB, C. Goetze, Plastic flow of oriented single crystals of olivine, Journal of Geophysical Research, 82, 5737 - 5753, 1977</p>
+<p>Faul, U. Dislocation structure of deformed olivine single crystals from conventional EBSD maps, Physics and Chemistry of Minerals, 48, 2021, <a href="https://doi.org/10.1007/s00269-021-01157-3">https://doi.org/10.1007/s00269-021-01157-3</a>
+</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SynEBSD.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Random Sampling | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/RandomSampling_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/RandomSampling_py.html#page",
+      "name": "Random Sampling",
+      "headline": "Random Sampling",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/RandomSampling_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/RandomSampling_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/RandomSampling_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Random Sampling</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/RandomSampling.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/ODFAnalysis/RandomSampling.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>An <a href="ODFTheory_py.html">orientation distribution function</a> describes a continuous
+population of orientations. This page solves the reverse problem to
+<a href="DensityEstimation_py.html">density estimation</a>: it turns an ODF into a finite list of
+orientations that represents that population. The ODF may have been built as a model
+or reconstructed from pole-figure measurements.</p>
+
+<p>There are two different reasons to do this. A random sample represents sampling
+variability, for example in a bootstrap or a synthetic measurement. An optimized sample
+represents the ODF with as few points as possible, for example as input to a
+crystal-plasticity calculation. These point sets may look similar, but they are not
+interchangeable. Sampling from a model also gives a known answer for testing a density
+estimation method. Crystal-plasticity codes such as VPSC also consume orientation lists
+in this form.</p>
+
+<p>The examples use a trigonal ODF made from a randomly chosen fibre on a uniform
+background.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize_scalar</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'32'</span><span class="p">)</span>
+<span class="n">fibre_odf</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">uniformODF</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">fibreODF</span><span class="p">(</span><span class="n">fibre</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">cs</span><span class="p">),</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="draw-a-random-sample">Draw a Random Sample</h2>
+
+<p><a href="SO3Fun.discreteSample.html">discreteSample</a> draws orientations with probability
+proportional to the ODF. Each orientation in the returned list has the same implicit
+weight, \(1/500\) in this example.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori</span> <span class="o">=</span> <span class="n">fibre_odf</span><span class="p">.</span><span class="n">discreteSample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># plot the ODF in Bunge sections
+</span><span class="n">plot</span><span class="p">(</span><span class="n">fibre_odf</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+
+<span class="c1"># plot the sampled orientations on top
+</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'none'</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RandomSampling-4.png" /></center>
+
+<p>The black circles gather around the high-density parts of the coloured ODF. Their
+apparent crowding is not a statistical test, however. Section coordinates and
+projections distort area, while an ODF lives in a three-dimensional orientation space.</p>
+
+<p>Sigma sections organize this trigonal example more directly and make the fibre easier
+to follow. They provide a better visual comparison, but they do not remove the need for
+a quantitative error measure.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot the ODF in sigma sections
+</span><span class="n">plot</span><span class="p">(</span><span class="n">fibre_odf</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">contour</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># plot the sampled orientations in the same sections
+</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'none'</span><span class="p">,</span> <span class="nb">all</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RandomSampling-5.png" /></center>
+
+<p>In the sigma sections, the black points trace the elongated high-density feature rather
+than filling orientation space uniformly. Random clusters and gaps remain because this
+is only one realization of 500 points.</p>
+
+<h2 id="reconstruct-the-odf-from-the-random-sample">Reconstruct the ODF from the Random Sample</h2>
+
+<p>A reconstruction converts the point set back to an ODF. Comparing it with the known
+model measures how well the sample represents the original. Here
+<a href="SO3Fun.calcError.html">calcError</a> is asked explicitly for the \(L^1\) error. The
+sample-size experiment below uses relative \(L^2\) error because that norm is cheap for
+harmonic ODFs. Compare errors within each experiment, not across the two different
+norms.</p>
+
+<p>The reconstruction also introduces a kernel halfwidth. A small halfwidth retains
+sample-scale variation; a large one smooths that variation but also broadens real
+texture features.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># estimate an ODF with a narrow kernel
+</span><span class="n">odf_rec</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+
+<span class="n">errRandom10</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">,</span> <span class="n">fibre_odf</span><span class="p">,</span> <span class="s">'L1'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'L1 error, random sample, 10 degree: </span><span class="si">{</span><span class="n">errRandom10</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L1 error, random sample, 10 degree: 0.185
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RandomSampling-6.png" /></center>
+
+<p>At \(10^\circ\), individual clusters and gaps appear as narrow peaks and troughs. The
+reconstruction shows the finite sample at least as strongly as it shows the underlying
+fibre.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># reconstruct the same orientations with a wider kernel
+</span><span class="n">odf_rec</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+
+<span class="n">errRandom20</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">,</span> <span class="n">fibre_odf</span><span class="p">,</span> <span class="s">'L1'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'L1 error, random sample, 20 degree: </span><span class="si">{</span><span class="n">errRandom20</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L1 error, random sample, 20 degree: 0.144
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RandomSampling-7.png" /></center>
+
+<p>At \(20^\circ\), the estimate is smoother and closer to the original for this
+realization. The price is sharpness: the wider kernel smooths the real fibre as well as
+the sampling noise. Compare both the error and the texture index rather than choosing
+the most visually pleasing plot.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'texture index, original ODF: </span><span class="si">{</span><span class="n">norm</span><span class="p">(</span><span class="n">fibre_odf</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'texture index, random reconstruction: </span><span class="si">{</span><span class="n">norm</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>texture index, original ODF: 1.371
+texture index, random reconstruction: 1.095
+</code></pre></div></div>
+
+<h2 id="place-an-optimized-sample">Place an Optimized Sample</h2>
+
+<p>Random points are appropriate when the realization itself is part of the experiment,
+such as a bootstrap study of measurement accuracy. When the aim is instead a compact
+numerical representation, use <a href="SO3Fun.optimalSample.html">optimalSample</a>. It moves the
+orientations to reduce their discrepancy from the ODF rather than drawing independent
+observations.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori</span> <span class="o">=</span> <span class="n">fibre_odf</span><span class="p">.</span><span class="n">optimalSample</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Reconstruct the optimized points with the same \(10^\circ\) halfwidth that left
+sample-scale peaks in the random reconstruction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf_rec</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+
+<span class="n">errOptimal10</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">,</span> <span class="n">fibre_odf</span><span class="p">,</span> <span class="s">'L1'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'L1 error, optimized sample, 10 degree: </span><span class="si">{</span><span class="n">errOptimal10</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>L1 error, optimized sample, 10 degree: 0.037
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RandomSampling-10.png" /></center>
+
+<p>The optimized points cover the model more evenly and support a sharper reconstruction
+at the same sample size. This usually reduces the error, but it does not turn the
+points into random observations. Use random samples to model variability and optimized
+samples as compact numerical input.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'texture index, original ODF: </span><span class="si">{</span><span class="n">norm</span><span class="p">(</span><span class="n">fibre_odf</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'texture index, optimized reconstruction: </span><span class="si">{</span><span class="n">norm</span><span class="p">(</span><span class="n">odf_rec</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>texture index, original ODF: 1.371
+texture index, optimized reconstruction: 1.286
+</code></pre></div></div>
+
+<h2 id="optimizing-the-weights-too">Optimizing the Weights Too</h2>
+
+<p>The sample above gives every orientation the same weight. Requesting the weights as
+well also optimizes them,</p>
+
+<p><code class="language-plaintext highlighter-rouge">ori, c = odf.optimalSample(500, optimizeWeights=True)</code></p>
+
+<p>The nonnegative weights sum to one and are volume fractions. Pass them to the
+reconstruction as <code class="language-plaintext highlighter-rouge">calcDensity(ori, weights=c)</code>. The ODF is then represented by a
+weighted sum of point masses. Optimizing one weight per orientation adds degrees of
+freedom, so fewer orientations can represent the same ODF to a given accuracy.</p>
+
+<p>Whether weighted points help depends on the reconstruction halfwidth and on the
+harmonic <code class="language-plaintext highlighter-rouge">bandwidth</code> used by <code class="language-plaintext highlighter-rouge">optimalSample</code>. The bandwidth says which harmonic degrees
+the optimization controls. Choose it for the intended use of the points; the
+<a href="SO3Fun.optimalSample.html">optimalSample</a> reference gives the details.</p>
+
+<h2 id="how-sample-size-changes-the-best-halfwidth">How Sample Size Changes the Best Halfwidth</h2>
+
+<p>The comparison above fixed both the sample size and the reconstruction halfwidth. A
+fair comparison over several sizes must tune the halfwidth separately for every
+sample. The following controlled experiment gives each point set the kernel that
+minimizes its relative \(L^2\) error, then compares the resulting errors.</p>
+
+<p>The search bracket reaches to 80 degrees, well above the halfwidth any of these sample
+sizes calls for. A bracket that the smallest samples can reach would clip their optimum
+and bias the fitted laws.</p>
+
+<p>These fitted laws describe this model ODF over the tested sizes. They are not universal
+prescriptions for another texture.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># a harmonic representation makes repeated L2 errors cheap to evaluate
+</span><span class="n">odfH</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="n">fibre_odf</span><span class="p">)</span>
+
+<span class="n">M</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># 32, 64, ... 512 orientations
+</span><span class="n">nRep</span> <span class="o">=</span> <span class="mi">5</span>                   <span class="c1"># independent random samples at each size
+</span>
+<span class="n">hwRand</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">nRep</span><span class="p">))</span>
+<span class="n">eRand</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">nRep</span><span class="p">))</span>
+<span class="n">hwOpt</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
+<span class="n">eOpt</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)):</span>
+
+  <span class="c1"># repeat the random sample because each realization differs
+</span>  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRep</span><span class="p">):</span>
+    <span class="n">oriR</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">odfH</span><span class="p">,</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">hw</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">odfH</span> <span class="o">-</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">oriR</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="n">hw</span> <span class="o">*</span> <span class="n">degree</span><span class="p">))</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">odfH</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s">'bounded'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">'xatol'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+    <span class="n">hwRand</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">eRand</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">res</span><span class="p">.</span><span class="n">fun</span>
+
+  <span class="c1"># the optimized sample is deterministic, so one run is enough
+</span>  <span class="n">oriO</span> <span class="o">=</span> <span class="n">optimalSample</span><span class="p">(</span><span class="n">odfH</span><span class="p">,</span> <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  <span class="n">err</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">hw</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">odfH</span> <span class="o">-</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">oriO</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="n">hw</span> <span class="o">*</span> <span class="n">degree</span><span class="p">))</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">odfH</span><span class="p">)</span>
+  <span class="n">res</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s">'bounded'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">'xatol'</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+  <span class="n">hwOpt</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">eOpt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">res</span><span class="p">.</span><span class="n">fun</span>
+</code></pre></div></div>
+
+<h2 id="fit-the-halfwidth-laws">Fit the Halfwidth Laws</h2>
+
+<p>Both optimal halfwidths are fitted by a power law,</p>
+
+\[\delta = a M^b,\]
+
+<p>using a linear fit on logarithmic coordinates.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">powerLaw</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">M</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">pHwRand</span> <span class="o">=</span> <span class="n">powerLaw</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">hwRand</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">pHwOpt</span> <span class="o">=</span> <span class="n">powerLaw</span><span class="p">(</span><span class="n">hwOpt</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'halfwidth for discreteSample: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">pHwRand</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> degree * M^</span><span class="si">{</span><span class="n">pHwRand</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'halfwidth for optimalSample: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">pHwOpt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> degree * M^</span><span class="si">{</span><span class="n">pHwOpt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>halfwidth for discreteSample: 61.0 degree * M^-0.209
+halfwidth for optimalSample: 47.6 degree * M^-0.257
+</code></pre></div></div>
+
+<p>Plot the measured halfwidths with their fitted laws. The circles are the means of five
+random realizations, and the squares are the deterministic optimized samples.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Mf</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">log10</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="p">.</span><span class="n">log10</span><span class="p">(</span><span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">evalLaw</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="n">cRand</span><span class="p">,</span> <span class="n">cOpt</span> <span class="o">=</span> <span class="n">ind2color</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">ind2color</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># an ordinary matplotlib figure of its own
+</span><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">Mf</span><span class="p">,</span> <span class="n">evalLaw</span><span class="p">(</span><span class="n">pHwRand</span><span class="p">,</span> <span class="n">Mf</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cRand</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">Mf</span><span class="p">,</span> <span class="n">evalLaw</span><span class="p">(</span><span class="n">pHwOpt</span><span class="p">,</span> <span class="n">Mf</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cOpt</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">hwRand</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cRand</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">hwOpt</span><span class="p">,</span> <span class="s">'s'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cOpt</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'number of orientations M'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'optimal halfwidth in degree'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'discreteSample'</span><span class="p">,</span> <span class="s">'optimalSample'</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s">'lower left'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RandomSampling-14.png" /></center>
+
+<p>Both curves fall as the sample grows, and the optimized points lie below the random
+ones throughout. The random halfwidth falls the faster of the two, so the gap narrows:
+an optimized sample supports a much sharper kernel at the smallest size and a
+moderately sharper one at the largest.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'ratio of optimized to random halfwidth: </span><span class="si">{</span><span class="n">hwOpt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">hwRand</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> at M = </span><span class="si">{</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s"> and '</span>
+      <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">hwOpt</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">hwRand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> at M = </span><span class="si">{</span><span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ratio of optimized to random halfwidth: 0.67 at M = 32 and 0.58 at M = 512
+</code></pre></div></div>
+
+<h2 id="the-asymptotic-halfwidth-rule">The Asymptotic Halfwidth Rule</h2>
+
+<p>For comparison, the <code class="language-plaintext highlighter-rouge">'magicRule'</code> in <a href="orientation.calcKernel.html">calcKernel</a> sets the
+parameter of the <a href="SO3DeLaValleePoussinKernel.html">de la Vallee Poussin kernel</a> to
+\(\kappa \sim M^{2/7}\). Since its halfwidth behaves like \(\delta \sim \kappa^{-1/2}\),
+the rule corresponds to \(\delta \sim M^{-1/7} \approx M^{-0.14}\).</p>
+
+<p>This is the classical asymptotic kernel-density rate on a three-dimensional space. The
+fitted exponents above are steeper without contradicting that result: they cover less
+than two decades of \(M\) and a model ODF that is half uniform. The comparison between
+the samplers is the useful result because both were measured in the same way.</p>
+
+<p>The halfwidth rules in <code class="language-plaintext highlighter-rouge">calcKernel</code> are derived for random samples. They will therefore
+oversmooth an optimized sample.</p>
+
+<h2 id="approximation-error-versus-sample-size">Approximation Error versus Sample Size</h2>
+
+<p>Once every sample has its own optimal halfwidth, compare the minimum relative \(L^2\)
+errors and fit a power law to each sampler.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pERand</span> <span class="o">=</span> <span class="n">powerLaw</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">eRand</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">pEOpt</span> <span class="o">=</span> <span class="n">powerLaw</span><span class="p">(</span><span class="n">eOpt</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">Mf</span><span class="p">,</span> <span class="n">evalLaw</span><span class="p">(</span><span class="n">pERand</span><span class="p">,</span> <span class="n">Mf</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cRand</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">Mf</span><span class="p">,</span> <span class="n">evalLaw</span><span class="p">(</span><span class="n">pEOpt</span><span class="p">,</span> <span class="n">Mf</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cOpt</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">eRand</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cRand</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">eOpt</span><span class="p">,</span> <span class="s">'s'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cOpt</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'number of orientations M'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'relative L2 error of the reconstruction'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'discreteSample'</span><span class="p">,</span> <span class="s">'optimalSample'</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s">'lower left'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'error for discreteSample: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">pERand</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> * M^</span><span class="si">{</span><span class="n">pERand</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'error for optimalSample: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">pEOpt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> * M^</span><span class="si">{</span><span class="n">pEOpt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>error for discreteSample: 0.82 * M^-0.197
+error for optimalSample: 0.83 * M^-0.364
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RandomSampling-16.png" /></center>
+
+<p>The optimized sample has the steeper fitted slope here too, and therefore converges
+faster over this tested range.</p>
+
+<p>Equating the fitted laws estimates how many random orientations are needed to match an
+optimized set of size \(M\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nEquiv</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">((</span><span class="n">np</span><span class="p">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">pEOpt</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">m</span><span class="p">))</span> <span class="o">-</span> <span class="n">pERand</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">pERand</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">M</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s"> optimized orientations correspond to </span><span class="si">{</span><span class="n">nEquiv</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span><span class="si">}</span><span class="s"> random ones'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>32 optimized orientations correspond to 585 random ones
+64 optimized orientations correspond to 2108 random ones
+128 optimized orientations correspond to 7597 random ones
+256 optimized orientations correspond to 27378 random ones
+512 optimized orientations correspond to 98665 random ones
+</code></pre></div></div>
+
+<h2 id="limits-of-the-comparison">Limits of the Comparison</h2>
+
+<p>These numbers belong to the model ODF on this page. Neither prefactors nor exponents
+carry over unchanged to another ODF. The prefactors scale with the halfwidth of the
+true ODF, and the fitted exponents become flatter for a sharper texture.</p>
+
+<p>The robust qualitative result is the structure of the comparison: the best halfwidths
+have similar exponents, while the optimized sample works with a kernel about one third
+sharper in this experiment. Its advantage is also limited by the harmonic <code class="language-plaintext highlighter-rouge">bandwidth</code>
+used during optimization. Once a reconstruction depends on degrees beyond that
+bandwidth, the optimization no longer controls its error and the curves approach each
+other again.</p>
+
+<h2 id="exporting-the-orientations">Exporting the Orientations</h2>
+
+<p>A sampled orientation list can be exported as <a href="RotationDefinition_py.html">Euler angles</a>
+with <a href="quaternion.export.html">export</a>. Crystal-plasticity programs often require a
+particular convention and a weight in every row. Use
+<a href="orientation.export_VPSC.html">export</a> with <code class="language-plaintext highlighter-rouge">interface='VPSC'</code> for the VPSC format.</p>
+
+<p>The broader choice between exact ODF storage, tabulated function values, and weighted
+orientation lists is covered in <a href="ODFExport_py.html">ODF Export</a>.</p>
+
+<h2 id="further-reading">Further Reading</h2>
+
+<ul>
+  <li><a href="https://doi.org/10.1201/9781315140919">Silverman, Density Estimation for Statistics and Data Analysis</a>
+develops kernel density estimation, bandwidth selection, and their asymptotic rates.</li>
+  <li><a href="https://doi.org/10.1137/100814731">Graf, Potts, and Steidl (2012)</a> relate
+discrepancy-minimizing point sets to quadrature error, the principle behind optimized
+sampling.</li>
+  <li><a href="https://doi.org/10.1016/j.mechmat.2015.04.014">Knezevic and Landry (2015)</a> reduce
+crystal-orientation data by matching generalized spherical-harmonic representations.</li>
+  <li><a href="https://doi.org/10.1016/0956-7151(93)90130-K">Lebensohn and Tome (1993)</a> introduce
+the VPSC formulation used as the motivating crystal-plasticity application.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="ODFExport_py.html">ODF Export</a> writes an ODF or its finite representation to a file.
+<a href="DensityEstimation_py.html">Density Estimation</a> develops the inverse step from
+orientations to a density, while <a href="OptimalKernel_py.html">Optimal Kernel Selection</a>
+compares data-driven halfwidth rules for random measurements.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>MATLAB’s <code class="language-plaintext highlighter-rouge">fminbnd</code> is SciPy’s bounded <code class="language-plaintext highlighter-rouge">minimize_scalar</code>, its <code class="language-plaintext highlighter-rouge">polyfit</code> and <code class="language-plaintext highlighter-rouge">loglog</code>
+NumPy’s and matplotlib’s. The random fibre and the random draws differ from MATLAB’s,
+so the errors and the fitted laws differ in their digits while the comparison holds.
+<code class="language-plaintext highlighter-rouge">optimalSample</code> returns the weights on <code class="language-plaintext highlighter-rouge">optimizeWeights=True</code> where MATLAB’s second
+output asks for them.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/RandomSampling_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

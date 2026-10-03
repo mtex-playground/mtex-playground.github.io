@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Texture evolution in rolled magnesium during uniaxial tension | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="This page compares two Taylor-model predictions for rolled magnesium pulled along its rolling direction. The starting sheet has a basal fibre texture, but the two temperatures use different slip resistances and reach different strains. The calculation shows how those choices change both the texture ">
+<link rel="canonical" href="https://mtex-playground.github.io/TaylorHex.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/TaylorHex.html#page",
+      "name": "Texture evolution in rolled magnesium during uniaxial tension",
+      "headline": "Texture evolution in rolled magnesium during uniaxial tension",
+      "description": "This page compares two Taylor-model predictions for rolled magnesium pulled along its rolling direction. The starting sheet has a basal fibre texture, but the two temperatures use different slip resistances and reach different strains. The calculation shows how those choices change both the texture ",
+      "url": "https://mtex-playground.github.io/TaylorHex.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/TaylorHex.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/TaylorHex.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Texture evolution in rolled magnesium during uniaxial tension</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Texture evolution in rolled magnesium during uniaxial tension</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_TaylorHex.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Plasticity/TaylorHex.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>This page compares two Taylor-model predictions for rolled magnesium pulled along its rolling direction. The starting sheet has a basal fibre texture, but the two temperatures use different slip resistances and reach different strains. The calculation shows how those choices change both the texture and the activity assigned to each deformation family.</p>
+<p>The motivating tension experiments reached approximately 30 percent strain at room temperature and 70 percent at 250 degrees Celsius.</p>
+<!--/introduction-->
+<h2 id="1">Set the crystal and specimen frames</h2>
+<p>The sheet is orthotropic, so its specimen symmetry is the orthorhombic group 222. Expressing it in a rolling frame names the specimen axes rolling direction (RD), transverse direction (TD), and normal direction (ND), and every pole figure below is drawn and annotated in those axes. Here the tension axis is RD.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ss</span> <span class="o">=</span> <span class="n">specimenSymmetry</span><span class="p">(</span><span class="s1">'222'</span><span class="p">);</span>
+<span class="n">ss</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">specimenFrame</span><span class="o">.</span><span class="n">rolling</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ss = orthorhombic specimenSymmetry (TD←RD↑)</code></pre></figure>
+<p>Load the lattice parameters and hexagonal symmetry from the magnesium crystal-information file. <code class="language-plaintext highlighter-rouge">properGroup</code> keeps the rotational part of the point group used to generate oriented slip and twinning systems.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="s1">'Mg-Magnesium.cif'</span><span class="p">)</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">properGroup</span><span class="p">;</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">cs = crystalSymmetry (⊙c→a)
+ 
+  mineral        : Mg               
+  symmetry       : 6/mmm            
+  elements       : 24               
+  a, b, c        : 3.2, 3.2, 5.2    
+  reference frame: X||a*, Y||b, Z||c</code></pre></figure>
+<h2 id="3">Build the initial basal fibre texture</h2>
+<p>In an ideal rolled magnesium sheet, the crystal c-axes are parallel to ND while rotations about that axis are random. A fibre ODF represents that basal fibre texture directly.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span> <span class="o">=</span> <span class="n">fibreODF</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">cAxis</span><span class="p">,</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span><span class="n">ss</span><span class="p">);</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="n">FourierODF</span><span class="p">(</span><span class="n">odf</span><span class="p">);</span></code></pre></figure>
+<p>Plot the basal pole, a prismatic pole, and a pyramidal pole. Pole figures are antipodal here, so opposite directions are drawn as the same pole.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/TaylorHex_01.png" alt="" />
+
+</center>
+<p>The basal poles form one maximum at ND. The prismatic poles form a ring because the initial model contains every rotation about the c-axis with equal probability. RD is also the tension direction in all three plots.</p>
+<h2 id="6">Choose temperature-dependent families</h2>
+<p>The <a href="SlipSystems.html">Slip Systems</a> page defines critical resolved shear stress (CRSS) and explains why hexagonal materials have no universal slip set. CRSS depends on material, temperature, and experiment, and published values vary widely. The dimensionless values below are illustrative ratios normalized to basal slip, not a universal magnesium parameter set.</p>
+<p>At room temperature, basal slip commonly dominates magnesium deformation and extension twins can also have a low CRSS. For this basal texture, tension perpendicular to the c-axis does not activate extension twinning. The model therefore includes only compression twins and assigns them the largest CRSS.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">sScold</span> <span class="o">=</span> <span class="p">[</span><span class="n">slipSystem</span><span class="o">.</span><span class="n">basal</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">prismatic2A</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">66</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">pyramidalCA</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">80</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">twinC1</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">100</span><span class="p">)];</span>
+
+<span class="c1">% Generate all symmetry-related systems and remember their family ids.</span>
+<span class="p">[</span><span class="n">sScold</span><span class="p">,</span><span class="n">slipId</span><span class="p">]</span> <span class="o">=</span> <span class="n">sScold</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">;</span></code></pre></figure>
+<p>At higher temperature, the assumed CRSS of both non-basal slip families decreases. The compression-twin CRSS remains high in this comparison.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">sSwarm</span> <span class="o">=</span> <span class="p">[</span><span class="n">slipSystem</span><span class="o">.</span><span class="n">basal</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">prismatic2A</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">pyramidalCA</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="k">...</span>
+  <span class="n">slipSystem</span><span class="o">.</span><span class="n">twinC1</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="mi">100</span><span class="p">)];</span>
+<span class="n">sSwarm</span> <span class="o">=</span> <span class="n">sSwarm</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">;</span></code></pre></figure>
+<h2 id="8">Define the two strain states</h2>
+<p>Plastic incompressibility requires each infinitesimal strain tensor to have zero trace. The room-temperature case assumes unequal contraction along TD and ND. The 250-degree case assumes that this transverse anisotropy is negligible, so both directions contract equally.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">epsCold</span> <span class="o">=</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">strainTensor</span><span class="p">(</span><span class="nb">diag</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span><span class="mf">0.6</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">]))</span>
+<span class="n">epsWarm</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">strainTensor</span><span class="p">(</span><span class="nb">diag</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">]))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">epsCold = strainTensor (y↓→x)
+  type: Lagrange 
+  rank: 2 (3 × 3)
+ 
+ *10^-2
+  30   0   0
+   0 -18   0
+   0   0 -12
+ 
+epsWarm = strainTensor (y↓→x)
+  type: Lagrange 
+  rank: 2 (3 × 3)
+ 
+ *10^-2
+  70   0   0
+   0 -35   0
+   0   0 -35</code></pre></figure>
+<h2 id="9">Solve the Taylor model for the starting texture</h2>
+<p>Draw a synthetic polycrystal from the initial ODF. <code class="language-plaintext highlighter-rouge">optimalSample</code> places the orientations so that they reproduce the ODF as closely as possible, which needs far fewer of them than a random draw. Both simulations start from this same polycrystal.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori</span> <span class="o">=</span> <span class="n">odf</span><span class="o">.</span><span class="n">optimalSample</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ori = orientation (Mg → TD←RD↑ (222))
+  size: 5280 × 1</code></pre></figure>
+<p>Express each strain in each crystal frame and solve the Taylor problem. The columns of <code class="language-plaintext highlighter-rouge">bCold</code> and <code class="language-plaintext highlighter-rouge">bWarm</code> are slip or twin amounts for the symmetrized systems. The spin tensors describe the corresponding lattice rotations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">bCold</span><span class="p">,</span><span class="n">Wcold</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcTaylor</span><span class="p">(</span><span class="nb">inv</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span> <span class="o">.*</span> <span class="n">epsCold</span><span class="p">,</span><span class="n">sScold</span><span class="p">);</span>
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">bWarm</span><span class="p">,</span><span class="n">Wwarm</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcTaylor</span><span class="p">(</span><span class="nb">inv</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span> <span class="o">.*</span> <span class="n">epsWarm</span><span class="p">,</span><span class="n">sSwarm</span><span class="p">);</span></code></pre></figure>
+<p>Apply each crystallographic spin to the initial orientations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">oriCold</span> <span class="o">=</span> <span class="n">ori</span> <span class="o">.*</span> <span class="n">orientation</span><span class="p">(</span><span class="o">-</span><span class="n">Wcold</span><span class="p">);</span>
+<span class="n">oriWarm</span> <span class="o">=</span> <span class="n">ori</span> <span class="o">.*</span> <span class="n">orientation</span><span class="p">(</span><span class="o">-</span><span class="n">Wwarm</span><span class="p">);</span>
+
+<span class="n">meanRotation</span> <span class="o">=</span> <span class="p">[</span><span class="nb">mean</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span><span class="n">oriCold</span><span class="p">)),</span><span class="k">...</span>
+  <span class="nb">mean</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span><span class="n">oriWarm</span><span class="p">))]</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">meanRotation =
+    8.3179   15.4162</code></pre></figure>
+<p>The mean orientation changes are 8.3179 degrees at room temperature and 15.4162 degrees at 250 degrees Celsius. The larger warm value reflects both its larger imposed strain and its different CRSS ratios.</p>
+<h2 id="13">One-step approximation</h2>
+<p>This page evaluates the spin only at the starting orientations and applies the entire 30 or 70 percent strain in one update. It is therefore an illustrative one-step approximation, especially at the larger strain. <a href="TextureEvolution.html">Texture Evolution</a> shows the more accurate incremental calculation in which orientations are updated repeatedly.</p>
+<h2 id="14">Compare the pole figures</h2>
+<p>Add the room-temperature and 250-degree results beneath the initial pole figures, then arrange the three states as rows on common specimen axes.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'grid'</span><span class="p">,</span><span class="s1">'grid_res'</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">oriCold</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'grid'</span><span class="p">,</span><span class="s1">'grid_res'</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">,</span><span class="s1">'noTitle'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">oriWarm</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'grid'</span><span class="p">,</span><span class="s1">'grid_res'</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">,</span><span class="s1">'noTitle'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/TaylorHex_02.png" alt="" />
+
+</center>
+<p>Compare each column from top to bottom: initial, room temperature, then 250 degrees Celsius. Both deformed rows depart from the ideal basal fibre, and they differ from one another because their CRSS ratios, strain shapes, and total strains are different. The plot cannot attribute a difference to temperature alone because all three inputs change together.</p>
+<h2 id="16">Summarize deformation-family activity</h2>
+<p>Sum the Taylor coefficients of symmetry-related systems using <code class="language-plaintext highlighter-rouge">slipId</code>. Dividing by the number of sampled crystals gives the mean amount assigned to each family per crystal.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">slipId</span> <span class="o">=</span> <span class="nb">repmat</span><span class="p">(</span><span class="n">slipId</span><span class="o">.'</span><span class="p">,</span><span class="nb">length</span><span class="p">(</span><span class="n">ori</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">statSsCold</span> <span class="o">=</span> <span class="nb">accumarray</span><span class="p">(</span><span class="n">slipId</span><span class="p">(:),</span><span class="n">bCold</span><span class="p">(:))</span> <span class="o">.</span><span class="p">/</span> <span class="nb">length</span><span class="p">(</span><span class="n">ori</span><span class="p">);</span>
+<span class="n">statSsWarm</span> <span class="o">=</span> <span class="nb">accumarray</span><span class="p">(</span><span class="n">slipId</span><span class="p">(:),</span><span class="n">bWarm</span><span class="p">(:))</span> <span class="o">.</span><span class="p">/</span> <span class="nb">length</span><span class="p">(</span><span class="n">ori</span><span class="p">);</span>
+
+<span class="n">familyActivity</span> <span class="o">=</span> <span class="nb">array2table</span><span class="p">([</span><span class="n">statSsCold</span><span class="o">.</span><span class="s1">';statSsWarm.'</span><span class="p">],</span><span class="k">...</span>
+  <span class="s1">'VariableNames'</span><span class="p">,{</span><span class="s1">'Basal'</span><span class="p">,</span><span class="s1">'Prismatic'</span><span class="p">,</span><span class="s1">'Pyramidal'</span><span class="p">,</span><span class="s1">'CompressionTwin'</span><span class="p">},</span><span class="k">...</span>
+  <span class="s1">'RowNames'</span><span class="p">,{</span><span class="s1">'RoomTemperature'</span><span class="p">,</span><span class="s1">'250DegreesC'</span><span class="p">})</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">familyActivity =
+  2×4 table
+                        Basal      Prismatic    Pyramidal    CompressionTwin
+                       ________    _________    _________    _______________
+    RoomTemperature    0.021981     0.37224      0.29477       2.3338e-10   
+    250DegreesC        0.044826     0.72982      0.84239       4.9066e-11</code></pre></figure>
+<p>Use a logarithmic scale because the active family totals span several orders of magnitude.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">bar</span><span class="p">([</span><span class="n">statSsCold</span><span class="o">.</span><span class="s1">';statSsWarm.'</span><span class="p">])</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'YScale'</span><span class="p">,</span><span class="s1">'log'</span><span class="p">,</span><span class="s1">'XTickLabel'</span><span class="p">,{</span><span class="s1">'RT'</span><span class="p">,</span><span class="s1">'250 degrees C'</span><span class="p">})</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Mean deformation amount per crystal'</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">({</span><span class="s1">'Basal slip'</span><span class="p">,</span><span class="s1">'Prismatic slip'</span><span class="p">,</span><span class="s1">'Pyramidal slip'</span><span class="p">,</span><span class="s1">'Comp. twin'</span><span class="p">},</span><span class="k">...</span>
+  <span class="s1">'Location'</span><span class="p">,</span><span class="s1">'eastoutside'</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'boxoff'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/TaylorHex_03.png" alt="" />
+
+</center>
+<p>Prismatic and pyramidal slip carry almost all deformation in this example. The warm CRSS ratios favour pyramidal slip over prismatic slip, whereas the order is reversed at room temperature. Compression-twin activity is below \(3 \times 10^{-10}\) per crystal, nine to ten orders of magnitude under prismatic and pyramidal slip. Because the imposed total strains differ, compare the family ranking within a row rather than absolute bar heights between temperatures.</p>
+<h2 id="19">References</h2>
+<div>
+<ul>
+<li>G. I. Taylor, <i>Plastic Strain in Metals</i>, <i>Journal of the Institute of Metals</i> 62 (1938), 307--324. This paper introduces the equal-strain polycrystal model used to select the deformation-system amounts.</li>
+<li>A. Jain and S. R. Agnew, <a href="https://doi.org/10.1016/j.msea.2006.03.160">Modeling the temperature dependent effect of twinning on the behavior of magnesium alloy AZ31B sheet</a>, <i>Materials Science and Engineering A</i> 462 (2007), 29--36. This paper documents the strong temperature dependence of non-basal slip CRSS and the sensitivity of magnesium predictions to the chosen CRSS values.</li>
+</ul>
+</div>
+<h2 id="20">Next</h2>
+<p>
+<a href="Lankford.html">Lankford</a> uses Taylor factors to predict the plastic strain ratio of a sheet as its loading direction changes. It turns the same orientation-dependent deformation model into a measure of sheet anisotropy.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/TaylorHex.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

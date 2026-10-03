@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Grain Graph Based Parent Grain Reconstruction | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="This page reconstructs prior austenite with a grain graph. It uses the same martensite data as Parent Austenite Reconstruction, but replaces that page&#39;s variant graph with a graph having one node per grain.">
+<link rel="canonical" href="https://mtex-playground.github.io/GrainGraphBasedReconstruction.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/GrainGraphBasedReconstruction.html#page",
+      "name": "Grain Graph Based Parent Grain Reconstruction",
+      "headline": "Grain Graph Based Parent Grain Reconstruction",
+      "description": "This page reconstructs prior austenite with a grain graph. It uses the same martensite data as Parent Austenite Reconstruction, but replaces that page's variant graph with a graph having one node per grain.",
+      "url": "https://mtex-playground.github.io/GrainGraphBasedReconstruction.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/GrainGraphBasedReconstruction.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/GrainGraphBasedReconstruction.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Grain Graph Based Parent Grain Reconstruction</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Grain Graph Based Parent Grain Reconstruction</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_GrainGraphBasedReconstruction.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/PhaseTransitions/GrainGraphBasedReconstruction.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>This page reconstructs prior austenite with a grain graph. It uses the same martensite data as <a href="MaParentGrainReconstruction.html">Parent Austenite Reconstruction</a>, but replaces that page's variant graph with a graph having one node per grain.</p>
+<p>The distinction matters. A variant graph decides among candidate variants before merging, while a grain graph reasons directly about compatibility between neighbouring grains. This page concentrates on that second route.</p>
+<!--/introduction-->
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">mtexdata</span> <span class="n">martensite</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ebsd = EBSDsquare (y↑→x, row↑→col)
+ 
+ Phase  Orientations         Mineral         Color  Symmetry  Crystal reference frame
+     0   92415 (27%)      notIndexed          none                                   
+     1  251187 (73%)  Iron bcc (old)  LightSkyBlue       432                         
+ 
+ Properties: bands, bc, bs, error, mad, reliabilityindex, oldId
+ Scan unit : um
+ X × Y × Z : [0 → 353] × [0 → 242] × [0 → 0]
+ Normal vector: (0,0,1)
+ Square grid  :486 × 707</code></pre></figure>
+<h2 id="2">Segment the child grains</h2>
+<p>The 3-degree segmentation is deliberately finer than the parent structure. It removes grains below five pixels and smooths the retained boundaries.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'angle'</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'alpha'</span><span class="p">,</span><span class="mf">6.1</span><span class="p">);</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Iron bcc'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Iron bcc'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'large'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_01.png" alt="" />
+
+</center>
+<p>The black child boundaries divide larger groups of related orientation colours. The graph will test which of those boundaries can disappear when the child grains are assigned a common parent.</p>
+<h2 id="4">Set up and fit the orientation relationship</h2>
+<p>The earlier steel page introduces <a href="parentGrainReconstructor.parentGrainReconstructor.html"><code class="language-plaintext highlighter-rouge">parentGrainReconstructor</code></a> and its phase guess. We again start from the Kurdjumov-Sachs (KS) parent-to-child OR. A Nishiyama-Wassermann OR could be supplied as another initial guess.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span> <span class="o">=</span> <span class="n">parentGrainReconstructor</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">grains</span><span class="p">);</span>
+<span class="n">initialP2C</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">KurdjumovSachs</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">csParent</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">csChild</span><span class="p">);</span>
+<span class="n">job</span><span class="o">.</span><span class="n">p2c</span> <span class="o">=</span> <span class="n">initialP2C</span>
+
+<span class="n">initialFit</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">calcGBFit</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span><span class="p">;</span>
+<span class="n">fitQuantilesInitial</span> <span class="o">=</span> <span class="n">quantile</span><span class="p">(</span><span class="n">initialFit</span><span class="p">,[</span><span class="mf">0.2</span> <span class="mf">0.4</span> <span class="mf">0.6</span> <span class="mf">0.8</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">job = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       4466    100%               
+ 
+ OR: (111) || (011)   [101̅] || [111̅]
+   c2c fit: 2.4°, 3.4°, 4.4°, 5.5° (quintiles)
+ 
+fitQuantilesInitial =
+    2.3630
+    3.3709
+    4.4305
+    5.5006</code></pre></figure>
+<p>The former page reported initial fit quintiles of 2.5, 3.5, 4.5, and 5.5 degrees. This run gives 2.363, 3.371, 4.431, and 5.501 degrees. <a href="MaParentGrainReconstruction.html">Parent Austenite Reconstruction</a> shows how to overlay the full histograms and map the fit onto boundary segments.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">calcParent2Child</span>
+
+<span class="n">optimizedFit</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">calcGBFit</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span><span class="p">;</span>
+<span class="n">fitQuantilesOptimized</span> <span class="o">=</span> <span class="n">quantile</span><span class="p">(</span><span class="n">optimizedFit</span><span class="p">,[</span><span class="mf">0.2</span> <span class="mf">0.4</span> <span class="mf">0.6</span> <span class="mf">0.8</span><span class="p">])</span>
+<span class="n">changeFromKS</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">initialP2C</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">p2c</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       4466    100%               
+ 
+ OR: (348.1°,10.3°,55.9°)
+   c2c fit: 1.5°, 2°, 2.5°, 3.9° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°
+ 
+fitQuantilesOptimized =
+    1.4531
+    1.9681
+    2.5111
+    3.9723
+changeFromKS =
+    3.1100</code></pre></figure>
+<p> <a href="parentGrainReconstructor.calcParent2Child.html"><code class="language-plaintext highlighter-rouge">calcParent2Child</code></a> uses the iterative method of Nyyss&ouml;nen and co-workers. It assumes that most measured boundaries are child-to-child boundaries. The first fit quintile is 1.453 degrees, consistent with the former rounded value of 1.5 degrees. The change from KS is 3.110 degrees, not 2.3 degrees. The 2.3-degree value in the displayed summary is the distance to the closest rounded ideal OR, so the earlier text compared two different quantities.</p>
+<p>Older text said the command stored the misfits in <code class="language-plaintext highlighter-rouge">job.fit</code>. The current class has no such property. <a href="parentGrainReconstructor.calcGBFit.html"><code class="language-plaintext highlighter-rouge">calcGBFit</code></a> computes them on demand and also returns their child-grain neighbour pairs. The former reference also paired an unrelated title with a 2018 DOI. The References section gives the OR-fitting paper and DOI used here.</p>
+<h2 id="7">Build the grain graph</h2>
+<p>A <b>grain graph</b> has one node per grain and one edge per shared grain boundary. An edge weight expresses how compatible the two grains are with a common parent orientation under the fitted OR.</p>
+<p> <a href="parentGrainReconstructor.calcGraph.html"><code class="language-plaintext highlighter-rouge">calcGraph</code></a> derives that weight from the child-to-child misorientation fit. The <code class="language-plaintext highlighter-rouge">threshold</code> is the misfit whose weight is exactly one half. The <code class="language-plaintext highlighter-rouge">tolerance</code> controls the width of the high-to-low transition. Earlier text called <code class="language-plaintext highlighter-rouge">tolerance</code> a Gaussian standard deviation, but the implementation uses it directly as the transition-width parameter.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">calcGraph</span><span class="p">(</span><span class="s1">'threshold'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'tolerance'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+
+<span class="n">graphWeights</span> <span class="o">=</span> <span class="nb">nonzeros</span><span class="p">(</span><span class="nb">triu</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="nb">graph</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+<span class="n">numGraphEdges</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">graphWeights</span><span class="p">)</span>
+<span class="n">graphWeightQuantiles</span> <span class="o">=</span> <span class="n">quantile</span><span class="p">(</span><span class="n">graphWeights</span><span class="p">,[</span><span class="mf">0.1</span> <span class="mf">0.5</span> <span class="mf">0.9</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       4466    100%               
+ 
+ OR: (348.1°,10.3°,55.9°)
+   c2c fit: 1.5°, 2°, 2.5°, 4° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°
+ 
+ graph: 4466 grains in 1 clusters + 2 single grain clusters
+ 
+numGraphEdges =
+       11154
+graphWeightQuantiles =
+    0.0080
+    0.6677
+    0.9464</code></pre></figure>
+<p>The printed count is the number of weighted neighbour relations retained by the graph: 11,154 in this run. Its 10th, 50th, and 90th weight percentiles are 0.0080, 0.6677, and 0.9464.</p>
+<h2 id="9">Read the graph on the map</h2>
+<p> <a href="parentGrainReconstructor.plotGraph.html"><code class="language-plaintext highlighter-rouge">plotGraph</code></a> maps the edge weights back to their grain boundaries.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Iron bcc'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Iron bcc'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'large'</span><span class="p">,</span><span class="s1">'faceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">job</span><span class="o">.</span><span class="n">plotGraph</span><span class="p">(</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_02.png" alt="" />
+
+</center>
+<p>Faint boundaries have high graph weight and are candidates to lie inside one parent grain. Opaque boundaries have weak support and should separate clusters. This inverse transparency is deliberate: likely internal boundaries visually recede.</p>
+<h2 id="11">Cluster the grain graph</h2>
+<p> <a href="parentGrainReconstructor.clusterGraph.html"><code class="language-plaintext highlighter-rouge">clusterGraph</code></a> uses Markov clustering to turn compatible nodes into components. <code class="language-plaintext highlighter-rouge">inflationPower</code> controls their granularity. A smaller value produces fewer, larger clusters; a larger value separates the graph more aggressively.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">clusterGraph</span><span class="p">(</span><span class="s1">'inflationPower'</span><span class="p">,</span><span class="mf">1.6</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       4466    100%               
+ 
+ OR: (348.1°,10.3°,55.9°)
+   c2c fit: 1.5°, 1.9°, 2.5°, 3.9° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°
+ 
+ graph: 4414 grains in 237 clusters + 54 single grain clusters</code></pre></figure>
+<p>The displayed graph summary gives clustered grains, component count, and single-grain components. Here 4,414 grains form 237 components and 54 components contain only one grain. These are hypotheses, not yet accepted parent grains.</p>
+<h2 id="13">Transform grains from the graph components</h2>
+<p> <a href="parentGrainReconstructor.calcParentFromGraph.html"><code class="language-plaintext highlighter-rouge">calcParentFromGraph</code></a> fits one common parent to every component. It then assigns each member its compatible candidate parent orientation. This is the transform step introduced on the earlier steel page. It does not yet merge the component footprints.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">calcParentFromGraph</span>
+
+<span class="n">numGraphTransformed</span> <span class="o">=</span> <span class="nb">nnz</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">isTransformed</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area   reconstructed
+ parent  Iron fcc        432       4414    100%   99%          
+ child   Iron bcc (old)  432       52      0.26%               
+ 
+ OR: (348.1°,10.3°,55.9°)
+   p2c fit: 4.9°, 6.9°, 13°, 21° (quintiles)
+   c2c fit: 5.8°, 5.8°, 5.8°, 5.8° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°
+ 
+numGraphTransformed =
+        4414</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_03.png" alt="" />
+
+</center>
+<p>Most child grains now appear in the parent phase. The graph transforms 4,414 grains and leaves 52 child grains unchanged. Neighbouring fragments with similar colours belong to graph components that still await quality control and merging.</p>
+<h2 id="15">Diagnose and reject weak components</h2>
+<p>
+<code class="language-plaintext highlighter-rouge">job.grains.fit</code> is the angular mismatch between each transformed grain's candidate parent and the fitted parent of its component. <code class="language-plaintext highlighter-rouge">job.grains.clusterSize</code> is the number of grains in that component.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">finiteGraphFit</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="nb">isfinite</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="n">fit</span><span class="p">))</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span><span class="p">;</span>
+<span class="n">graphFitQuantiles</span> <span class="o">=</span> <span class="n">quantile</span><span class="p">(</span><span class="n">finiteGraphFit</span><span class="p">,[</span><span class="mf">0.5</span> <span class="mf">0.9</span> <span class="mf">0.99</span><span class="p">])</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">)</span>
+<span class="n">setColorRange</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'fit (degrees)'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">graphFitQuantiles =
+    2.1835
+    4.1930
+   19.1252</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_04.png" alt="" />
+
+</center>
+<p>Low values inside a large component support its common parent. High values and isolated small components expose assignments that should be undone before boundary votes use them as neighbours.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rejectGraphAssignment</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="n">fit</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="o">*</span><span class="nb">degree</span> <span class="o">|</span> <span class="k">...</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="n">clusterSize</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">numGrainsFailingGraphCriteria</span> <span class="o">=</span> <span class="nb">nnz</span><span class="p">(</span><span class="n">rejectGraphAssignment</span><span class="p">)</span>
+
+<span class="n">job</span><span class="o">.</span><span class="n">revert</span><span class="p">(</span><span class="n">rejectGraphAssignment</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">numGrainsFailingGraphCriteria =
+   848
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       3620    89%   81%          
+ child   Iron bcc (old)  432       846     11%                
+ 
+ OR: (348.1°,10.3°,55.9°)
+   p2c fit: 4.4°, 9.6°, 13°, 21° (quintiles)
+   c2c fit: 1.3°, 1.8°, 2.3°, 3.4° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_05.png" alt="" />
+
+</center>
+<p> <a href="parentGrainReconstructor.revert.html"><code class="language-plaintext highlighter-rouge">revert</code></a> restores the measured child phase and orientation for the rejected grains. The criteria flag 848 grains. Of those, 54 carry no graph assignment to undo, so this call reverts 794 of them and leaves 846 child grains. Called without an argument, <code class="language-plaintext highlighter-rouge">job.revert</code> undoes the entire reconstruction. That full reset is useful when comparing graph parameters.</p>
+<h2 id="18">Recover rejected grains with boundary votes</h2>
+<p>Each boundary to an accepted parent grain votes for a candidate parent of the neighbouring child grain. Three passes let newly transformed grains support the next frontier. Their thresholds relax from 2.5 to 5 and then 7.5 degrees.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">childGrainsAfterVote</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcGBVotes</span><span class="p">(</span><span class="s1">'p2c'</span><span class="p">,</span><span class="s1">'threshold'</span><span class="p">,</span><span class="n">k</span><span class="o">*</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcParentFromVote</span>
+  <span class="n">childGrainsAfterVote</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">childGrains</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="n">childGrainsAfterVote</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       3852    93%   86%          
+ child   Iron bcc (old)  432       614     7.1%               
+ 
+ OR: (348.1°,10.3°,55.9°)
+   p2c fit: 7.8°, 11°, 15°, 23° (quintiles)
+   c2c fit: 1.4°, 1.9°, 2.4°, 3.5° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°
+ 
+ votes: 1 × 1
+   probabilities: 0%, 0%, 0%, 0% (quintiles)
+ 
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       4079    95%   91%          
+ child   Iron bcc (old)  432       387     4.5%               
+ 
+ OR: (348.1°,10.3°,55.9°)
+   p2c fit: 11°, 13°, 19°, 24° (quintiles)
+   c2c fit: 1.4°, 1.9°, 2.4°, 3.4° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°
+ 
+ votes: 4 × 1
+   probabilities: 0%, 0%, 0%, 0% (quintiles)
+ 
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       4292    98%   96%          
+ child   Iron bcc (old)  432       174     1.9%               
+ 
+ OR: (348.1°,10.3°,55.9°)
+   p2c fit: 17°, 20°, 24°, 26° (quintiles)
+   c2c fit: 1.4°, 2°, 2.6°, 3.2° (quintiles)
+   closest ideal OR: (111) || (011)   [11̅0] || [100] fit: 2.3°
+ 
+childGrainsAfterVote =
+   614   387   174</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_06.png" alt="" />
+
+</center>
+<p>The printed sequence should decrease as the reconstructed neighbourhood expands. It is 614, 387, and 174 child grains in this run. The final map fills most rejected regions without accepting their original weak graph assignments.</p>
+<h2 id="20">Merge parent fragments and inclusions</h2>
+<p>The earlier steel page defines the separate transform and merge steps. <a href="parentGrainReconstructor.mergeSimilar.html"><code class="language-plaintext highlighter-rouge">mergeSimilar</code></a> now combines neighbouring parent fragments within 7.5 degrees. <a href="parentGrainReconstructor.mergeInclusions.html"><code class="language-plaintext highlighter-rouge">mergeInclusions</code></a> then absorbs enclosed grains containing at most 50 pixels into their parent host.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">numParentsBeforeMerge</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">mergeSimilar</span><span class="p">(</span><span class="s1">'threshold'</span><span class="p">,</span><span class="mf">7.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">numParentsAfterSimilarMerge</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">mergeInclusions</span><span class="p">(</span><span class="s1">'maxSize'</span><span class="p">,</span><span class="mi">50</span><span class="p">);</span>
+<span class="n">numParentsAfterInclusionMerge</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">numParentsBeforeMerge =
+        4292
+numParentsAfterSimilarMerge =
+   292
+numParentsAfterInclusionMerge =
+   273</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_07.png" alt="" />
+
+</center>
+<p>The first count change measures orientation-based merging. The second measures topological inclusion cleanup. Large parent footprints remain while the many compatible fragments and small enclosed child grains disappear.</p>
+<h2 id="22">Check packets and input-to-parent membership</h2>
+<p> <a href="parentGrainReconstructor.calcVariants.html"><code class="language-plaintext highlighter-rouge">calcVariants</code></a> stores <code class="language-plaintext highlighter-rouge">variantId</code> and <code class="language-plaintext highlighter-rouge">packetId</code> on <code class="language-plaintext highlighter-rouge">job.transformedGrains</code>. A packet groups variants that share the same parent {111} habit plane. Here <code class="language-plaintext highlighter-rouge">packetId</code> selects the parent {111} plane closest to martensite (011).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">job</span><span class="o">.</span><span class="n">calcVariants</span>
+
+<span class="n">packetColor</span> <span class="o">=</span> <span class="n">ind2color</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">transformedGrains</span><span class="o">.</span><span class="n">packetId</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">transformedGrains</span><span class="p">,</span><span class="n">packetColor</span><span class="p">,</span><span class="s1">'faceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">parentGrains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">parentGrains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">grainSelected</span> <span class="o">=</span> <span class="n">parentGrains</span><span class="p">(</span><span class="k">...</span>
+  <span class="n">parentGrains</span><span class="o">.</span><span class="n">findByLocation</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span><span class="mi">80</span><span class="p">]));</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grainSelected</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="n">selectedParentId</span> <span class="o">=</span> <span class="n">grainSelected</span><span class="o">.</span><span class="n">id</span>
+<span class="n">childGrains</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">grainsPrior</span><span class="p">(</span><span class="k">...</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">mergeId</span> <span class="o">==</span> <span class="n">grainSelected</span><span class="o">.</span><span class="n">id</span><span class="p">);</span>
+<span class="n">numChildrenInSelectedParent</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">childGrains</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">selectedParentId =
+   326
+numChildrenInSelectedParent =
+    93</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/GrainGraphBasedReconstruction_08.png" alt="" />
+
+</center>
+<p>Packet colours should organize inside the thick parent boundaries. The white boundary selects the parent at [100,80]. A parent ID depends on the reconstruction run that produced it, so <code class="language-plaintext highlighter-rouge">selectedParentId</code> prints the one this page arrived at rather than a number to carry over from elsewhere.</p>
+<p>
+<code class="language-plaintext highlighter-rouge">job.grainsPrior</code> preserves the input grains, while <code class="language-plaintext highlighter-rouge">job.mergeId</code> maps each one to its current parent ID. The printed child count confirms the selected footprint can be traced back to its 93 measured grains.</p>
+<h2 id="24">Reuse the common crystallographic and pixel checks</h2>
+<p>The earlier <a href="MaParentGrainReconstruction.html">Parent Austenite Reconstruction</a> works through the remaining checks in full. <a href="calcVariantId.html"><code class="language-plaintext highlighter-rouge">calcVariantId</code></a> compares the measured child orientations with all theoretical variants of one reconstructed parent. Its pole figure tests crystallography inside a grain, not only its outline.</p>
+<p> <a href="parentGrainReconstructor.calcParentEBSD.html"><code class="language-plaintext highlighter-rouge">calcParentEBSD</code></a> transfers the grain result to individual pixels. The per-pixel property <code class="language-plaintext highlighter-rouge">parentEBSD.fit</code> measures correspondence between the pixel-derived parent and its reconstructed grain orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">parentEBSD</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">calcParentEBSD</span><span class="p">;</span>
+<span class="n">pixelFit</span> <span class="o">=</span> <span class="n">parentEBSD</span><span class="p">(</span><span class="s1">'Iron fcc'</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span><span class="p">;</span>
+<span class="n">pixelFitQuantiles</span> <span class="o">=</span> <span class="n">quantile</span><span class="p">(</span><span class="n">pixelFit</span><span class="p">(</span><span class="o">~</span><span class="nb">isnan</span><span class="p">(</span><span class="n">pixelFit</span><span class="p">)),[</span><span class="mf">0.5</span> <span class="mf">0.9</span> <span class="mf">0.99</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">pixelFitQuantiles =
+    2.2340
+    4.1554
+    7.1494</code></pre></figure>
+<p>The printed fit quantiles are the compact numerical check for this graph reconstruction. The median, 90th, and 99th percentiles are 2.234, 4.155, and 7.149 degrees. Low values mean the measured child pixels agree with their assigned parent orientation.</p>
+<p>To fill remaining notIndexed or not reconstructed pixels, the earlier page segments <code class="language-plaintext highlighter-rouge">parentEBSD</code> at 3 degrees with <code class="language-plaintext highlighter-rouge">'minPixel',10</code>, smooths the parent boundaries by 10 iterations, and applies a <code class="language-plaintext highlighter-rouge">halfQuadraticFilter</code>:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">parentEBSD</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">parentEBSD</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'angle'</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">parentGrains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">parentGrains</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">halfQuadraticFilter</span><span class="p">;</span>
+<span class="n">parentEBSD</span> <span class="o">=</span> <span class="n">smooth</span><span class="p">(</span><span class="n">parentEBSD</span><span class="p">(</span><span class="s1">'indexed'</span><span class="p">),</span><span class="n">F</span><span class="p">,</span><span class="s1">'fill'</span><span class="p">,</span><span class="n">parentGrains</span><span class="p">);</span></code></pre></figure>
+<p>The grain boundaries constrain the fill so it does not blur across the reconstructed parent partition.</p>
+<h2 id="26">References</h2>
+<div>
+<ul>
+<li>F. Niessen, T. Nyyss&ouml;nen, A. A. Gazder, and R. Hielscher, <a href="https://doi.org/10.1107/S1600576721011560">Parent grain reconstruction from partially or fully transformed microstructures in MTEX</a>, <i>Journal of Applied Crystallography</i> 55 (2022), 180-194, defines the grain-graph reconstruction, rejection, and boundary-voting workflow used here.</li>
+<li>T. Nyyss&ouml;nen, M. Isakov, P. Peura, and V.-T. Kuokkala, <a href="https://doi.org/10.1007/s11661-016-3462-2">Iterative determination of the orientation relationship between austenite and martensite from a large amount of grain pair misorientations</a>, <i>Metallurgical and Materials Transactions A</i> 47 (2016), 2587-2590, gives the OR-fitting method.</li>
+</ul>
+</div>
+<h2 id="27">Next</h2>
+<p>Continue with <a href="TriplePointBasedReconstruction.html">Triple Point Based Reconstruction</a>. It replaces pairwise boundary evidence with the stronger constraint available where three distinct grains meet.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/GrainGraphBasedReconstruction.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

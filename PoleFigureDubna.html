@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Reconstructing the Dubna Quartz ODF | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="This page follows a three-file subset of the seven bundled Dubna pole figures from their files to a reconstructed orientation distribution function (ODF), then checks its fit. Florian Wobbe measured the quartz specimen at Dubna in 2005 using neutron diffraction, as recorded in the original MTEX Dubn">
+<link rel="canonical" href="https://mtex-playground.github.io/PoleFigureDubna.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/PoleFigureDubna.html#page",
+      "name": "Reconstructing the Dubna Quartz ODF",
+      "headline": "Reconstructing the Dubna Quartz ODF",
+      "description": "This page follows a three-file subset of the seven bundled Dubna pole figures from their files to a reconstructed orientation distribution function (ODF), then checks its fit. Florian Wobbe measured the quartz specimen at Dubna in 2005 using neutron diffraction, as recorded in the original MTEX Dubn",
+      "url": "https://mtex-playground.github.io/PoleFigureDubna.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/PoleFigureDubna.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/PoleFigureDubna.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Reconstructing the Dubna Quartz ODF</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Reconstructing the Dubna Quartz ODF</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_PoleFigureDubna.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/PoleFigureAnalysis/PoleFigureDubna.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>This page follows a three-file subset of the seven bundled Dubna pole figures from their files to a reconstructed orientation distribution function (ODF), then checks its fit. Florian Wobbe measured the quartz specimen at Dubna in 2005 using neutron diffraction, as recorded in the <a href="https://mtex-toolbox.github.io/HomepageOld/files/doc/dubna_demo.html">original MTEX Dubna example</a>.</p>
+<p>The example brings together the import, inspection, reconstruction, and validation steps developed earlier in this chapter. It assumes the pole-figure idea from <a href="PoleFigureAnalysis.html">Pole Figures</a>, the import model from <a href="PoleFigureImport.html">Import</a>, and the inversion workflow from <a href="PoleFigure2ODF.html">ODF Reconstruction</a>. The origin of the ghost effect is explained in <a href="PoleFigure2ODFAmbiguity.html">The Ghost Effect</a>.</p>
+<p>A plotting convention states how the specimen reference frame is drawn. This data set uses Y upward and X to the right. The convention does not rotate the specimen directions or change their intensities.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Import the three measurements</h2>
+<p>Quartz is trigonal. The lattice parameters below define its crystal frame as well as the metric used to interpret the four-index notation introduced in <a href="CrystalDirections.html">Miller Indices</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">CS</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'-3m'</span><span class="p">,[</span><span class="mf">4.9</span> <span class="mf">4.9</span> <span class="mf">5.4</span><span class="p">]);</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="p">{</span><span class="k">...</span>
+  <span class="nb">fullfile</span><span class="p">(</span><span class="n">mtexDataPath</span><span class="p">,</span><span class="s1">'PoleFigure'</span><span class="p">,</span><span class="s1">'dubna'</span><span class="p">,</span><span class="s1">'Q(10-10)_amp.cnv'</span><span class="p">),</span><span class="k">...</span>
+  <span class="nb">fullfile</span><span class="p">(</span><span class="n">mtexDataPath</span><span class="p">,</span><span class="s1">'PoleFigure'</span><span class="p">,</span><span class="s1">'dubna'</span><span class="p">,</span><span class="s1">'Q(10-11)(01-11)_amp.cnv'</span><span class="p">),</span><span class="k">...</span>
+  <span class="nb">fullfile</span><span class="p">(</span><span class="n">mtexDataPath</span><span class="p">,</span><span class="s1">'PoleFigure'</span><span class="p">,</span><span class="s1">'dubna'</span><span class="p">,</span><span class="s1">'Q(11-22)_amp.cnv'</span><span class="p">)};</span>
+
+<span class="c1">% crystal-plane normals, one cell per measured file</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">{</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="k">...</span>
+  <span class="p">[</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">),</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">CS</span><span class="p">)],</span><span class="k">...</span>
+  <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">CS</span><span class="p">)};</span>
+
+<span class="c1">% relative structure coefficients, in the same order as h</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,[</span><span class="mf">0.52</span><span class="p">,</span><span class="mf">1.23</span><span class="p">],</span><span class="mi">1</span><span class="p">};</span></code></pre></figure>
+<p>The second diffraction peak contains the unresolved \((01\bar{1}1)\) and \((10\bar{1}1)\) reflections. Its measured intensity is therefore a weighted superposition of two pole figures, not a fourth measurement. Passing <code class="language-plaintext highlighter-rouge">c</code> at import makes that same weighted sum part of the forward model used during reconstruction. See <a href="PoleFigureImport.html">Import</a> for how the structure coefficients are found.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pf</span> <span class="o">=</span> <span class="n">PoleFigure</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">CS</span><span class="p">,</span><span class="s1">'interface'</span><span class="p">,</span><span class="s1">'dubna'</span><span class="p">,</span><span class="s1">'superposition'</span><span class="p">,</span><span class="n">c</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">pf = PoleFigure (y↑→x)
+  crystal symmetry : -3m1, X||a*, Y||b, Z||c
+ 
+  h = (101̅0), r = 72 × 19 points
+  h = (011̅1)(101̅1), r = 72 × 19 points
+  h = (112̅2), r = 72 × 19 points</code></pre></figure>
+<p>The summary reports three entries on identical \(72 \times 19\) direction grids. The double Miller label on the second entry confirms that its two reflections have not been mistaken for separate measurements.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'intensity'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigureDubna_01.png" alt="" />
+
+</center>
+<p>The three panels contain sharp maxima in different specimen directions. The second panel has a much larger raw intensity range, which is why the solver estimates one scale factor per pole figure. These counts are not yet pole densities in multiples of a random distribution (mrd); see <a href="ODFTheory.html">ODF Theory</a>.</p>
+<h2 id="6">Inspect the stored data</h2>
+<p>The object exposes the measured intensities, crystal-plane normals, and specimen directions as ordinary arrays. Different pole figures can use different direction grids, so <a href="PoleFigure.PoleFigure.html"><code class="language-plaintext highlighter-rouge">PoleFigure</code></a> also provides the cell-valued properties <code class="language-plaintext highlighter-rouge">allI</code>, <code class="language-plaintext highlighter-rouge">allH</code>, and <code class="language-plaintext highlighter-rouge">allR</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">I</span> <span class="o">=</span> <span class="n">pf</span><span class="o">.</span><span class="n">intensities</span><span class="p">;</span>
+<span class="n">latticeDirections</span> <span class="o">=</span> <span class="n">pf</span><span class="o">.</span><span class="n">h</span><span class="p">;</span>
+<span class="n">specimenDirections</span> <span class="o">=</span> <span class="n">pf</span><span class="o">.</span><span class="n">r</span><span class="p">;</span></code></pre></figure>
+<p>Minimum and maximum intensities give a first scale check. The rows follow the three entries in the object summary above.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">poleFigureLabel</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'(10-10)'</span><span class="p">;</span><span class="s1">'(01-11)+(10-11)'</span><span class="p">;</span><span class="s1">'(11-22)'</span><span class="p">};</span>
+<span class="n">intensitySummary</span> <span class="o">=</span> <span class="nb">table</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span><span class="o">.</span><span class="s1">',max(pf).'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'VariableNames'</span><span class="p">,{</span><span class="s1">'minimum'</span><span class="p">,</span><span class="s1">'maximum'</span><span class="p">},</span><span class="s1">'RowNames'</span><span class="p">,</span><span class="n">poleFigureLabel</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">intensitySummary =
+  3×2 table
+                       minimum    maximum
+                       _______    _______
+    (10-10)               0        89.8  
+    (01-11)+(10-11)       0        1360  
+    (11-22)               0         962</code></pre></figure>
+<p> <a href="PoleFigure.isOutlier.html"><code class="language-plaintext highlighter-rouge">isOutlier</code></a> compares every measurement with its neighbourhood. Use it to create a mask for inspection:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">outlierMask</span> <span class="o">=</span> <span class="n">isOutlier</span><span class="p">(</span><span class="n">pf</span><span class="p">);</span></code></pre></figure>
+<p>A flag is a prompt to inspect the experiment, not permission to delete a value automatically. Background, defocusing, normalization, and an executable outlier example are in <a href="PoleFigureCorrection.html">Data Correction</a>.</p>
+<h2 id="9">Select a diagnostic band</h2>
+<p>High-tilt measurements are especially vulnerable to defocusing. The next condition demonstrates indexed selection by removing only the two rings from 70 through 75 degrees. It deliberately retains directions above 75 degrees, so it is not a recommended high-tilt correction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">keep</span> <span class="o">=</span> <span class="n">pf</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">theta</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="o">*</span><span class="nb">degree</span> <span class="o">|</span> <span class="n">pf</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">theta</span> <span class="o">&gt;</span> <span class="mi">75</span><span class="o">*</span><span class="nb">degree</span><span class="p">;</span>
+<span class="n">pf_bandRemoved</span> <span class="o">=</span> <span class="n">pf</span><span class="p">(</span><span class="n">keep</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">pf_bandRemoved</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'intensity'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">pf_bandRemoved = PoleFigure (y↑→x)
+  crystal symmetry : -3m1, X||a*, Y||b, Z||c
+ 
+  h = (101̅0), r = 1 × 1224 points
+  h = (011̅1)(101̅1), r = 1 × 1224 points
+  h = (112̅2), r = 1 × 1224 points</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigureDubna_02.png" alt="" />
+
+</center>
+<p>The blank band is the direct visual consequence of the selection. Each entry now contains 1224 of its original 1368 specimen directions.</p>
+<h2 id="11">Rotate the measured directions</h2>
+<p> <a href="PoleFigure.rotate.html"><code class="language-plaintext highlighter-rouge">rotate</code></a> actively moves every measured specimen direction while leaving its intensity unchanged. This is not a frame change and not a plotting convention. If import assigned the wrong specimen reference frame, correct the import whenever possible.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rot</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">xvector</span><span class="o">-</span><span class="n">yvector</span><span class="p">,</span><span class="mi">25</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">pf_rotated</span> <span class="o">=</span> <span class="nb">rotate</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="n">rot</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">pf_rotated</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'intensity'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigureDubna_03.png" alt="" />
+
+</center>
+<p>All three intensity patterns turn together relative to the plotted axes. Their values and the number of sampled directions do not change.</p>
+<h2 id="13">Make a coarse reconstruction</h2>
+<p>A 10 degree orientation grid and at most six solver iterations provide a quick consistency check.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">recCoarse</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'iterMax'</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">recCoarse = SO3FunRBF (3̅m1 → y↑→x)
+ 
+  multimodal components
+  kernel: de la Vallee Poussin, halfwidth 10°
+  center: 2472 orientations, resolution: 10°
+  weight: 1</code></pre></figure>
+<p>The first check is always the recalculated pole figures against the measured ones above. Recalculate exactly the three measured entities. The <code class="language-plaintext highlighter-rouge">'superposition'</code> option combines the two unresolved reflections with their imported structure coefficients instead of drawing them as separate pole figures.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotPDF</span><span class="p">(</span><span class="n">recCoarse</span><span class="p">,</span><span class="n">pf</span><span class="o">.</span><span class="n">allH</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'superposition'</span><span class="p">,</span><span class="n">pf</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'mrd'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigureDubna_04.png" alt="" />
+
+</center>
+<p>The broad maxima occupy the same regions as in the measured panels and have the same relative order. At this coarse resolution that agreement is only a screening result, not evidence that the recovered ODF is unique. <a href="PoleFigure2ODF.html">ODF Reconstruction</a> explains the cost of resolution and iteration count. <a href="PoleFigureRefinement.html">Iterative ODF Reconstruction</a> shows what successively narrowing the kernel can gain.</p>
+<h2 id="16">Reconstruct at the default resolution</h2>
+<p>The final reconstruction uses the default orientation grid and kernel. Its iteration trace is suppressed because <a href="PoleFigure2ODF.html">ODF Reconstruction</a> explains that output in detail.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rec</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span></code></pre></figure>
+<p> <a href="PoleFigure.calcError.html"><code class="language-plaintext highlighter-rouge">calcError</code></a> returns one regularised relative residual per measured pole figure. Label the values so the superposed measurement remains identifiable.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">regularisedRelativeResidual</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="n">rec</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">)</span><span class="o">.'</span><span class="p">;</span>
+<span class="n">fitSummary</span> <span class="o">=</span> <span class="nb">table</span><span class="p">(</span><span class="n">regularisedRelativeResidual</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'RowNames'</span><span class="p">,</span><span class="n">poleFigureLabel</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">fitSummary =
+  3×1 table
+                       regularisedRelativeResidual
+                       ___________________________
+    (10-10)                      0.42687          
+    (01-11)+(10-11)              0.18203          
+    (11-22)                      0.35339</code></pre></figure>
+<p>The superposed measurement in the middle fits best, at 0.18, and the \((10\bar{1}0)\) measurement fits worst, at 0.43. A smaller residual means a better match to the measured projection. It does not prove that the ODF itself is unique or true.</p>
+<h2 id="19">Locate the remaining mismatch</h2>
+<p> <a href="PoleFigure.plotDiff.html"><code class="language-plaintext highlighter-rouge">plotDiff</code></a> shows the same regularised relative residual at every measured direction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotDiff</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="n">rec</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'relative residual'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigureDubna_05.png" alt="" />
+
+</center>
+<p>The mismatch is scattered rather than concentrated in one patch, which is consistent with measurement noise. It also grows towards the rim, where the high specimen tilt makes defocusing correction least reliable. Both patterns are diagnostic clues, not proof of a single cause.</p>
+<h2 id="21">Exercises</h2>
+<p>Working through these on the same data set covers the rest of the chapter:</p>
+<div>
+<ol>
+<li>inspect the raw pole figures and identify measurements you would not trust;</li>
+<li>remove only values for which you have a physical reason, reconstruct the ODF, and compare the <a href="PoleFigure.calcError.html"><code class="language-plaintext highlighter-rouge">calcError</code></a> values;</li>
+<li>reconstruct from fewer pole figures and find the smallest set that still gives a recognisable texture; and</li>
+<li>compare reconstructions with and without <a href="PoleFigure2ODFGhostCorrection.html">ghost correction</a>. Which fits the pole figures better, and why does that comparison not identify the true ODF?</li>
+</ol>
+</div>
+<h2 id="22">Further reading</h2>
+<div>
+<ul>
+<li>R. Hielscher and H. Schaeben, <a href="https://doi.org/10.1107/S0021889808030112">A novel pole figure inversion method: specification of the MTEX algorithm</a>, <i>Journal of Applied Crystallography</i> 41, 1024--1037, 2008. This specifies the estimator and numerical reconstruction used here.</li>
+<li>S. Matthies, H.-R. Wenk and G. W. Vinel, <a href="https://doi.org/10.1107/S0021889888000275">Some basic concepts of texture analysis and comparison of three methods to calculate orientation distributions from pole figures</a>, <i>Journal of Applied Crystallography</i> 21, 285--304, 1988. It motivates using both integral errors and difference pole figures to assess an inversion.</li>
+<li>K. Ullemeyer et al., <a href="https://doi.org/10.23689/fidgeo-1862">Neutron time-of-flight texture measurements in Dubna: status and developments</a>, in <i>11. Symposium Tektonik, Struktur- und Kristallgeologie</i>, 2006. It describes the SKAT instrument and why time-of-flight diffraction records several pole figures from bulk geological samples.</li>
+<li>H.-J. Bunge, <a href="https://doi.org/10.1016/C2013-0-11769-2">Texture Analysis in Materials Science: Mathematical Methods</a>, Butterworths, English ed., 1982. This is the standard textbook treatment of pole figures and ODF reconstruction.</li>
+</ul>
+</div>
+<h2 id="23">Next</h2>
+<p>
+<a href="PoleFigureExport.html">Export</a> shows how to write measured and recalculated pole figures. Continue to <a href="ODFAnalysis.html">ODF Analysis</a> to quantify the assessed ODF and derive texture characteristics from it.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/PoleFigureDubna.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>MTEX in MATLAB and in Python | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/MATLABtoPython_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/MATLABtoPython_py.html#page",
+      "name": "MTEX in MATLAB and in Python",
+      "headline": "MTEX in MATLAB and in Python",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/MATLABtoPython_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/MATLABtoPython_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/MATLABtoPython_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">MTEX in MATLAB and in Python</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/MATLABtoPython.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GeneralConcepts/MATLABtoPython.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>MTEX for Python keeps the names of MATLAB MTEX: the classes (<code class="language-plaintext highlighter-rouge">vector3d</code>, <code class="language-plaintext highlighter-rouge">orientation</code>,
+<code class="language-plaintext highlighter-rouge">EBSD</code>, <code class="language-plaintext highlighter-rouge">grain2d</code>), the commands (<code class="language-plaintext highlighter-rouge">calcGrains</code>, <code class="language-plaintext highlighter-rouge">calcDensity</code>, <code class="language-plaintext highlighter-rouge">plotPF</code>) and their
+options. A MATLAB script translates line by line, and most lines change only in their
+punctuation. This page lists what does change, the rules of the Python language first and
+then the few places where MTEX itself behaves differently.</p>
+
+<h2 id="at-a-glance">At a glance</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>MATLAB</th>
+      <th>Python</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Start MTEX</td>
+      <td><code class="language-plaintext highlighter-rouge">startup_mtex</code>, once per session</td>
+      <td><code class="language-plaintext highlighter-rouge">from mtex import *</code>, in every script</td>
+    </tr>
+    <tr>
+      <td>Editor</td>
+      <td>the MATLAB desktop</td>
+      <td>VS Code with the Python and Jupyter extensions</td>
+    </tr>
+    <tr>
+      <td>Section of a script</td>
+      <td><code class="language-plaintext highlighter-rouge">%%</code>, run with Ctrl+Enter</td>
+      <td><code class="language-plaintext highlighter-rouge"># %%</code>, run with Shift+Enter</td>
+    </tr>
+    <tr>
+      <td>Comment</td>
+      <td><code class="language-plaintext highlighter-rouge">% text</code></td>
+      <td><code class="language-plaintext highlighter-rouge"># text</code></td>
+    </tr>
+    <tr>
+      <td>Suppress output</td>
+      <td><code class="language-plaintext highlighter-rouge">;</code> at the end of a line</td>
+      <td>not needed, only the last line of a cell prints</td>
+    </tr>
+    <tr>
+      <td>Option with a value</td>
+      <td><code class="language-plaintext highlighter-rouge">calcGrains(ebsd, 'angle', 10*degree)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">calcGrains(ebsd, angle=10*degree)</code></td>
+    </tr>
+    <tr>
+      <td>Flag</td>
+      <td><code class="language-plaintext highlighter-rouge">'antipodal'</code></td>
+      <td><code class="language-plaintext highlighter-rouge">antipodal=True</code></td>
+    </tr>
+    <tr>
+      <td>Select</td>
+      <td><code class="language-plaintext highlighter-rouge">ebsd('indexed')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ebsd['indexed']</code></td>
+    </tr>
+    <tr>
+      <td>First and last element</td>
+      <td><code class="language-plaintext highlighter-rouge">x(1)</code>, <code class="language-plaintext highlighter-rouge">x(end)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">x[0]</code>, <code class="language-plaintext highlighter-rouge">x[-1]</code></td>
+    </tr>
+    <tr>
+      <td>Several outputs</td>
+      <td><code class="language-plaintext highlighter-rouge">[grains, ebsd] = calcGrains(ebsd)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">grains = calcGrains(ebsd)</code></td>
+    </tr>
+    <tr>
+      <td>Copy</td>
+      <td><code class="language-plaintext highlighter-rouge">ori2 = ori</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ori2 = ori.copy()</code></td>
+    </tr>
+    <tr>
+      <td>Join</td>
+      <td><code class="language-plaintext highlighter-rouge">[ori1, ori2]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">cat(ori1, ori2)</code></td>
+    </tr>
+    <tr>
+      <td>Element-wise arithmetic</td>
+      <td><code class="language-plaintext highlighter-rouge">a .* b</code>, <code class="language-plaintext highlighter-rouge">a .^ 2</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a * b</code>, <code class="language-plaintext highlighter-rouge">a ** 2</code></td>
+    </tr>
+    <tr>
+      <td>Overlay plots</td>
+      <td><code class="language-plaintext highlighter-rouge">hold on</code></td>
+      <td><code class="language-plaintext highlighter-rouge">hold(True)</code></td>
+    </tr>
+    <tr>
+      <td>Import wizard</td>
+      <td><code class="language-plaintext highlighter-rouge">import_wizard</code></td>
+      <td><code class="language-plaintext highlighter-rouge">importWizard()</code></td>
+    </tr>
+    <tr>
+      <td>Open a documentation page</td>
+      <td><code class="language-plaintext highlighter-rouge">edit EBSDTutorial</code></td>
+      <td><code class="language-plaintext highlighter-rouge">openDoc('EBSDTutorial')</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The sections below explain each row.</p>
+
+<h2 id="starting-mtex">Starting MTEX</h2>
+
+<p>MATLAB MTEX is started once per session with <code class="language-plaintext highlighter-rouge">startup_mtex</code>. In Python, every script
+starts by importing MTEX:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<p>This makes every MTEX command available by its name. The setup of Python and of an editor
+is described in <a href="Installation_py.html">Installing MTEX for Python</a>.</p>
+
+<p>Comments start with <code class="language-plaintext highlighter-rouge">#</code> instead of <code class="language-plaintext highlighter-rouge">%</code>, and a cell of the editor starts with <code class="language-plaintext highlighter-rouge"># %%</code>
+instead of <code class="language-plaintext highlighter-rouge">%%</code>. There is no semicolon to suppress output: a line never prints anything,
+except the last line of a cell when it is a bare expression. Use <code class="language-plaintext highlighter-rouge">print</code> to show a value
+anywhere else.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'forsterite'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ebsd</span><span class="p">))</span>
+<span class="n">ebsd</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>245952
+EBSD (y↓→x)
+  size: 336 × 732 grid
+  Phase  Orientations  Mineral     Color         Symmetry  Crystal reference frame
+  0      58485 (24%)   notIndexed
+  1      152345 (62%)  Forsterite  LightSkyBlue  mmm       Forsterite
+  2      26058 (11%)   Enstatite   DarkSeaGreen  mmm       Enstatite
+  3      9064 (3.7%)   Diopside    Goldenrod     12/m1     Diopside
+  properties    : bands, bc, bs, error, mad
+  scan unit     : um
+  X × Y         : [0 → 3.655e+04] × [0 → 1.675e+04]
+  square lattice: spacing 50
+</code></pre></div></div>
+
+<h2 id="options-are-keywords">Options are keywords</h2>
+
+<p>A MATLAB option is a name followed by its value, a flag is a name alone. In Python both
+are keyword arguments: the option is <code class="language-plaintext highlighter-rouge">name=value</code>, the flag is <code class="language-plaintext highlighter-rouge">name=True</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>MATLAB</th>
+      <th>Python</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">calcGrains(ebsd, 'angle', 10*degree)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">calcGrains(ebsd, angle=10*degree)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Miller(1,0,0, cs, 'antipodal')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Miller(1, 0, 0, cs, antipodal=True)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">plot(grains, 'linewidth', 2)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">plot(grains, lineWidth=2)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">calcODF(pf, 'noGhostCorrection')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">calcODF(pf, ghostCorrection=False)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The keywords are spelled one way throughout: in camelCase (<code class="language-plaintext highlighter-rouge">lineWidth</code>, <code class="language-plaintext highlighter-rouge">markerSize</code>,
+<code class="language-plaintext highlighter-rouge">displayName</code>), a tolerance as <code class="language-plaintext highlighter-rouge">tol</code>, an iteration bound as <code class="language-plaintext highlighter-rouge">maxIter</code>, and a flag by what
+it switches on, so that MATLAB’s <code class="language-plaintext highlighter-rouge">'noSymmetry'</code> is <code class="language-plaintext highlighter-rouge">symmetry=False</code>. Progress output is
+switched by <code class="language-plaintext highlighter-rouge">verbose</code>, where MATLAB silences it by <code class="language-plaintext highlighter-rouge">'silent'</code>: <code class="language-plaintext highlighter-rouge">mtexdata(..., verbose=False)</code>.</p>
+
+<p>A string that names something stays a string in the argument list: the kind of Miller
+indices <code class="language-plaintext highlighter-rouge">'uvw'</code>, an Euler convention <code class="language-plaintext highlighter-rouge">'ZYZ'</code>, an alignment <code class="language-plaintext highlighter-rouge">'X||a'</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">].</span><span class="n">CS</span>
+<span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (Forsterite)
+  u  v  w
+  1  0  0
+</code></pre></div></div>
+
+<p>See <a href="GeneralConceptsOptions_py.html">Options</a> for more.</p>
+
+<h2 id="indexing-with-brackets-counting-from-zero">Indexing with brackets, counting from zero</h2>
+
+<p>Selections use square brackets instead of round ones. Everything else about them stays:
+a phase name, a condition or a list of positions selects.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>MATLAB</th>
+      <th>Python</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ebsd('indexed')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ebsd['indexed']</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ebsd('Forsterite')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ebsd['Forsterite']</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">grains(grains.grainSize &gt; 100)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">grains[grains.grainSize &gt; 100]</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">gB('Forsterite', 'Forsterite')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">gB['Forsterite', 'Forsterite']</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Positions count from 0, and a range <code class="language-plaintext highlighter-rouge">a:b</code> stops before <code class="language-plaintext highlighter-rouge">b</code>. MATLAB’s <code class="language-plaintext highlighter-rouge">x(1)</code> is <code class="language-plaintext highlighter-rouge">x[0]</code>,
+<code class="language-plaintext highlighter-rouge">x(1:10)</code> is <code class="language-plaintext highlighter-rouge">x[0:10]</code>, and <code class="language-plaintext highlighter-rouge">x(end)</code> is <code class="language-plaintext highlighter-rouge">x[-1]</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">big</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[</span><span class="n">grains</span><span class="p">.</span><span class="n">grainSize</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">big</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">].</span><span class="n">grainSize</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([2550,  427,  121], dtype=int32)
+</code></pre></div></div>
+
+<p>Positions and ids are different things: the grain ids count from 1, as in MATLAB, so the
+first grain is at position 0 and has the id 1.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nb">id</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([1], dtype=int32)
+</code></pre></div></div>
+
+<p>See <a href="ListsAndIndexing_py.html">Lists and Indexing</a> for the details.</p>
+
+<h2 id="properties-and-methods">Properties and methods</h2>
+
+<p>What MATLAB MTEX calls a property is written without parentheses, a command with them.
+MATLAB accepts <code class="language-plaintext highlighter-rouge">rot.angle</code> for <code class="language-plaintext highlighter-rouge">angle(rot)</code>; Python needs the parentheses, and without them
+returns the command itself instead of its result.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">].</span><span class="n">orientations</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">ori</span><span class="p">.</span><span class="n">CS</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crystalFrame (⊙c→a)
+  mineral : Forsterite
+  symmetry: mmm
+  elements: 8
+  a, b, c : 4.756, 10.21, 5.98
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([50.9455, 50.9184, 51.0415])
+</code></pre></div></div>
+
+<p>Every such command is also a function, as in MATLAB: <code class="language-plaintext highlighter-rouge">angle(ori)</code> is <code class="language-plaintext highlighter-rouge">ori.angle()</code>.</p>
+
+<h2 id="several-outputs">Several outputs</h2>
+
+<p>A command with several outputs returns them together, and they are unpacked by commas
+instead of square brackets: MATLAB’s <code class="language-plaintext highlighter-rouge">[ind, d] = find(...)</code> is <code class="language-plaintext highlighter-rouge">ind, d = find(...)</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">calcGrains</code> is the exception. MATLAB also returns the updated map,
+<code class="language-plaintext highlighter-rouge">[grains, ebsd] = calcGrains(ebsd)</code>. Python writes the grain ids into the input map,
+so <code class="language-plaintext highlighter-rouge">grains = calcGrains(ebsd)</code> suffices:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ebsd</span><span class="p">.</span><span class="n">grainId</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 1,  1,  1, ..., 47, 47, 47],
+       [ 1,  1,  1, ..., 47, 47, 47],
+       [ 1,  1,  1, ...,  0, 47, 47],
+       [ 1,  1,  1, ..., 46,  0,  0],
+       [ 1,  1,  1, ...,  0, 58,  0]], dtype=int32)
+</code></pre></div></div>
+
+<p>Because the map is changed, compare two reconstructions on copies:
+<code class="language-plaintext highlighter-rouge">calcGrains(ebsd.copy(), ...)</code>.</p>
+
+<h2 id="assignment-does-not-copy">Assignment does not copy</h2>
+
+<p>In MATLAB, <code class="language-plaintext highlighter-rouge">ori2 = ori</code> makes a copy, and changing <code class="language-plaintext highlighter-rouge">ori2</code> leaves <code class="language-plaintext highlighter-rouge">ori</code> alone. In Python both
+names refer to the same object, so a change through one is seen through the other. Ask for
+a copy when you want one:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori2</span> <span class="o">=</span> <span class="n">ori</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Operations never change their input: <code class="language-plaintext highlighter-rouge">ori2 = ori * rot</code> or <code class="language-plaintext highlighter-rouge">ebsd2 = rotate(ebsd, rot)</code>
+return new objects, as in MATLAB.</p>
+
+<h2 id="lists-of-objects">Lists of objects</h2>
+
+<p>Square brackets in MATLAB concatenate: <code class="language-plaintext highlighter-rouge">[ori1, ori2]</code>. In Python square brackets build a
+plain Python list, which MTEX commands do not accept as a list of orientations. Use <code class="language-plaintext highlighter-rouge">cat</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ori1</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">ori2</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">90</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">cat</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span> <span class="n">ori2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>orientation (Forsterite → y↓→x)
+  size: 2
+  Bunge Euler angles in degree
+  phi1  Phi  phi2
+     0    0     0
+    90    0     0
+</code></pre></div></div>
+
+<h2 id="arithmetic-numbers-and-control-flow">Arithmetic, numbers and control flow</h2>
+
+<p>The operations on MTEX objects keep their meaning: <code class="language-plaintext highlighter-rouge">*</code> applies a rotation, <code class="language-plaintext highlighter-rouge">inv(ori)</code>
+inverts. For numbers, MTEX uses NumPy, the standard Python package for arrays, whose
+operations apply elementwise without a dot.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>MATLAB</th>
+      <th>Python</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">a .* b</code>, <code class="language-plaintext highlighter-rouge">a ./ b</code>, <code class="language-plaintext highlighter-rouge">a .^ 2</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a * b</code>, <code class="language-plaintext highlighter-rouge">a / b</code>, <code class="language-plaintext highlighter-rouge">a ** 2</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">a ~= b</code>, <code class="language-plaintext highlighter-rouge">~a</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a != b</code>, <code class="language-plaintext highlighter-rouge">~a</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">a &amp;&amp; b</code>, <code class="language-plaintext highlighter-rouge">a \|\| b</code></td>
+      <td><code class="language-plaintext highlighter-rouge">a and b</code>, <code class="language-plaintext highlighter-rouge">a or b</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">zeros(3, 1)</code>, <code class="language-plaintext highlighter-rouge">mean(x)</code>, <code class="language-plaintext highlighter-rouge">max(x)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">np.zeros(3)</code>, <code class="language-plaintext highlighter-rouge">np.mean(x)</code>, <code class="language-plaintext highlighter-rouge">np.max(x)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">numel(x)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">len(x)</code> or <code class="language-plaintext highlighter-rouge">x.size</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isnan(x)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">np.isnan(x)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pi</code>, <code class="language-plaintext highlighter-rouge">degree</code></td>
+      <td><code class="language-plaintext highlighter-rouge">pi</code>, <code class="language-plaintext highlighter-rouge">degree</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">for i = 1:n ... end</code></td>
+      <td><code class="language-plaintext highlighter-rouge">for i in range(n):</code> and an indented block</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">if a &gt; 0 ... end</code></td>
+      <td><code class="language-plaintext highlighter-rouge">if a &gt; 0:</code> and an indented block</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">function y = f(x) ... end</code></td>
+      <td><code class="language-plaintext highlighter-rouge">def f(x):</code> and an indented block ending in <code class="language-plaintext highlighter-rouge">return y</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sprintf('%d grains', n)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">f'{n} grains'</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Python has no <code class="language-plaintext highlighter-rouge">end</code>: the lines of a loop or a function are the ones indented below it.
+NumPy is imported as <code class="language-plaintext highlighter-rouge">import numpy as np</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"grain </span><span class="si">{</span><span class="n">big</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nb">id</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s">: </span><span class="si">{</span><span class="n">big</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">grainSize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s"> pixels"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grain 1: 2550 pixels
+grain 4: 427 pixels
+grain 7: 121 pixels
+</code></pre></div></div>
+
+<h2 id="plotting">Plotting</h2>
+
+<p>The plotting commands are MATLAB MTEX’s and take the same options. Figures are drawn with
+matplotlib, the standard plotting package of Python.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>MATLAB</th>
+      <th>Python</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">figure</code></td>
+      <td><code class="language-plaintext highlighter-rouge">newMtexFigure()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">hold on</code>, <code class="language-plaintext highlighter-rouge">hold off</code></td>
+      <td><code class="language-plaintext highlighter-rouge">hold(True)</code>, <code class="language-plaintext highlighter-rouge">hold(False)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">nextAxis</code></td>
+      <td><code class="language-plaintext highlighter-rouge">nextAxis()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mtexColorbar</code></td>
+      <td><code class="language-plaintext highlighter-rouge">mtexColorbar()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">saveFigure('map.png')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">saveFigure('map.png')</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">].</span><span class="n">orientations</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/MATLABtoPython-13.png" /></center>
+
+<h2 id="names-that-changed">Names that changed</h2>
+
+<p>A few classes carry the names of the coming MATLAB release, where the MATLAB pages of
+MTEX 6 still use the old ones, and a few commands have a better name in Python than in
+MATLAB: a misnomer, a duplicate or a workaround for a limit of MATLAB. They take the same
+arguments.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>MATLAB MTEX 6</th>
+      <th>Python</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">crystalSymmetry('m-3m', [a b c], 'mineral', 'Iron')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">crystalFrame('m-3m', [a, b, c], mineral='Iron')</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">specimenSymmetry('222')</code></td>
+      <td><code class="language-plaintext highlighter-rouge">specimenFrame('222')</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ebsd.opt</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ebsd.meta</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">loadEBSD(fname)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">loadEBSD(fname)</code> or <code class="language-plaintext highlighter-rouge">EBSD.load(fname)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">import_wizard</code></td>
+      <td><code class="language-plaintext highlighter-rouge">importWizard()</code>, or <code class="language-plaintext highlighter-rouge">mtex-wizard</code> in a terminal</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">plotPDF(odf, h)</code>, <code class="language-plaintext highlighter-rouge">plotPDF(ori, h)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">plotPF(odf, h)</code>, <code class="language-plaintext highlighter-rouge">plotPF(ori, h)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">plotIPDF(odf, r)</code>, <code class="language-plaintext highlighter-rouge">plotIPDF(ori, r)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">plotIPF(odf, r)</code>, <code class="language-plaintext highlighter-rouge">plotIPF(ori, r)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">calcPDF(odf, h, r)</code>, <code class="language-plaintext highlighter-rouge">odf.pdf(h)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">odf.radon(h, r)</code>, <code class="language-plaintext highlighter-rouge">odf.radon(h)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">odf.ipdf(r)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">odf.radon(r=r)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">hist(grains)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">histogram(grains, grouped=True)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">angle_outer(v1, v2)</code>, <code class="language-plaintext highlighter-rouge">dot_outer(v1, v2)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">angle(v1, v2, outer=True)</code>, <code class="language-plaintext highlighter-rouge">dot(v1, v2, outer=True)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">eq(v1, v2)</code>, <code class="language-plaintext highlighter-rouge">eqTol(cs1, cs2)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">isclose(v1, v2)</code>, <code class="language-plaintext highlighter-rouge">isclose(cs1, cs2)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">orientation.eye(cs)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">orientation.id(cs)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">plotSpektra(odf)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">plotSpectrum(odf)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">textureindex(odf)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">textureIndex(odf)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">eS.addFeature_singleStep</code></td>
+      <td><code class="language-plaintext highlighter-rouge">eS.addFeature('singleStep')</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">project2FundamentalRegion(ori)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">projectIntoFundamentalRegion(ori)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">project2EulerFR(ori)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">projectIntoEulerRegion(ori)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sR.restrict2Upper</code></td>
+      <td><code class="language-plaintext highlighter-rouge">sR.restrictToUpper</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SO3F.SRight</code>, <code class="language-plaintext highlighter-rouge">SO3F.SLeft</code>, <code class="language-plaintext highlighter-rouge">oR.CS1</code>, <code class="language-plaintext highlighter-rouge">oR.CS2</code></td>
+      <td><code class="language-plaintext highlighter-rouge">SO3F.frameA</code>, <code class="language-plaintext highlighter-rouge">SO3F.frameB</code> (or <code class="language-plaintext highlighter-rouge">CS</code>, <code class="language-plaintext highlighter-rouge">SS</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">plotx2north</code></td>
+      <td><code class="language-plaintext highlighter-rouge">plottingConvention.default(north=xvector)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">quiver3(t)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">quiver3d(t)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">loadEBSD_ang(fname)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">loadEBSD(fname)</code>, the format from the extension or <code class="language-plaintext highlighter-rouge">interface='ang'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">export_VPSC(ori, fname)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">export(ori, fname, interface='VPSC')</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="behaviour-that-differs-on-purpose">Behaviour that differs on purpose</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">calcGrains</code> changes the map it is given</strong>, as described above.</li>
+  <li><strong>A map read on a grid keeps its grid.</strong> A map whose file stores a regular grid is a
+two-dimensional EBSD object at once, rows by columns, where MATLAB reads a list and
+builds the grid by <code class="language-plaintext highlighter-rouge">gridify</code>. A selection such as <code class="language-plaintext highlighter-rouge">ebsd['indexed']</code> is a list.</li>
+  <li><strong>Moving a gridded map keeps the order of its data.</strong> <code class="language-plaintext highlighter-rouge">rotate</code>, <code class="language-plaintext highlighter-rouge">shift</code> and <code class="language-plaintext highlighter-rouge">transform</code>
+move the positions; MATLAB stores a rotated map anew. <code class="language-plaintext highlighter-rouge">gridify(ebsd, ...)</code> reorders
+explicitly.</li>
+  <li><strong>Unknown options.</strong> <code class="language-plaintext highlighter-rouge">calcGrains</code> and most computing commands refuse a misspelt keyword;
+the plotting commands pass unknown ones on to matplotlib.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">].</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(336, 732) (226906,)
+</code></pre></div></div>
+
+<h2 id="where-to-find-help">Where to find help</h2>
+
+<p>Every page of the MTEX documentation has a MATLAB and a Python version; the switch at the
+top of a page changes between them. The MATLAB page is the place to look for anything
+this port does not describe yet, and the rules of this page translate its code.
+<code class="language-plaintext highlighter-rouge">openDoc('EBSDTutorial')</code> gives a page as a script to run section by section, as
+<code class="language-plaintext highlighter-rouge">edit EBSDTutorial</code> opens a documentation script in MATLAB.
+<a href="https://docs.python.org/3/tutorial/">The Python Tutorial</a> is the introduction to the
+language, <a href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">NumPy for MATLAB users</a>
+the translation table for numerical code.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/MATLABtoPython_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

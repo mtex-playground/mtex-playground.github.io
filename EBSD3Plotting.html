@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Volume Data and Slices | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="An EBSD3 object stores one measurement per voxel: its position, phase, orientation, and whatever properties the file provides. It is the volume counterpart of a two-dimensional EBSD map, and the representation to use while the question still concerns individual measurements rather than whole-grain g">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSD3Plotting.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSD3Plotting.html#page",
+      "name": "Volume Data and Slices",
+      "headline": "Volume Data and Slices",
+      "description": "An EBSD3 object stores one measurement per voxel: its position, phase, orientation, and whatever properties the file provides. It is the volume counterpart of a two-dimensional EBSD map, and the representation to use while the question still concerns individual measurements rather than whole-grain g",
+      "url": "https://mtex-playground.github.io/EBSD3Plotting.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSD3Plotting.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSD3Plotting.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Volume Data and Slices</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Volume Data and Slices</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_EBSD3Plotting.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/EBSD3Analysis/EBSD3Plotting.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>An <a href="EBSD3.EBSD3.html">EBSD3</a> object stores one measurement per voxel: its position, phase, orientation, and whatever properties the file provides. It is the volume counterpart of a two-dimensional <a href="EBSD.EBSD.html">EBSD</a> map, and the representation to use while the question still concerns individual measurements rather than whole-grain geometry.</p>
+<p>This page imports such a volume, displays it, and cuts planar slices out of it. A slice is an ordinary two-dimensional EBSD map, so everything written for planar data applies to it unchanged. The polyhedral <a href="grain3d.grain3d.html">grain3d</a> representation is the subject of <a href="Grains3D.html">Three-Dimensional Grains</a>.</p>
+<!--/introduction-->
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Import a volume</h2>
+<p> <a href="EBSD3.load.html"><code class="language-plaintext highlighter-rouge">EBSD3.load</code></a> detects the file format automatically. The sample data set is a simulated nine-phase volume written in the Xnovo GrainMapper3D format,</p>
+<pre>  ebsd = EBSD3.load(fullfile(mtexDataPath,'EBSD3','SimulatedMultiPhase.h5'))</pre>
+<p>which <code class="language-plaintext highlighter-rouge">mtexdata</code> resolves by name.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s1">'xnovo'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ebsd = EBSD3square (y↑→x)
+ 
+ Phase  Orientations     Mineral          Color  Symmetry  Crystal reference frame
+     0   27950 (22%)  notIndexed           none                                   
+     1  11046 (8.8%)     Silicon        SkyBlue      m-3m                         
+     2  11876 (9.5%)     Diamond  PaleVioletRed      m-3m                         
+     3  10436 (8.3%)   Magnesium            Red     6/mmm        X||a, Y||b*, Z||c
+     4  10231 (8.2%)      Rutile            Red     4/mmm                         
+     5   9060 (7.2%)    Corundum    YellowGreen      -3m1        X||a, Y||b*, Z||c
+     6  11521 (9.2%)      Quartz    DeepSkyBlue      -3m1        X||a, Y||b*, Z||c
+     7  10961 (8.8%)    Pyroxene     SandyBrown       mmm                         
+     8  10578 (8.5%)  Hornblende         Orchid     12/m1        X||a, Y||b, Z||c*
+     9  11341 (9.1%)  Microcline           Gold        -1              X||a, Z||c*
+ 
+ Properties: Completeness, grainId
+ Scan unit : mm
+ X × Y × Z : [-0.24 0.24] × [-0.24 0.24] × [-0.24 0.24]
+ Grid size (square): 50 × 50 × 50</code></pre></figure>
+<p>The summary reports a 50 x 50 x 50 array rather than a list, i.e. the measurements are held in an <a href="EBSD3square.EBSD3square.html">EBSD3square</a> whose entries are addressed as <code class="language-plaintext highlighter-rouge">ebsd(i,j,k)</code>. The three array dimensions carry \(x\), \(y\) and \(z\). Each of the nine phases occupies roughly a twelfth of the voxels and the remaining fifth is not indexed.</p>
+<p>The voxel is 10 micron on a side and the volume spans about half a millimetre in each direction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">ebsd</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">dy</span><span class="p">,</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">dz</span><span class="p">]</span>
+<span class="n">ebsd</span><span class="o">.</span><span class="n">extent</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+    0.0100    0.0100    0.0100
+ans =
+   -0.2450    0.2450   -0.2450    0.2450   -0.2450    0.2450</code></pre></figure>
+<h2 id="4">Select voxels</h2>
+<p>A phase or a condition selects voxels the way it selects the pixels of a map. The result is a list of the selected voxels, shorter than the volume, that still carries the unit cell of the grid it came from.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsdQuartz</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="s1">'Quartz'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ebsdQuartz = EBSD3 (y↑→x)
+ 
+ Phase  Orientations  Mineral        Color  Symmetry  Crystal reference frame
+     6  11521 (100%)   Quartz  DeepSkyBlue      -3m1        X||a, Y||b*, Z||c
+ 
+ Properties: Completeness, grainId
+ Scan unit : mm
+ X × Y × Z : [-0.23 0.24] × [-0.23 0.24] × [-0.24 0.24]</code></pre></figure>
+<p>Whatever needs the grid rebuilds it in place: <a href="EBSD3.calcGrains.html"><code class="language-plaintext highlighter-rouge">calcGrains</code></a>, <code class="language-plaintext highlighter-rouge">plot</code> and <code class="language-plaintext highlighter-rouge">slice</code> put the list back onto its lattice, with the cells nobody occupies not indexed, and <a href="EBSD3.gridify.html"><code class="language-plaintext highlighter-rouge">gridify</code></a> does so explicitly. A block of subscripts, <code class="language-plaintext highlighter-rouge">ebsd(10:20,10:20,10:20)</code>, keeps the grid and crops it.</p>
+<h2 id="6">Display the volume</h2>
+<p> <a href="EBSD3.plot.html"><code class="language-plaintext highlighter-rouge">plot</code></a> hands the volume to the MATLAB volume viewer, which cuts three slice planes through the data and renders them on the graphics card. The planes are dragged with the mouse, and the volume is rotated, clipped and cropped interactively, so this is a live window rather than a figure:</p>
+<pre>  plot(ebsd)                          % colour by phase
+  plot(ebsd,ebsd.prop.grainId)        % colour by a property</pre>
+<p>Voxel colours are never interpolated, so a boundary stays where the measurement puts it, and voxels that are not indexed are painted in the background colour.</p>
+<p>Interaction is what that window is for. Anything that has to end up in a figure, a publication, or a further calculation goes through a slice.</p>
+<h2 id="7">Cut a slice</h2>
+<p> <a href="EBSD3.slice.html"><code class="language-plaintext highlighter-rouge">slice</code></a> resamples the volume onto a regular grid inside a <a href="plane3d.plane3d.html">plane3d</a> and returns a two-dimensional <a href="EBSD.EBSD.html">EBSD</a> map. The plane is given by its normal and one point on it.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsdZ</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">plane3d</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ebsdZ = EBSDsquare (y↑→x, col←row↓)
+ 
+ Phase  Orientations     Mineral          Color  Symmetry  Crystal reference frame
+     0     763 (28%)  notIndexed           none                                   
+     1     376 (14%)     Silicon        SkyBlue      m-3m                         
+     2    122 (4.5%)     Diamond  PaleVioletRed      m-3m                         
+     3    179 (6.6%)   Magnesium            Red     6/mmm        X||a, Y||b*, Z||c
+     4    128 (4.7%)      Rutile            Red     4/mmm                         
+     5    193 (7.1%)    Corundum    YellowGreen      -3m1        X||a, Y||b*, Z||c
+     6     76 (2.8%)      Quartz    DeepSkyBlue      -3m1        X||a, Y||b*, Z||c
+     7    256 (9.5%)    Pyroxene     SandyBrown       mmm                         
+     8    236 (8.7%)  Hornblende         Orchid     12/m1        X||a, Y||b, Z||c*
+     9     375 (14%)  Microcline           Gold        -1              X||a, Z||c*
+ 
+ Properties: Completeness, grainId
+ Scan unit : mm
+ X × Y × Z : [-0.26 → 0.26] × [-0.26 → 0.26] × [0 → 0]
+ Normal vector: (0,0,1)
+ Square grid  :52 × 52</code></pre></figure>
+<p>The result is an <a href="EBSDsquare.EBSDsquare.html">EBSDsquare</a> like any imported map, it carries all nine phases, and it plots like one.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">ebsdZ</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSD3Plotting_01.png" alt="" />
+
+</center>
+<p>The section is a disc, so the simulated specimen is round in the \(xy\) plane rather than filling its bounding box. The grains are equiaxed and the nine phases are mixed through the section without any layering.</p>
+<h2 id="10">Slices at several depths</h2>
+<p>Repeating the cut at different heights shows how the microstructure develops through the volume. Each panel is a full EBSD map.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'large'</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="n">z</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.15</span> <span class="mi">0</span> <span class="mf">0.15</span><span class="p">]</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">plane3d</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">z</span><span class="p">))),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+  <span class="n">mtexTitle</span><span class="p">([</span><span class="s1">'z = '</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="s1">' mm'</span><span class="p">])</span>
+  <span class="k">if</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">nextAxis</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSD3Plotting_02.png" alt="" />
+
+</center>
+<p>The three discs have the same diameter, so the specimen is a cylinder standing along \(z\). The grain pattern is different in each panel because every section meets a different set of grains.</p>
+<h2 id="12">An arbitrary plane</h2>
+<p>The normal is unrestricted. The measurements of a section keep their position in the specimen, so a section that does not lie in the \(xy\) plane would be seen edge on from the default viewing direction. <code class="language-plaintext highlighter-rouge">slice</code> therefore gives the section a <a href="plottingConvention.html">plottingConvention</a> of its own that looks along the plane normal, and the map is drawn face on without moving any data.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'large'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">plane3d</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'normal || x'</span><span class="p">)</span>
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">plane3d</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'normal || (1,1,1)'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSD3Plotting_03.png" alt="" />
+
+</center>
+<p>The section normal to \(x\) is rectangular and shows the full height of the cylinder. The oblique section is the larger of the two because that plane crosses more of the specimen; its grid is regular within the plane, not in the specimen axes.</p>
+<p>A section normal to \(z\) needs no new convention and keeps the one the volume already carries, so it is drawn exactly as an imported map is.</p>
+<h2 id="14">Several sections at once</h2>
+<p>A section keeps the position its measurements have in the specimen, so drawing more than one into the same axes assembles them where they belong. Three orthogonal cuts seen from an angle give the picture the volume viewer shows, in a figure that can be published.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">plane3d</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">plane3d</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">plane3d</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="n">setCamera</span><span class="p">(</span><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default3D</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSD3Plotting_04.png" alt="" />
+
+</center>
+<p>The convention a single section carries decides how that section alone is seen. Once several are combined there is one camera for all of them, and <a href="plottingConvention.html"><code class="language-plaintext highlighter-rouge">plottingConvention.default3D</code></a> is the oblique view this chapter uses. The three planes meet at the centre of the specimen, so a grain crossed by two of them appears in both.</p>
+<h2 id="16">Colour a slice</h2>
+<p>A slice carries the orientations, phases and properties of the voxels it passes through, so it is coloured by exactly the same commands as an imported map. Orientation colouring needs a single phase at a time, which for a multi-phase section means one call per phase.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="k">for</span> <span class="n">p</span> <span class="o">=</span> <span class="n">ebsdZ</span><span class="o">.</span><span class="n">indexedPhasesId</span>
+  <span class="n">ebsdP</span> <span class="o">=</span> <span class="n">ebsdZ</span><span class="p">(</span><span class="n">ebsdZ</span><span class="o">.</span><span class="n">CSList</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">mineral</span><span class="p">);</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">ebsdP</span><span class="p">,</span><span class="n">ebsdP</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+  <span class="nb">hold</span> <span class="n">on</span>
+<span class="k">end</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Warning: The point group "-1" has no topologically correct color key: its
+         fundamental sector cannot be mapped smoothly and one to one onto the
+         color space, so the colors jump somewhere. Colorizing with the point
+         group "1" instead removes the jump, but that identifies directions
+         differently, so symmetrically equivalent directions no longer share a
+         color.</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSD3Plotting_05.png" alt="" />
+
+</center>
+<p>Each phase is coloured by its own inverse pole figure key, so colours are comparable within a phase but not between phases.</p>
+<h2 id="18">Separate orientation from measurement quality</h2>
+<p>A dark or abruptly changing orientation colour does not by itself indicate a poor measurement. Compare a stored quality field with orientation on the same plane. <code class="language-plaintext highlighter-rouge">Completeness</code> is supplied by this Xnovo file; other importers may provide different quality measures.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'large'</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdZ</span><span class="p">,</span><span class="n">ebsdZ</span><span class="o">.</span><span class="n">prop</span><span class="o">.</span><span class="n">Completeness</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Completeness'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span>
+<span class="n">nextAxis</span>
+<span class="n">quartz</span> <span class="o">=</span> <span class="n">ebsdZ</span><span class="p">(</span><span class="s1">'Quartz'</span><span class="p">);</span>
+<span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">quartz</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span>
+<span class="n">ipfKey</span><span class="o">.</span><span class="n">inversePoleFigureDirection</span> <span class="o">=</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">quartz</span><span class="p">,</span><span class="n">ipfKey</span><span class="o">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">quartz</span><span class="o">.</span><span class="n">orientations</span><span class="p">),</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Quartz: IPF along specimen z'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSD3Plotting_06.png" alt="" />
+
+</center>
+<p>The IPF reference is a specimen direction. It stays along \(z\) even when the cutting plane or camera changes. Reuse the same key when comparing orientations on several sections. Interpret completeness using the acquisition method; this simulated example does not establish a cutoff for experimental data.</p>
+<h2 id="20">A slice is an ordinary EBSD map</h2>
+<p>Nothing distinguishes the result of <code class="language-plaintext highlighter-rouge">slice</code> from an imported map, so the planar toolchain applies to it directly. Here the section is segmented into grains and the boundaries drawn over the phase map.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsdZ</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdZ</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSD3Plotting_07.png" alt="" />
+
+</center>
+<p>These are grains reconstructed independently in two dimensions. A grain connected outside this plane can appear as separate regions here, so this segmentation need not match a slice of the three-dimensional grains. This data set also ships the segmentation of the full volume as the voxel property <code class="language-plaintext highlighter-rouge">grainId</code>, which the slice carries along.</p>
+<p>Reconstructing grains in the volume as closed polyhedra is described in <a href="Grains3D.html">Three-Dimensional Grains</a>.</p>
+<h2 id="22">Function reference</h2>
+<p>
+   <table class="usertable">
+      <tr>
+         <td>
+               <p>Function</p>
+         </td>
+         <td>
+               <p>Purpose</p>
+         </td>
+         <td>
+               <p>Function</p>
+         </td>
+         <td>
+               <p>Purpose</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="EBSD3.load.html">
+                     <tt>load</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>import volume measurements</p>
+         </td>
+         <td>
+               <p>
+                  <a href="EBSD3.plot.html">
+                     <tt>plot</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>open the volume viewer</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="EBSD3.slice.html">
+                     <tt>slice</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>extract a planar EBSD map</p>
+         </td>
+         <td>
+               <p>
+                  <a href="EBSD.plot.html">
+                     <tt>plot</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>colour a section</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="EBSD.calcGrains.html">
+                     <tt>calcGrains</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>segment one section</p>
+         </td>
+         <td>
+               <p>
+                  <a href="EBSD3square.calcGrains.html">
+                     <tt>calcGrains</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>segment the full volume</p>
+         </td>
+      </tr>
+   </table>
+</p>
+<h2 id="23">References</h2>
+<div>
+<ul>
+<li>F. Bachmann, R. Hielscher, and H. Schaeben, <a href="https://doi.org/10.1016/j.ultramic.2011.08.002">Grain Detection from 2d and 3d EBSD Data - Specification of the MTEX Algorithm</a>, <i>Ultramicroscopy</i> 111 (2011), 1720--1733, specifies the segmentation that <a href="EBSD.calcGrains.html"><code class="language-plaintext highlighter-rouge">calcGrains</code></a> applies to the section.</li>
+</ul>
+</div>
+<h2 id="24">Next</h2>
+<p>Continue with <a href="Grains3D.html">Three-Dimensional Grains</a> to turn a volume into polyhedra and to work with their faces and normals.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSD3Plotting.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

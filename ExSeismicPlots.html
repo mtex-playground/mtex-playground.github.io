@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Seismic velocities and anisotropy | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="Calculating and plotting elastic velocities from elastic stiffness tensor \(C_{ijkl}\) and density (by David Mainprice).">
+<link rel="canonical" href="https://mtex-playground.github.io/ExSeismicPlots.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/ExSeismicPlots.html#page",
+      "name": "Seismic velocities and anisotropy",
+      "headline": "Seismic velocities and anisotropy",
+      "description": "Calculating and plotting elastic velocities from elastic stiffness tensor \\(C_{ijkl}\\) and density (by David Mainprice).",
+      "url": "https://mtex-playground.github.io/ExSeismicPlots.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/ExSeismicPlots.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/ExSeismicPlots.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Examples navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Seismic velocities and anisotropy</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+      This HTML was auto-generated from MATLAB code.
+      To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Seismic velocities and anisotropy</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_ExSeismicPlots.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/examples/blob/master/ExSeismics/ExSeismicPlots.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>Calculating and plotting elastic velocities from elastic stiffness tensor \(C_{ijkl}\) and density (by David Mainprice).</p>
+<!--/introduction-->
+<h2 id="1">Crystal Symmetry and definition of the elastic stiffness tensor</h2>
+<p>crystal symmetry - Orthorhombic mmm Olivine structure (4.7646 10.2296 5.9942 90.00 90.00 90.00)</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs_tensor</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'mmm'</span><span class="p">,[</span><span class="mf">4.7646</span><span class="p">,</span><span class="mf">10.2296</span><span class="p">,</span><span class="mf">5.9942</span><span class="p">],</span><span class="k">...</span>
+  <span class="s1">'x||a'</span><span class="p">,</span><span class="s1">'z||c'</span><span class="p">,</span><span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'Olivine'</span><span class="p">);</span></code></pre></figure>
+<p>
+<b>Import 4th rank tensor as 6 by 6 matrix</b>
+</p>
+<p>Olivine elastic stiffness (Cij) tensor in GPa Abramson E.H., Brown J.M., Slutsky L.J., and Zaug J.(1997) The elastic constants of San Carlos olivine to 17 GPa. Journal of Geophysical Research 102: 12253-12263.</p>
+<p>Enter tensor as 6 by 6 matrix M, line by line.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">M</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">320.5</span>  <span class="mf">68.15</span>  <span class="mf">71.6</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+    <span class="p">[</span> <span class="mf">68.15</span>  <span class="mf">196.5</span>  <span class="mf">76.8</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+    <span class="p">[</span>  <span class="mf">71.6</span>   <span class="mf">76.8</span> <span class="mf">233.5</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+    <span class="p">[</span>   <span class="mi">0</span>      <span class="mi">0</span>      <span class="mi">0</span>     <span class="mi">64</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+    <span class="p">[</span>   <span class="mi">0</span>      <span class="mi">0</span>      <span class="mi">0</span>      <span class="mi">0</span>    <span class="mi">77</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+    <span class="p">[</span>   <span class="mi">0</span>      <span class="mi">0</span>      <span class="mi">0</span>      <span class="mi">0</span>     <span class="mi">0</span>  <span class="mf">78.7</span><span class="p">]];</span>
+
+<span class="c1">% Define density (g/cm3)</span>
+<span class="n">rho</span><span class="o">=</span><span class="mf">3.355</span><span class="p">;</span>
+
+<span class="c1">% Define tensor object in MTEX</span>
+<span class="c1">% Cij -&gt; Cijkl - elastic stiffness tensor</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">stiffnessTensor</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">cs_tensor</span><span class="p">,</span><span class="s1">'density'</span><span class="p">,</span><span class="n">rho</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">C = stiffnessTensor (Olivine)
+  density: 3.355            
+  unit   : GPa              
+  rank   : 4 (3 × 3 × 3 × 3)
+ 
+  tensor in Voigt matrix representation:
+ 320.5  68.2  71.6     0     0     0
+  68.2 196.5  76.8     0     0     0
+  71.6  76.8 233.5     0     0     0
+     0     0     0    64     0     0
+     0     0     0     0    77     0
+     0     0     0     0     0  78.7</code></pre></figure>
+<p>Compute seismic velocities as functions on the sphere</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">vp</span><span class="p">,</span><span class="n">vs1</span><span class="p">,</span><span class="n">vs2</span><span class="p">,</span><span class="n">pp</span><span class="p">,</span><span class="n">ps1</span><span class="p">,</span><span class="n">ps2</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">velocity</span><span class="p">(</span><span class="s1">'harmonic'</span><span class="p">);</span></code></pre></figure>
+<h2 id="4">Plotting section</h2>
+<p>Here we set preference for a nice plot.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% set color map to seismic color map: blue2redColorMap</span>
+<span class="n">setMTEXpref</span><span class="p">(</span><span class="s1">'defaultColorMap'</span><span class="p">,</span><span class="n">blue2redColorMap</span><span class="p">)</span>
+
+<span class="c1">% some options</span>
+<span class="n">blackMarker</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'white'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">};</span>
+<span class="n">whiteMarker</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Marker'</span><span class="p">,</span><span class="s1">'o'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'white'</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">};</span>
+
+<span class="c1">% some global options for the titles</span>
+<span class="c1">%titleOpt = {'FontSize',getMTEXpref('FontSize'),'visible','on'}; %{'FontSize',15};</span>
+<span class="n">titleOpt</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'visible'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">};</span>
+
+<span class="c1">% Setup multiplot</span>
+<span class="c1">% define plot size [origin X,Y,Width,Height]</span>
+<span class="n">mtexFigure</span><span class="p">(</span><span class="s1">'position'</span><span class="p">,[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">1000</span> <span class="mi">1000</span><span class="p">]);</span>
+
+<span class="c1">% set up spacing between subplots default is 10 pixel</span>
+<span class="c1">%mtexFig.innerPlotSpacing = 20;</span>
+
+<span class="c1">% Standard Seismic plot with 8 subplots in 3 by 3 matrix</span>
+<span class="c1">%</span>
+<span class="c1">% Plot matrix layout</span>
+<span class="c1">%        1 Vp        2 AVs      3 S1 polarization</span>
+<span class="c1">%        4 Vs1       5 Vs2      6 dVs</span>
+<span class="c1">%        7 Vp/Vs1    8 Vp/Vs2</span>
+<span class="c1">%</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_01.png" alt="" />
+
+</center>
+<h2 id="5">Vp : Plot P-wave velocity (km/s)</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Plot P-wave velocity (km/s)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Vp (km/s)'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% extrema</span>
+<span class="p">[</span><span class="n">maxVp</span><span class="p">,</span> <span class="n">maxVpPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vp</span><span class="p">);</span>
+<span class="p">[</span><span class="n">minVp</span><span class="p">,</span> <span class="n">minVpPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">vp</span><span class="p">);</span>
+
+<span class="c1">% percentage anisotropy</span>
+<span class="n">AVp</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">maxVp</span><span class="o">-</span><span class="n">minVp</span><span class="p">)</span> <span class="p">/</span> <span class="p">(</span><span class="n">maxVp</span><span class="o">+</span><span class="n">minVp</span><span class="p">);</span>
+
+<span class="c1">% mark maximum with black square and minimum with white circle</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxVpPos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">blackMarker</span><span class="p">{:})</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">minVpPos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">whiteMarker</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="c1">% subTitle</span>
+<span class="nb">xlabel</span><span class="p">([</span><span class="s1">'Vp Anisotropy = '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">AVp</span><span class="p">,</span><span class="s1">'%6.1f'</span><span class="p">)],</span><span class="n">titleOpt</span><span class="p">{:})</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_02.png" alt="" />
+
+</center>
+<h2 id="6">AVs : Plot S-wave anisotropy percentage for each propagation direction</h2>
+<p>defined as AVs = 200*(Vs1-Vs2)/(Vs1+Vs2)</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% create a new axis</span>
+<span class="n">nextAxis</span>
+
+<span class="c1">% Plot S-wave anisotropy (percent)</span>
+<span class="n">AVs</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">vs1</span><span class="o">-</span><span class="n">vs2</span><span class="p">)</span><span class="o">.</span><span class="p">/(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">AVs</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">);</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'S-wave anisotropy (%)'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% Max percentage anisotropy</span>
+<span class="p">[</span><span class="n">maxAVs</span><span class="p">,</span><span class="n">maxAVsPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">AVs</span><span class="p">);</span>
+<span class="p">[</span><span class="n">minAVs</span><span class="p">,</span><span class="n">minAVsPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">AVs</span><span class="p">);</span>
+
+<span class="nb">xlabel</span><span class="p">([</span><span class="s1">'Max Vs Anisotropy = '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">maxAVs</span><span class="p">,</span><span class="s1">'%6.1f'</span><span class="p">)],</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% mark maximum with black square and minimum with white circle</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxAVsPos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">blackMarker</span><span class="p">{:})</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">minAVsPos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">whiteMarker</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_03.png" alt="" />
+
+</center>
+<h2 id="7">S1 Polarization: Plot fastest S-wave (Vs1) polarization directions</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% create a new axis</span>
+<span class="n">nextAxis</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">AVs</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Vs1 polarization'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ps1</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_04.png" alt="" />
+
+</center>
+<h2 id="8">Vs1 : Plot Vs1 velocities (km/s)</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% create a new axis</span>
+<span class="n">nextAxis</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">vs1</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Vs1 (km/s)'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% Percentage anisotropy</span>
+<span class="p">[</span><span class="n">maxS1</span><span class="p">,</span><span class="n">maxS1pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vs1</span><span class="p">);</span>
+<span class="p">[</span><span class="n">minS1</span><span class="p">,</span><span class="n">minS1pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">vs1</span><span class="p">);</span>
+<span class="n">AVs1</span><span class="o">=</span><span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">maxS1</span><span class="o">-</span><span class="n">minS1</span><span class="p">)</span><span class="o">.</span><span class="p">/(</span><span class="n">maxS1</span><span class="o">+</span><span class="n">minS1</span><span class="p">);</span>
+
+<span class="nb">xlabel</span><span class="p">([</span><span class="s1">'Vs1 Anisotropy = '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">AVs1</span><span class="p">,</span><span class="s1">'%6.1f'</span><span class="p">)],</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ps1</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">)</span>
+
+<span class="c1">% mark maximum with black square and minimum with white circle</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxS1pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">blackMarker</span><span class="p">{:})</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">minS1pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">whiteMarker</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_05.png" alt="" />
+
+</center>
+<h2 id="9">Vs2 : Plot Vs2 velocities (km/s)</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% create a new axis</span>
+<span class="n">nextAxis</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">vs2</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Vs2 (km/s)'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% Percentage anisotropy</span>
+<span class="p">[</span><span class="n">maxS2</span><span class="p">,</span><span class="n">maxS2pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vs2</span><span class="p">);</span>
+<span class="p">[</span><span class="n">minS2</span><span class="p">,</span><span class="n">minS2pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">vs2</span><span class="p">);</span>
+<span class="n">AVs2</span><span class="o">=</span><span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">maxS2</span><span class="o">-</span><span class="n">minS2</span><span class="p">)</span><span class="o">.</span><span class="p">/(</span><span class="n">maxS2</span><span class="o">+</span><span class="n">minS2</span><span class="p">);</span>
+<span class="nb">xlabel</span><span class="p">([</span><span class="s1">'Vs2 Anisotropy = '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">AVs2</span><span class="p">,</span><span class="s1">'%6.1f'</span><span class="p">)],</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ps2</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">)</span>
+
+<span class="c1">% mark maximum with black square and minimum with white circle</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxS2pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">blackMarker</span><span class="p">{:})</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">minS2pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">whiteMarker</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_06.png" alt="" />
+
+</center>
+<h2 id="10">dVs : Plot Velocity difference Vs1-Vs2 (km/s) plus Vs1 polarization</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% create a new axis</span>
+<span class="n">nextAxis</span>
+
+<span class="n">dVs</span> <span class="o">=</span> <span class="n">vs1</span><span class="o">-</span><span class="n">vs2</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">dVs</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'dVs=Vs1-Vs2 (km/s)'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% Max percentage anisotropy</span>
+<span class="p">[</span><span class="n">maxdVs</span><span class="p">,</span><span class="n">maxdVsPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dVs</span><span class="p">);</span>
+<span class="p">[</span><span class="n">mindVs</span><span class="p">,</span><span class="n">mindVsPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dVs</span><span class="p">);</span>
+
+<span class="nb">xlabel</span><span class="p">([</span><span class="s1">'Max dVs (km/s) = '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">maxdVs</span><span class="p">,</span><span class="s1">'%6.2f'</span><span class="p">)],</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% mark maximum with black square and minimum with white circle</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxdVsPos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">blackMarker</span><span class="p">{:})</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">mindVsPos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">whiteMarker</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_07.png" alt="" />
+
+</center>
+<h2 id="11">Vp/Vs1 : Plot Vp/Vs1 ratio (no units)</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% create a new axis</span>
+<span class="n">nextAxis</span>
+
+<span class="n">vpvs1</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="p">/</span><span class="n">vs1</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">vpvs1</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Vp/Vs1'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% Percentage anisotropy</span>
+<span class="p">[</span><span class="n">maxVpVs1</span><span class="p">,</span><span class="n">maxVpVs1Pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vpvs1</span><span class="p">);</span>
+<span class="p">[</span><span class="n">minVpVs1</span><span class="p">,</span><span class="n">minVpVs1Pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">vpvs1</span><span class="p">);</span>
+<span class="n">AVpVs1</span><span class="o">=</span><span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">maxVpVs1</span><span class="o">-</span><span class="n">minVpVs1</span><span class="p">)/(</span><span class="n">maxVpVs1</span><span class="o">+</span><span class="n">minVpVs1</span><span class="p">);</span>
+
+<span class="nb">xlabel</span><span class="p">([</span><span class="s1">'Vp/Vs1 Anisotropy = '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">AVpVs1</span><span class="p">,</span><span class="s1">'%6.1f'</span><span class="p">)],</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% mark maximum with black square and minimum with white circle</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxVpVs1Pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">blackMarker</span><span class="p">{:})</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">minVpVs1Pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">whiteMarker</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_08.png" alt="" />
+
+</center>
+<h2 id="12">Vp/Vs2 : Plot Vp/Vs2 ratio (no units)</h2>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% create a new axis</span>
+<span class="n">nextAxis</span>
+
+<span class="n">vpvs2</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="p">/</span><span class="n">vs2</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">vpvs2</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Vp/Vs2'</span><span class="p">,</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% Percentage anisotropy</span>
+<span class="p">[</span><span class="n">maxVpVs2</span><span class="p">,</span><span class="n">maxVpVs2Pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vpvs2</span><span class="p">);</span>
+<span class="p">[</span><span class="n">minVpVs2</span><span class="p">,</span><span class="n">minVpVs2Pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">vpvs2</span><span class="p">);</span>
+<span class="n">AVpVs2</span><span class="o">=</span><span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">maxVpVs2</span><span class="o">-</span><span class="n">minVpVs2</span><span class="p">)/(</span><span class="n">maxVpVs2</span><span class="o">+</span><span class="n">minVpVs2</span><span class="p">);</span>
+
+<span class="nb">xlabel</span><span class="p">([</span><span class="s1">'Vp/Vs2 Anisotropy = '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">AVpVs2</span><span class="p">,</span><span class="s1">'%6.1f'</span><span class="p">)],</span><span class="n">titleOpt</span><span class="p">{:})</span>
+
+<span class="c1">% mark maximum with black square and minimum with white circle</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxVpVs2Pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">blackMarker</span><span class="p">{:})</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">minVpVs2Pos</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="n">whiteMarker</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_09.png" alt="" />
+
+</center>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% add colorbars to all plots</span>
+<span class="n">mtexColorbar</span>
+<span class="n">drawNow</span><span class="p">(</span><span class="n">gcm</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'large'</span><span class="p">)</span>
+
+<span class="c1">% reset old colormap</span>
+<span class="n">setMTEXpref</span><span class="p">(</span><span class="s1">'defaultColorMap'</span><span class="p">,</span><span class="n">WhiteJetColorMap</span><span class="p">)</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ExSeismicPlots_10.png" alt="" />
+
+</center>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/ExSeismicPlots.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

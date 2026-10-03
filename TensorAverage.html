@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Tensor Averages | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A polycrystal has no single-crystal stiffness tensor. Each measurement has an orientation that rotates its phase tensor into the specimen frame. The aggregate response also depends on how stress and strain are shared.">
+<link rel="canonical" href="https://mtex-playground.github.io/TensorAverage.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/TensorAverage.html#page",
+      "name": "Tensor Averages",
+      "headline": "Tensor Averages",
+      "description": "A polycrystal has no single-crystal stiffness tensor. Each measurement has an orientation that rotates its phase tensor into the specimen frame. The aggregate response also depends on how stress and strain are shared.",
+      "url": "https://mtex-playground.github.io/TensorAverage.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/TensorAverage.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/TensorAverage.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Tensor Averages</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Tensor Averages</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_TensorAverage.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Tensors/TensorAverage.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>A polycrystal has no single-crystal stiffness tensor. Each measurement has an orientation that rotates its phase tensor into the specimen frame. The aggregate response also depends on how stress and strain are shared.</p>
+<p>Even with phase tensors and orientations, this information determines bounds rather than a unique effective stiffness. This page computes the Voigt, Reuss, and Hill estimates from EBSD measurements and from an ODF.</p>
+<p>Read <a href="TensorDefinition.html">Tensor Definition</a> first for tensor rank and crystal frames. <a href="TensorArithmetics.html">Tensor Arithmetics</a> explains how an orientation rotates a tensor into the specimen frame.</p>
+<!--/introduction-->
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s1">'epidote'</span><span class="p">);</span>
+
+<span class="c1">% show the part of the map used to illustrate the cleaning step</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="nb">inpolygon</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,[</span><span class="mi">2000</span> <span class="mi">0</span> <span class="mi">1400</span> <span class="mi">375</span><span class="p">])));</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/TensorAverage_01.png" alt="" />
+
+</center>
+<h2 id="2">Remove poorly fitted measurements</h2>
+<p>The mean angular deviation (MAD) measures the fit between an indexed diffraction pattern and its solution. Here measurements above 1.3 degrees are removed before their orientations can enter the average.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">MAD_MAXIMUM</span> <span class="o">=</span> <span class="mf">1.3</span><span class="p">;</span>
+<span class="n">ebsd</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">mad</span> <span class="o">&gt;</span> <span class="n">MAD_MAXIMUM</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="nb">inpolygon</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,[</span><span class="mi">2000</span> <span class="mi">0</span> <span class="mi">1400</span> <span class="mi">375</span><span class="p">])));</span>
+
+<span class="c1">%</span>
+<span class="c1">% Compare this map with the first one. Small blank patches mark removed</span>
+<span class="c1">% measurements, while the phase colours of retained measurements are unchanged.</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/TensorAverage_02.png" alt="" />
+
+</center>
+<h2 id="3">Define the single-crystal stiffness tensors</h2>
+<p>Every selected phase needs a stiffness tensor expressed in its published crystal frame. The <code class="language-plaintext highlighter-rouge">'X</code><code class="language-plaintext highlighter-rouge">a*','Z</code><code class="language-plaintext highlighter-rouge">c'</code> alignment is therefore part of the material data, not a plotting choice.</p>
+<p>The glaucophane coefficients and density are from L. Bezacier et al., <a href="https://doi.org/10.1016/j.tecto.2010.09.011">Elasticity of glaucophane, seismic velocities and anisotropy of the subducted oceanic crust</a>, <i>Tectonophysics</i> 494 (2010), 201-210.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">CS_Tensor_glaucophane</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'2/m'</span><span class="p">,[</span><span class="mf">9.5334</span><span class="p">,</span><span class="mf">17.7347</span><span class="p">,</span><span class="mf">5.3008</span><span class="p">],</span><span class="k">...</span>
+  <span class="p">[</span><span class="mf">90.00</span><span class="p">,</span><span class="mf">103.597</span><span class="p">,</span><span class="mf">90.00</span><span class="p">]</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'X||a*'</span><span class="p">,</span><span class="s1">'Z||c'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'Glaucophane'</span><span class="p">);</span>
+
+<span class="n">rho_glaucophane</span> <span class="o">=</span> <span class="mf">3.07</span><span class="p">;</span>
+
+<span class="c1">% coefficients C_ij in Voigt matrix notation, in GPa</span>
+<span class="n">Cij</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">122.28</span>   <span class="mf">45.69</span>   <span class="mf">37.24</span>   <span class="mf">0.00</span>   <span class="mf">2.35</span>   <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="mf">45.69</span>  <span class="mf">231.50</span>   <span class="mf">74.91</span>   <span class="mf">0.00</span>  <span class="o">-</span><span class="mf">4.78</span>   <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="mf">37.24</span>   <span class="mf">74.91</span>  <span class="mf">254.57</span>   <span class="mf">0.00</span> <span class="o">-</span><span class="mf">23.74</span>   <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>   <span class="mf">0.00</span>    <span class="mf">0.00</span>    <span class="mf">0.00</span>  <span class="mf">79.67</span>   <span class="mf">0.00</span>   <span class="mf">8.89</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>   <span class="mf">2.35</span>   <span class="o">-</span><span class="mf">4.78</span>  <span class="o">-</span><span class="mf">23.74</span>   <span class="mf">0.00</span>  <span class="mf">52.82</span>   <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>   <span class="mf">0.00</span>    <span class="mf">0.00</span>    <span class="mf">0.00</span>   <span class="mf">8.89</span>   <span class="mf">0.00</span>  <span class="mf">51.24</span><span class="p">]];</span>
+
+<span class="n">C_glaucophane</span> <span class="o">=</span> <span class="n">stiffnessTensor</span><span class="p">(</span><span class="n">Cij</span><span class="p">,</span><span class="n">CS_Tensor_glaucophane</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'density'</span><span class="p">,</span><span class="n">rho_glaucophane</span><span class="p">);</span>
+
+<span class="c1">%</span>
+<span class="c1">% The epidote coefficients are from K.S. Aleksandrov et al., _Velocities of</span>
+<span class="c1">% elastic waves in minerals at atmospheric pressure and increasing the</span>
+<span class="c1">% precision of elastic constants by means of EVM_ (in Russian),</span>
+<span class="c1">% _Izv. Acad. Sci. USSR, Geol. Ser._ 10 (1974), 15-24.</span>
+
+<span class="n">CS_Tensor_epidote</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'2/m'</span><span class="p">,[</span><span class="mf">8.8877</span><span class="p">,</span><span class="mf">5.6275</span><span class="p">,</span><span class="mf">10.1517</span><span class="p">],</span><span class="k">...</span>
+  <span class="p">[</span><span class="mf">90.00</span><span class="p">,</span><span class="mf">115.383</span><span class="p">,</span><span class="mf">90.00</span><span class="p">]</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'X||a*'</span><span class="p">,</span><span class="s1">'Z||c'</span><span class="p">,</span><span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'Epidote'</span><span class="p">);</span>
+
+<span class="n">rho_epidote</span> <span class="o">=</span> <span class="mf">3.45</span><span class="p">;</span>
+
+<span class="n">Cij</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">211.50</span>    <span class="mf">65.60</span>    <span class="mf">43.20</span>     <span class="mf">0.00</span>     <span class="o">-</span><span class="mf">6.50</span>     <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="mf">65.60</span>   <span class="mf">239.00</span>    <span class="mf">43.60</span>     <span class="mf">0.00</span>    <span class="o">-</span><span class="mf">10.40</span>     <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="mf">43.20</span>    <span class="mf">43.60</span>   <span class="mf">202.10</span>     <span class="mf">0.00</span>    <span class="o">-</span><span class="mf">20.00</span>     <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>   <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>    <span class="mf">39.10</span>      <span class="mf">0.00</span>    <span class="o">-</span><span class="mf">2.30</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="o">-</span><span class="mf">6.50</span>   <span class="o">-</span><span class="mf">10.40</span>   <span class="o">-</span><span class="mf">20.00</span>     <span class="mf">0.00</span>     <span class="mf">43.40</span>     <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>   <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>    <span class="o">-</span><span class="mf">2.30</span>      <span class="mf">0.00</span>    <span class="mf">79.50</span><span class="p">]];</span>
+
+<span class="n">C_epidote</span> <span class="o">=</span> <span class="n">stiffnessTensor</span><span class="p">(</span><span class="n">Cij</span><span class="p">,</span><span class="n">CS_Tensor_epidote</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'density'</span><span class="p">,</span><span class="n">rho_epidote</span><span class="p">);</span>
+
+<span class="c1">%</span>
+<span class="c1">% &lt;stiffnessTensor.stiffnessTensor.html |stiffnessTensor|&gt; records the unit,</span>
+<span class="c1">% crystal frame, and density with each coefficient array.</span></code></pre></figure>
+<h2 id="4">Average the EBSD measurements</h2>
+<p>This example selects only epidote and glaucophane. Each retained pixel has equal weight, so a phase contribution is proportional to its mapped area.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsdAggregate</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">({</span><span class="s1">'Epidote'</span><span class="p">,</span><span class="s1">'Glaucophane'</span><span class="p">});</span>
+
+<span class="n">phaseFractions</span> <span class="o">=</span> <span class="nb">array2table</span><span class="p">(</span><span class="k">...</span>
+  <span class="p">[</span><span class="nb">length</span><span class="p">(</span><span class="n">ebsdAggregate</span><span class="p">(</span><span class="s1">'Epidote'</span><span class="p">)),</span><span class="nb">length</span><span class="p">(</span><span class="n">ebsdAggregate</span><span class="p">(</span><span class="s1">'Glaucophane'</span><span class="p">))]</span> <span class="k">...</span>
+  <span class="o">.</span><span class="p">/</span> <span class="nb">length</span><span class="p">(</span><span class="n">ebsdAggregate</span><span class="p">),</span><span class="k">...</span>
+  <span class="s1">'VariableNames'</span><span class="p">,{</span><span class="s1">'Epidote'</span><span class="p">,</span><span class="s1">'Glaucophane'</span><span class="p">})</span>
+
+<span class="c1">%</span>
+<span class="c1">% &lt;EBSD.calcTensor.html |calcTensor|&gt; matches each phase to a compatible</span>
+<span class="c1">% tensor by the attached symmetry and lattice parameters. The argument order</span>
+<span class="c1">% does not define that mapping. MTEX then rotates every tensor into the</span>
+<span class="c1">% specimen frame, the reference frame of the map, and averages the pixels.</span>
+
+<span class="p">[</span><span class="n">CVoigt</span><span class="p">,</span><span class="n">CReuss</span><span class="p">,</span><span class="n">CHill</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcTensor</span><span class="p">(</span><span class="n">ebsdAggregate</span><span class="p">,</span><span class="k">...</span>
+  <span class="n">C_glaucophane</span><span class="p">,</span><span class="n">C_epidote</span><span class="p">);</span>
+
+<span class="n">aggregateModuliValues</span> <span class="o">=</span> <span class="k">...</span>
+  <span class="p">[</span><span class="n">CVoigt</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">,</span><span class="n">CReuss</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">,</span><span class="n">CHill</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">;</span><span class="k">...</span>
+   <span class="n">CVoigt</span><span class="o">.</span><span class="n">shearModulus</span><span class="p">,</span><span class="n">CReuss</span><span class="o">.</span><span class="n">shearModulus</span><span class="p">,</span><span class="n">CHill</span><span class="o">.</span><span class="n">shearModulus</span><span class="p">];</span>
+
+<span class="n">aggregateModuli</span> <span class="o">=</span> <span class="nb">array2table</span><span class="p">(</span><span class="n">aggregateModuliValues</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'VariableNames'</span><span class="p">,{</span><span class="s1">'Voigt'</span><span class="p">,</span><span class="s1">'Reuss'</span><span class="p">,</span><span class="s1">'Hill'</span><span class="p">},</span><span class="k">...</span>
+  <span class="s1">'RowNames'</span><span class="p">,{</span><span class="s1">'bulk modulus (GPa)'</span><span class="p">,</span><span class="s1">'shear modulus (GPa)'</span><span class="p">})</span>
+
+<span class="c1">%</span>
+<span class="c1">% The bulk estimates are 103.6, 94.4, and 99.0 GPa. The shear estimates are</span>
+<span class="c1">% 66.5, 60.9, and 63.7 GPa. These are scalar summaries of the three</span>
+<span class="c1">% anisotropic aggregate stiffness tensors.</span>
+
+<span class="n">newMtexFigure</span><span class="p">;</span>
+<span class="nb">bar</span><span class="p">(</span><span class="n">aggregateModuliValues</span><span class="p">);</span>
+<span class="nb">set</span><span class="p">(</span><span class="nb">gca</span><span class="p">,</span><span class="s1">'XTickLabel'</span><span class="p">,{</span><span class="s1">'bulk'</span><span class="p">,</span><span class="s1">'shear'</span><span class="p">});</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'modulus (GPa)'</span><span class="p">);</span>
+<span class="nb">legend</span><span class="p">({</span><span class="s1">'Voigt'</span><span class="p">,</span><span class="s1">'Reuss'</span><span class="p">,</span><span class="s1">'Hill'</span><span class="p">},</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'best'</span><span class="p">);</span>
+
+<span class="c1">%</span>
+<span class="c1">% In both groups the Reuss bar is lower and the Voigt bar is upper. The Hill</span>
+<span class="c1">% bar lies halfway between them by definition.</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">phaseFractions =
+  1×2 table
+    Epidote    Glaucophane
+    _______    ___________
+    0.2466       0.7534   
+aggregateModuli =
+  2×3 table
+                           Voigt     Reuss      Hill 
+                           ______    ______    ______
+    bulk modulus (GPa)     103.58    94.399    98.991
+    shear modulus (GPa)    66.525    60.891    63.708</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/TensorAverage_03.png" alt="" />
+
+</center>
+<h2 id="5">Average one phase</h2>
+<p>A single-phase calculation uses the same API with one stiffness tensor. Separate names preserve these results for comparison with the ODF average.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">CVoigt_glaucophane_ebsd</span><span class="p">,</span><span class="n">CReuss_glaucophane_ebsd</span><span class="p">,</span><span class="k">...</span>
+  <span class="n">CHill_glaucophane_ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcTensor</span><span class="p">(</span><span class="k">...</span>
+  <span class="n">ebsd</span><span class="p">(</span><span class="s1">'Glaucophane'</span><span class="p">),</span><span class="n">C_glaucophane</span><span class="p">);</span></code></pre></figure>
+<h2 id="6">Average an ODF</h2>
+<p>Spatial positions are not required once the orientations have been reduced to an orientation distribution function (ODF). The <code class="language-plaintext highlighter-rouge">'halfwidth'</code> controls the smoothing used by <a href="rotation.calcDensity.html"><code class="language-plaintext highlighter-rouge">calcDensity</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf_glaucophane</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Glaucophane'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span>
+
+<span class="p">[</span><span class="n">CVoigt_glaucophane_odf</span><span class="p">,</span><span class="n">CReuss_glaucophane_odf</span><span class="p">,</span><span class="k">...</span>
+  <span class="n">CHill_glaucophane_odf</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcTensor</span><span class="p">(</span><span class="n">odf_glaucophane</span><span class="p">,</span><span class="n">C_glaucophane</span><span class="p">);</span>
+
+<span class="n">glaucophaneBulkValues</span> <span class="o">=</span> <span class="k">...</span>
+  <span class="p">[</span><span class="n">CVoigt_glaucophane_ebsd</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">,</span><span class="k">...</span>
+   <span class="n">CVoigt_glaucophane_odf</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">;</span><span class="k">...</span>
+   <span class="n">CReuss_glaucophane_ebsd</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">,</span><span class="k">...</span>
+   <span class="n">CReuss_glaucophane_odf</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">;</span><span class="k">...</span>
+   <span class="n">CHill_glaucophane_ebsd</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">,</span><span class="k">...</span>
+   <span class="n">CHill_glaucophane_odf</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">];</span>
+
+<span class="n">glaucophaneBulkModuli</span> <span class="o">=</span> <span class="nb">array2table</span><span class="p">(</span><span class="n">glaucophaneBulkValues</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'VariableNames'</span><span class="p">,{</span><span class="s1">'EBSD'</span><span class="p">,</span><span class="s1">'ODF'</span><span class="p">},</span><span class="k">...</span>
+  <span class="s1">'RowNames'</span><span class="p">,{</span><span class="s1">'Voigt'</span><span class="p">,</span><span class="s1">'Reuss'</span><span class="p">,</span><span class="s1">'Hill'</span><span class="p">})</span>
+
+<span class="c1">%</span>
+<span class="c1">% The Voigt bulk modulus is 102.7 GPa by both routes. The Reuss value changes</span>
+<span class="c1">% from 92.1 GPa for the measurements to 91.7 GPa for the smoothed ODF.</span>
+<span class="c1">% This agreement is a consistency check, not a validation of the averaging</span>
+<span class="c1">% assumptions.</span>
+<span class="c1">%</span>
+<span class="c1">% The ODF route also applies when orientations come from pole figures rather</span>
+<span class="c1">% than a map. For a multiphase aggregate, average each phase ODF separately</span>
+<span class="c1">% and then combine the tensors with independently justified volume fractions.</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">glaucophaneBulkModuli =
+  3×2 table
+              EBSD      ODF  
+             ______    ______
+    Voigt    102.67    102.67
+    Reuss    92.125     91.72
+    Hill     97.397    97.195</code></pre></figure>
+<h2 id="7">Use the aggregate tensor</h2>
+<p>An averaged stiffness tensor predicts elastic wave propagation through the aggregate. <a href="stiffnessTensor.plotSeismicVelocities.html"><code class="language-plaintext highlighter-rouge">plotSeismicVelocities</code></a> maps several velocities and polarizations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotSeismicVelocities</span><span class="p">(</span><span class="n">CHill_glaucophane_odf</span><span class="p">);</span>
+
+<span class="c1">%</span>
+<span class="c1">% Read the upper-left panel first. The P-wave velocity ranges from 6.89 to</span>
+<span class="c1">% 8.38 km/s, and the labelled anisotropy is 19.5 percent. The fastest and</span>
+<span class="c1">% slowest propagation directions are different because the measured</span>
+<span class="c1">% glaucophane orientations are not uniformly distributed.</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/TensorAverage_04.png" alt="" />
+
+</center>
+<h2 id="8">What these estimates leave out</h2>
+<p>Pixel weighting makes mapped area fraction stand in for volume fraction. That is justified only when the section and sampled area represent the material. It is not an equal-grain average.</p>
+<p>Voigt and Reuss use phase fractions, orientations, and single-crystal tensors. They do not use grain shape, spatial arrangement, porosity, or grain-boundary mechanics. An ODF removes the spatial information entirely.</p>
+<p>The gap between the bounds can reflect single-crystal anisotropy, phase stiffness contrast, and phase proportions. A multiphase aggregate can have a gap even when every phase is isotropic. Hill is an estimate inside the bounds, not another rigorous bound.</p>
+<h2 id="9">The maths behind the averages</h2>
+<p>Let \(C_m^{s}\) be the stiffness tensor for measurement \(m\) after its orientation rotates it into the specimen frame. Let normalized weights \(w_m\) satisfy \(\sum_m w_m=1\). The Voigt estimate averages stiffness:</p>
+<p>\[ \overline{C}_{V}=\sum_{m=1}^{M}w_m C_m^{s}. \]</p>
+<p>It assumes uniform strain. The Reuss estimate averages compliance and then inverts the result:</p>
+<p>\[ \overline{C}_{R}=\left(\sum_{m=1}^{M}w_m \left(C_m^{s}\right)^{-1}\right)^{-1}. \]</p>
+<p>It assumes uniform stress. Under linear elasticity these two assumptions give upper and lower energy bounds on the effective stiffness. Neither field can generally satisfy both stress equilibrium and strain compatibility at every grain boundary.</p>
+<p>The Hill estimate is their arithmetic mean:</p>
+<p>\[ \overline{C}_{H}=\frac{1}{2} \left(\overline{C}_{V}+\overline{C}_{R}\right). \]</p>
+<h2 id="10">Next</h2>
+<p>
+<a href="CPOSeismicProperties.html">CPO Seismic Properties</a> continues with several mineral phases, modal fractions, and aggregate seismic plots. Here CPO means crystallographic preferred orientation. <a href="IsotropicTheory.html">Isotropic Theory</a> introduces the tighter Hashin-Shtrikman bounds when their additional assumptions are appropriate. <a href="ODFTutorial.html">ODFs</a> explains how an orientation distribution is built.</p>
+<h2 id="11">Further reading</h2>
+<div>
+<ul>
+<li>W. Voigt, <a href="https://doi.org/10.1007/978-3-663-15884-4"><i>Lehrbuch der Kristallphysik</i></a>, 1910, gives the uniform-strain construction.</li>
+<li>A. Reuss, <a href="https://doi.org/10.1002/zamm.19290090104">Berechnung der Fliessgrenze von Mischkristallen auf Grund der Plastizitaetsbedingung fuer Einkristalle</a>, <i>ZAMM</i> 9 (1929), 49-58, gives the uniform-stress construction.</li>
+<li>R. Hill, <a href="https://doi.org/10.1088/0370-1298/65/5/307">The Elastic Behaviour of a Crystalline Aggregate</a>, <i>Proceedings of the Physical Society A</i> 65 (1952), 349-354, establishes the bounds and discusses their mean.</li>
+<li>D. Mainprice, R. Hielscher, and H. Schaeben, <a href="https://doi.org/10.1144/SP360.10">Calculating anisotropic physical properties from texture data using the MTEX open-source package</a>, <i>Geological Society, London, Special Publications</i> 360 (2011), 175-192.</li>
+<li>
+<a href="https://doi.org/10.1520/E0562-19E01">ASTM E562-19e1</a>, <i>Standard Test Method for Determining Volume Fraction by Systematic Manual Point Count</i>, states the stereological conditions behind estimating volume fraction from a representative two-dimensional section.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/TensorAverage.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

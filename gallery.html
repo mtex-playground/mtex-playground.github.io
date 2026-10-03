@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="gallery, figures, EBSD, texture, grains, pole figures, MTEX examples">
+
+
+<title>Gallery | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/gallery">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mtex-playground.github.io/gallery#page",
+      "name": "Gallery",
+      "headline": "Gallery",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/gallery",
+      "mainEntityOfPage": "https://mtex-playground.github.io/gallery",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/gallery -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+</head>
+
+<body class="mx-body">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery" class="mx-current" aria-current="page">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+<main class="mx-page">
+
+
+
+<div class="mx-wrap">
+  <div class="mx-pagehead">
+    <div class="mx-eyebrow">Gallery</div>
+    <h1>What MTEX can do</h1>
+    <p>Every figure is drawn by a few lines of MTEX code on data that comes with MTEX.</p>
+  </div>
+  <div class="mx-chips" id="mx-chips" role="group" aria-label="Filter by label">
+    <button type="button" data-l="" aria-pressed="true">All <small>51</small></button>
+    
+    <button type="button" data-l="3D" aria-pressed="false">3D <small>2</small></button>
+    
+    <button type="button" data-l="Boundaries" aria-pressed="false">Boundaries <small>7</small></button>
+    
+    <button type="button" data-l="Crystal geometry" aria-pressed="false">Crystal geometry <small>9</small></button>
+    
+    <button type="button" data-l="Deformation" aria-pressed="false">Deformation <small>9</small></button>
+    
+    <button type="button" data-l="EBSD" aria-pressed="false">EBSD <small>15</small></button>
+    
+    <button type="button" data-l="Grains" aria-pressed="false">Grains <small>13</small></button>
+    
+    <button type="button" data-l="Mathematics" aria-pressed="false">Mathematics <small>2</small></button>
+    
+    <button type="button" data-l="Parent grains" aria-pressed="false">Parent grains <small>3</small></button>
+    
+    <button type="button" data-l="Pole figures" aria-pressed="false">Pole figures <small>5</small></button>
+    
+    <button type="button" data-l="Properties" aria-pressed="false">Properties <small>3</small></button>
+    
+    <button type="button" data-l="Texture" aria-pressed="false">Texture <small>15</small></button>
+    
+    <button type="button" data-l="Tutorials" aria-pressed="false">Tutorials <small>5</small></button>
+    
+  </div>
+  <div class="mx-gal" id="mx-gal">
+    
+    <figure class="mx-tile" data-l="|Tutorials|EBSD|">
+      <a class="mx-tile-im" href="EBSDTutorial.html"><img loading="lazy" src="figures/gallery/ebsdtutorial.png" alt="Your first EBSD analysis"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDTutorial.html">Your first EBSD analysis</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata forsterite silent
+ebsd = ebsd(<span class="k">inpolygon</span>(ebsd,[12000 3000 9000 6750]));
+grains = <span class="k">smoothBoundary</span>(<span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,10*degree,<span class="s">'minPixel'</span>,5),5);
+<span class="k">plot</span>(ebsd(<span class="s">'Forsterite'</span>),ebsd(<span class="s">'Forsterite'</span>).orientations)
+hold on, <span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1.5), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Tutorials|Grains|">
+      <a class="mx-tile-im" href="GrainTutorial.html"><img loading="lazy" src="figures/gallery/graintutorial.png" alt="Your first grain analysis"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="GrainTutorial.html">Your first grain analysis</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata mylonite silent
+ebsd = ebsd(<span class="k">inpolygon</span>(ebsd,[21000 1500 2000 1500]));
+[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,15*degree);
+<span class="k">plot</span>(grains)
+hold on
+<span class="k">plot</span>(grains(<span class="s">'Quartz'</span>),grains(<span class="s">'Quartz'</span>).meanOrientation)
+<span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1.5)
+hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Tutorials|Boundaries|">
+      <a class="mx-tile-im" href="BoundaryTutorial.html"><img loading="lazy" src="figures/gallery/boundarytutorial.png" alt="Your first boundary analysis"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="BoundaryTutorial.html">Your first boundary analysis</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata twins silent
+grains = <span class="k">smoothBoundary</span>(<span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,15*degree),5);
+gB = grains.<span class="k">boundary</span>(<span class="s">'Magnesium'</span>,<span class="s">'Magnesium'</span>);
+<span class="k">plot</span>(gB,gB.misorientation.angle./degree,<span class="s">'lineWidth'</span>,3)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'Misorientation (degree)'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Tutorials|Pole figures|">
+      <a class="mx-tile-im" href="PoleFigureTutorial.html"><img loading="lazy" src="figures/gallery/pftutorial.png" alt="Your first pole figure analysis"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="PoleFigureTutorial.html">Your first pole figure analysis</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata dubna silent
+odf = <span class="k">calcODF</span>(pf,<span class="s">'silent'</span>);
+<span class="k">plotPDF</span>(odf,<span class="k">pf.allH</span>(1),<span class="s">'antipodal'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Tutorials|Texture|">
+      <a class="mx-tile-im" href="ODFTutorial.html"><img loading="lazy" src="figures/gallery/odftutorial.png" alt="Your first texture analysis"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="ODFTutorial.html">Your first texture analysis</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata titanium silent
+odf = <span class="k">calcDensity</span>(ebsd(<span class="s">'Titanium (Alpha)'</span>).orientations,<span class="s">'halfwidth'</span>,10*degree);
+<span class="k">plotSection</span>(odf,<span class="s">'sigma'</span>,<span class="s">'sections'</span>,4,<span class="s">'contourf'</span>)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'mrd'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|">
+      <a class="mx-tile-im" href="EBSDIPFMap.html"><img loading="lazy" src="figures/gallery/ipfmap.png" alt="Colouring EBSD maps"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDIPFMap.html">Colouring EBSD maps</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata twins silent
+<span class="k">plot</span>(ebsd,<span class="s">'ipfDirection'</span>,zvector)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Grains|Boundaries|">
+      <a class="mx-tile-im" href="TwinningBoundaries.html"><img loading="lazy" src="figures/gallery/twins.png" alt="Twin boundaries"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="TwinningBoundaries.html">Twin boundaries</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,5*degree,<span class="s">'minPixel'</span>,3);
+grains = <span class="k">smoothBoundary</span>(grains,5);
+twin = <span class="k">orientation.map</span>(<span class="k">Miller</span>(1,-1,0,1,grains.CS),<span class="k">Miller</span>(1,0,-1,-1,grains.CS),...
+  <span class="k">Miller</span>(0,1,-1,1,grains.CS,<span class="s">'uvw'</span>),<span class="k">Miller</span>(1,-1,0,1,grains.CS,<span class="s">'uvw'</span>));
+gB = grains.<span class="k">boundary</span>(<span class="s">'Magnesium'</span>,<span class="s">'Magnesium'</span>);
+twinB = gB(gB.<span class="k">isTwinning</span>(twin,5*degree));
+<span class="k">plot</span>(grains,grains.meanOrientation,<span class="s">'ipfDirection'</span>,zvector), hold on
+<span class="k">plot</span>(twinB,<span class="s">'lineColor'</span>,<span class="s">'w'</span>,<span class="s">'lineWidth'</span>,3), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Boundaries|">
+      <a class="mx-tile-im" href="BoundaryMisorientations.html"><img loading="lazy" src="figures/gallery/misorientation.png" alt="Boundary misorientations"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="BoundaryMisorientations.html">Boundary misorientations</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plot</span>(gB,gB.misorientation.angle./degree,<span class="s">'lineWidth'</span>,2)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'degree'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Boundaries|Texture|">
+      <a class="mx-tile-im" href="AngleDistributionFunction.html"><img loading="lazy" src="figures/gallery/angledist.png" alt="Misorientation distributions"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="AngleDistributionFunction.html">Misorientation distributions</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plotAngleDistribution</span>(gB.misorientation)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Texture|Mathematics|">
+      <a class="mx-tile-im" href="DensityEstimation.html"><img loading="lazy" src="figures/gallery/density.png" alt="Density estimation"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="DensityEstimation.html">Density estimation</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>x = <span class="k">linspace</span>(0,1,500);
+f = @(x) (<span class="k">Gaussian</span>(0.2,0.05,x)+<span class="k">Gaussian</span>(0.5,0.2,x))/2;
+sample = <span class="k">discreteSample</span>(f,80,<span class="s">'range'</span>,[0 1]);
+psi = <span class="k">Gaussian</span>(0,0.05);
+estimate = @(x) <span class="k">mean</span>(psi(x-sample),1);
+<span class="k">plot</span>(x,f(x),<span class="s">'lineWidth'</span>,3), hold on
+<span class="k">plot</span>(x,estimate(x),<span class="s">'lineWidth'</span>,3)
+<span class="k">plot</span>(sample,<span class="k">zeros</span>(<span class="k">size</span>(sample)),<span class="s">'.'</span>,<span class="s">'markerSize'</span>,14)
+hold off
+<span class="k">legend</span>(<span class="s">'True density'</span>,<span class="s">'Kernel estimate'</span>,<span class="s">'Sample'</span>,<span class="s">'Location'</span>,<span class="s">'northeast'</span>)
+<span class="k">xlabel</span>(<span class="s">'x'</span>), <span class="k">ylabel</span>(<span class="s">'Density'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Texture|">
+      <a class="mx-tile-im" href="VectorsDensityEstimation.html"><img loading="lazy" src="figures/gallery/caxes.png" alt="Spherical density estimation"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="VectorsDensityEstimation.html">Spherical density estimation</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>c = ebsd(<span class="s">'Magnesium'</span>).orientations * <span class="k">Miller</span>(0,0,0,1,ebsd(<span class="s">'Magnesium'</span>).CS);
+<span class="k">plot</span>(<span class="k">calcDensity</span>(c,<span class="s">'halfwidth'</span>,7.5*degree),<span class="s">'upper'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Deformation|">
+      <a class="mx-tile-im" href="EBSDKAM.html"><img loading="lazy" src="figures/gallery/kam.png" alt="Kernel average misorientation"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDKAM.html">Kernel average misorientation</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata ferrite
+[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'minPixel'</span>,8);
+<span class="k">plot</span>(ebsd,ebsd.<span class="k">KAM</span>(<span class="s">'threshold'</span>,2.5*degree)./degree)
+<span class="k">setColorRange</span>([0 2]), mtexColorMap LaboTeX
+hold on, <span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1.5), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Deformation|">
+      <a class="mx-tile-im" href="EBSDDenoising.html"><img loading="lazy" src="figures/gallery/denoising.png" alt="Denoising orientation maps"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDDenoising.html">Denoising orientation maps</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>ebsdS = <span class="k">smooth</span>(ebsd(<span class="s">'indexed'</span>),l1TVFilter);
+<span class="k">newMtexFigure</span>(<span class="s">'layout'</span>,[1 2]);
+<span class="k">plot</span>(ebsd,ebsd.<span class="k">KAM</span>(<span class="s">'threshold'</span>,2.5*degree)./degree)
+<span class="k">mtexTitle</span>(<span class="s">'Measured'</span>)
+nextAxis
+<span class="k">plot</span>(ebsdS,ebsdS.<span class="k">KAM</span>(<span class="s">'threshold'</span>,2.5*degree)./degree)
+<span class="k">mtexTitle</span>(<span class="s">'Denoised'</span>)
+<span class="k">setColorRange</span>([0 2]), mtexColorMap LaboTeX
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'KAM (degree)'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Grains|Deformation|">
+      <a class="mx-tile-im" href="GrainOrientationParameters.html"><img loading="lazy" src="figures/gallery/gos.png" alt="Grain orientation parameters"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="GrainOrientationParameters.html">Grain orientation parameters</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mis2mean = <span class="k">calcGROD</span>(ebsd,grains);
+GOS = ebsd.<span class="k">grainMean</span>(mis2mean.angle,grains);
+<span class="k">plot</span>(grains,GOS./degree)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'degree'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|">
+      <a class="mx-tile-im" href="EBSDPlotting.html"><img loading="lazy" src="figures/gallery/phases.png" alt="Phase maps"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDPlotting.html">Phase maps</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata forsterite
+ebsd = ebsd(<span class="k">inpolygon</span>(ebsd,[12000 3000 9000 6750]));
+<span class="k">plot</span>(ebsd)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Grains|">
+      <a class="mx-tile-im" href="ShapeParameters.html"><img loading="lazy" src="figures/gallery/shape.png" alt="Grain shape parameters"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="ShapeParameters.html">Grain shape parameters</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>grains = <span class="k">calcGrains</span>(ebsd,<span class="s">'minPixel'</span>,10);
+<span class="k">plot</span>(grains,grains.aspectRatio)
+<span class="k">setColorRange</span>([1 4]), <span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'aspect ratio'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Grains|">
+      <a class="mx-tile-im" href="EllipseBasedParameters.html"><img loading="lazy" src="figures/gallery/ellipses.png" alt="Ellipse fitting"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EllipseBasedParameters.html">Ellipse fitting</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>[c,a,b] = grains(grains.numPixel&gt;200).fitEllipse;
+<span class="k">plot</span>(grains,<span class="s">'faceColor'</span>,[0.88 0.93 0.96]), hold on
+<span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1,<span class="s">'lineColor'</span>,[0.55 0.65 0.7])
+<span class="k">plotEllipse</span>(c,a,b,<span class="s">'lineColor'</span>,[0.02 0.35 0.42],<span class="s">'lineWidth'</span>,2.5), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Grains|Crystal geometry|">
+      <a class="mx-tile-im" href="CrystalShapes.html"><img loading="lazy" src="figures/gallery/crystals.png" alt="Crystal shapes"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="CrystalShapes.html">Crystal shapes</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>fo = grains(<span class="s">'Forsterite'</span>);
+[~,id] = <span class="k">sort</span>(fo.area,<span class="s">'descend'</span>);
+cS = <span class="k">crystalShape.olivine</span>(fo.CS);
+<span class="k">plot</span>(grains,<span class="s">'faceColor'</span>,[0.91 0.94 0.96]), hold on
+<span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1,<span class="s">'lineColor'</span>,[0.55 0.65 0.7])
+<span class="k">plot</span>(fo(id(1:<span class="k">min</span>(20,<span class="k">numel</span>(id)))),0.55*cS,<span class="s">'colored'</span>), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Texture|">
+      <a class="mx-tile-im" href="EBSDOrientationPlots.html"><img loading="lazy" src="figures/gallery/polefigure.png" alt="Pole figures"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDOrientationPlots.html">Pole figures</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>ori = ebsd(<span class="s">'Forsterite'</span>).orientations;
+<span class="k">plotPDF</span>(ori,<span class="k">Miller</span>(0,0,1,ori.CS),<span class="s">'points'</span>,5000,<span class="s">'markerSize'</span>,3)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Texture|">
+      <a class="mx-tile-im" href="SigmaSections.html"><img loading="lazy" src="figures/gallery/sigma.png" alt="ODF sections"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="SigmaSections.html">ODF sections</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>odf = <span class="k">calcDensity</span>(ori);
+<span class="k">plotSection</span>(odf,<span class="s">'sigma'</span>,(60:15:105)*degree,<span class="s">'contourf'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Texture|">
+      <a class="mx-tile-im" href="OrientationInversePoleFigure.html"><img loading="lazy" src="figures/gallery/ipf.png" alt="Inverse pole figures"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="OrientationInversePoleFigure.html">Inverse pole figures</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plotIPDF</span>(odf,zvector)
+mtexColorbar</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Crystal geometry|Texture|">
+      <a class="mx-tile-im" href="OrientationFundamentalRegion.html"><img loading="lazy" src="figures/gallery/fundamental.png" alt="Fundamental regions"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="OrientationFundamentalRegion.html">Fundamental regions</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plot</span>(grains(<span class="s">'Forsterite'</span>).meanOrientation,<span class="s">'axisAngle'</span>,<span class="s">'markerSize'</span>,12)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Crystal geometry|EBSD|">
+      <a class="mx-tile-im" href="EBSDIPFMap.html"><img loading="lazy" src="figures/gallery/ipfkey.png" alt="Colour keys"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDIPFMap.html">Colour keys</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plot</span>(<span class="k">ipfColorKey</span>(ebsd(<span class="s">'Forsterite'</span>)))</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Texture|Pole figures|">
+      <a class="mx-tile-im" href="ODFModeling.html"><img loading="lazy" src="figures/gallery/goss.png" alt="Model textures"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="ODFModeling.html">Model textures</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>cs = <span class="k">crystalSymmetry</span>(<span class="s">'m-3m'</span>);
+odf = <span class="k">unimodalODF</span>(<span class="k">orientation.goss</span>(cs),<span class="s">'halfwidth'</span>,10*degree);
+<span class="k">plotPDF</span>(odf,<span class="k">Miller</span>({1,0,0},{1,1,0},{1,1,1},cs),<span class="s">'layout'</span>,[2 2])</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Crystal geometry|">
+      <a class="mx-tile-im" href="CrystalDirections.html"><img loading="lazy" src="figures/gallery/miller.png" alt="Miller indices"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="CrystalDirections.html">Miller indices</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>m = <span class="k">Miller</span>({1,0,0},{1,1,0},{1,1,1},{2,1,0},cs,<span class="s">'uvw'</span>);
+<span class="k">plot</span>(m,<span class="s">'symmetrised'</span>,<span class="s">'labeled'</span>,<span class="s">'upper'</span>,<span class="s">'grid'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Crystal geometry|">
+      <a class="mx-tile-im" href="CrystalShapes.html"><img loading="lazy" src="figures/gallery/quartz.png" alt="Crystal morphology"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="CrystalShapes.html">Crystal morphology</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plot</span>(crystalShape.quartz,<span class="s">'colored'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Properties|">
+      <a class="mx-tile-im" href="WaveVelocities.html"><img loading="lazy" src="figures/gallery/velocity.png" alt="Wave velocities"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="WaveVelocities.html">Wave velocities</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>cs = <span class="k">crystalSymmetry</span>(<span class="s">'mmm'</span>,[4.7646 10.2296 5.9942],<span class="s">'mineral'</span>,<span class="s">'Olivine'</span>);
+C = <span class="k">stiffnessTensor.load</span>(<span class="k">fullfile</span>(mtexDataPath,<span class="s">'tensor'</span>,<span class="s">'Olivine1997PC.GPa'</span>),cs);
+C = <span class="k">addOption</span>(C,<span class="s">'density'</span>,3.355);
+<span class="k">plot</span>(C.velocity,<span class="s">'complete'</span>,<span class="s">'upper'</span>)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'km/s'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Properties|">
+      <a class="mx-tile-im" href="AnisotropicTheory.html"><img loading="lazy" src="figures/gallery/youngs.png" alt="Elastic anisotropy"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="AnisotropicTheory.html">Elastic anisotropy</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plot</span>(C.YoungsModulus,<span class="s">'complete'</span>,<span class="s">'upper'</span>)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'GPa'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Crystal geometry|">
+      <a class="mx-tile-im" href="EBSDReferenceFrame.html"><img loading="lazy" src="figures/gallery/frames.png" alt="Reference frames"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDReferenceFrame.html">Reference frames</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>ebsd = <span class="k">EBSD.load</span>(<span class="k">fullfile</span>(mtexEBSDPath,<span class="s">'olivineopticalmap.ang'</span>),<span class="s">'setting'</span>,2);
+grains = <span class="k">calcGrains</span>(ebsd);
+<span class="k">plot</span>(ebsd(<span class="s">'olivine'</span>),<span class="s">'ipfDirection'</span>,zvector,<span class="s">'refFrame'</span>,<span class="s">'on'</span>)
+hold on, <span class="k">plot</span>(grains(grains.numPixel&gt;500),crystalShape.olivine,<span class="s">'colored'</span>), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Texture|">
+      <a class="mx-tile-im" href="ClusterDemo.html"><img loading="lazy" src="figures/gallery/clustering.png" alt="Clustering"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="ClusterDemo.html">Clustering</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>cs = <span class="k">crystalSymmetry</span>(<span class="s">'432'</span>);
+odf = 0.7*<span class="k">fibreODF</span>(<span class="k">fibre.gamma</span>(cs),<span class="s">'halfwidth'</span>,10*degree) + ...
+  0.3*<span class="k">unimodalODF</span>(<span class="k">orientation.byEuler</span>(30*degree,10*degree,60*degree,cs));
+ori = odf.<span class="k">discreteSample</span>(10000);
+[cId,center] = <span class="k">calcCluster</span>(ori,<span class="s">'method'</span>,<span class="s">'classix'</span>);
+<span class="k">plotSection</span>(ori,<span class="k">ind2color</span>(cId),<span class="s">'markerSize'</span>,5,<span class="s">'sigma'</span>,<span class="s">'sections'</span>,4)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Parent grains|Grains|">
+      <a class="mx-tile-im" href="GrainGraphBasedReconstruction.html"><img loading="lazy" src="figures/gallery/martensite.png" alt="Martensite reconstruction"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="GrainGraphBasedReconstruction.html">Martensite reconstruction</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata martensite
+job = <span class="k">parentGrainReconstructor</span>(ebsd);
+job.p2c = <span class="k">orientation.KurdjumovSachs</span>(job.csParent,job.csChild);
+job.calcParent2Child;
+job.<span class="k">calcGraph</span>(<span class="s">'threshold'</span>,2.5*degree,<span class="s">'tolerance'</span>,2.5*degree);
+job.clusterGraph;
+job.calcParentFromGraph;
+<span class="k">plot</span>(job.parentGrains,<span class="s">'ipfDirection'</span>,zvector)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Parent grains|Grains|">
+      <a class="mx-tile-im" href="TiBetaReconstruction.html"><img loading="lazy" src="figures/gallery/parents.png" alt="Parent grain reconstruction"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="TiBetaReconstruction.html">Parent grain reconstruction</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata alphaBetaTitanium
+job = <span class="k">parentGrainReconstructor</span>(ebsd);
+job.p2c = <span class="k">orientation.Burgers</span>(job.csParent,job.csChild);
+job.<span class="k">calcVariantGraph</span>(<span class="s">'threshold'</span>,1.5*degree);
+job.<span class="k">clusterVariantGraph</span>(<span class="s">'numIter'</span>,3);
+job.calcParentFromVote;
+<span class="k">plot</span>(job.parentGrains,<span class="s">'ipfDirection'</span>,zvector)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Pole figures|Texture|">
+      <a class="mx-tile-im" href="PoleFigure2ODF.html"><img loading="lazy" src="figures/gallery/polefigures.png" alt="ODF reconstruction"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="PoleFigure2ODF.html">ODF reconstruction</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata dubna
+odf = <span class="k">calcODF</span>(pf,<span class="s">'silent'</span>);
+<span class="k">plotPDF</span>(odf,<span class="k">pf.allH</span>(1:3),<span class="s">'antipodal'</span>,<span class="s">'superposition'</span>,<span class="k">pf.c</span>(1:3),<span class="s">'layout'</span>,[2 2])</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Pole figures|">
+      <a class="mx-tile-im" href="PoleFigurePlot.html"><img loading="lazy" src="figures/gallery/measured.png" alt="Pole figure data"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="PoleFigurePlot.html">Pole figure data</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata dubna silent
+<span class="k">plot</span>(pf{1:4},<span class="s">'layout'</span>,[2 2],<span class="s">'markerSize'</span>,4)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Grains|">
+      <a class="mx-tile-im" href="GrainReconstruction.html"><img loading="lazy" src="figures/gallery/reconstruction.png" alt="Reconstructing grains"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="GrainReconstruction.html">Reconstructing grains</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata EMSphinx silent
+ebsd = ebsd(<span class="s">'Iron fcc'</span>);
+ebsd = ebsd(<span class="k">inpolygon</span>(ebsd,[40 30 80 60]));
+grains = <span class="k">calcGrains</span>(ebsd,<span class="s">'fmc'</span>,0.5,<span class="s">'minPixel'</span>,10);
+grains = <span class="k">smoothBoundary</span>(grains,5);
+<span class="k">plot</span>(ebsd,ebsd.orientations,<span class="s">'ipfDirection'</span>,zvector)
+hold on, <span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,2), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Grains|Deformation|">
+      <a class="mx-tile-im" href="EBSDGROD.html"><img loading="lazy" src="figures/gallery/grod.png" alt="Orientation gradients within grains"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDGROD.html">Orientation gradients within grains</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata ferrite silent
+[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,10*degree,<span class="s">'minPixel'</span>,5);
+grod = <span class="k">calcGROD</span>(ebsd,grains);
+<span class="k">plot</span>(ebsd,grod.angle./degree)
+mtexColorMap parula
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'GROD (degree)'</span>)
+hold on, <span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1.5), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Grains|Boundaries|Deformation|">
+      <a class="mx-tile-im" href="SubGrainBoundaries.html"><img loading="lazy" src="figures/gallery/subgrains.png" alt="Revealing subgrain boundaries"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="SubGrainBoundaries.html">Revealing subgrain boundaries</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,[10 1]*degree,<span class="s">'minPixel'</span>,5);
+subGB = grains.innerBoundary;
+subGB = subGB(subGB.misorientation.angle&lt;=10*degree &amp; subGB.componentSize&gt;50);
+<span class="k">plot</span>(ebsd(<span class="s">'indexed'</span>),ebsd(<span class="s">'indexed'</span>).orientations,<span class="s">'faceAlpha'</span>,0.4)
+hold on
+<span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1.5)
+<span class="k">plot</span>(subGB,<span class="s">'lineWidth'</span>,2,<span class="s">'lineColor'</span>,[0.05 0.2 0.7])
+hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Deformation|">
+      <a class="mx-tile-im" href="GND.html"><img loading="lazy" src="figures/gallery/gnd.png" alt="Mapping dislocation density"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="GND.html">Mapping dislocation density</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>ebsd = <span class="k">EBSD.load</span>(<span class="k">fullfile</span>(mtexEBSDPath,<span class="s">'DC06_2uniax.ang'</span>),<span class="s">'setting'</span>,2);
+ebsd = ebsd(<span class="k">inpolygon</span>(ebsd,[1 25 48 36]));
+[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,2.5*degree,<span class="s">'minPixel'</span>,6);
+ebsd = <span class="k">smooth</span>(ebsd,l1TVFilter,<span class="s">'fill'</span>,grains);
+dS = <span class="k">dislocationSystem.bcc</span>(ebsd.CS);
+dS(dS.isEdge).u = 1;
+dS(dS.isScrew).u = 0.7;
+gnd = <span class="k">calcGND</span>(ebsd,dS);
+<span class="k">plot</span>(ebsd,gnd)
+mtexColorMap hot
+<span class="k">set</span>(gca,<span class="s">'ColorScale'</span>,<span class="s">'log'</span>,<span class="s">'CLim'</span>,[1e11 5e14]);
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'density (1/m^2)'</span>)
+hold on, <span class="k">plot</span>(grains.boundary,<span class="s">'lineWidth'</span>,1.5,<span class="s">'lineColor'</span>,<span class="s">'w'</span>), hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Deformation|Crystal geometry|">
+      <a class="mx-tile-im" href="SchmidFactor.html"><img loading="lazy" src="figures/gallery/schmid.png" alt="Schmid factors and slip systems"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="SchmidFactor.html">Schmid factors and slip systems</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>cs = <span class="k">crystalSymmetry</span>(<span class="s">'432'</span>);
+sS = <span class="k">slipSystem.fcc</span>(cs).<span class="k">symmetrise</span>(<span class="s">'antipodal'</span>);
+SF = sS.SchmidFactor;
+<span class="k">contourf</span>(<span class="k">max</span>(<span class="k">abs</span>(SF),[],1),<span class="s">'upper'</span>)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'Schmid factor'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Deformation|Texture|">
+      <a class="mx-tile-im" href="TaylorModel.html"><img loading="lazy" src="figures/gallery/taylor.png" alt="Predicting plastic deformation"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="TaylorModel.html">Predicting plastic deformation</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata csl silent
+ebsd = ebsd(<span class="k">inpolygon</span>(ebsd,[40 20 100 75]));
+grains = <span class="k">smoothBoundary</span>(<span class="k">calcGrains</span>(ebsd,<span class="s">'minPixel'</span>,3),5);
+sS = <span class="k">slipSystem.fcc</span>(grains.CS).symmetrise;
+epsilon = <span class="k">strainTensor</span>(<span class="k">diag</span>([1 0 -1]));
+M = <span class="k">calcTaylor</span>(<span class="k">inv</span>(grains.meanOrientation)*epsilon,sS);
+<span class="k">plot</span>(grains,M)
+mtexColorMap parula
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'Taylor factor'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Deformation|Boundaries|">
+      <a class="mx-tile-im" href="SlipTransmission.html"><img loading="lazy" src="figures/gallery/slip.png" alt="Slip across grain boundaries"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="SlipTransmission.html">Slip across grain boundaries</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata titanium silent
+[grains,ebsd] = <span class="k">calcGrains</span>(ebsd);
+grains = <span class="k">smoothBoundary</span>(grains,5);
+sS = <span class="k">slipSystem.basal</span>(ebsd.CS).symmetrise;
+[SF,id] = <span class="k">max</span>(sS.<span class="k">SchmidFactor</span>(<span class="k">inv</span>(grains.meanOrientation)*xvector),[],2);
+sSGrain = grains.meanOrientation .* sS(id);
+gB = grains.<span class="k">boundary</span>(<span class="s">'indexed'</span>);
+mP = <span class="k">mPrime</span>(sSGrain(gB.<span class="k">grainId</span>(:,1)),sSGrain(gB.<span class="k">grainId</span>(:,2)));
+<span class="k">plot</span>(grains,<span class="s">'faceColor'</span>,[0.92 0.94 0.95])
+hold on
+<span class="k">plot</span>(gB,mP,<span class="s">'lineWidth'</span>,4)
+<span class="k">quiver</span>(grains,sSGrain.trace,<span class="s">'color'</span>,[0.08 0.2 0.4])
+hold off
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,"m'")</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|3D|Grains|">
+      <a class="mx-tile-im" href="Grains3D.html"><img loading="lazy" src="figures/gallery/grains3d.png" alt="Exploring grains in 3D"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="Grains3D.html">Exploring grains in 3D</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>grains3 = <span class="k">grain3d.load</span>(<span class="k">fullfile</span>(mtexEBSDPath,<span class="s">'SmallIN100_MeshStats.dream3d'</span>));
+<span class="k">plot</span>(grains3,grains3.meanOrientation,<span class="s">'edgeAlpha'</span>,0.08,<span class="s">'micronbar'</span>,<span class="s">'off'</span>)
+<span class="k">setCamera</span>(plottingConvention.default3D)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|3D|EBSD|">
+      <a class="mx-tile-im" href="EBSD3Plotting.html"><img loading="lazy" src="figures/gallery/volume.png" alt="Slicing a 3D microstructure"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSD3Plotting.html">Slicing a 3D microstructure</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>ebsd3 = <span class="k">mtexdata</span>(<span class="s">'xnovo'</span>);
+<span class="k">plot</span>(<span class="k">slice</span>(ebsd3,<span class="k">plane3d</span>(zvector,<span class="k">vector3d</span>(0,0,0))),<span class="s">'micronbar'</span>,<span class="s">'off'</span>)
+hold on
+<span class="k">plot</span>(<span class="k">slice</span>(ebsd3,<span class="k">plane3d</span>(xvector,<span class="k">vector3d</span>(0,0,0))),<span class="s">'micronbar'</span>,<span class="s">'off'</span>)
+<span class="k">plot</span>(<span class="k">slice</span>(ebsd3,<span class="k">plane3d</span>(yvector,<span class="k">vector3d</span>(0,0,0))),<span class="s">'micronbar'</span>,<span class="s">'off'</span>)
+hold off
+<span class="k">setCamera</span>(plottingConvention.default3D)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Parent grains|Grains|">
+      <a class="mx-tile-im" href="MaParentGrainReconstruction.html"><img loading="lazy" src="figures/gallery/austenite.png" alt="Reconstructing parent austenite"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="MaParentGrainReconstruction.html">Reconstructing parent austenite</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata martensite silent
+job = <span class="k">parentGrainReconstructor</span>(ebsd);
+job.p2c = <span class="k">orientation.KurdjumovSachs</span>(job.csParent,job.csChild);
+job.calcParent2Child;
+job.<span class="k">calcVariantGraph</span>(<span class="s">'threshold'</span>,3.5*degree,<span class="s">'tolerance'</span>,3.5*degree);
+job.<span class="k">clusterVariantGraph</span>(<span class="s">'includeSimilar'</span>);
+job.calcParentFromVote;
+job.<span class="k">mergeSimilar</span>(<span class="s">'threshold'</span>,7.5*degree);
+job.<span class="k">mergeInclusions</span>(<span class="s">'maxSize'</span>,50);
+<span class="k">plot</span>(job.parentGrains,job.parentGrains.meanOrientation)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|">
+      <a class="mx-tile-im" href="EBSDMapsAndImages.html"><img loading="lazy" src="figures/gallery/images.png" alt="Correlating EBSD and SEM images"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSDMapsAndImages.html">Correlating EBSD and SEM images</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata trueEbsdWCCoSmall silent
+img = ebsd.opt.trueEbsdImgs;
+sem = <span class="k">mapImage</span>(img.fsdT1,<span class="s">'dxy'</span>,img.pixSzImg,<span class="s">'origin'</span>,ebsd.<span class="k">pos</span>(1,1));
+ebsd.prop.fsd = <span class="k">interp</span>(sem,ebsd.pos);
+<span class="k">plot</span>(ebsd,ebsd.fsd)
+mtexColorMap gray
+hold on
+grains = <span class="k">calcGrains</span>(ebsd);
+<span class="k">plot</span>(grains.boundary,<span class="s">'lineColor'</span>,[1 0.65 0.1],<span class="s">'lineWidth'</span>,2)
+hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|EBSD|Texture|">
+      <a class="mx-tile-im" href="EBSD2ODF.html"><img loading="lazy" src="figures/gallery/ebsdtexture.png" alt="Estimating texture from EBSD"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="EBSD2ODF.html">Estimating texture from EBSD</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata copper silent
+ori = ebsd(<span class="s">'copper'</span>).orientations;
+odf = <span class="k">calcDensity</span>(ori,<span class="s">'halfwidth'</span>,10*degree);
+<span class="k">plotSection</span>(odf,<span class="s">'sigma'</span>,<span class="s">'sections'</span>,4,<span class="s">'contourf'</span>)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,<span class="s">'mrd'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Properties|Texture|">
+      <a class="mx-tile-im" href="TensorAverage.html"><img loading="lazy" src="figures/gallery/aggregate.png" alt="Properties of textured polycrystals"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="TensorAverage.html">Properties of textured polycrystals</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata twins silent
+Cij = [59.7 26.2 21.7 0 0 0;26.2 59.7 21.7 0 0 0;21.7 21.7 61.7 0 0 0;...
+  0 0 0 16.4 0 0;0 0 0 0 16.4 0;0 0 0 0 0 16.75];
+C = <span class="k">stiffnessTensor</span>(Cij,ebsd(<span class="s">'Magnesium'</span>).CS);
+[~,~,CHill] = <span class="k">calcTensor</span>(ebsd(<span class="s">'Magnesium'</span>),C);
+<span class="k">plot</span>(CHill.YoungsModulus,<span class="s">'complete'</span>,<span class="s">'upper'</span>)
+<span class="k">mtexColorbar</span>(<span class="s">'title'</span>,"Young's modulus (GPa)")</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Crystal geometry|Boundaries|">
+      <a class="mx-tile-im" href="MisorientationTheory.html"><img loading="lazy" src="figures/gallery/misorientationtheory.png" alt="Understanding misorientations"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="MisorientationTheory.html">Understanding misorientations</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>mtexdata twins silent
+grains = <span class="k">smoothBoundary</span>(<span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,5*degree),5);
+<span class="k">plot</span>(grains,grains.meanOrientation,<span class="s">'ipfDirection'</span>,zvector)
+hold on
+<span class="k">plot</span>(grains([57 58]).boundary,<span class="s">'lineColor'</span>,<span class="s">'w'</span>,<span class="s">'lineWidth'</span>,3)
+<span class="k">text</span>(grains([57 58]),{<span class="s">'1'</span>,<span class="s">'2'</span>},<span class="s">'fontSize'</span>,22)
+hold off</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Crystal geometry|">
+      <a class="mx-tile-im" href="CrystalSymmetries.html"><img loading="lazy" src="figures/gallery/symmetry.png" alt="Crystal symmetry"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="CrystalSymmetries.html">Crystal symmetry</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">plot</span>(<span class="k">crystalSymmetry</span>(<span class="s">'m-3m'</span>))</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Mathematics|">
+      <a class="mx-tile-im" href="S2FunPlotting.html"><img loading="lazy" src="figures/gallery/sphere.png" alt="Functions on the sphere"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="S2FunPlotting.html">Functions on the sphere</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre><span class="k">surf</span>(S2Fun.smiley)
+axis off
+how2plot = plottingConvention;
+how2plot.north = yvector;
+how2plot.outOfScreen = <span class="k">vector3d</span>(1,0,2);
+<span class="k">setCamera</span>(how2plot)</pre></details>
+      </figcaption>
+    </figure>
+    
+    <figure class="mx-tile" data-l="|Texture|Pole figures|">
+      <a class="mx-tile-im" href="PlotTypes.html"><img loading="lazy" src="figures/gallery/plotting.png" alt="Choosing your plot style"></a>
+      <figcaption class="mx-tile-cap">
+        <h3><a href="PlotTypes.html">Choosing your plot style</a></h3>
+        <details class="mx-tile-code"><summary>Code</summary><pre>cs = <span class="k">crystalSymmetry</span>(<span class="s">'-3m'</span>);
+odf = <span class="k">fibreODF</span>(<span class="k">Miller</span>(1,1,0,cs),zvector);
+<span class="k">plotPDF</span>(odf,<span class="k">Miller</span>(1,0,0,cs),<span class="s">'antipodal'</span>)</pre></details>
+      </figcaption>
+    </figure>
+    
+  </div>
+</div>
+<script>
+(function () {
+  var chips = document.querySelectorAll('#mx-chips button'), tiles = document.querySelectorAll('#mx-gal .mx-tile');
+  chips.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var l = b.getAttribute('data-l');
+      chips.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      tiles.forEach(function (t) { t.hidden = l !== '' && t.getAttribute('data-l').indexOf('|' + l + '|') < 0; });
+    });
+  });
+})();
+</script>
+
+</main>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

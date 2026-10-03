@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Inferring Twin Boundaries | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/TwinningBoundaries_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/TwinningBoundaries_py.html#page",
+      "name": "Inferring Twin Boundaries",
+      "headline": "Inferring Twin Boundaries",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/TwinningBoundaries_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/TwinningBoundaries_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/TwinningBoundaries_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Inferring Twin Boundaries</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/TwinningBoundaries.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GrainBoundaries/TwinningBoundaries.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A twin is a part of a crystal whose lattice has a special mirrored orientation relative
+to its host. The crystallographic relation between the two orientations is the <em>twin
+law</em>.</p>
+
+<p>Deformation twins form in magnesium and other hexagonal metals when slip alone cannot
+accommodate the imposed strain. Their abundance and geometry can therefore help to
+reconstruct what happened to a specimen.</p>
+
+<p>This page infers a candidate twin law from a repeated misorientation in an EBSD map. It
+then selects the boundary segments that match the complete relationship.
+<a href="Twinning_py.html">Twinning</a> takes the complementary route and starts from a known
+crystallographic law.</p>
+
+<p>The example assumes familiarity with <a href="GrainReconstruction_py.html">grain reconstruction</a>
+and <a href="MisorientationTheory_py.html">misorientation symmetry</a>.
+<a href="BoundaryMisorientations_py.html">Misorientations at Grain Boundaries</a> introduces the
+boundary properties used below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load the example in its specimen plotting frame
+</span><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'twins'</span><span class="p">)</span>
+
+<span class="c1"># reconstruct and smooth the grains
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># compute the colours explicitly to keep the published output quiet
+</span><span class="n">colorKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span>
+<span class="n">grainColor</span> <span class="o">=</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">grainColor</span><span class="p">)</span>
+
+<span class="c1"># store the crystal symmetry of magnesium
+</span><span class="n">CS</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">CS</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TwinningBoundaries-3.png" /></center>
+
+<p>The narrow lamellae cross several larger grains and have a contrasting mean orientation.
+That morphology suggests twinning, but it does not prove a twin mechanism. The following
+analysis identifies the repeated lattice relationship between each lamella and its host.</p>
+
+<h2 id="select-same-phase-boundaries">Select Same-Phase Boundaries</h2>
+
+<p>A grain boundary is one segment between neighboring EBSD measurements that belong to
+different grains. The summary splits the complete network by the phases on either side.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">boundary</span>
+<span class="n">gB</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grainBoundary (y↑→x)
+  size: 3305 segments, 248 chains
+  segments  length   mineral 1  mineral 2
+       607  182 µm  notIndexed  Magnesium
+      2698  717 µm   Magnesium  Magnesium
+</code></pre></div></div>
+
+<p>Of these segments, some are boundaries against the edge of the scan, where a grain is cut
+off and has no neighbour. MTEX reports the missing neighbour as <code class="language-plaintext highlighter-rouge">notIndexed</code>; this map
+contains no <code class="language-plaintext highlighter-rouge">notIndexed</code> grains of its own.</p>
+
+<p>Only segments with magnesium grains on both sides have the same-phase misorientations
+needed here. The object summary reports their number and total trace length. Segment
+count is controlled by boundary sampling and is not a count of physical twins.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB_MgMg</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="s">'Magnesium'</span><span class="p">,</span> <span class="s">'Magnesium'</span><span class="p">]</span>
+<span class="n">gB_MgMg</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grainBoundary (y↑→x)
+  size: 2698 segments, 216 chains
+  segments  length  mineral 1  mineral 2
+      2698  717 µm  Magnesium  Magnesium
+</code></pre></div></div>
+
+<h2 id="find-the-repeated-misorientation">Find the Repeated Misorientation</h2>
+
+<p>Colour each segment by its disorientation angle.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">gB_MgMg</span><span class="p">,</span> <span class="n">gB_MgMg</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'misorientation angle in degree'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TwinningBoundaries-6.png" /></center>
+
+<p>The connected yellow traces near 86 degrees outline most of the narrow lamellae. Cooler
+colours mark boundaries spread over lower angles.</p>
+
+<p>The histogram makes the concentration explicit. The narrow peak just below 90 degrees
+dominates a background spread over many angles.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">histogram</span><span class="p">(</span><span class="n">gB_MgMg</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s">'misorientation angle (degree)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TwinningBoundaries-7.png" /></center>
+
+<p>Isolate the 85–87 degree peak and print its share of the boundary segments. About one
+third of all magnesium-to-magnesium segments lie in this two-degree interval. A
+concentration this sharp is not expected from a random population; it points to one
+relationship repeated across the map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inPeak</span> <span class="o">=</span> <span class="p">(</span><span class="n">gB_MgMg</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">85</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">gB_MgMg</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">87</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">mori</span> <span class="o">=</span> <span class="n">gB_MgMg</span><span class="p">.</span><span class="n">misorientation</span><span class="p">[</span><span class="n">inPeak</span><span class="p">]</span>
+
+<span class="n">peakSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'segments'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">mori</span><span class="p">),</span> <span class="s">'percentOfMgMgSegments'</span><span class="p">:</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">mori</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gB_MgMg</span><span class="p">)}</span>
+<span class="n">peakSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'segments': 899, 'percentOfMgMgSegments': 33.320978502594514}
+</code></pre></div></div>
+
+<h2 id="identify-the-relationship">Identify the Relationship</h2>
+
+<p>Angle alone does not identify a misorientation. Plot the peak in the full axis–angle
+space.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scatter</span><span class="p">(</span><span class="n">mori</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TwinningBoundaries-9.png" /></center>
+
+<p>The points form one tight cluster rather than several clusters with similar angles. This
+compact cloud is the evidence for one complete relationship.</p>
+
+<p>The robust mean locates the centre without giving isolated measurements undue influence.
+<a href="orientation.round2Miller.html"><code class="language-plaintext highlighter-rouge">round2Miller</code></a> then finds low-index planes and
+directions that the measured mean makes parallel.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">moriMean</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">mori</span><span class="p">,</span> <span class="n">robust</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">round2Miller</span><span class="p">(</span><span class="n">moriMean</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>     plane parallel   direction parallel     fit
+(11̅01̅) || (101̅1)   [01̅11] || [1̅101]  0.63°
+</code></pre></div></div>
+
+<p>The fit is within half a degree. Use those low-index correspondences to define the ideal
+relationship without the small experimental deviation of the measured mean.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">twinning</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">),</span>
+                           <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">))</span>
+<span class="n">twinning</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>misorientation (Magnesium → Magnesium)
+  (101̅1̅) || (011̅1)   [011̅1] || [11̅01]
+</code></pre></div></div>
+
+<h2 id="two-equivalent-descriptions">Two Equivalent Descriptions</h2>
+
+<p>By default MTEX returns the <em>disorientation</em>: the symmetry-equivalent representative with
+the smallest rotation angle. For this magnesium twin law it is 86.3 degrees about the
+(11-20) crystal axis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">twinDisorientationAxis</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">twinning</span><span class="p">.</span><span class="n">axis</span><span class="p">())</span>
+<span class="n">twinDisorientationAxis</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (Magnesium)
+  h   k   i  l
+  2  -1  -1  0
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">twinDisorientationAngle</span> <span class="o">=</span> <span class="n">twinning</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">twinDisorientationAngle</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>86.2992
+</code></pre></div></div>
+
+<p>The same twin law also has a 180 degree representative about a twin axis. The <code class="language-plaintext highlighter-rouge">max</code>
+option of <a href="orientation.angle.html"><code class="language-plaintext highlighter-rouge">angle</code></a> and <a href="orientation.axis.html"><code class="language-plaintext highlighter-rouge">axis</code></a> selects
+that representative.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">twinOperationAngle</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">twinning</span><span class="p">,</span> <span class="s">'max'</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">twinOperationAngle</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>180
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">twinOperationAxis</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="n">axis</span><span class="p">(</span><span class="n">twinning</span><span class="p">,</span> <span class="s">'max'</span><span class="p">),</span> <span class="s">'UVTW'</span><span class="p">))</span>
+<span class="n">twinOperationAxis</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (Magnesium)
+   U  V  T  W
+  -1  1  0  1
+</code></pre></div></div>
+
+<p>Both descriptions belong to the same misorientation under magnesium crystal symmetry. The
+86.3 degrees reported for the disorientation and the 180 degrees quoted for the twin
+operation are therefore not in conflict. An angle and its axis must always be read from
+the same representative.</p>
+
+<h2 id="select-candidate-twin-boundaries">Select Candidate Twin Boundaries</h2>
+
+<p>Compare every boundary misorientation with the complete ideal law, not only with its
+86.3 degree angle. A boundary has no intrinsic first side, so its misorientation carries
+grain-exchange symmetry: the law and its inverse are treated as the same relationship.
+See <a href="MisorientationGrainExchangeSym_py.html">Grain Exchange Symmetry</a>.</p>
+
+<p>A five-degree tolerance admits the experimental spread in this map. It is an analyst
+choice rather than a universal property of the twin law, and it should reflect
+orientation uncertainty and the purpose of the analysis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">twinDeviation</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">gB_MgMg</span><span class="p">.</span><span class="n">misorientation</span><span class="p">,</span> <span class="n">twinning</span><span class="p">)</span>
+<span class="n">isTwinning</span> <span class="o">=</span> <span class="n">twinDeviation</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">twinBoundary</span> <span class="o">=</span> <span class="n">gB_MgMg</span><span class="p">[</span><span class="n">isTwinning</span><span class="p">]</span>
+<span class="n">twinBoundary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grainBoundary (y↑→x)
+  size: 1408 segments, 67 chains
+  segments  length  mineral 1  mineral 2
+      1408  356 µm  Magnesium  Magnesium
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># report the fraction of trace length rather than only segment count
+</span><span class="n">candidateTracePercent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">twinBoundary</span><span class="p">.</span><span class="n">segLength</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">gB_MgMg</span><span class="p">.</span><span class="n">segLength</span><span class="p">)</span>
+<span class="n">candidateTracePercent</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>49.7057
+</code></pre></div></div>
+
+<p>The two object summaries show how many magnesium-to-magnesium segments pass the test.
+They account for about half of the total trace length.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">grainColor</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">twinBoundary</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'candidate twin boundary'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TwinningBoundaries-18.png" /></center>
+
+<p>The white traces follow the lamellae seen in the first figure. This spatial agreement
+checks that the relationship inferred from the peak is the one repeated in the map.</p>
+
+<h2 id="what-the-selection-establishes">What the Selection Establishes</h2>
+
+<p>The selected objects are candidate twin-boundary segments, not a count of physical
+twins. Consecutive segments can belong to one lamella, and boundary smoothing changes
+their number. Trace length is less sensitive to resampling, but it still does not count
+twin domains.</p>
+
+<p>A misorientation match also does not identify which side is the parent or prove that
+deformation twinning produced the boundary. A two-dimensional EBSD map supplies the
+boundary trace, not the full interface-plane orientation;
+<a href="TiltAndTwistBoundaries_py.html">Tilt and Twist Boundaries</a> develops that limitation.
+Morphology, loading, and evidence for later slip, detwinning, or secondary twinning may
+be needed for a mechanistic interpretation.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>Th. Hahn and H. Klapper,
+<a href="https://doi.org/10.1107/97809553602060000917">Twinning of Crystals</a>,
+<em>International Tables for Crystallography</em>, Vol. D, ch. 3.3, pp. 413–487, 2013. This
+chapter defines twin laws, equivalent operations, and twin boundaries.</li>
+  <li>J. W. Christian and S. Mahajan,
+<a href="https://doi.org/10.1016/0079-6425(94)00007-7">Deformation Twinning</a>,
+<em>Progress in Materials Science</em> 39 (1995), 1–157. This review covers deformation-twin
+crystallography and mechanisms.</li>
+  <li>Y. Zhang <em>et al.</em>,
+<a href="https://doi.org/10.1107/S0021889810037180">A General Method to Determine Twinning Elements</a>,
+<em>Journal of Applied Crystallography</em> 43 (2010), 1426–1430. This paper connects an
+observed relationship with classical twinning elements.</li>
+  <li>V. Randle,
+<a href="https://doi.org/10.1111/j.1365-2818.2008.02000.x">Application of EBSD to the Analysis of Interface Planes: Evolution over the Last Two Decades</a>,
+<em>Journal of Microscopy</em> 230 (2008), 406–413. This review explains what
+two-dimensional and stereological EBSD measurements reveal about boundary planes.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>If the twin law is known in advance, <a href="Twinning_py.html">Twinning</a> shows how to construct it
+directly. The next reconstruction step is often to restore parent-grain footprints by
+merging across the selected boundaries; see <a href="GrainMerge_py.html">Merging Grains</a>.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/TwinningBoundaries_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

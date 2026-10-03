@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Grain Reference Orientation Deviation (GROD) | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSDGROD_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSDGROD_py.html#page",
+      "name": "Grain Reference Orientation Deviation (GROD)",
+      "headline": "Grain Reference Orientation Deviation (GROD)",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/EBSDGROD_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSDGROD_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSDGROD_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Grain Reference Orientation Deviation (GROD)</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/EBSDGROD.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/EBSDAnalysis/EBSDGROD.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>The grain reference orientation deviation asks how far each measurement has turned
+away from a chosen orientation for its own grain. The grain mean is the usual
+reference.</p>
+
+<p><a href="EBSDKAM_py.html">KAM</a> compares a point with its immediate neighbours and asks how
+sharply the lattice is bent. GROD instead compares the point with the grain reference.
+It reveals orientation variation across the whole grain. GROD records lattice rotation
+relative to that reference. It is not a strain measurement or a measure of accumulated
+deformation.</p>
+
+<p>Both the angle and the axis of the deviation carry information. The angle shows its
+magnitude, while the axis can distinguish rotation patterns that the angle alone hides.</p>
+
+<p>The example is a deformed ferrite specimen. The misorientation axes are very sensitive
+to noise, so the orientations are denoised first. See <a href="EBSDDenoising_py.html">Denoising</a>.</p>
+
+<p>The page assumes that the map has already been segmented into grains. See
+<a href="GrainReconstruction_py.html">Grain Reconstruction</a> for that step. Misorientation angle
+and axis should also be familiar; see <a href="MisorientationTheory_py.html">Misorientations</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># use the rolling-direction frame carried by the ferrite specimen
+</span><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'ferrite'</span><span class="p">)</span>
+
+<span class="n">highAngle</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">lowAngle</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="p">[</span><span class="n">highAngle</span><span class="p">,</span> <span class="n">lowAngle</span><span class="p">],</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># smooth grain boundaries
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># denoise the orientations
+</span><span class="n">F</span> <span class="o">=</span> <span class="n">halfQuadraticFilter</span><span class="p">()</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">smooth</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">orientations</span><span class="p">))</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-3.png" /></center>
+
+<p>The colour changes within the larger grains are the orientation gradients that GROD
+will quantify. The overlaid outlines show which grain supplies the reference
+orientation for each measurement.</p>
+
+<h2 id="the-deviation-angle">The deviation angle</h2>
+
+<p><a href="EBSD.calcGROD.html">calcGROD</a> computes the deviation as a misorientation, one per
+measurement. It needs the reconstructed grains as a second argument. It also needs
+<code class="language-plaintext highlighter-rouge">ebsd.grainId</code>, which <code class="language-plaintext highlighter-rouge">calcGrains</code> set.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># compute the grain reference orientation deviation
+</span><span class="n">grod</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">calcGROD</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The first plot maps its angle. Subgrain boundaries are drawn on top and faded in
+proportion to their own misorientation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># plot the misorientation angle of the GROD
+</span><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">grod</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'misorientation angle in degree'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'LaboTeX'</span><span class="p">)</span>
+
+<span class="c1"># overlay grain and sub-grain boundaries
+</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">,</span> <span class="n">edgeAlpha</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">grodAngle</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">grod</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'GROD angle: median </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">grodAngle</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> degree; maximum </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">grodAngle</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> degree'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GROD angle: median 1.69 degree; maximum 23.6 degree
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-5.png" /></center>
+
+<p>Half the measurements are within about 1.6° of their grain mean and the worst reach
+about 19°. The large values are not scattered. They fill extended parts of grains and
+often end at the inner boundaries.</p>
+
+<p>Those boundaries were detected from local neighbour misorientations, not from GROD. A
+<a href="SubGrainBoundaries_py.html">subgrain boundary</a> can coincide with a jump in GROD, but a
+GROD jump is not its definition.</p>
+
+<h2 id="grain-orientation-spread">Grain orientation spread</h2>
+
+<p>Averaging the deviation angle over each grain gives the grain orientation spread.
+<a href="EBSD.grainMean.html">grainMean</a> performs that averaging.</p>
+
+<p>Although <code class="language-plaintext highlighter-rouge">calcGrains</code> stored <code class="language-plaintext highlighter-rouge">grains.GOS</code>, that value belongs to the raw orientations.
+The calculation below deliberately uses the denoised data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GOS</span> <span class="o">=</span> <span class="n">grainMean</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">grod</span><span class="p">.</span><span class="n">angle</span><span class="p">(),</span> <span class="n">grains</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">GOS</span> <span class="o">/</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'GOS in degree'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'GOS for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span><span class="si">}</span><span class="s"> grains: median </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">GOS</span> <span class="o">/</span> <span class="n">degree</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> degree; maximum </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">GOS</span> <span class="o">/</span> <span class="n">degree</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> degree'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GOS for 377 grains: median 0.83 degree; maximum 6.6 degree
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-6.png" /></center>
+
+<p>Of the 377 grains the median spread is below a degree and the largest 6.6°. The map is
+not uniform. Some grains have much more internal orientation variation than their
+neighbours, producing an order-of-magnitude spread.</p>
+
+<p>GOS depends on segmentation, denoising, reference orientation, and grain size.
+Comparisons require the same choices.</p>
+
+<h2 id="the-misorientation-axis-in-crystal-coordinates">The misorientation axis in crystal coordinates</h2>
+
+<p>Every deviation also has an axis, and it matters in which reference frame that axis is
+expressed. The crystal frame is attached to the lattice of the phase. In this frame the
+axis is an \((hk\ell)\) crystal direction, obtained with <a href="orientation.axis.html">axis</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">axCrystal</span> <span class="o">=</span> <span class="n">grod</span><span class="p">.</span><span class="n">axis</span><span class="p">()</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">axCrystal</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fundamentalRegion</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mrd'</span><span class="p">)</span>
+
+<span class="n">crystalDensityRange</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">get_clim</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Crystal-frame axis density: </span><span class="si">{</span><span class="n">crystalDensityRange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> to </span><span class="si">{</span><span class="n">crystalDensityRange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Crystal-frame axis density: 0.86 to 1.21 mrd
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-7.png" /></center>
+
+<p>The range is close to uniform, about 0.8 to 1.2 times. In crystal coordinates the axes
+are therefore close to evenly distributed, with a slight preference for \([101]\). A
+colour key shows where those directions occur in the map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colorKey</span> <span class="o">=</span> <span class="n">HSVDirectionKey</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">colorKey</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-8.png" /></center>
+
+<p>Directions related by ferrite crystal symmetry have the same colour in this key. The
+deviation angle serves as transparency in the map below, so that points which have
+barely turned fade to white.</p>
+
+<p>A small-angle axis is poorly constrained by conventional EBSD. Whitening it prevents
+uncertain axes from dominating the picture, but it is a visualization choice rather
+than an uncertainty correction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># compute the color from the misorientation axis
+</span><span class="n">color</span> <span class="o">=</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">direction2color</span><span class="p">(</span><span class="n">axCrystal</span><span class="p">)</span>
+
+<span class="c1"># and set the transparency from the misorientation angle
+</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">grod</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span> <span class="o">/</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># plot the data
+</span><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">,</span> <span class="n">edgeAlpha</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-9.png" /></center>
+
+<p>Whole regions of a grain share one colour, that is one misorientation axis. This is
+what makes the crystal frame worth looking at.</p>
+
+<p>A low-angle boundary formed by a single slip system has its axis fixed by the geometry
+of that system. A pure tilt wall turns about an axis in the slip plane and
+perpendicular to the Burgers vector. A pure twist wall turns about the slip plane
+normal. This rule applies directly to the misorientation across a boundary. GROD
+compares a point with its reference.</p>
+
+<p>A coherent GROD-axis cluster can nevertheless constrain candidate slip systems when
+combined with the angle map and independent slip geometry. V. Tong, E. Wielewski and
+B. Britton use long-range rotations in
+<a href="https://doi.org/10.48550/arXiv.1803.00236">Characterisation of Slip and Twinning in High-Rate-Deformed Zirconium with EBSD</a>.</p>
+
+<p>A cluster alone does not identify a unique active system. The
+<a href="SlipSystems_py.html">slip system</a> and <a href="DislocationSystems_py.html">dislocation system</a>
+chapters describe how to set up candidates in MTEX. See
+<a href="TiltAndTwistBoundaries_py.html">Tilt and Twist Boundaries</a> for the boundary geometry
+itself.</p>
+
+<h2 id="the-misorientation-axis-in-specimen-coordinates">The misorientation axis in specimen coordinates</h2>
+
+<p>The specimen frame is the reference frame in which the map and sample are expressed.
+The same axis in this frame is the crystal axis carried over by the orientation of the
+measurement.</p>
+
+<p>The option <code class="language-plaintext highlighter-rouge">symmetry=False</code> is essential. The axis must be the representative that belongs
+to this orientation, not a symmetric equivalent.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">axSpecimen</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">orientations</span> <span class="o">*</span> <span class="n">grod</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="n">symmetry</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">axSpecimen</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'distribution of misorientation axes in mrd'</span><span class="p">)</span>
+
+<span class="n">specimenDensityRange</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">get_clim</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Specimen-frame axis density: </span><span class="si">{</span><span class="n">specimenDensityRange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> to </span><span class="si">{</span><span class="n">specimenDensityRange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Specimen-frame axis density: 0.29 to 6.36 mrd
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-10.png" /></center>
+
+<p>This distribution runs from about 0.2 to nearly 7 times uniform. The same axes that
+were spread evenly over the crystal are strongly clustered in the specimen frame.
+Loading is defined in this frame, which makes the clustering useful. Texture and a few
+highly deformed grains can also produce maxima; the map below distinguishes those
+possibilities.</p>
+
+<p>In the specimen frame the axes have no crystal symmetry and are directional rather
+than antipodal. The colour key therefore uses the whole sphere.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colorKey</span> <span class="o">=</span> <span class="n">HSVDirectionKey</span><span class="p">()</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">colorKey</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-11.png" /></center>
+
+<p>Opposite specimen directions have different colours in this key. The spatial plot
+follows the same construction as the crystal-frame map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># compute color and transparency
+</span><span class="n">omega</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">grod</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span> <span class="o">/</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">direction2color</span><span class="p">(</span><span class="n">axSpecimen</span><span class="p">)</span>
+
+<span class="c1"># plot the data
+</span><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="n">omega</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">,</span> <span class="n">edgeAlpha</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/EBSDGROD-12.png" /></center>
+
+<h2 id="choosing-another-reference-orientation">Choosing another reference orientation</h2>
+
+<p>The grain mean is convenient, but it removes a rigid rotation shared by the whole
+grain. <a href="EBSD.calcGROD.html">calcGROD</a> accepts a third argument: one reference rotation
+for every grain ID, or one scalar for all grains.</p>
+
+<p>A registered map of the undeformed specimen can supply one initial orientation per
+grain. GROD then retains whole-grain rotation relative to that state. Such a comparison
+first requires spatial registration; see
+<a href="EBSDTrueEbsd_py.html">TrueEBSD Distortion Correction</a>. Changing the reference changes
+the angle, axis, and GOS. State that choice in every reported method.</p>
+
+<h2 id="the-definition">The definition</h2>
+
+<p>For the orientation \(o_{i,j}\) at position \((i,j)\) and the chosen reference orientation
+\(r_g\) of its grain,</p>
+
+\[\mathrm{GROD}_{i,j} = \mathbf S_{i,j} \cdot \mathrm{inv}(r_g) \cdot o_{i,j}\]
+
+<p>where the symmetry element \(\mathbf S_{i,j}\) is the one that makes the misorientation
+angle as small as possible. With no third input to <code class="language-plaintext highlighter-rouge">calcGROD</code>, \(r_g\) is the grain mean
+orientation.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li>S. I. Wright, M. M. Nowell and D. P. Field,
+<a href="https://doi.org/10.1017/S1431927611000055">A Review of Strain Analysis Using Electron Backscatter Diffraction</a>,
+<em>Microscopy and Microanalysis</em> 17 (2011), 316–329. It reviews what
+orientation-gradient measures can and cannot say about deformation.</li>
+  <li>D. J. Prior, <a href="https://doi.org/10.1046/j.1365-2818.1999.00572.x">Problems in Determining the Misorientation Axes for Small Angular Misorientations Using EBSD</a>,
+<em>Journal of Microscopy</em> 195 (1999), 217–225. It quantifies the rapid loss of axis
+precision at small angles.</li>
+  <li>V. Tong, E. Wielewski and B. Britton,
+<a href="https://doi.org/10.48550/arXiv.1803.00236">Characterisation of Slip and Twinning in High-Rate-Deformed Zirconium with EBSD</a>
+(2018). It demonstrates the slip-system interpretation discussed above.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="EBSDProfile_py.html">Line Profiles</a> to turn a colour gradient into a curve
+along a chosen path. The broader family of grain-scale statistics is described in
+<a href="GrainOrientationParameters_py.html">Grain Orientation Parameters</a>.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSDGROD_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

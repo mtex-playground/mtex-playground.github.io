@@ -1,0 +1,4 @@
+# Preview of the MTEX site. The live site is https://mtex-toolbox.github.io
+User-agent: *
+Disallow: /
+

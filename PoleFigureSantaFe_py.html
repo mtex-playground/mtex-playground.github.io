@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>The Santa Fe Benchmark | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/PoleFigureSantaFe_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/PoleFigureSantaFe_py.html#page",
+      "name": "The Santa Fe Benchmark",
+      "headline": "The Santa Fe Benchmark",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/PoleFigureSantaFe_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/PoleFigureSantaFe_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/PoleFigureSantaFe_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">The Santa Fe Benchmark</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/PoleFigureSantaFe.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/PoleFigureAnalysis/PoleFigureSantaFe.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>The Santa Fe orientation distribution function (ODF) is a model texture agreed on at a
+workshop in Santa Fe so that pole-figure inversion methods could be compared on the same
+problem. An ODF is a density over orientation space. Because this one is known exactly,
+a reconstruction can be judged by what it recovers rather than only by how well it fits
+the data.</p>
+
+<p>This page assumes the forward experiment from
+<a href="PoleFigureSimulation_py.html">Simulating Pole Figure Data</a> and the inverse problem from
+<a href="PoleFigure2ODF_py.html">ODF Estimation</a>. The origin of the ghost effect is explained in
+<a href="PoleFigure2ODFAmbiguity_py.html">The Ghost Effect</a>. Here the complete controlled
+experiment is used to measure how much
+<a href="PoleFigure2ODFGhostCorrection_py.html">ghost correction</a> recovers.</p>
+
+<p>A plotting convention states how the specimen reference frame is laid out on screen. The
+benchmark uses Y upward and X to the right. This convention does not rotate the specimen
+or change the ODF.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="the-known-model">The known model</h2>
+
+<p><a href="SantaFe.html">SantaFe</a> has cubic crystal symmetry and orthorhombic specimen symmetry.
+It combines a 0.73 mrd uniform background with one component containing 27 percent of
+the volume. Values are in multiples of a random distribution (mrd), so a uniform ODF has
+the value 1 mrd everywhere; see <a href="ODFTheory_py.html">ODF Theory</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf</span> <span class="o">=</span> <span class="n">SantaFe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="simulate-noisy-pole-figures">Simulate noisy pole figures</h2>
+
+<p>Four lattice directions are sampled on an antipodally symmetric specimen grid with 5
+degree spacing.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># crystal directions
+</span><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">odf</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+
+<span class="c1"># specimen directions
+</span><span class="n">r</span> <span class="o">=</span> <span class="n">equispacedS2Grid</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># pole figures
+</span><span class="n">pf</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><a href="PoleFigure.noisepf.html">noisepf</a> draws Poisson counts. At a direction with pole
+density \(P_h(r)\), the mean count is \(100P_h(r)\) in this example; 100 is an intensity
+scale, not the same mean at every point. No background is added.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pf</span> <span class="o">=</span> <span class="n">noisepf</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'LaboTeX'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureSantaFe-4.png" /></center>
+
+<p>The four panels retain the model’s broad pattern, while individual grid values
+fluctuate. Relative fluctuations are most conspicuous in weak regions because Poisson
+noise is large compared with a small signal.</p>
+
+<h2 id="reconstruct-with-and-without-ghost-correction">Reconstruct with and without ghost correction</h2>
+
+<p><a href="PoleFigure.calcODF.html">calcODF</a> applies ghost correction by default. The second call
+disables it explicitly. Solver output is suppressed here because
+<a href="PoleFigure2ODF_py.html">ODF Estimation</a> explains the iteration history.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rec</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+<span class="n">rec2</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">ghostCorrection</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="compare-fit-with-recovery">Compare fit with recovery</h2>
+
+<p>Two different comparisons are needed. The ODF error from
+<a href="SO3Fun.calcError.html">calcError</a> is half the mean absolute difference on a 5 degree
+orientation grid. For normalized ODFs, it is the fraction of material that would have to
+move through orientation space to turn one distribution into the other.</p>
+
+<p>The mean pole-figure residual instead compares each function with the noisy data. It is
+the regularised relative error used by <a href="PoleFigure.calcError.html">calcError</a>, averaged
+over the four pole figures. The extrema give a second reading of the reconstructed ODFs.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odfError</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">calcError</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="n">odf</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="n">calcError</span><span class="p">(</span><span class="n">rec2</span><span class="p">,</span> <span class="n">odf</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)]</span>
+
+<span class="n">meanPoleFigureResidual</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">calcError</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odf</span><span class="p">)),</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">calcError</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">rec</span><span class="p">)),</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">calcError</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">rec2</span><span class="p">))]</span>
+
+<span class="n">minimumMrd</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">odf</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">min</span><span class="p">(</span><span class="n">rec</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">min</span><span class="p">(</span><span class="n">rec2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">maximumMrd</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">odf</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="p">(</span><span class="n">rec</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="p">(</span><span class="n">rec2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="s">""</span><span class="si">:</span><span class="mi">24</span><span class="n">s</span><span class="si">}{</span><span class="s">"odfError"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">10</span><span class="n">s</span><span class="si">}{</span><span class="s">"meanPFResidual"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">16</span><span class="n">s</span><span class="si">}{</span><span class="s">"minimumMrd"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">12</span><span class="n">s</span><span class="si">}{</span><span class="s">"maximumMrd"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">12</span><span class="n">s</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s">'model'</span><span class="p">,</span> <span class="s">'withGhostCorrection'</span><span class="p">,</span> <span class="s">'withoutGhostCorrection'</span><span class="p">],</span> <span class="n">odfError</span><span class="p">,</span> <span class="n">meanPoleFigureResidual</span><span class="p">,</span> <span class="n">minimumMrd</span><span class="p">,</span> <span class="n">maximumMrd</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="mi">24</span><span class="n">s</span><span class="si">}{</span><span class="n">a</span><span class="si">:</span><span class="mf">10.4</span><span class="n">f</span><span class="si">}{</span><span class="n">b</span><span class="si">:</span><span class="mf">16.4</span><span class="n">f</span><span class="si">}{</span><span class="n">c</span><span class="si">:</span><span class="mf">12.4</span><span class="n">f</span><span class="si">}{</span><span class="n">d</span><span class="si">:</span><span class="mf">12.4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                          odfError  meanPFResidual  minimumMrd  maximumMrd
+model                       0.0000          0.0505      0.7300      5.0395
+withGhostCorrection         0.0477          0.0491      0.5953      4.9217
+withoutGhostCorrection      0.0989          0.0481      0.2179      4.6192
+</code></pre></div></div>
+
+<p>The corrected reconstruction has an ODF error of about 0.045, so between four and five
+percent of the volume is in the wrong place. The uncorrected error is about 0.10, more
+than twice as large. All three mean pole-figure residuals round to 0.05, and the
+uncorrected reconstruction fits the noisy data as well as the model itself. A good fit to
+the projections therefore does not prove that an ODF is unique or true.</p>
+
+<p>The counting noise is drawn afresh on every run, so these numbers move in the third
+digit. The ordering of the two reconstructions does not.</p>
+
+<h2 id="where-the-corrected-reconstruction-misses-the-data">Where the corrected reconstruction misses the data</h2>
+
+<p><a href="PoleFigure.plotDiff.html">plotDiff</a> shows the regularised relative difference at every
+simulated measurement direction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotDiff</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">rec</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureSantaFe-7.png" /></center>
+
+<p>The residuals are scattered rather than concentrated in one coherent patch. That pattern
+is consistent with the counting noise added above. With measured data it would be a
+diagnostic clue, not proof that noise is the only cause.</p>
+
+<h2 id="recalculated-pole-figures">Recalculated pole figures</h2>
+
+<p>The pole figures recalculated from the corrected ODF reproduce the broad maxima in the
+noisy simulation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="n">pf</span><span class="p">.</span><span class="n">h</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureSantaFe-8.png" /></center>
+
+<p>Their smoothness is expected: the reconstruction uses finite-width kernels and is not
+intended to reproduce every random fluctuation. This agreement is necessary, but the
+table above shows why it is not a sufficient validation when the true ODF is unknown.</p>
+
+<h2 id="read-the-three-odfs">Read the three ODFs</h2>
+
+<p>First plot the corrected reconstruction in Euler-angle sections.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fontSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">,</span> <span class="n">minmax</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'white2black'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureSantaFe-9.png" /></center>
+
+<p>The known model provides the reference.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fontSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">,</span> <span class="n">minmax</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'white2black'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureSantaFe-10.png" /></center>
+
+<p>Finally, plot the reconstruction without ghost correction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">rec2</span><span class="p">,</span> <span class="n">sections</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fontSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">,</span> <span class="n">minmax</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'white2black'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureSantaFe-11.png" /></center>
+
+<p>The components occupy the right places in both reconstructions. Read the <code class="language-plaintext highlighter-rouge">minmax</code> labels
+instead of comparing independently scaled contour shades. The model peaks at 5.0 mrd and
+the corrected reconstruction a little below it. Its minimum is about 0.6 mrd against the
+model background of 0.73 mrd. Without ghost correction the minimum falls to about 0.2
+mrd: the reconstruction digs holes in the background to pay for intensity missing from
+the peaks.</p>
+
+<h2 id="read-the-harmonic-spectrum">Read the harmonic spectrum</h2>
+
+<p><a href="SO3Fun.plotSpektra.html">plotSpectrum</a> groups the magnitude of the harmonic coefficients
+by degree. This is the most direct view of the even–odd defect.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="s">'all'</span><span class="p">)</span>
+<span class="n">plotSpectrum</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'small'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plotSpectrum</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotSpectrum</span><span class="p">(</span><span class="n">rec2</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'true ODF'</span><span class="p">,</span> <span class="s">'with ghost correction'</span><span class="p">,</span> <span class="s">'without ghost correction'</span><span class="p">])</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureSantaFe-12.png" /></center>
+
+<p>The uncorrected curve zig-zags: its odd degrees lie below the true ones, while its even
+degrees follow them. That is the ghost effect in harmonic space. The corrected curve
+follows the model much more smoothly because ghost correction estimates information that
+the pole figures do not determine.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li>K. Pawlik, J. Pospiech and K. Lücke,
+<a href="https://labosoft.com.pl/download/adcmethod.htm">The development of a new direct method of ODF reproduction from pole figures and its testing with the help of model functions</a>,
+in J. S. Kallend and G. Gottstein (eds.), <em>ICOTOM 8</em>, The Metallurgical Society,
+105–110, 1988. This is the model-function comparison presented at the Santa Fe
+conference.</li>
+  <li>S. Matthies and G. W. Vinel,
+<a href="https://doi.org/10.1002/pssb.2221120254">On the reproduction of the orientation distribution function of texturized samples from reduced pole figures using the conception of a conditional ghost correction</a>,
+<em>physica status solidi (b)</em> 112, K111–K114, 1982. This paper introduces the
+conditional ghost-correction idea.</li>
+  <li>R. Hielscher and H. Schaeben,
+<a href="https://doi.org/10.1107/S0021889808030112">A novel pole figure inversion method: specification of the MTEX algorithm</a>,
+<em>Journal of Applied Crystallography</em> 41, 1024–1037, 2008. This paper specifies the
+estimator and numerical reconstruction used here.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="PoleFigureDubna_py.html">the Dubna example</a> to apply the same validation
+sequence to measured neutron pole figures. Once an ODF has been validated,
+<a href="ODFAnalysis.html">ODF Analysis</a> introduces its properties and derived quantities.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">min(odf)</code> and <code class="language-plaintext highlighter-rouge">max(odf)</code> return the pair of the extreme value and the orientation where
+it is reached, so the table reads their first element. MATLAB’s <code class="language-plaintext highlighter-rouge">table</code> is a printed
+loop. The Poisson draw of <code class="language-plaintext highlighter-rouge">noisepf</code> is not seeded, as MATLAB’s is not, so the errors
+vary in the third digit between builds.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/PoleFigureSantaFe_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

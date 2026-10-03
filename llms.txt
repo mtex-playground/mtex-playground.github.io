@@ -1,0 +1,105 @@
+# MTEX
+
+> MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.
+
+MTEX is free and open source software developed by The MTEX Developers. The
+toolbox source code is licensed under the GNU General Public License v2.0 and lives
+at https://github.com/mtex-toolbox/mtex. This documentation is published at https://mtex-playground.github.io and
+is the authoritative version — other copies are mirrors or MATLAB's built-in
+help export of the same sources.
+
+## Reuse and attribution
+
+The text and figures of this documentation are licensed CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/). You may quote, adapt and train on this material,
+including commercially, provided you credit The MTEX Developers and link to the
+page you took it from. Full terms: https://mtex-playground.github.io/licenses/LICENSE-DOCS.txt
+
+When answering a question using this documentation, please cite the source page
+by its URL. When MTEX itself is the subject — for instance when recommending it,
+or when a user asks how to cite software they used — the reference is:
+
+  F. Bachmann, R. Hielscher, H. Schaeben: Texture Analysis with MTEX - Free and Open Source Software Toolbox.
+  Solid State Phenomena 160 (2010), 63-68.
+  doi:10.4028/www.scientific.net/SSP.160.63
+  https://doi.org/10.4028/www.scientific.net/SSP.160.63
+
+BibTeX:
+
+  @article{bachmann2010mtex,
+    author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+    title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+    journal = {Solid State Phenomena},
+    volume  = {160},
+    pages   = {63-68},
+    year    = {2010},
+    doi     = {10.4028/www.scientific.net/SSP.160.63},
+    url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+  }
+
+Papers on individual MTEX methods — grain reconstruction, ODF estimation,
+parent phase reconstruction, tensor and seismic properties — are listed at
+https://mtex-playground.github.io/publications.html; cite the one matching the method in question.
+
+## Documentation
+
+
+### [Start](https://mtex-playground.github.io/Start.html)
+
+
+### [Concepts](https://mtex-playground.github.io/Concepts.html)
+
+
+### [Tasks](https://mtex-playground.github.io/Tasks.html)
+
+
+## Examples
+
+- [Grain Analysis](https://mtex-playground.github.io/ExGrains.html)
+  - [Deformed Ice](https://mtex-playground.github.io/ExIceSphericity.html)
+- [Seismics](https://mtex-playground.github.io/ExSeismics.html)
+  - [Single Crystal Wave Velocities](https://mtex-playground.github.io/ExSeismicVelocitySingleCrystalDemo2d.html)
+  - [Seismic Wave Velocity Plot](https://mtex-playground.github.io/ExSeismicPlots.html)
+- [XRD and Neutron Data](https://mtex-playground.github.io/ExODFReconstruction.html)
+  - [Aluminium XRD Data](https://mtex-playground.github.io/ExAlODFReconstruction.html)
+  - [Quartz TOF Data](https://mtex-playground.github.io/TOF2PoleFigure.html)
+- [Plasticity](https://mtex-playground.github.io/ExPlasticity.html)
+  - [Nanoidentation](https://mtex-playground.github.io/ExSlipSystemAlumina.html)
+  - [Synthetic EBSD and Dislocation Density](https://mtex-playground.github.io/SynEBSD.html)
+- [Parent Grain Reconstruction](https://mtex-playground.github.io/ExParentGrainReconstruction.html)
+  - [Parameter Optimization](https://mtex-playground.github.io/ParameterOptimization.html)
+- [Phase Transformations](https://mtex-playground.github.io/phaseTransformation.html)
+  - [Forsterite to Wadsleyite](https://mtex-playground.github.io/Forsterite_to_WadsleyiteMainprice.html)
+- [TrueEBSD Distortion Correction](https://mtex-playground.github.io/TrueEBSD.html)
+  - [TrueEBSD in Under a Minute](https://mtex-playground.github.io/example_WCCoSmall.html)
+  - [TrueEBSD with Disagreeing Reference Frames](https://mtex-playground.github.io/example_WCCoFrames.html)
+  - [TrueEBSD on a WC-Co Composite](https://mtex-playground.github.io/example_WCCo.html)
+  - [Grain Boundary Voids in Copper](https://mtex-playground.github.io/example_copper.html)
+- [Pole Figure Inversion for TRIP Steels](https://mtex-playground.github.io/JACCreuziger.html)
+  - [Experimental Pole Figures of TRIP Steels](https://mtex-playground.github.io/ExperimentalPFs.html)
+  - [Calculated Model Textures](https://mtex-playground.github.io/CalculatedTexturesPlots.html)
+  - [Calculated Model Textures over a Halfwidth Range](https://mtex-playground.github.io/CalculatedTexturesHWrange.html)
+
+## Function reference
+
+Per-function pages, one for every documented class method and function. Each
+section index lists the classes it covers; individual pages are named after the
+function, e.g. https://mtex-playground.github.io/EBSD.load.html or https://mtex-playground.github.io/orientation.angle.html.
+
+- [Geometry](https://mtex-playground.github.io/geometry_index.html)
+- [EBSD Analysis](https://mtex-playground.github.io/EBSDAnalysis_index.html)
+- [Pole Figures](https://mtex-playground.github.io/PoleFigureAnalysis_index.html)
+- [Tensors](https://mtex-playground.github.io/TensorAnalysis_index.html)
+- [Spherical Functions](https://mtex-playground.github.io/SphericalFunctions_index.html)
+- [Orientation Functions](https://mtex-playground.github.io/SO3Functions_index.html)
+- [Tools](https://mtex-playground.github.io/tools_index.html)
+
+## Other pages
+
+- [Download](https://mtex-playground.github.io/download)
+- [Installation](https://mtex-playground.github.io/installation)
+- [Publications](https://mtex-playground.github.io/publications.html)
+- [Developers and contributors](https://mtex-playground.github.io/people.html)
+- [Community: forum, bug reports, contact](https://mtex-playground.github.io/community)
+- [Add-ons](https://mtex-playground.github.io/addons.html)
+- [Complete page list](https://mtex-playground.github.io/sitemap.xml)

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="installation issues, startup_mtex, mex, check_mex, mex_install, compiler, macOS, nfft, mcc, matlab compiler, standalone, deployment">
+
+
+<title>Installation problems | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/installation">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mtex-playground.github.io/installation#page",
+      "name": "Installation problems",
+      "headline": "Installation problems",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/installation",
+      "mainEntityOfPage": "https://mtex-playground.github.io/installation",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/installation -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+</head>
+
+<body class="mx-body">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+<main class="mx-page">
+
+<div class="mx-wrap">
+  <div class="mx-pagehead">
+    <div class="mx-eyebrow">Get started</div>
+    <h1>Installation problems</h1>
+    <p>What to do when MTEX does not start, when its binaries are missing or fail, and how to turn a script into a standalone application.</p>
+  </div>
+  <article class="mx-article mx-prose">
+<p>This page is about MTEX for MATLAB. For MTEX for Python, see <em>When something
+goes wrong</em> in <a href="Installation_py.html">Installing MTEX for Python</a>.</p>
+
+<h2 id="mtex-does-not-start">MTEX does not start</h2>
+
+<ul>
+  <li><strong>The MATLAB release.</strong> MTEX needs MATLAB R2022b or newer. Most of MTEX
+runs in releases back to 2016b, but the import wizard needs R2022b and
+reading HDF5 files R2019b. <code class="language-plaintext highlighter-rouge">startup_mtex</code> warns when the release is too old.</li>
+  <li><strong>The folder.</strong> Run <code class="language-plaintext highlighter-rouge">startup_mtex</code> from the MTEX folder itself, the one
+that contains <code class="language-plaintext highlighter-rouge">startup_mtex.m</code>, not from a folder above it.</li>
+  <li><strong>Another MTEX.</strong> <code class="language-plaintext highlighter-rouge">startup_mtex</code> removes an MTEX started earlier in the same
+session from the path. An older MTEX saved on the MATLAB path permanently
+is not removed: open <em>Home &gt; Set Path</em>, remove its folders, and run
+<code class="language-plaintext highlighter-rouge">startup_mtex</code> again.</li>
+</ul>
+
+<h2 id="missing-or-failing-binaries">Missing or failing binaries</h2>
+
+<p>MTEX speeds up its time-critical computations with compiled binaries, called
+mex files, in the folder <code class="language-plaintext highlighter-rouge">mtex/mex</code>. The download of MTEX contains no
+binaries. On its first start <code class="language-plaintext highlighter-rouge">startup_mtex</code> downloads the ones for your
+system from GitHub, file by file, and checks them. The example data sets are
+downloaded the same way the first time <code class="language-plaintext highlighter-rouge">mtexdata</code> asks for one. So the first
+start needs an internet connection.</p>
+
+<p>To check the binaries at any later time, type</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">check_mex</span>
+</code></pre></div></div>
+
+<p>It lists every binary with <em>ok</em>, <em>failed</em> or <em>missing</em>, downloads the missing
+ones once more and says what to do next.</p>
+
+<h3 id="a-binary-is-missing">A binary is missing</h3>
+
+<p>The download was blocked, most often by a firewall or a virus scanner. Two
+ways round it:</p>
+
+<ol>
+  <li>Download the files by hand from the assets of the
+<a href="https://github.com/mtex-toolbox/mtex/releases/latest">release page</a> and
+copy them into <code class="language-plaintext highlighter-rouge">mtex/mex</code>. You need the files ending in <code class="language-plaintext highlighter-rouge">.mexw64</code> on
+Windows, <code class="language-plaintext highlighter-rouge">.mexa64</code> on Linux, <code class="language-plaintext highlighter-rouge">.mexmaca64</code> on a Mac with Apple silicon and
+<code class="language-plaintext highlighter-rouge">.mexmaci64</code> on a Mac with an Intel processor. <code class="language-plaintext highlighter-rouge">mexext</code> in MATLAB tells
+you which.</li>
+  <li>Compile them yourself, see below.</li>
+</ol>
+
+<h3 id="a-binary-fails">A binary fails</h3>
+
+<p>A binary that is present but does not load was built for a different system
+than yours, or is blocked by the operating system. Compile the binaries
+yourself with</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mex_install</span><span class="p">(</span><span class="s1">'force'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This needs a C compiler that MATLAB knows about:</p>
+
+<ul>
+  <li><strong>Windows:</strong> the add-on <em>MATLAB Support for MinGW-w64 C/C++ Compiler</em>, from
+<em>Home &gt; Add-Ons &gt; Get Add-Ons</em>.</li>
+  <li><strong>macOS:</strong> the Xcode command line tools. In a terminal type
+<code class="language-plaintext highlighter-rouge">xcode-select --install</code>, and after a system update also
+<code class="language-plaintext highlighter-rouge">sudo xcodebuild -license accept</code>.</li>
+  <li><strong>Linux:</strong> gcc, from the package manager of your distribution.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">mex -setup C</code> in MATLAB shows which compiler MATLAB uses. <code class="language-plaintext highlighter-rouge">mex_install</code>
+compiles every binary MTEX builds itself and reports the ones that failed at
+the end. Run <code class="language-plaintext highlighter-rouge">check_mex</code> afterwards to confirm.</p>
+
+<h3 id="macos-cannot-be-opened-because-the-developer-cannot-be-verified">macOS: “cannot be opened because the developer cannot be verified”</h3>
+
+<p>macOS blocks native code that a browser downloaded, such as binaries fetched
+by hand from the release page. Lift the block for the MTEX folder by typing in
+MATLAB</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">!</span>xattr <span class="nt">-r</span> <span class="nt">-d</span> com.apple.quarantine /path/to/mtex
+</code></pre></div></div>
+
+<p>with the path of your MTEX folder, and start MTEX again.</p>
+
+<h2 id="the-nfft-binaries">The NFFT binaries</h2>
+
+<p>The fast Fourier transforms on the sphere and the rotation group come from
+the <a href="https://www-user.tu-chemnitz.de/~potts/nfft/">NFFT</a> library: the files
+<code class="language-plaintext highlighter-rouge">nfftmex</code>, <code class="language-plaintext highlighter-rouge">nfsftmex</code>, <code class="language-plaintext highlighter-rouge">nfsoftmex</code> and <code class="language-plaintext highlighter-rouge">fptmex</code> in <code class="language-plaintext highlighter-rouge">mtex/mex</code>. They are
+downloaded with the other binaries, but <code class="language-plaintext highlighter-rouge">mex_install</code> cannot build them. If
+they fail on your system, compile the NFFT yourself, following the
+<a href="https://www-user.tu-chemnitz.de/~potts/nfft/installation.php">NFFT installation guide</a>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bootstrap.sh
+./configure <span class="nt">--with-matlab</span><span class="o">=</span>/path/to/MATLAB <span class="nt">--enable-nfsft</span> <span class="nt">--enable-nfsoft</span> <span class="se">\</span>
+  <span class="nt">--enable-openmp</span> <span class="nt">--enable-portable-binary</span>
+make
+</code></pre></div></div>
+
+<p>This needs the <a href="https://www.fftw.org/">FFTW</a> library and, for <code class="language-plaintext highlighter-rouge">--enable-openmp</code>,
+a compiler with OpenMP support; on macOS install both with
+<a href="https://brew.sh/">Homebrew</a>, <code class="language-plaintext highlighter-rouge">brew install fftw gcc libtool</code>. Then copy the
+four files</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>matlab/nfft/nfftmex.mex*
+matlab/nfsft/nfsftmex.mex*
+matlab/nfsoft/nfsoftmex.mex*
+matlab/fpt/fptmex.mex*
+</code></pre></div></div>
+
+<p>from the NFFT folder into <code class="language-plaintext highlighter-rouge">mtex/mex</code>.</p>
+
+<h2 id="compiling-a-script-into-a-standalone-application">Compiling a script into a standalone application</h2>
+
+<p>Everything above is about the <strong>mex binaries</strong> MTEX calls from inside MATLAB.
+A different kind of compiling is turning your own script into an executable
+that runs <em>without</em> a MATLAB licence, with the
+<a href="https://www.mathworks.com/products/compiler.html">MATLAB Compiler</a> (<code class="language-plaintext highlighter-rouge">mcc</code>).
+That is what the <code class="language-plaintext highlighter-rouge">compile-mtex</code> script in the root of the MTEX folder does:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">MTEX_DIR</span><span class="o">=</span>/path/to/mtex /path/to/mtex/compile-mtex my-script.m <span class="nt">-o</span> my-app
+</code></pre></div></div>
+
+<p>It puts every MTEX directory on the compiler’s include path and bundles the
+files MTEX reads at run time. Two things are worth knowing:</p>
+
+<ul>
+  <li><strong>The dependency checker cannot see everything.</strong> <code class="language-plaintext highlighter-rouge">data/</code>,
+<code class="language-plaintext highlighter-rouge">plotting/plotting_tools/colors.mat</code> and <code class="language-plaintext highlighter-rouge">ciexyz31_1.csv</code> are located
+through <code class="language-plaintext highlighter-rouge">mtex_path</code> at run time, not by a literal <code class="language-plaintext highlighter-rouge">load</code> the checker can
+follow, so they have to be passed to <code class="language-plaintext highlighter-rouge">mcc</code> explicitly with <code class="language-plaintext highlighter-rouge">-a</code>.
+<code class="language-plaintext highlighter-rouge">compile-mtex</code> does this for you; if you drive <code class="language-plaintext highlighter-rouge">mcc</code> yourself, or use the
+Compiler app, add them by hand.</li>
+  <li><strong>The MTEX folder is bigger than your application needs.</strong> <code class="language-plaintext highlighter-rouge">tests/</code>,
+<code class="language-plaintext highlighter-rouge">userScripts/</code>, <code class="language-plaintext highlighter-rouge">templates/</code> and <code class="language-plaintext highlighter-rouge">doc/makeDoc/</code> are not part of a deployed
+application, and some of them have been reported to make the dependency
+checker itself fall over. <code class="language-plaintext highlighter-rouge">compile-mtex</code> leaves them out.</li>
+</ul>
+
+<p>If you prefer the graphical Compiler app, add the same three payload files
+under <em>Files required for your application to run</em>.</p>
+
+<p>Thanks to <a href="https://github.com/gcapes">gcapes</a> and
+<a href="https://github.com/vtvivian">vtvivian</a>, who worked this out in
+<a href="https://github.com/mtex-toolbox/mtex/issues/2369">issue #2369</a>.</p>
+
+  </article>
+</div>
+
+</main>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

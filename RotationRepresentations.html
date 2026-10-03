@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Rotation Representations | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="The same rotation can be described by different coordinates. The best choice depends on whether the coordinates will be plotted, sampled, or used to build a grid.">
+<link rel="canonical" href="https://mtex-playground.github.io/RotationRepresentations.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/RotationRepresentations.html#page",
+      "name": "Rotation Representations",
+      "headline": "Rotation Representations",
+      "description": "The same rotation can be described by different coordinates. The best choice depends on whether the coordinates will be plotted, sampled, or used to build a grid.",
+      "url": "https://mtex-playground.github.io/RotationRepresentations.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/RotationRepresentations.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/RotationRepresentations.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Rotation Representations</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Rotation Representations</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_RotationRepresentations.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Rotations/RotationRepresentations.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>The same rotation can be described by different coordinates. The best choice depends on whether the coordinates will be plotted, sampled, or used to build a grid.</p>
+<p>This page assumes the axis--angle and quaternion descriptions introduced in <a href="RotationDefinition.html">Defining Rotations</a>. MTEX stores the proper part of every <a href="rotation.rotation.html"><code class="language-plaintext highlighter-rouge">rotation</code></a> as a unit <a href="quaternion.quaternion.html">quaternion</a>. The coordinates below are computed from that quaternion on demand.</p>
+<p>Rodrigues and homochoric coordinates are <b>scaled-axis</b> representations. Their direction is the rotation axis \(\vec n\). Their length is a function \(f(\omega)\) of the principal rotation angle \(0 \leq \omega \leq \pi\):</p>
+<p>\[ \vec v = f(\omega)\,\vec n. \]</p>
+<p>Cubochoric coordinates take one further step and map the homochoric ball onto a cube. They therefore do not, in general, point along the rotation axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rot</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="nb">rand</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Rodrigues--Frank Coordinates</h2>
+<p>The Rodrigues--Frank vector scales the axis by \(f(\omega)=\tan(\omega/2)\). MTEX computes it with <a href="quaternion.Rodrigues.html"><code class="language-plaintext highlighter-rouge">Rodrigues</code></a>.</p>
+<p>The following output puts the angle in degrees in the first column and the length of its Rodrigues vector in the second.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">sampleAngle</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">60</span> <span class="mi">120</span> <span class="mi">170</span> <span class="mi">179</span><span class="p">]</span> <span class="o">*</span> <span class="nb">degree</span><span class="p">;</span>
+<span class="n">sampleRot</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span><span class="n">sampleAngle</span><span class="p">);</span>
+<span class="n">vRodrigues</span> <span class="o">=</span> <span class="n">sampleRot</span><span class="o">.</span><span class="n">Rodrigues</span><span class="p">;</span>
+<span class="n">rodriguesLength</span> <span class="o">=</span> <span class="nb">norm</span><span class="p">(</span><span class="n">vRodrigues</span><span class="p">);</span>
+
+<span class="p">[</span><span class="n">sampleAngle</span><span class="p">(:)</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">,</span><span class="n">rodriguesLength</span><span class="p">(:)]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+         0         0
+   60.0000    0.5774
+  120.0000    1.7321
+  170.0000   11.4301
+  179.0000  114.5887</code></pre></figure>
+<p>The length grows rapidly near a half turn. At exactly \(180^\circ\) it is infinite, so the full rotation space is unbounded in Rodrigues coordinates. Rotations about one fixed axis nevertheless form a straight line, and symmetry boundaries become planes. These properties make Rodrigues coordinates useful for visualizing <a href="OrientationFundamentalRegion.html">fundamental regions</a>.</p>
+<p> <a href="rotation.byRodrigues.html"><code class="language-plaintext highlighter-rouge">rotation.byRodrigues</code></a> performs the inverse conversion. The displayed angular error confirms the round trip.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rotFromRodrigues</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byRodrigues</span><span class="p">(</span><span class="n">vRodrigues</span><span class="p">);</span>
+<span class="nb">max</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">sampleRot</span><span class="p">,</span><span class="n">rotFromRodrigues</span><span class="p">))</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     0</code></pre></figure>
+<h2 id="4">Homochoric Coordinates</h2>
+<p>Rodrigues coordinates simplify geometry but distort volume. Homochoric coordinates instead scale the rotation axis by</p>
+<p>\[ f(\omega) = \left(\frac{3}{4}\left(\omega-\sin\omega\right)\right)^{1/3}. \]</p>
+<p> <a href="quaternion.homochoric.html"><code class="language-plaintext highlighter-rouge">homochoric</code></a> maps all rotations into a ball. Its radius is \(R=(3\pi/4)^{1/3}\), reached by the half turns.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">vHomochoric</span> <span class="o">=</span> <span class="n">rot</span><span class="o">.</span><span class="n">homochoric</span><span class="p">;</span>
+<span class="n">R</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.75</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="n">halfTurn</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span><span class="nb">pi</span><span class="p">);</span>
+<span class="p">[</span><span class="nb">norm</span><span class="p">(</span><span class="n">halfTurn</span><span class="o">.</span><span class="n">homochoric</span><span class="p">),</span><span class="n">R</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+    1.3307    1.3307</code></pre></figure>
+<h2 id="5">A volume check</h2>
+<p> <a href="rotation.rand.html"><code class="language-plaintext highlighter-rouge">rotation.rand</code></a> samples the uniform, or Haar, distribution on the rotation group. Equal-volume homochoric coordinates turn that sample into a uniform distribution in the ball.</p>
+<p>A uniform ball does not have a uniform distribution of radii. A shell at radius \(r\) has more volume than a shell of the same thickness near the centre, so the radial density is \(3r^2/R^3\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span><span class="p">;</span>
+<span class="nb">histogram</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="n">vHomochoric</span><span class="p">),</span><span class="mi">50</span><span class="p">,</span><span class="s1">'Normalization'</span><span class="p">,</span><span class="s1">'pdf'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">r</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">R</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="n">r</span><span class="o">.^</span><span class="mi">2</span><span class="p">/</span><span class="n">R</span><span class="o">^</span><span class="mi">3</span><span class="p">,</span><span class="s1">'LineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'sampled radii'</span><span class="p">,</span><span class="s1">'uniform-ball density'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'northwest'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'homochoric radius'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'probability density'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/RotationRepresentations_01.png" alt="" />
+
+</center>
+<h2 id="6">Reading the volume check</h2>
+<p>The sampled bars follow the increasing theoretical curve. This agreement is the visible consequence of preserving Haar volume. It does not mean that homochoric coordinates preserve angles, shapes, or distances between arbitrary rotations.</p>
+<h2 id="7">Cubochoric Coordinates</h2>
+<p>Cubochoric coordinates compose the homochoric map with an equal-volume map from the ball to a cube. The cube has edge length \(\pi^{2/3}\) and the same volume, \(\pi^2\), as the homochoric ball.</p>
+<p>MTEX computes these coordinates with <a href="quaternion.cubochoric.html"><code class="language-plaintext highlighter-rouge">cubochoric</code></a>. The next figure maps the same half turns first to the homochoric boundary and then to the cubochoric boundary.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">halfTurnAxis</span> <span class="o">=</span> <span class="n">equispacedS2Grid</span><span class="p">(</span><span class="s1">'points'</span><span class="p">,</span><span class="mi">2000</span><span class="p">);</span>
+<span class="n">boundaryRot</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">halfTurnAxis</span><span class="p">,</span><span class="nb">pi</span><span class="p">);</span>
+<span class="n">homochoricBoundary</span> <span class="o">=</span> <span class="n">boundaryRot</span><span class="o">.</span><span class="n">homochoric</span><span class="p">;</span>
+<span class="n">cubochoricBoundary</span> <span class="o">=</span> <span class="n">boundaryRot</span><span class="o">.</span><span class="n">cubochoric</span><span class="p">;</span>
+
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">tiledlayout</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">nexttile</span>
+<span class="nb">scatter3</span><span class="p">(</span><span class="n">homochoricBoundary</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">homochoricBoundary</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="k">...</span>
+  <span class="n">homochoricBoundary</span><span class="o">.</span><span class="n">z</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s1">'filled'</span><span class="p">)</span>
+<span class="nb">axis</span> <span class="n">equal</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'h_1'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'h_2'</span><span class="p">);</span> <span class="nb">zlabel</span><span class="p">(</span><span class="s1">'h_3'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'homochoric boundary'</span><span class="p">)</span>
+
+<span class="n">nexttile</span>
+<span class="nb">scatter3</span><span class="p">(</span><span class="n">cubochoricBoundary</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">cubochoricBoundary</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="k">...</span>
+  <span class="n">cubochoricBoundary</span><span class="o">.</span><span class="n">z</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s1">'filled'</span><span class="p">)</span>
+<span class="nb">axis</span> <span class="n">equal</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'c_1'</span><span class="p">);</span> <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'c_2'</span><span class="p">);</span> <span class="nb">zlabel</span><span class="p">(</span><span class="s1">'c_3'</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'cubochoric boundary'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/RotationRepresentations_02.png" alt="" />
+
+</center>
+<h2 id="8">Reading the coordinate domains</h2>
+<p>The spherical boundary on the left becomes the six faces of the cube on the right. Opposite axes describe the same \(180^\circ\) rotation, so opposite boundary locations are identified. Neither domain is an ordinary solid with independent points everywhere on its boundary.</p>
+<p>The cube is convenient for Cartesian grids. This is why <a href="homochoricSO3Grid.homochoricSO3Grid.html"><code class="language-plaintext highlighter-rouge">homochoricSO3Grid</code></a> constructs its internal grid in cubochoric coordinates despite the class name.</p>
+<h2 id="9">Inverting Cubochoric Coordinates</h2>
+<p>There is no <code class="language-plaintext highlighter-rouge">rotation.byCubochoric</code> constructor. First map the cube back to the homochoric ball with <a href="cubo2homo.html"><code class="language-plaintext highlighter-rouge">cubo2homo</code></a>, then use <a href="rotation.byHomochoric.html"><code class="language-plaintext highlighter-rouge">rotation.byHomochoric</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">vCubochoric</span> <span class="o">=</span> <span class="n">rot</span><span class="o">.</span><span class="n">cubochoric</span><span class="p">;</span>
+<span class="n">xyz</span> <span class="o">=</span> <span class="n">cubo2homo</span><span class="p">(</span><span class="k">...</span>
+  <span class="p">[</span><span class="n">vCubochoric</span><span class="o">.</span><span class="n">x</span><span class="p">(:),</span><span class="n">vCubochoric</span><span class="o">.</span><span class="n">y</span><span class="p">(:),</span><span class="n">vCubochoric</span><span class="o">.</span><span class="n">z</span><span class="p">(:)]);</span>
+<span class="n">rotFromCubochoric</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byHomochoric</span><span class="p">(</span><span class="n">xyz</span><span class="p">);</span>
+
+<span class="nb">max</span><span class="p">(</span><span class="nb">angle</span><span class="p">(</span><span class="n">rot</span><span class="p">,</span><span class="n">rotFromCubochoric</span><span class="p">))</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+   3.4151e-06</code></pre></figure>
+<p>The displayed maximum is the angular round-trip error in degrees. Its small nonzero value comes from floating-point evaluation of the two nonlinear maps.</p>
+<h2 id="11">Choosing a Representation</h2>
+<p>
+   <table class="usertable">
+      <tr>
+         <td>
+               <p>
+                  <b>representation</b>
+               </p>
+         </td>
+         <td>
+               <p>
+                  <b>coordinate domain</b>
+               </p>
+         </td>
+         <td>
+               <p>
+                  <b>preserves volume</b>
+               </p>
+         </td>
+         <td>
+               <p>
+                  <b>useful feature</b>
+               </p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="quaternion.Rodrigues.html">Rodrigues--Frank</a>
+               </p>
+         </td>
+         <td>
+               <p>unbounded \(\mathbb R^3\)</p>
+         </td>
+         <td>
+               <p>no</p>
+         </td>
+         <td>
+               <p>straight fixed-axis lines and planar symmetry boundaries</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="quaternion.homochoric.html">homochoric</a>
+               </p>
+         </td>
+         <td>
+               <p>ball of radius \((3\pi/4)^{1/3}\)</p>
+         </td>
+         <td>
+               <p>yes</p>
+         </td>
+         <td>
+               <p>radial coordinates for density and integration</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="quaternion.cubochoric.html">cubochoric</a>
+               </p>
+         </td>
+         <td>
+               <p>cube of edge \(\pi^{2/3}\)</p>
+         </td>
+         <td>
+               <p>yes</p>
+         </td>
+         <td>
+               <p>uniform Cartesian grids</p>
+         </td>
+      </tr>
+   </table>
+</p>
+<p>Equal volume refers to the invariant volume measure on the rotation group. It is not a claim about Euclidean distance. Use <a href="quaternion.angle.html"><code class="language-plaintext highlighter-rouge">angle</code></a>, rather than coordinate-vector distance, when the physical angular separation between two rotations is required.</p>
+<p>Do not average any of these vectors to obtain a mean rotation. The mean must respect rotation geometry; use <a href="quaternion.mean.html"><code class="language-plaintext highlighter-rouge">mean</code></a> on the rotations themselves.</p>
+<h2 id="12">The Maths Behind Equal Volume</h2>
+<p>For Haar-uniform rotations, the radial part of the volume element is proportional to \(\sin^2(\omega/2)\,\mathrm d\omega\). The homochoric definition gives</p>
+<p>\[ r^3=\frac34(\omega-\sin\omega), \]</p>
+<p>and differentiation gives</p>
+<p>\[ 3r^2\,\mathrm dr=\frac32\sin^2(\omega/2)\,\mathrm d\omega. \]</p>
+<p>Thus equal intervals of Euclidean volume \(r^2\,\mathrm dr\) correspond to equal intervals of rotation-group volume, up to one constant factor. At \(\omega=\pi\) the ball volume is \(4\pi R^3/3=\pi^2\), which also equals the volume of the cubochoric cube.</p>
+<h2 id="13">References</h2>
+<div>
+<ul>
+<li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>, Springer, 2004, develops the parametrisations and geometry of rotation space.</li>
+<li>D. Rowenhorst et al., <a href="https://doi.org/10.1088/0965-0393/23/8/083501">Consistent representations of and conversions between 3D rotations</a>, Modelling and Simulation in Materials Science and Engineering 23 (2015) 083501, compares conventions and conversion formulas.</li>
+<li>D. Rosca, A. Morawiec and M. De Graef, <a href="https://doi.org/10.1088/0965-0393/22/7/075013">A new method of constructing a grid in the space of 3D rotations and its applications to texture analysis</a>, Modelling and Simulation in Materials Science and Engineering 22 (2014) 075013, introduces cubochoric coordinates.</li>
+<li>P. G. Callahan et al., <a href="https://doi.org/10.1107/S1600576717001157">Three-dimensional texture visualization approaches: theoretical analysis and examples</a>, Journal of Applied Crystallography 50 (2017) 430--440, compares rotation-space domains for crystallographic point groups.</li>
+<li>S. I. Wright and M. De Graef, <a href="https://doi.org/10.1107/S1574870722004554">Electron backscatter diffraction</a>, International Tables for Crystallography C, ch. 1.6, 2022, reviews rotation representations and their use in EBSD.</li>
+</ul>
+</div>
+<h2 id="14">Next</h2>
+<p>
+<a href="RotationImproper.html">Improper Rotations</a> explains why reflections and inversions need an additional handedness flag. Then <a href="RotationOperations.html">Operations</a> covers composition, inversion, and rotation distance. <a href="RotationPlotting.html">Plotting Rotations</a> uses the coordinate domains introduced here, while <a href="OrientationFundamentalRegion.html">Orientation Fundamental Regions</a> adds crystal and specimen symmetry.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/RotationRepresentations.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

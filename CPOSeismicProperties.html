@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Seismic Properties of a Multiphase CPO | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="This page turns an EBSD map into the stiffness tensor and seismic-wave plots of a polycrystalline aggregate. The required inputs are the phase proportions, the crystal orientations, one single-crystal stiffness tensor per phase, and the corresponding densities. The result connects a crystallographic">
+<link rel="canonical" href="https://mtex-playground.github.io/CPOSeismicProperties.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/CPOSeismicProperties.html#page",
+      "name": "Seismic Properties of a Multiphase CPO",
+      "headline": "Seismic Properties of a Multiphase CPO",
+      "description": "This page turns an EBSD map into the stiffness tensor and seismic-wave plots of a polycrystalline aggregate. The required inputs are the phase proportions, the crystal orientations, one single-crystal stiffness tensor per phase, and the corresponding densities. The result connects a crystallographic",
+      "url": "https://mtex-playground.github.io/CPOSeismicProperties.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/CPOSeismicProperties.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/CPOSeismicProperties.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Seismic Properties of a Multiphase CPO</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Seismic Properties of a Multiphase CPO</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_CPOSeismicProperties.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Elasticity/CPOSeismicProperties.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>This page turns an EBSD map into the stiffness tensor and seismic-wave plots of a polycrystalline aggregate. The required inputs are the phase proportions, the crystal orientations, one single-crystal stiffness tensor per phase, and the corresponding densities. The result connects a crystallographic preferred orientation (CPO) to directional wave speeds.</p>
+<p>The worked sequence has four steps: place the map in its external reference frame, define the phase tensors, average them over the measured orientations, and inspect the aggregate seismic plots.</p>
+<!--/introduction-->
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">mtexdata</span> <span class="n">forsterite</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ebsd = EBSDsquare (y↑→x, row↑→col)
+ 
+ Phase  Orientations     Mineral         Color  Symmetry  Crystal reference frame
+     0   58485 (24%)  notIndexed          none                                   
+     1  152345 (62%)  Forsterite  LightSkyBlue       mmm                         
+     2   26058 (11%)   Enstatite  DarkSeaGreen       mmm                         
+     3   9064 (3.7%)    Diopside     Goldenrod     12/m1        X||a*, Y||b, Z||c
+ 
+ Properties: bands, bc, bs, error, mad, oldId
+ Scan unit : um
+ X × Y × Z : [0 → 36550] × [0 → 16750] × [0 → 0]
+ Normal vector: (0,0,1)
+ Square grid  :336 × 732</code></pre></figure>
+<h2 id="2">Inspect the phases and choose the averaging population</h2>
+<p>The map contains Forsterite, Enstatite, and Diopside. Its display reports approximately 62% Forsterite, 11% Enstatite, 3.7% Diopside, and 24% notIndexed pixels. For an elastic aggregate, the phase proportions must be normalized over the indexed pixels because no orientation or phase tensor is available for the notIndexed measurements.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">phaseFraction</span> <span class="o">=</span> <span class="p">[</span><span class="nb">length</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'f'</span><span class="p">)),</span><span class="nb">length</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'e'</span><span class="p">)),</span><span class="nb">length</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'d'</span><span class="p">))]</span> <span class="k">...</span>
+  <span class="o">.</span><span class="p">/</span> <span class="nb">length</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'indexed'</span><span class="p">));</span>
+
+<span class="nb">fprintf</span><span class="p">([</span><span class="s1">'Indexed phase fractions: Forsterite %.1f%%, Enstatite %.1f%%, '</span> <span class="k">...</span>
+  <span class="s1">'Diopside %.1f%%.\n'</span><span class="p">],</span><span class="mi">100</span><span class="o">*</span><span class="n">phaseFraction</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Indexed phase fractions: Forsterite 81.3%, Enstatite 13.9%, Diopside 4.8%.</code></pre></figure>
+<h2 id="3">Place the map in the external reference frame</h2>
+<p>In the imported map, the foliation runs north--south. Standard geoscience CPO plots and physical-property plots instead use an external reference frame with vertical east--west foliation and horizontal east--west lineation. Rotating the complete dataset by 90 degrees about the \(z\)-axis moves both its positions and its orientations into that frame.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsd</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">zvector</span><span class="p">,</span><span class="o">-</span><span class="mi">90</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span> <span class="o">*</span> <span class="n">ebsd</span><span class="p">;</span></code></pre></figure>
+<p>The next command puts \(x\) towards north for a better screen fit. It changes the session-wide plotting convention, so the map, pole figures, and tensor plots below all use the same screen directions.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotx2north</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'refFrame'</span><span class="p">,</span><span class="s1">'on'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CPOSeismicProperties_01.png" alt="" />
+
+</center>
+<p>The reference-frame arrows are the check on this operation. Read them before interpreting a fast direction as a geological lineation.</p>
+<h2 id="6">Define the Forsterite stiffness tensor</h2>
+<p>Abramson et al. (1997) reported the following olivine stiffness coefficients in GPa. The crystal symmetry records the lattice parameters and the crystal reference frame in which those coefficients were measured. The density is in \(\mathrm{g/cm}^3\) so that <a href="stiffnessTensor.velocity.html"><code class="language-plaintext highlighter-rouge">velocity</code></a> returns km/s.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">CS_Tensor_Fo</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'222'</span><span class="p">,[</span><span class="mf">4.762</span> <span class="mf">10.225</span> <span class="mf">5.994</span><span class="p">],</span><span class="k">...</span>
+  <span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'Forsterite'</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'light red'</span><span class="p">);</span>
+
+<span class="n">rho_Fo</span> <span class="o">=</span> <span class="mf">3.3550</span><span class="p">;</span>
+
+<span class="n">Cij</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">320.5</span>  <span class="mf">68.15</span>  <span class="mf">71.6</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">68.15</span>  <span class="mf">196.5</span>  <span class="mf">76.8</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">71.6</span>    <span class="mf">76.8</span> <span class="mf">233.5</span>     <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="mi">0</span>       <span class="mi">0</span>      <span class="mi">0</span>     <span class="mi">64</span>     <span class="mi">0</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="mi">0</span>       <span class="mi">0</span>      <span class="mi">0</span>      <span class="mi">0</span>    <span class="mi">77</span>     <span class="mi">0</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span>  <span class="mi">0</span>       <span class="mi">0</span>      <span class="mi">0</span>      <span class="mi">0</span>     <span class="mi">0</span>    <span class="mf">78.7</span><span class="p">]];</span>
+
+<span class="n">C_Fo</span> <span class="o">=</span> <span class="n">stiffnessTensor</span><span class="p">(</span><span class="n">Cij</span><span class="p">,</span><span class="n">CS_Tensor_Fo</span><span class="p">,</span><span class="s1">'density'</span><span class="p">,</span><span class="n">rho_Fo</span><span class="p">);</span></code></pre></figure>
+<p>A single-crystal tensor must always carry the crystal reference frame used to express its components \(c_{ijkl}\). Equal-looking component tables in different frames do not describe the same directions in the crystal.</p>
+<h2 id="8">Define the Enstatite stiffness tensor</h2>
+<p>The phase named Enstatite uses the orthopyroxene coefficients reported by Chai et al. (1997). The explicit alignment states that \(x\) is parallel to the \(a\)-axis and \(z\) is parallel to the \(c\)-axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs_Tensor_opx</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'mmm'</span><span class="p">,[</span><span class="mf">18.2457</span> <span class="mf">8.7984</span> <span class="mf">5.1959</span><span class="p">],</span><span class="k">...</span>
+  <span class="p">[</span><span class="mi">90</span> <span class="mi">90</span> <span class="mi">90</span><span class="p">]</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'x||a'</span><span class="p">,</span><span class="s1">'z||c'</span><span class="p">,</span><span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'Enstatite'</span><span class="p">);</span>
+
+<span class="n">rho_opx</span> <span class="o">=</span> <span class="mf">3.3060</span><span class="p">;</span>
+
+<span class="n">Cij</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">236.90</span> <span class="mf">79.60</span> <span class="mf">63.20</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span><span class="mf">79.60</span> <span class="mf">180.50</span> <span class="mf">56.80</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span><span class="mf">63.20</span>  <span class="mf">56.80</span> <span class="mf">230.40</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">0.00</span>   <span class="mf">0.00</span>  <span class="mf">0.00</span> <span class="mf">84.30</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">0.00</span>   <span class="mf">0.00</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span> <span class="mf">79.40</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">0.00</span>   <span class="mf">0.00</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span>  <span class="mf">0.00</span> <span class="mf">80.10</span><span class="p">]];</span>
+
+<span class="n">C_opx</span> <span class="o">=</span> <span class="n">stiffnessTensor</span><span class="p">(</span><span class="n">Cij</span><span class="p">,</span><span class="n">cs_Tensor_opx</span><span class="p">,</span><span class="s1">'density'</span><span class="p">,</span><span class="n">rho_opx</span><span class="p">);</span></code></pre></figure>
+<h2 id="9">Define the Diopside stiffness tensor</h2>
+<p>Isaak et al. published these monoclinic chrome-diopside coefficients online in 2005. Their table uses \(x\) parallel to the \(a^{*}\)-axis and \(z\) parallel to the \(c\)-axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs_Tensor_cpx</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'121'</span><span class="p">,[</span><span class="mf">9.585</span> <span class="mf">8.776</span> <span class="mf">5.26</span><span class="p">],</span><span class="k">...</span>
+  <span class="p">[</span><span class="mi">90</span> <span class="mf">105.86</span> <span class="mi">90</span><span class="p">]</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'x||a*'</span><span class="p">,</span><span class="s1">'z||c'</span><span class="p">,</span><span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'Diopside'</span><span class="p">);</span>
+
+<span class="n">rho_cpx</span> <span class="o">=</span> <span class="mf">3.2860</span><span class="p">;</span>
+
+<span class="n">Cij</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">228.10</span> <span class="mf">78.80</span> <span class="mf">70.20</span>  <span class="mf">0.00</span>  <span class="mf">7.90</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span><span class="mf">78.80</span> <span class="mf">181.10</span> <span class="mf">61.10</span>  <span class="mf">0.00</span>  <span class="mf">5.90</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span><span class="mf">70.20</span>  <span class="mf">61.10</span> <span class="mf">245.40</span>  <span class="mf">0.00</span> <span class="mf">39.70</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">0.00</span>   <span class="mf">0.00</span>  <span class="mf">0.00</span> <span class="mf">78.90</span>  <span class="mf">0.00</span>  <span class="mf">6.40</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">7.90</span>   <span class="mf">5.90</span> <span class="mf">39.70</span>  <span class="mf">0.00</span> <span class="mf">68.20</span>  <span class="mf">0.00</span><span class="p">];</span><span class="k">...</span>
+  <span class="p">[</span> <span class="mf">0.00</span>   <span class="mf">0.00</span>  <span class="mf">0.00</span>  <span class="mf">6.40</span>  <span class="mf">0.00</span> <span class="mf">78.10</span><span class="p">]];</span>
+
+<span class="n">C_cpx</span> <span class="o">=</span> <span class="n">stiffnessTensor</span><span class="p">(</span><span class="n">Cij</span><span class="p">,</span><span class="n">cs_Tensor_cpx</span><span class="p">,</span><span class="s1">'density'</span><span class="p">,</span><span class="n">rho_cpx</span><span class="p">);</span></code></pre></figure>
+<h2 id="10">Match the tensor and EBSD crystal frames</h2>
+<p>The published Diopside lattice parameters differ from those of the measured phase by about 2%. <a href="EBSD.calcTensor.html"><code class="language-plaintext highlighter-rouge">calcTensor</code></a> matches a phase tensor by mineral name, Laue group, and lattice parameters. It accepts at most 1% relative deviation in the lattice axes and 0.01 rad in the lattice angles, so it deliberately rejects this near match.</p>
+<p>The remedy is <a href="tensor.transformReferenceFrame.html"><code class="language-plaintext highlighter-rouge">transformReferenceFrame</code></a>. A frame change re-expresses the same physical tensor in the crystal frame of the measured phase; it does not rotate the crystal or change its elastic response.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">C_cpx</span> <span class="o">=</span> <span class="n">transformReferenceFrame</span><span class="p">(</span><span class="n">C_cpx</span><span class="p">,</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Diopside'</span><span class="p">)</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span></code></pre></figure>
+<p>Only Diopside needs this explicit frame change. The Forsterite and Enstatite tensor frames already match their measured phases within the tolerances.</p>
+<h2 id="12">Read a single-crystal seismic overview</h2>
+<p>
+<a href="WaveVelocities.html">Wave Velocities</a> develops the three wave modes and their polarization directions. Here <a href="stiffnessTensor.plotSeismicVelocities.html"><code class="language-plaintext highlighter-rouge">plotSeismicVelocities</code></a> summarizes the Forsterite result.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotSeismicVelocities</span><span class="p">(</span><span class="n">C_Fo</span><span class="p">)</span>
+
+<span class="c1">% Add crystal-axis labels to the S-wave anisotropy panel.</span>
+<span class="n">nextAxis</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">text</span><span class="p">(</span><span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">CS_Tensor_Fo</span><span class="p">),</span><span class="k">...</span>
+  <span class="p">{</span><span class="s1">'[100]'</span><span class="p">,</span><span class="s1">'[010]'</span><span class="p">,</span><span class="s1">'[001]'</span><span class="p">},</span><span class="s1">'backgroundColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CPOSeismicProperties_02.png" alt="" />
+
+</center>
+<p>Red is slow and blue is fast. In each velocity panel, a black square marks the maximum and a white circle marks the minimum. The short bars in the \(V_{s1}\) and \(V_{s2}\) panels show shear-wave polarization. The added crystal axes let you relate these patterns to directions in the Forsterite lattice.</p>
+<h2 id="14">Average the measured orientations directly</h2>
+<p>
+<a href="TensorAverage.html">Tensor Averages</a> explains the Voigt uniform-strain estimate, the Reuss uniform-stress estimate, and their Hill mean. <code class="language-plaintext highlighter-rouge">calcTensor</code> rotates the appropriate phase tensor by every indexed orientation and returns all three aggregate estimates.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">CVoigtEbsd</span><span class="p">,</span><span class="n">CReussEbsd</span><span class="p">,</span><span class="n">CHillEbsd</span><span class="p">]</span> <span class="o">=</span> <span class="k">...</span>
+  <span class="n">calcTensor</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">C_Fo</span><span class="p">,</span><span class="n">C_opx</span><span class="p">,</span><span class="n">C_cpx</span><span class="p">);</span>
+
+<span class="n">plotSeismicVelocities</span><span class="p">(</span><span class="n">CHillEbsd</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CPOSeismicProperties_03.png" alt="" />
+
+</center>
+<p>This plot is read in the external frame checked above, not in any one crystal frame. Compare it with the single-crystal plot: averaging weakens the directional contrast, but the CPO leaves preferred fast and slow directions. The subtitle of each panel reports its anisotropy.</p>
+<h2 id="16">Average orientation distributions phase by phase</h2>
+<p>Direct averaging can be slow for a large EBSD dataset. An alternative is to estimate one orientation distribution function (ODF) per phase, then average each phase tensor over its ODF. An ODF describes the volume fraction of crystals at each orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf_ol</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'f'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">odf_opx</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'e'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">odf_cpx</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'d'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span></code></pre></figure>
+<p>A phase may be selected by an unambiguous initial, as above. Use the full mineral name when two phase names start with the same letter. This route is not limited to EBSD: an ODF reconstructed from X-ray or neutron diffraction can enter the same calculation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">CVoigt_ol</span><span class="p">,</span><span class="n">CReuss_ol</span><span class="p">,</span><span class="n">CHill_ol</span><span class="p">]</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="n">C_Fo</span><span class="p">,</span><span class="n">odf_ol</span><span class="p">);</span>
+<span class="p">[</span><span class="n">CVoigt_opx</span><span class="p">,</span><span class="n">CReuss_opx</span><span class="p">,</span><span class="n">CHill_opx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="n">C_opx</span><span class="p">,</span><span class="n">odf_opx</span><span class="p">);</span>
+<span class="p">[</span><span class="n">CVoigt_cpx</span><span class="p">,</span><span class="n">CReuss_cpx</span><span class="p">,</span><span class="n">CHill_cpx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="n">C_cpx</span><span class="p">,</span><span class="n">odf_cpx</span><span class="p">);</span></code></pre></figure>
+<p>The indexed phase fractions computed at the start are the weights for the multiphase mean. They sum to one, so notIndexed pixels contribute neither a tensor nor an artificial fourth phase.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">CVoigtOdf</span><span class="p">,</span><span class="n">CReussOdf</span><span class="p">,</span><span class="n">CHillOdf</span><span class="p">]</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span> <span class="k">...</span>
+  <span class="p">[</span><span class="n">CVoigt_ol</span><span class="p">,</span><span class="n">CVoigt_opx</span><span class="p">,</span><span class="n">CVoigt_cpx</span><span class="p">],</span><span class="s1">'weights'</span><span class="p">,</span><span class="n">phaseFraction</span><span class="p">);</span>
+
+<span class="n">CHillOdf</span>
+
+<span class="n">plotSeismicVelocities</span><span class="p">(</span><span class="n">CHillOdf</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">CHillOdf = stiffnessTensor (y←↑x)
+  density: 3.3449           
+  unit   : GPa              
+  rank   : 4 (3 × 3 × 3 × 3)
+ 
+  tensor in Voigt matrix representation:
+  241.9  74.33  78.24   0.71   4.68  -3.15
+  74.33 210.31  73.69   3.59  -0.56  -1.83
+  78.24  73.69 252.17   6.46   4.61  -0.32
+   0.71   3.59   6.46  76.83  -0.41   1.65
+   4.68  -0.56   4.61  -0.41  84.86   2.19
+  -3.15  -1.83  -0.32   1.65   2.19  74.48</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CPOSeismicProperties_04.png" alt="" />
+
+</center>
+<p>The ODF-based plot should reproduce the broad pattern of the direct EBSD average. It need not be identical because the 10 degree kernel smooths each measured orientation distribution before the tensor is averaged.</p>
+<h2 id="20">References</h2>
+<div>
+<ul>
+<li>E. H. Abramson, J. M. Brown, L. J. Slutsky, and J. Zaug, <a href="https://doi.org/10.1029/97JB00682">The elastic constants of San Carlos olivine to 17 GPa</a>, <i>Journal of Geophysical Research</i> 102 (1997), 12253-12263, supplies the olivine stiffness coefficients used here.</li>
+<li>M. Chai, J. M. Brown, and L. J. Slutsky, <a href="https://doi.org/10.1029/97JB00893">The elastic constants of an aluminous orthopyroxene to 12.5 GPa</a>, <i>Journal of Geophysical Research</i> 102 (1997), 14779-14785, supplies the orthopyroxene coefficients.</li>
+<li>D. G. Isaak, I. Ohno, and P. C. Lee, <a href="https://doi.org/10.1007/s00269-005-0047-9">The elastic constants of monoclinic single-crystal chrome-diopside to 1,300 K</a>, <i>Physics and Chemistry of Minerals</i> 32 (2006), 691-699, supplies the Diopside coefficients and their source crystal frame.</li>
+<li>D. Mainprice, R. Hielscher, and H. Schaeben, <a href="https://doi.org/10.1144/SP360.10">Calculating anisotropic physical properties from texture data using the MTEX open-source package</a>, <i>Geological Society, London, Special Publications</i> 360 (2011), 175-192, develops the texture-to-property averaging workflow used on this page.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/CPOSeismicProperties.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

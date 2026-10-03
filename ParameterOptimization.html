@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Parameter optimization for Parent Grain Reconstruction (PGR) | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="This script demonstrates a systematic approach on how to get the most out of challenging PGR tasks by systematic tuning of the most critical parameters. The microstructure explored in this example is lath martensite, for which especially the reconstruction of annealing twins in the parent austenite ">
+<link rel="canonical" href="https://mtex-playground.github.io/ParameterOptimization.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/ParameterOptimization.html#page",
+      "name": "Parameter optimization for Parent Grain Reconstruction (PGR)",
+      "headline": "Parameter optimization for Parent Grain Reconstruction (PGR)",
+      "description": "This script demonstrates a systematic approach on how to get the most out of challenging PGR tasks by systematic tuning of the most critical parameters. The microstructure explored in this example is lath martensite, for which especially the reconstruction of annealing twins in the parent austenite ",
+      "url": "https://mtex-playground.github.io/ParameterOptimization.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/ParameterOptimization.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/ParameterOptimization.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Examples navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Parameter optimization for Parent Grain Reconstruction (PGR)</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+      This HTML was auto-generated from MATLAB code.
+      To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Parameter optimization for Parent Grain Reconstruction (PGR)</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_ParameterOptimization.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/examples/blob/master/ExParentGrainReconstruction/ParameterOptimization.m">
+    edit page</a>
+    author: Frank Nie&szlig;en, Technical University of Denmark, Department of Civil and Mechanical Engineering, Germany</font>
+<div>
+<!--introduction-->
+<p>This script demonstrates a systematic approach on how to get the most out of challenging PGR tasks by systematic tuning of the most critical parameters. The microstructure explored in this example is lath martensite, for which especially the reconstruction of annealing twins in the parent austenite phase is a challenging task. This is the same dataset that is explored in <a href="https://mtex-toolbox.github.io/MaParentGrainReconstruction.html">the general documentation for martensite Parent Grain Reconstruction</a>.</p>
+<p>As the script is quite long and some sections take some time to execute, I highly recommend running this script section-by-section. You ideally want to follow my <a href="https://www.youtube.com/watch?v=Ib1qtJAWgd8&amp;t=83s">talk</a> at the MTEX User Meeting 2024 before or alongside exploring this script.</p>
+<!--/introduction-->
+<h2 id="1">Data Import</h2>
+<p>Let us begin by loading the MTEX documentation dataset on martensite from Ref. <a href="https://doi.org/10.1007/s11661-018-4904-9">T. Nyyss&ouml;nen, P. Peura, V.-T. Kuokkala, Crystallography, Morphology, and Martensite Transformation of Prior Austenite in Intercritically Annealed High-Aluminum Steel, Metall Mater Trans A 49 (2018) 6426&ndash;6441</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% get MTEX data</span>
+<span class="n">mtexdata</span> <span class="n">martensite</span> <span class="n">silent</span>
+
+<span class="c1">% set plotting convention</span>
+<span class="n">setMTEXpref</span><span class="p">(</span><span class="s1">'xAxisDirection'</span><span class="p">,</span><span class="s1">'east'</span><span class="p">);</span>
+<span class="n">setMTEXpref</span><span class="p">(</span><span class="s1">'zAxisDirection'</span><span class="p">,</span><span class="s1">'outofPlane'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Plot the EBSD data of the child phase</h2>
+<p>Let us first take a look at the example EBSD data.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Define color key</span>
+<span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">ebsd</span><span class="p">);</span>
+<span class="n">ipfKey</span><span class="o">.</span><span class="n">inversePoleFigureDirection</span> <span class="o">=</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">;</span>
+
+<span class="c1">% Get colors associated with crystal orientations</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="o">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">);</span>
+
+<span class="c1">% Plot the microstructure data</span>
+<span class="nb">figure</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'Martensitic microstructure'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">colors</span><span class="p">);</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_01.png" alt="" />
+
+</center>
+<p>We can see that the dataset only consists of lath martensite, the child phase in this transformation system, and unindexed points. Our aim is to accurately reconstruct the prior austenite microstructure, the parent microstructure in this example.</p>
+<h2 id="4">Explore different threshold angles for child grain reconstruction</h2>
+<p>Let us explore some different threshold angles to reconstruct the child grains at different levels of detail.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">%List of threshold angles</span>
+<span class="n">thrsh_angles</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>
+
+<span class="c1">%Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'Child grain reconstruction at different threshold angles'</span><span class="p">);</span>
+
+<span class="c1">% Loop over different child grain reconstructions</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">thrsh_angles</span><span class="p">)</span>
+
+  <span class="c1">% Load data</span>
+  <span class="n">mtexdata</span> <span class="n">martensite</span> <span class="n">silent</span>
+
+  <span class="c1">% Calculate grains with defined angular threshold</span>
+  <span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">,</span><span class="n">thrsh_angles</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+  <span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+
+  <span class="c1">% Plot the orientation data and overlay the grain boundaries</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">on</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">)</span>
+  <span class="nb">title</span><span class="p">(</span><span class="nb">strcat</span><span class="p">(</span><span class="s2">"Threshold angle: "</span><span class="p">,</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">thrsh_angles</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span><span class="s2">"%.1f"</span><span class="p">),</span> <span class="s2">"^{\circ}"</span><span class="p">),</span><span class="k">...</span>
+    <span class="s1">'interpreter'</span><span class="p">,</span><span class="s1">'tex'</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">off</span>
+
+  <span class="c1">% Enable multiplot</span>
+  <span class="k">if</span> <span class="n">ii</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="n">thrsh_angles</span><span class="p">),</span> <span class="n">nextAxis</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_02.png" alt="" />
+
+</center>
+<p>From the child grain reconstructions it is apparent that in this dataset threshold values of 1 to 1.5&deg; lead to a significant loss of EBSD data associated with small grains. Therefore only the range of 2-6&deg; is feasible as a starting point for grain reconstruction.</p>
+<h2 id="6">Effect of child grain reconstruction on PGR results</h2>
+<p>We will now carry out the PGR on child grains reconstructed with the identified angular threshold values. We will otherwise assume reasonable and constant parameters for the PGR to enable comparability. We compare the PGR results as received from the variant graph approach before any post-processing to enable reasonable comparison</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Let us revisit the three largest threshold angles</span>
+<span class="n">thrsh_angles</span> <span class="o">=</span> <span class="n">thrsh_angles</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="c1">%Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="nb">length</span><span class="p">(</span><span class="n">thrsh_angles</span><span class="p">)],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'PGR at different Child grain threshold values'</span><span class="p">);</span>
+
+<span class="c1">%Child grain reconstruction</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">thrsh_angles</span><span class="p">)</span>
+
+  <span class="c1">% Load data</span>
+  <span class="n">mtexdata</span> <span class="n">martensite</span> <span class="n">silent</span>
+
+  <span class="c1">% Calculate grains with defined angular threshold</span>
+  <span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">,</span><span class="n">thrsh_angles</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+  <span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+
+  <span class="c1">% set up the PGR job</span>
+  <span class="n">job</span> <span class="o">=</span> <span class="n">parentGrainReconstructor</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">grains</span><span class="p">);</span>
+
+  <span class="c1">% initial guess for the parent to child orientation relationship</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">p2c</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">KurdjumovSachs</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">csParent</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">csChild</span><span class="p">);</span>
+
+  <span class="c1">% refine the OR</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcParent2Child</span><span class="p">;</span>
+
+  <span class="c1">% setup the variant graph</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcVariantGraph</span><span class="p">(</span><span class="s1">'threshold'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'tolerance'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+  <span class="c1">% cluster the variant graph</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">clusterVariantGraph</span><span class="p">;</span>
+
+  <span class="c1">% calculate the parent grain orientations</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcParentFromVote</span><span class="p">(</span><span class="s1">'minProb'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+
+  <span class="c1">% plot the parent grains (before any further processing)</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">)</span>
+  <span class="nb">title</span><span class="p">(</span><span class="nb">strcat</span><span class="p">(</span><span class="s2">"Threshold angle: "</span><span class="p">,</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">thrsh_angles</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span><span class="s2">"%.1f"</span><span class="p">),</span> <span class="s2">"^{\circ}"</span><span class="p">),</span><span class="k">...</span>
+    <span class="s1">'interpreter'</span><span class="p">,</span><span class="s1">'tex'</span><span class="p">);</span>
+
+  <span class="c1">% Enable multiplot</span>
+  <span class="k">if</span> <span class="n">ii</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="n">thrsh_angles</span><span class="p">),</span> <span class="n">nextAxis</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_03.png" alt="" />
+
+</center>
+<p>The effect of child grain reconstruction appears to be quite prominent - the smaller the reconstruction threshold angle the more of the parent grain microstructure is confidently reconstructed. In martensitic steels the misorientation between the different variants is oftentimes quite low which means that grain reconstruction with too large threshold values merges grains that belong to different variants and thereby complicate the PGR. For this example, 2&deg; seems to be the optimum, so we will move forward with that parameter.</p>
+<h2 id="8">Optimizing the orientation relationship (OR)</h2>
+<p>Next we will check the effect of fitting the OR using the <code class="language-plaintext highlighter-rouge">calcParent2Child</code> function vs. assuming several rational ORs on PGR.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Load data</span>
+<span class="n">mtexdata</span> <span class="n">martensite</span> <span class="n">silent</span>
+
+<span class="c1">% Calculate grains with defined angular threshold</span>
+<span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="c1">% Initialize the parent grain reconstructor class</span>
+<span class="n">job</span> <span class="o">=</span> <span class="n">parentGrainReconstructor</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">grains</span><span class="p">);</span>
+
+<span class="c1">% Define some rational ORs typical for lath martensitic steels</span>
+<span class="n">KS</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">KurdjumovSachs</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">csParent</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">csChild</span><span class="p">);</span>
+<span class="n">NW</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">NishiyamaWassermann</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">csParent</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">csChild</span><span class="p">);</span>
+<span class="n">GT</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">GreningerTrojano</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">csParent</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">csChild</span><span class="p">);</span>
+
+<span class="c1">% initial guess for the parent to child orientation relationship</span>
+<span class="n">job</span><span class="o">.</span><span class="n">p2c</span> <span class="o">=</span> <span class="n">KS</span><span class="p">;</span>
+
+<span class="c1">% iteratively refine the OR</span>
+<span class="n">job</span><span class="o">.</span><span class="n">calcParent2Child</span><span class="p">;</span>
+
+<span class="c1">% collect all ORs (|job.p2c| contains the refined OR)</span>
+<span class="n">ORs</span> <span class="o">=</span> <span class="p">[</span><span class="n">KS</span><span class="p">,</span><span class="n">NW</span><span class="p">,</span><span class="n">GT</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">p2c</span><span class="p">];</span>
+<span class="n">ORnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"KS"</span><span class="p">,</span><span class="s2">"NW"</span><span class="p">,</span><span class="s2">"GT"</span><span class="p">,</span><span class="s2">"Fitted"</span><span class="p">];</span>
+
+<span class="c1">% Show the disorientation between the ORs and the misorientations at the</span>
+<span class="c1">% microstructure grain boundaries</span>
+
+<span class="c1">%Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'OR-Fit grain boundary plot'</span><span class="p">);</span>
+<span class="n">fh</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'OR-Fit histogram'</span><span class="p">);</span>
+
+<span class="c1">% loop over different ORs</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">ORs</span><span class="p">)</span>
+  <span class="c1">%Assign OR as currently active OR</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">p2c</span> <span class="o">=</span> <span class="n">ORs</span><span class="p">(</span><span class="n">ii</span><span class="p">);</span>
+
+  <span class="c1">% compute the misfit for all child to child grain neighbours</span>
+  <span class="p">[</span><span class="n">fit</span><span class="p">,</span><span class="n">c2cPairs</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">calcGBFit</span><span class="p">;</span>
+
+  <span class="c1">% Plot the misfit in histogram</span>
+  <span class="nb">figure</span><span class="p">(</span><span class="n">fh</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">on</span>
+  <span class="nb">histogram</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'BinMethod'</span><span class="p">,</span><span class="s1">'sqrt'</span><span class="p">);</span>
+  <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Misfit Angle (^{\circ})'</span><span class="p">,</span><span class="s2">"Interpreter"</span><span class="p">,</span><span class="s2">"tex"</span><span class="p">);</span>
+  <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Counts'</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">off</span>
+
+  <span class="c1">% select grain boundary segments by grain ids</span>
+  <span class="p">[</span><span class="n">gB</span><span class="p">,</span><span class="n">pairId</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="o">.</span><span class="n">selectByGrainId</span><span class="p">(</span><span class="n">c2cPairs</span><span class="p">);</span>
+
+  <span class="c1">% plot the child phase</span>
+  <span class="nb">figure</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">);</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'faceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+
+  <span class="c1">% and on top of it the boundaries colorized by the misfit</span>
+  <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+  <span class="c1">% scale fit between 0 and 1 - required for edgeAlpha</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">gB</span><span class="p">,</span> <span class="s1">'edgeAlpha'</span><span class="p">,</span> <span class="p">(</span><span class="n">fit</span><span class="p">(</span><span class="n">pairId</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span> <span class="o">-</span> <span class="mf">2.5</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="mi">2</span> <span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">off</span>
+  <span class="nb">title</span><span class="p">(</span><span class="n">ORnames</span><span class="p">(</span><span class="n">ii</span><span class="p">));</span>
+
+  <span class="c1">% Enable multiplot</span>
+  <span class="k">if</span> <span class="n">ii</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="n">ORs</span><span class="p">),</span> <span class="nb">figure</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">);</span> <span class="n">nextAxis</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">% Adding labels and titles</span>
+<span class="nb">figure</span><span class="p">(</span><span class="n">fh</span><span class="p">);</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">legend</span><span class="p">(</span><span class="n">ORnames</span><span class="p">);</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_04.png" alt="" />
+
+</center>
+<center>
+<img class="inline" src="figures/ParameterOptimization_05.png" alt="" />
+
+</center>
+<p>The histogram plot shows that OR refinement yields an OR that is far more representative of the actual OR present in the microstructure. The Greninger-Trojano (GT) OR is closest to the fitted OR. Plotting the fit of the OR onto the grain boundaries showed that the fitted OR nicely outlines the grain boundaries of the parent grains, which is an important prerequisite for successful PGR.</p>
+<h2 id="10">Tune parameters for OR refinement</h2>
+<p>The OR refinement using <code class="language-plaintext highlighter-rouge">calcParent2Child</code> can be fine-tuned with custom choices for the parameters <code class="language-plaintext highlighter-rouge">threshold</code> and <code class="language-plaintext highlighter-rouge">quantile</code>. The <code class="language-plaintext highlighter-rouge">threshold</code> value is the maximum misfit between the OR and grain misorientations to be considered for the optimization of the OR. The <code class="language-plaintext highlighter-rouge">quantile</code> value defines which quantile of the misfit distribution (see previous histogram) is considered for optimization of the OR. Whichever criterion cuts off more of the available data will be enforced. The parameters are used to make sure that the parent grain boundaries, which are not OR-related boundaries, can be excluded from the OR refinement procedure in a controlled manner.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Let us define some parameters</span>
+<span class="c1">% (you may want to explore more parameter sets)</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span>
+<span class="n">quantile</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mf">0.8</span><span class="p">];</span>
+
+<span class="c1">% Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'OR-Fit grain boundary plot'</span><span class="p">);</span>
+<span class="n">fh2</span> <span class="o">=</span> <span class="nb">figure</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'OR-Fit histogram'</span><span class="p">);</span>
+
+<span class="c1">% loop over different parameter sets</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
+
+  <span class="c1">%Assign initial guess for OR</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">p2c</span> <span class="o">=</span> <span class="n">KS</span><span class="p">;</span>
+
+  <span class="c1">% Refine OR</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcParent2Child</span><span class="p">(</span><span class="s1">'quantile'</span><span class="p">,</span><span class="n">quantile</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span><span class="s1">'threshold'</span><span class="p">,</span><span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+  <span class="c1">% Compute the misfit for all child to child grain neighbours</span>
+  <span class="p">[</span><span class="n">fit</span><span class="p">,</span><span class="n">c2cPairs</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">calcGBFit</span><span class="p">;</span>
+
+  <span class="c1">% Plot misfit distribution in histogram</span>
+  <span class="nb">figure</span><span class="p">(</span><span class="n">fh2</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">on</span>
+  <span class="nb">histogram</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'BinMethod'</span><span class="p">,</span><span class="s1">'sqrt'</span><span class="p">,</span><span class="s1">'facealpha'</span><span class="p">,</span><span class="mf">0.3</span><span class="p">);</span>
+  <span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Misfit Angle (^{\circ})'</span><span class="p">,</span><span class="s2">"Interpreter"</span><span class="p">,</span><span class="s2">"tex"</span><span class="p">);</span>
+  <span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Counts'</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">off</span>
+
+  <span class="c1">% Select grain boundary segments by grain ids</span>
+  <span class="p">[</span><span class="n">gB</span><span class="p">,</span><span class="n">pairId</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="o">.</span><span class="n">selectByGrainId</span><span class="p">(</span><span class="n">c2cPairs</span><span class="p">);</span>
+
+  <span class="c1">% Plot the child phase</span>
+  <span class="nb">figure</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">);</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'faceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+  <span class="c1">% and on top of it the boundaries colorized by the misfit</span>
+  <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+
+  <span class="c1">% Scale fit between 0 and 1 - required for edgeAlpha</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">gB</span><span class="p">,</span> <span class="s1">'edgeAlpha'</span><span class="p">,</span> <span class="p">(</span><span class="n">fit</span><span class="p">(</span><span class="n">pairId</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span> <span class="o">-</span> <span class="mf">2.5</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="mi">2</span> <span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">off</span>
+  <span class="nb">title</span><span class="p">(</span><span class="nb">strcat</span><span class="p">(</span><span class="s2">"Threshold: "</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span><span class="s2">" Quantile: "</span><span class="p">,</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">quantile</span><span class="p">(</span><span class="n">ii</span><span class="p">))));</span>
+
+  <span class="c1">% Enable multiplot</span>
+  <span class="k">if</span> <span class="n">ii</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
+    <span class="nb">figure</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">);</span> <span class="n">nextAxis</span><span class="p">;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c1">% Adding labels</span>
+<span class="nb">figure</span><span class="p">(</span><span class="n">fh2</span><span class="p">);</span>
+<span class="nb">grid</span> <span class="n">on</span>
+<span class="nb">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">legend</span><span class="p">(</span><span class="nb">append</span><span class="p">(</span><span class="s2">"Thresh.: "</span><span class="p">,</span><span class="nb">string</span><span class="p">(</span><span class="n">threshold</span><span class="p">),</span><span class="s2">", Quantile: "</span><span class="p">,</span><span class="nb">string</span><span class="p">(</span><span class="n">quantile</span><span class="p">)));</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_06.png" alt="" />
+
+</center>
+<center>
+<img class="inline" src="figures/ParameterOptimization_07.png" alt="" />
+
+</center>
+<p>We only look at the 0&deg; - 10&deg; misfit range to better discern the effect of the different parameter sets. The parameter choice of the <code class="language-plaintext highlighter-rouge">calcParent2Child</code> command did not cause drastic changes in the fit of the optimal OR. Threshold values of 10&deg; gave a better fit than 5&deg;, and a quantile value of 0.9 may be slightly better than 0.8. The threshold angle of 10&deg; and the <code class="language-plaintext highlighter-rouge">quantile</code> of 0.9 are the default values of the <code class="language-plaintext highlighter-rouge">calcParent2Child</code> command. For your dataset, the quantile value should reflect the ratio between prior parent boundaries and OR-related boundaries. In the present case, prior austenite grains are large and filled with a very fine OR-related boundary structure within, meaning that the quantile value does not play a big role. If you have small prior parent grains with little internal OR-related boundary structure you should explore smaller quantile values.</p>
+<h2 id="12">Translating the OR misfit into a probability function</h2>
+<p>Next, we need to translate the misfit between the OR and the grain misorientations \(\omega\) into an OR probability function \(\Psi\):</p>
+<p>\begin{equation} \Psi(\omega) = 1 - \tfrac{1}{2}\left(1 + \mathrm{erf}(2 \tfrac{\omega - \delta}{\sigma})\right). \end{equation}</p>
+<p>where \(\delta\) is a threshold value and \(\sigma\) is a tolerance value. The function tends to 1 for grain misorientations that agree well with the OR and to 0 for child grain misorientations that disagree strongly with the OR. The function therefore describes the probability with which two grains belong to the same parent grain. Let us plot this probability function on top of the OR misfit distribution from before for a few different combinations of the parameters <code class="language-plaintext highlighter-rouge">tolerance</code> and <code class="language-plaintext highlighter-rouge">threshold</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Let us assume an OR and iteratively refine it.</span>
+<span class="n">job</span><span class="o">.</span><span class="n">p2c</span> <span class="o">=</span> <span class="n">KS</span><span class="p">;</span>
+<span class="n">job</span><span class="o">.</span><span class="n">calcParent2Child</span><span class="p">;</span>
+
+<span class="c1">% Plot the misfit histogram</span>
+<span class="c1">% (|pdf| normalization was chosen to plot the misfit distribution and</span>
+<span class="c1">% probability function with reference to the same y-axis)</span>
+<span class="nb">figure</span><span class="p">(</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'OR-probability functions'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">h</span> <span class="o">=</span> <span class="nb">histogram</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'BinMethod'</span><span class="p">,</span><span class="s1">'sqrt'</span><span class="p">,</span><span class="s1">'normalization'</span><span class="p">,</span><span class="s1">'pdf'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'FaceAlpha'</span><span class="p">,</span><span class="mf">0.3</span><span class="p">,</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s2">"OR misfit distribution"</span><span class="p">);</span>
+
+<span class="c1">% Parameter sets for tolerance and threshold</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">2.0</span><span class="p">];</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">3.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">5.0</span><span class="p">];</span>
+
+<span class="c1">% Define xLim and input vector for function</span>
+<span class="n">maxX</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">:</span><span class="mf">0.1</span><span class="p">:</span><span class="n">maxX</span><span class="p">;</span>
+
+<span class="c1">% Add the probability functions to the plot</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'Misfit Angle (^{\circ})'</span><span class="p">,</span><span class="s2">"Interpreter"</span><span class="p">,</span><span class="s2">"tex"</span><span class="p">);</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'Probability'</span><span class="p">);</span>
+
+<span class="c1">% Compute the CDF values for the normal distribution</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">erf</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">))</span><span class="o">.</span><span class="p">/</span><span class="n">tol</span><span class="p">(</span><span class="n">ii</span><span class="p">)));</span>
+  <span class="nb">hold</span> <span class="n">on</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">'LineWidth'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'DisplayName'</span><span class="p">,</span><span class="k">...</span>
+    <span class="nb">strcat</span><span class="p">(</span><span class="s1">'Tol: '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">tol</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span> <span class="s2">"^{\circ}, Thresh: "</span><span class="p">,</span> <span class="k">...</span>
+    <span class="nb">num2str</span><span class="p">(</span><span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span><span class="s2">"^{\circ}"</span><span class="p">));</span>
+<span class="k">end</span>
+
+<span class="c1">% Format plot and figure</span>
+<span class="nb">grid</span> <span class="n">on</span><span class="p">;</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s2">"Interpreter"</span><span class="p">,</span><span class="s2">"tex"</span><span class="p">);</span>
+<span class="nb">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">maxX</span><span class="p">])</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_08.png" alt="" />
+
+</center>
+<p>It can be observed that the different parameter choices for <code class="language-plaintext highlighter-rouge">threshold</code> and <code class="language-plaintext highlighter-rouge">tolerance</code> give a different weighting to the misfit values. Let us now plot the function values directly onto the grain boundaries to decide which parameter set leads to the best separation of prior parent and OR-related boundaries.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% compute the misfit for all child to child grain neighbors</span>
+<span class="p">[</span><span class="n">fit</span><span class="p">,</span><span class="n">c2cPairs</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">calcGBFit</span><span class="p">;</span>
+
+<span class="c1">% select grain boundary segments by grain ids</span>
+<span class="p">[</span><span class="n">gB</span><span class="p">,</span><span class="n">pairId</span><span class="p">]</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="o">.</span><span class="n">selectByGrainId</span><span class="p">(</span><span class="n">c2cPairs</span><span class="p">);</span>
+
+<span class="c1">%Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'OR-probability grain boundary plot'</span><span class="p">);</span>
+
+<span class="c1">%Loop over probability function parameters</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+  <span class="c1">% plot the child phase</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'faceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+  <span class="c1">% and on top of it the boundaries colorized by the misfit</span>
+  <span class="nb">hold</span> <span class="n">on</span><span class="p">;</span>
+
+  <span class="c1">% scale fit between 0 and 1 with different parameter sets</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">gB</span><span class="p">,</span> <span class="s1">'edgeAlpha'</span><span class="p">,</span> <span class="p">(</span><span class="n">fit</span><span class="p">(</span><span class="n">pairId</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span> <span class="o">-</span> <span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">))</span><span class="o">.</span><span class="p">/</span><span class="n">tol</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span> <span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+  <span class="nb">hold</span> <span class="n">off</span>
+  <span class="nb">title</span><span class="p">(</span><span class="nb">strcat</span><span class="p">(</span><span class="s1">'Tol: '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">tol</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span> <span class="s2">"^{\circ}, Thresh: "</span><span class="p">,</span> <span class="k">...</span>
+    <span class="nb">num2str</span><span class="p">(</span><span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span><span class="s2">"^{\circ}"</span><span class="p">),</span><span class="s2">"Interpreter"</span><span class="p">,</span><span class="s2">"tex"</span><span class="p">);</span>
+
+  <span class="c1">% Enable multiplot</span>
+  <span class="k">if</span> <span class="n">ii</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+    <span class="nb">figure</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">);</span> <span class="n">nextAxis</span><span class="p">;</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_09.png" alt="" />
+
+</center>
+<p>We can see that a sharp tolerance of 1.5&deg; and threshold value of 1.5&deg; mark several boundaries as prior austenite boundaries, even though they are in the interior of what appears to be the prior austenite grains. Conversely, a very relaxed value pair of tolerance 2&deg; and threshold 5&deg; does not highlight boundaries that appear to be prior austenite boundaries. The value pair tolerance 2.5&deg; and threshold 2.5&deg; seems to deliver the best result. In the misfit distribution histogram, this parameter set nicely separates the mode of the distribution from the tail to the right. You will have to experiment with these parameters for your own microstructure to get the best possible PGR result.</p>
+<h2 id="15">Evaluating effect of probability functions on PGR</h2>
+<p>Let us now explore the PGR results that are obtained using the different probability function values. The parameters defining the probability function are passed to the method <code class="language-plaintext highlighter-rouge">calcVariantGraph</code>. This method sets up the variant graph, in which all possible parent variants of each grain are represented as nodes. The parent variants of neighboring grains are connected with edges that contain the computed OR probability values.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">%Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'PGR results for different OR-probability functions'</span><span class="p">);</span>
+
+<span class="c1">%Loop over probability function parameters</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+  <span class="c1">% setup the variant graph</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcVariantGraph</span><span class="p">(</span><span class="s1">'threshold'</span><span class="p">,</span><span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">.*</span><span class="nb">degree</span><span class="p">,</span><span class="k">...</span>
+    <span class="s1">'tolerance'</span><span class="p">,</span><span class="n">tol</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+  <span class="c1">% cluster the variant graph</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">clusterVariantGraph</span><span class="p">;</span>
+
+  <span class="c1">% calculate the parent grain orientations</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcParentFromVote</span><span class="p">(</span><span class="s1">'minProb'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+
+  <span class="c1">% Plot the PGR result (before any cleaning is applied)</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">);</span>
+  <span class="nb">title</span><span class="p">(</span><span class="nb">strcat</span><span class="p">(</span><span class="s1">'Tol: '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="n">tol</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span> <span class="s2">"^{\circ}, Thresh:"</span><span class="p">,</span> <span class="k">...</span>
+    <span class="nb">num2str</span><span class="p">(</span><span class="n">threshold</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span><span class="s2">"^{\circ}"</span><span class="p">),</span><span class="s2">"Interpreter"</span><span class="p">,</span><span class="s2">"tex"</span><span class="p">);</span>
+
+  <span class="c1">% Enable multiplot</span>
+  <span class="k">if</span> <span class="n">ii</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+    <span class="nb">figure</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">);</span> <span class="n">nextAxis</span><span class="p">;</span>
+  <span class="k">end</span>
+
+  <span class="c1">% Revert PGR results to allow new PGR with different parameters</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">revert</span><span class="p">;</span>
+<span class="k">end</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_10.png" alt="" />
+
+</center>
+<p>We can observe that in the case where the probability function did not lead to a good separation between prior-parent and OR-related boundaries fewer grains have been confidently reconstructed. The first two explored parameter sets give decent PGR result, with the first dataset (subjectively) looking slightly more complete. The difference here is however marginal. It is important to make this evaluation before any post-processing is applied to the reconstructed parent microstructure.</p>
+<h2 id="17">The effect of clustering parameters on the PGR</h2>
+<p>Having identified an optimal probability function to translate the OR misfit into OR probabilities, the parameters during clustering can be explored. The variant graph relies on a Markovian clustering algorithm, which is originally reported in</p>
+<p>
+<a href="https://doi.org/10.1137/040608635">van Dongen, Stijn, Graph clustering via a discrete uncoupling process, Siam Journal on Matrix Analysis and Applications 30-1, p121-141, 2008</a>.</p>
+<p>and defined in the present application in</p>
+<p>
+<a href="https://doi.org/10.1016/j.mtla.2022.101399">R. Hielscher, T. Nyyss&ouml;nen, F. Niessen, A.A. Gazder, The variant graph approach to improved parent grain reconstruction, Materialia 22 (2022) 101399</a>.</p>
+<p>When iteratively applying the Markovian clustering algorithm to the variant graph, edges with high probability are further strengthened and edges with low probability are further weakened, leading to eventual cluster formation. With each iteration the probabilities are extended to an additional order of neighbors, leading to a gradual delocalization of the optimal parent grain orientation solution.</p>
+<p>We will explore the two most critical parameters controlling the behavior of the Markovian Clustering algorithm, <code class="language-plaintext highlighter-rouge">numIter</code> and <code class="language-plaintext highlighter-rouge">inflationPower</code>. The parameter <code class="language-plaintext highlighter-rouge">numIter</code> controls the number of iterations for which the clustering algorithm is run, which affects the order of neighbors taken into account and to which degree convergence is approached. The parameter <code class="language-plaintext highlighter-rouge">inflationPower</code>, controls the degree of clustering in each iteration. In other words, it decides how rapidly clusters are formed.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Different settings for inflationPower (alpha) and numIter for</span>
+<span class="c1">% MCL clustering</span>
+<span class="nb">alpha</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.05</span><span class="p">,</span><span class="mf">1.2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">1.05</span><span class="p">,</span><span class="mf">1.2</span><span class="p">];</span>
+<span class="n">numIter</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">];</span>
+
+<span class="c1">%Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'PGR results for different clustering parameters'</span><span class="p">);</span>
+
+<span class="c1">% Check reconstructed microstructure for different clustering parameters</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="nb">alpha</span><span class="p">)</span>
+  <span class="c1">% setup the variant graph</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcVariantGraph</span><span class="p">(</span><span class="s1">'threshold'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'tolerance'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+
+  <span class="c1">% cluster the variant graph with different parameters</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">clusterVariantGraph</span><span class="p">(</span><span class="s1">'inflationPower'</span><span class="p">,</span><span class="nb">alpha</span><span class="p">(</span><span class="n">ii</span><span class="p">),</span><span class="s1">'numIter'</span><span class="p">,</span><span class="n">numIter</span><span class="p">(</span><span class="n">ii</span><span class="p">));</span>
+
+  <span class="c1">% calculate the parent grain orientations</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcParentFromVote</span><span class="p">(</span><span class="s1">'minProb'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+
+  <span class="c1">% Plot the PGR result (before any cleaning is applied)</span>
+  <span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">);</span>
+  <span class="nb">title</span><span class="p">(</span><span class="nb">strcat</span><span class="p">(</span><span class="s1">'Alpha: '</span><span class="p">,</span><span class="nb">num2str</span><span class="p">(</span><span class="nb">alpha</span><span class="p">(</span><span class="n">ii</span><span class="p">)),</span> <span class="s2">", NumIter: "</span><span class="p">,</span> <span class="nb">num2str</span><span class="p">(</span><span class="n">numIter</span><span class="p">(</span><span class="n">ii</span><span class="p">))));</span>
+
+  <span class="c1">% Enable multiplot</span>
+  <span class="k">if</span> <span class="n">ii</span> <span class="o">&lt;</span> <span class="nb">length</span><span class="p">(</span><span class="nb">alpha</span><span class="p">)</span>
+    <span class="nb">figure</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="p">);</span> <span class="n">nextAxis</span><span class="p">;</span>
+  <span class="k">end</span>
+
+  <span class="c1">% Revert PGR results to allow new PGR with different parameters</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">revert</span><span class="p">;</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       9342    99%                
+ 
+ OR: (100.5°,46.6°,258°)
+   c2c fit: 1.2°, 1.7°, 2.1°, 2.6° (quintiles)
+   closest ideal OR: (11̅1̅) || (01̅1̅)   [101] || [100] fit: 2.5°
+ 
+ variant graph: 431081 entries
+ 
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       9342    99%                
+ 
+ OR: (100.5°,46.6°,258°)
+   c2c fit: 1.2°, 1.6°, 2°, 2.7° (quintiles)
+   closest ideal OR: (11̅1̅) || (01̅1̅)   [101] || [100] fit: 2.5°
+ 
+ variant graph: 431081 entries
+ 
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       9342    99%                
+ 
+ OR: (100.5°,46.6°,258°)
+   c2c fit: 1.2°, 1.7°, 2°, 2.7° (quintiles)
+   closest ideal OR: (11̅1̅) || (01̅1̅)   [101] || [100] fit: 2.5°
+ 
+ variant graph: 431081 entries
+ 
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       9342    99%                
+ 
+ OR: (100.5°,46.6°,258°)
+   c2c fit: 1.2°, 1.7°, 2°, 2.7° (quintiles)
+   closest ideal OR: (11̅1̅) || (01̅1̅)   [101] || [100] fit: 2.5°
+ 
+ variant graph: 431081 entries
+ 
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       9342    99%                
+ 
+ OR: (100.5°,46.6°,258°)
+   c2c fit: 1.2°, 1.6°, 2.1°, 2.7° (quintiles)
+   closest ideal OR: (11̅1̅) || (01̅1̅)   [101] || [100] fit: 2.5°
+ 
+ variant graph: 431081 entries
+ 
+ 
+ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       9342    99%                
+ 
+ OR: (100.5°,46.6°,258°)
+   c2c fit: 1.2°, 1.6°, 2°, 2.6° (quintiles)
+   closest ideal OR: (11̅1̅) || (01̅1̅)   [101] || [100] fit: 2.5°
+ 
+ variant graph: 431081 entries</code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_11.png" alt="" />
+
+</center>
+<p>It may not be entirely possible to judge the quality of the PGR without having access to a validation dataset (i.e. without knowing the actual parent microstructure), nevertheless some observations can be made: An inflation power of 1.2 seems to be too high, leading to large patches of material that have not been reconstructed. A good indicator for the present microstructure is to check in how far likely annealing twins have been resolved with a realistic morphology and how very small parent grains may become present that are unlikely to be associated with real parent grains. Based on this the choice of an inflation power of 1.05 and numIter of 10 seems to be a good choice, although it is hard to make an objective assessment. Note that an inflation power of 1 means that no clustering is enforced - with this setting the algorithm simply explores the local neighborhood up to the degree of neighbor defined by <code class="language-plaintext highlighter-rouge">numIter</code> and bases the most likely parent orientation on the overall probabilities within this region.</p>
+<h2 id="19">Final reconstruction</h2>
+<p>We can now do the final reconstruction using the optimized parameters and subsequently apply a growth-based PGR algorithm to reconstruct the remaining grains, as well as some post-processing steps to clean up the microstructure. You may also want to play with the parameter <code class="language-plaintext highlighter-rouge">minProb</code> of the <code class="language-plaintext highlighter-rouge">calcParentFromVote</code> method, which defines the minimum probability for a specific parent orientation required to conduct the PGR of a specific child grain. Lowering this parameter will lead to a more complete, but less confident PGR.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% *** PGR using the Variant Graph Approach</span>
+
+<span class="c1">% setup the variant graph</span>
+<span class="n">job</span><span class="o">.</span><span class="n">calcVariantGraph</span><span class="p">(</span><span class="s1">'threshold'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'tolerance'</span><span class="p">,</span><span class="mf">2.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+
+<span class="c1">% Cluster the variant graph with different parameters</span>
+<span class="n">job</span><span class="o">.</span><span class="n">clusterVariantGraph</span><span class="p">(</span><span class="s1">'inflationPower'</span><span class="p">,</span><span class="mf">1.05</span><span class="p">,</span><span class="s1">'numIter'</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+
+<span class="c1">% Calculate the parent grain orientations</span>
+<span class="n">job</span><span class="o">.</span><span class="n">calcParentFromVote</span><span class="p">(</span><span class="s1">'minProb'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+
+<span class="c1">% Plot the PGR result (before any cleaning is applied)</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="s1">'Name'</span><span class="p">,</span><span class="s1">'Final PGR with cleaning procedure'</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s2">"Initial Variant Graph PGR"</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">;</span>
+
+<span class="c1">% *** Growth algorithm to fill non-reconstructed regions based on</span>
+<span class="c1">% previously reconstructed neighboring austenite orientations</span>
+
+<span class="c1">% Calculate new Votes for all parent-child grain combinations. Iterate a</span>
+<span class="c1">% few times</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">5</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcGBVotes</span><span class="p">(</span><span class="s1">'p2c'</span><span class="p">,</span><span class="s1">'reconsiderAll'</span><span class="p">);</span>
+  <span class="n">job</span><span class="o">.</span><span class="n">calcParentFromVote</span><span class="p">(</span><span class="s1">'minProb'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="k">end</span>
+
+<span class="c1">% Plot the PGR result (before any cleaning is applied)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s2">"+ Application of growth PGR algorithm"</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">;</span>
+
+<span class="c1">% *** Merge neighboring grains with low parent grain misorientation</span>
+
+<span class="c1">% Merge neighboring parent grains that have &lt;= 7.5°</span>
+<span class="c1">% misorientation angle to each other</span>
+<span class="n">job</span><span class="o">.</span><span class="n">mergeSimilar</span><span class="p">(</span><span class="s1">'threshold'</span><span class="p">,</span><span class="mf">7.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="c1">% Plot the PGR result after merging similarly oriented grains</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s2">"+ merging similarly oriented grains"</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">;</span>
+
+<span class="c1">% *** Remove small inclusion grains</span>
+
+<span class="c1">% Merge inclusion grains with a size &lt;= 100 into the host grains</span>
+<span class="n">job</span><span class="o">.</span><span class="n">mergeInclusions</span><span class="p">(</span><span class="s1">'maxSize'</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span>
+
+<span class="c1">% Plot the PGR result after merging inclusions</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">parentGrains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">);</span>
+<span class="nb">title</span><span class="p">(</span><span class="s2">"+ removing small inclusions"</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = parentGrainReconstructor
+ 
+ phase   mineral         symmetry  grains  area  reconstructed
+ parent  Iron fcc        432       0       0%    0%           
+ child   Iron bcc (old)  432       9342    99%                
+ 
+ OR: (100.5°,46.6°,258°)
+   c2c fit: 1.2°, 1.7°, 2.1°, 2.7° (quintiles)
+   closest ideal OR: (11̅1̅) || (01̅1̅)   [101] || [100] fit: 2.5°
+ 
+ variant graph: 431081 entries</code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_12.png" alt="" />
+
+</center>
+<p>We are now finished with the PGR and can, as a last step, plot the child and reconstructed parent EBSD data overlayed with the outlines of the parent grains.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Prepare plotting</span>
+<span class="nb">figure</span><span class="p">;</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]);</span>
+
+<span class="c1">% Plot the initial orientation data with the prior parent grain outlines</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">ebsdPrior</span><span class="p">,</span><span class="n">job</span><span class="o">.</span><span class="n">ebsdPrior</span><span class="o">.</span><span class="n">orientations</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="c1">% Plot the reconstructed orientation data with the prior parent grain outlines</span>
+<span class="n">nextAxis</span><span class="p">;</span>
+<span class="n">parentEBSD</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">calcParentEBSD</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">parentEBSD</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">csParent</span><span class="p">),</span><span class="n">parentEBSD</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">csParent</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center>
+<img class="inline" src="figures/ParameterOptimization_13.png" alt="" />
+
+</center>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/ParameterOptimization.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

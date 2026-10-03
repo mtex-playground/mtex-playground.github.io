@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Wave Velocities | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="An elastic disturbance travels through a crystal as three waves. For each propagation direction there is one fast, roughly compressional P-wave and two slower S-waves. Each wave has a speed and a polarisation direction.">
+<link rel="canonical" href="https://mtex-playground.github.io/WaveVelocities.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/WaveVelocities.html#page",
+      "name": "Wave Velocities",
+      "headline": "Wave Velocities",
+      "description": "An elastic disturbance travels through a crystal as three waves. For each propagation direction there is one fast, roughly compressional P-wave and two slower S-waves. Each wave has a speed and a polarisation direction.",
+      "url": "https://mtex-playground.github.io/WaveVelocities.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/WaveVelocities.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/WaveVelocities.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Wave Velocities</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Wave Velocities</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_WaveVelocities.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Elasticity/WaveVelocities.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>An elastic disturbance travels through a crystal as three waves. For each propagation direction there is one fast, roughly compressional P-wave and two slower S-waves. Each wave has a speed and a polarisation direction.</p>
+<p>Anisotropy makes all six quantities depend on propagation direction. This page computes them from a stiffness tensor, visualises shear-wave splitting, and compares phase velocity with energy velocity.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Load stiffness and density</h2>
+<p>Use the olivine stiffness tensor introduced in <a href="AnisotropicTheory.html">Anisotropic Elasticity</a>. The tensor is in GPa and is expressed in the olivine crystal frame.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">fname</span> <span class="o">=</span> <span class="nb">fullfile</span><span class="p">(</span><span class="n">mtexDataPath</span><span class="p">,</span><span class="s1">'tensor'</span><span class="p">,</span><span class="s1">'Olivine1997PC.GPa'</span><span class="p">);</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'mmm'</span><span class="p">,[</span><span class="mf">4.7646</span> <span class="mf">10.2296</span> <span class="mf">5.9942</span><span class="p">],</span><span class="k">...</span>
+  <span class="s1">'mineral'</span><span class="p">,</span><span class="s1">'Olivine'</span><span class="p">);</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">stiffnessTensor</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="n">cs</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">C = stiffnessTensor (Olivine)
+  unit: GPa              
+  rank: 4 (3 × 3 × 3 × 3)
+ 
+  tensor in Voigt matrix representation:
+ 320.5  68.2  71.6     0     0     0
+  68.2 196.5  76.8     0     0     0
+  71.6  76.8 233.5     0     0     0
+     0     0     0    64     0     0
+     0     0     0     0    77     0
+     0     0     0     0     0  78.7</code></pre></figure>
+<p>Wave speed depends on both stiffness and material density \(\rho\). The density of olivine used here is 3.355 g/cm\(^3\). Store it in the tensor because almost every command below needs it.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">rho</span> <span class="o">=</span> <span class="mf">3.355</span><span class="p">;</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">addOption</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="s1">'density'</span><span class="p">,</span><span class="n">rho</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">C = stiffnessTensor (Olivine)
+  unit   : GPa              
+  density: 3.355            
+  rank   : 4 (3 × 3 × 3 × 3)
+ 
+  tensor in Voigt matrix representation:
+ 320.5  68.2  71.6     0     0     0
+  68.2 196.5  76.8     0     0     0
+  71.6  76.8 233.5     0     0     0
+     0     0     0    64     0     0
+     0     0     0     0    77     0
+     0     0     0     0     0  78.7</code></pre></figure>
+<p>Density can instead be supplied while constructing the tensor. The corresponding syntax is <code class="language-plaintext highlighter-rouge">stiffnessTensor(M,cs,'density',rho)</code>. It can also be passed as a trailing argument to individual commands. Without density, stiffness alone does not determine a velocity in km/s.</p>
+<h2 id="5">Solve for one propagation direction</h2>
+<p>The propagation direction \(n\) is normal to the moving wavefront. The polarisation direction gives the particle vibration. <a href="stiffnessTensor.velocity.html"><code class="language-plaintext highlighter-rouge">velocity</code></a> returns all three speeds and all three polarisations at once.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">n</span> <span class="o">=</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">;</span>
+<span class="p">[</span><span class="n">vpX</span><span class="p">,</span><span class="n">vs1X</span><span class="p">,</span><span class="n">vs2X</span><span class="p">,</span><span class="n">ppX</span><span class="p">,</span><span class="n">ps1X</span><span class="p">,</span><span class="n">ps2X</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">n</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">vpX =
+    9.7739
+vs1X =
+    4.8433
+vs2X =
+    4.7907
+ 
+ppX = vector3d (y↑→x)
+ antipodal: true
+  x y z
+  1 0 0
+ 
+ps1X = vector3d (y↑→x)
+ antipodal: true
+  x y z
+  0 1 0
+ 
+ps2X = vector3d (y↑→x)
+ antipodal: true
+  x y z
+  0 0 1</code></pre></figure>
+<p>The outputs are ordered as P-wave, fast S-wave, and slow S-wave. The speeds <code class="language-plaintext highlighter-rouge">vpX</code>, <code class="language-plaintext highlighter-rouge">vs1X</code>, and <code class="language-plaintext highlighter-rouge">vs2X</code> are in km/s. The axes <code class="language-plaintext highlighter-rouge">ppX</code>, <code class="language-plaintext highlighter-rouge">ps1X</code>, and <code class="language-plaintext highlighter-rouge">ps2X</code> give their polarisations. A polarisation is an <a href="VectorsAxes.html">axis</a> because its sign is arbitrary.</p>
+<p>The chosen \(x\) direction is a symmetry axis of the olivine crystal. The three polarisations therefore coincide with coordinate axes. Here the P-wave polarisation is exactly parallel to its propagation.</p>
+<h2 id="7">Solve for a list of directions</h2>
+<p>The same command accepts any list of propagation directions.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">xyz</span> <span class="o">=</span> <span class="p">[</span><span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span><span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">]</span>
+<span class="n">vpXYZ</span> <span class="o">=</span> <span class="n">velocity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">xyz</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">xyz = vector3d (y↑→x)
+ size: 1 × 3
+  x y z
+  1 0 0
+  0 1 0
+  0 0 1
+vpXYZ =
+    9.7739    7.6531    8.3425</code></pre></figure>
+<h2 id="8">Solve over the complete sphere</h2>
+<p>Omit the propagation direction to compute every direction. The first three outputs are <a href="S2FunConcept.html">spherical functions</a>. They give P-, fast-S-, and slow-S-wave speed as functions of direction.</p>
+<p>The remaining outputs are <a href="S2FunAxisField.html">spherical axis fields</a>. They give the corresponding polarisation at each direction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">vp</span><span class="p">,</span><span class="n">vs1</span><span class="p">,</span><span class="n">vs2</span><span class="p">,</span><span class="n">pp</span><span class="p">,</span><span class="n">ps1</span><span class="p">,</span><span class="n">ps2</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocity</span><span class="p">(</span><span class="n">C</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">vp = S2FunTri (y↑→x)
+  vertices: 18338 × 1
+ 
+ 
+vs1 = S2FunTri (y↑→x)
+  vertices: 18338 × 1
+ 
+ 
+vs2 = S2FunTri (y↑→x)
+  vertices: 18338 × 1
+ 
+ 
+pp = S2AxisFieldTri
+  vertices: 18338 × 1
+ 
+ 
+ps1 = S2AxisFieldTri
+  vertices: 18338 × 1
+ 
+ 
+ps2 = S2AxisFieldTri
+  vertices: 18338 × 1</code></pre></figure>
+<p>These are ordinary spherical functions and can be evaluated anywhere.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">vpFromGridX</span> <span class="o">=</span> <span class="n">vp</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">vpFromGridX =
+    9.7735</code></pre></figure>
+<p>By default, <code class="language-plaintext highlighter-rouge">velocity</code> samples a triangulated grid and interpolates between its nodes. This explains the small deviation from the exact <code class="language-plaintext highlighter-rouge">vpX</code> above.</p>
+<p>The option <code class="language-plaintext highlighter-rouge">'harmonic'</code> returns a <a href="S2FunHarmonicRepresentation.html">harmonic expansion</a> instead. Harmonic expansions are smooth and respect crystal symmetry exactly. They are the better choice for three-dimensional plots.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">vpHarm</span> <span class="o">=</span> <span class="n">velocity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="s1">'harmonic'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">vpHarm = S2FunHarmonicSym (Olivine)
+  bandwidth: 48
+  antipodal: true</code></pre></figure>
+<h2 id="11">Plot speed and polarisation together</h2>
+<p>Plot the P-wave speed over the upper hemisphere. Overlay its polarisation axes at sampled propagation directions.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">newMtexFigure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">mtexColorMap</span> <span class="n">blue2red</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'P-wave speed in km/s'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/WaveVelocities_01.png" alt="" />
+
+</center>
+<p>The colour at each point gives speed for that propagation direction. The line segment gives the corresponding particle vibration. Most segments stay close to the radial propagation direction. The P-wave is therefore almost, but not exactly, longitudinal.</p>
+<h2 id="13">See shear-wave splitting</h2>
+<p>Spherical functions support ordinary arithmetic. Subtract the slow S-wave speed from the fast S-wave speed. Overlay the fast-wave polarisation <code class="language-plaintext highlighter-rouge">ps1</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">deltaVs</span> <span class="o">=</span> <span class="n">vs1</span><span class="o">-</span><span class="n">vs2</span><span class="p">;</span>
+
+<span class="n">newMtexFigure</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">deltaVs</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ps1</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">mtexColorMap</span> <span class="n">blue2red</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'fast minus slow S-wave speed in km/s'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/WaveVelocities_02.png" alt="" />
+
+</center>
+<p>An incident S-wave splits into two perpendicular polarisations. The two components travel at different speeds and arrive with a delay. The line segments show the fast S-wave polarisation measured by a seismologist.</p>
+<p>Directions where the speed difference vanishes are acoustic axes. Both S-waves have the same speed there, so no splitting occurs.</p>
+<h2 id="15">Quantify anisotropy</h2>
+<p>Velocity variation is commonly reported relative to a mean velocity. The convention below uses the midpoint of the fastest and slowest values.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">maxVp</span><span class="p">,</span><span class="n">maxPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">vp</span><span class="p">);</span>
+<span class="p">[</span><span class="n">minVp</span><span class="p">,</span><span class="n">minPos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">vp</span><span class="p">);</span>
+<span class="n">AVp</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">maxVp</span><span class="o">-</span><span class="n">minVp</span><span class="p">)</span><span class="o">.</span><span class="p">/(</span><span class="n">maxVp</span><span class="o">+</span><span class="n">minVp</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">AVp =
+   24.3329</code></pre></figure>
+<p>P-wave anisotropy is one number for the complete directional function. Mark the fastest direction with a black square. Mark the slowest direction with a white circle.</p>
+<p>S-wave anisotropy compares the two S-waves in each common propagation direction, so it remains a directional function. The ratio of P-wave to fast-S-wave speed is a third useful quantity.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">AVs</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="p">(</span><span class="n">vs1</span><span class="o">-</span><span class="n">vs2</span><span class="p">)</span><span class="o">.</span><span class="p">/(</span><span class="n">vs1</span><span class="o">+</span><span class="n">vs2</span><span class="p">);</span>
+
+<span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">maxPos</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="s1">'Marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">,</span><span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">minPos</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="s1">'Marker'</span><span class="p">,</span><span class="s1">'o'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'P-wave speed'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">AVs</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'S-wave anisotropy'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">vp</span><span class="o">.</span><span class="p">/</span><span class="n">vs1</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Vp/Vs1'</span><span class="p">)</span>
+
+<span class="n">mtexColorMap</span> <span class="n">blue2red</span>
+
+<span class="c1">% one call with one title per panel - repeated calls toggle the colorbars off</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,{</span><span class="s1">'km/s'</span><span class="p">,</span><span class="s1">'percent'</span><span class="p">,</span><span class="s1">'ratio'</span><span class="p">})</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/WaveVelocities_03.png" alt="" />
+
+</center>
+<p>The first map locates the directions behind the scalar <code class="language-plaintext highlighter-rouge">AVp</code>. The second map is zero on acoustic axes and largest where splitting is strongest. The third map is dimensionless and need not have extrema in the same directions as either speed alone.</p>
+<h2 id="18">Compare with an isotropic aggregate</h2>
+<p>Average randomly oriented olivine crystals with a <a href="uniformODF.html">uniform ODF</a>. The first output of <a href="tensor.mean.html"><code class="language-plaintext highlighter-rouge">mean</code></a> is the Voigt average. <a href="IsotropicTheory.html">Isotropic Theory</a> defines the Voigt, Reuss, and Hill alternatives and explains why the exact aggregate stiffness is bounded.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">C_iso</span> <span class="o">=</span> <span class="nb">mean</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">uniformODF</span><span class="p">(</span><span class="n">cs</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">C_iso = stiffnessTensor (y↑→x)
+  unit   : GPa              
+  density: 3.355            
+  rank   : 4 (3 × 3 × 3 × 3)
+ 
+  tensor in Voigt matrix representation:
+ 237.56  78.49  78.49      0      0      0
+  78.49 237.56  78.49      0      0      0
+  78.49  78.49 237.56      0      0      0
+      0      0      0  79.54      0      0
+      0      0      0      0  79.54      0
+      0      0      0      0      0  79.54</code></pre></figure>
+<p>This average is elastically isotropic. Its wave speeds are independent of propagation direction. They are determined completely by bulk modulus \(K\), shear modulus \(G\), and density.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">K</span> <span class="o">=</span> <span class="n">C_iso</span><span class="o">.</span><span class="n">bulkModulus</span><span class="p">;</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">C_iso</span><span class="o">.</span><span class="n">shearModulus</span><span class="p">;</span>
+
+<span class="n">vpIso</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">((</span><span class="n">K</span> <span class="o">+</span> <span class="mi">4</span><span class="p">/</span><span class="mi">3</span><span class="o">*</span><span class="n">G</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="n">rho</span><span class="p">)</span>
+<span class="n">vsIso</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="p">/</span><span class="n">rho</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">vpIso =
+    8.4147
+vsIso =
+    4.8690</code></pre></figure>
+<p>These formulas agree with <code class="language-plaintext highlighter-rouge">velocity</code> for the isotropic tensor.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">vp_iso</span><span class="p">,</span><span class="n">vs1_iso</span><span class="p">,</span><span class="n">vs2_iso</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocity</span><span class="p">(</span><span class="n">C_iso</span><span class="p">,</span><span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">vp_iso =
+    8.4147
+vs1_iso =
+    4.8690
+vs2_iso =
+    4.8690</code></pre></figure>
+<p>Both isotropic S-waves have the same speed. An isotropic medium therefore has no shear-wave splitting. Place its P-wave speed between the single-crystal extremes.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cprintf</span><span class="p">([</span><span class="n">minVp</span><span class="p">,</span><span class="n">vpIso</span><span class="p">,</span><span class="n">maxVp</span><span class="p">],</span><span class="k">...</span>
+  <span class="s1">'-Lc'</span><span class="p">,{</span><span class="s1">'min Vp'</span> <span class="s1">'isotropic'</span> <span class="s1">'max Vp'</span><span class="p">})</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">min Vp isotropic    max Vp
+7.65328   8.41473    9.7735</code></pre></figure>
+<h2 id="22">Compare phase velocity with energy velocity</h2>
+<p>The computed speeds are phase velocities. Phase velocity describes how fast a wavefront moves along its normal \(n\).</p>
+<p>Energy travels along the energy velocity vector \(V_e\). In a lossless medium this is a good proxy for group velocity. <a href="stiffnessTensor.energyVector.html"><code class="language-plaintext highlighter-rouge">energyVector</code></a> computes it from the stiffness, propagation direction, phase speed, and polarisation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% an arbitrary, non-symmetry propagation direction</span>
+<span class="n">nOblique</span> <span class="o">=</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">byPolar</span><span class="p">(</span><span class="mi">45</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">20</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="p">[</span><span class="n">vpOblique</span><span class="p">,</span><span class="n">vs1Oblique</span><span class="p">,</span><span class="n">vs2Oblique</span><span class="p">,</span><span class="n">ppOblique</span><span class="p">,</span><span class="n">ps1Oblique</span><span class="p">,</span><span class="n">ps2Oblique</span><span class="p">]</span> <span class="o">=</span> <span class="k">...</span>
+  <span class="n">velocity</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">nOblique</span><span class="p">);</span>
+
+<span class="n">Ve</span> <span class="o">=</span> <span class="n">energyVector</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">nOblique</span><span class="p">,</span><span class="n">vpOblique</span><span class="p">,</span><span class="n">ppOblique</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Ve = vector3d (y↑→x)
+     x    y    z
+  6.92 1.57 5.11</code></pre></figure>
+<p>In an anisotropic medium, \(V_e\) is generally not parallel to \(n\). The energy is deflected sideways by the following angle in degrees.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">energyDeflection</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">Ve</span><span class="p">,</span><span class="n">nOblique</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">energyDeflection =
+   10.7498</code></pre></figure>
+<p>The magnitude of \(V_e\) is at least as large as the phase velocity. Its projection onto \(n\) reproduces the phase velocity exactly.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cprintf</span><span class="p">([</span><span class="nb">norm</span><span class="p">(</span><span class="n">Ve</span><span class="p">),</span><span class="nb">dot</span><span class="p">(</span><span class="n">Ve</span><span class="p">,</span><span class="n">nOblique</span><span class="p">),</span><span class="n">vpOblique</span><span class="p">],</span><span class="k">...</span>
+  <span class="s1">'-Lc'</span><span class="p">,{</span><span class="s1">'|Ve|'</span> <span class="s1">'Ve.n'</span> <span class="s1">'Vp'</span><span class="p">})</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">|Ve|    Ve.n      Vp
+8.74413 8.59068 8.59068</code></pre></figure>
+<p>Passing an empty propagation direction with spherical speed and polarisation functions returns a <a href="S2FunVectorField.html">spherical vector field</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">VeField</span> <span class="o">=</span> <span class="n">energyVector</span><span class="p">(</span><span class="n">C</span><span class="p">,[],</span><span class="n">vp</span><span class="p">,</span><span class="n">pp</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">VeField = S2VectorFieldTri
+  vertices: 18338 × 1</code></pre></figure>
+<h2 id="26">Plot phase-velocity and slowness surfaces</h2>
+<p>A phase-velocity surface places each speed at a radial distance from the origin. A slowness surface uses reciprocal speed in s/km. Plot sections through the plane with normal \(x\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">planeNormal</span> <span class="o">=</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">;</span>
+
+<span class="c1">% common section and arrow options</span>
+<span class="n">optSec</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'interp'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">};</span>
+<span class="n">optQuiver</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'autoScaleFactor'</span><span class="p">,</span><span class="mf">0.35</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">};</span>
+<span class="n">optQuiverProp</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'autoScaleFactor'</span><span class="p">,</span><span class="mf">0.25</span><span class="p">,</span><span class="s1">'doNotDraw'</span><span class="p">};</span>
+<span class="n">prop</span> <span class="o">=</span> <span class="n">S2VectorFieldHarmonic</span><span class="o">.</span><span class="n">normal</span><span class="p">;</span>
+
+<span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1">% phase velocities</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optSec</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'Vp'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="n">vs1</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optSec</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'Vs1'</span><span class="p">)</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="n">vs2</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optSec</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'Vs2'</span><span class="p">)</span>
+
+<span class="c1">% polarisation directions</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span><span class="n">pp</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'c'</span><span class="p">,</span><span class="n">optQuiver</span><span class="p">{:},</span><span class="k">...</span>
+  <span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'pp'</span><span class="p">)</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="n">vs1</span><span class="p">,</span><span class="n">ps1</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'g'</span><span class="p">,</span><span class="n">optQuiver</span><span class="p">{:},</span><span class="k">...</span>
+  <span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'ps1'</span><span class="p">)</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="n">vs2</span><span class="p">,</span><span class="n">ps2</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'m'</span><span class="p">,</span><span class="n">optQuiver</span><span class="p">{:},</span><span class="k">...</span>
+  <span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'ps2'</span><span class="p">)</span>
+
+<span class="c1">% propagation directions as reference</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span><span class="n">prop</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optQuiverProp</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'n'</span><span class="p">)</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="n">vs1</span><span class="p">,</span><span class="n">prop</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optQuiverProp</span><span class="p">{:})</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="n">vs2</span><span class="p">,</span><span class="n">prop</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optQuiverProp</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">axis</span> <span class="n">off</span> <span class="n">tight</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Phase velocity surface'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+
+<span class="c1">% slowness surfaces</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vp</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optSec</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'Vp'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vs1</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optSec</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'Vs1'</span><span class="p">)</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vs2</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optSec</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'Vs2'</span><span class="p">)</span>
+
+<span class="c1">% polarisation directions</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vp</span><span class="p">,</span><span class="n">pp</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'c'</span><span class="p">,</span><span class="n">optQuiver</span><span class="p">{:},</span><span class="k">...</span>
+  <span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'pp'</span><span class="p">)</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vs1</span><span class="p">,</span><span class="n">ps1</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'g'</span><span class="p">,</span><span class="n">optQuiver</span><span class="p">{:},</span><span class="k">...</span>
+  <span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'ps1'</span><span class="p">)</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vs2</span><span class="p">,</span><span class="n">ps2</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'m'</span><span class="p">,</span><span class="n">optQuiver</span><span class="p">{:},</span><span class="k">...</span>
+  <span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'ps2'</span><span class="p">)</span>
+
+<span class="c1">% propagation directions as reference</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vp</span><span class="p">,</span><span class="n">prop</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optQuiverProp</span><span class="p">{:},</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'n'</span><span class="p">)</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vs1</span><span class="p">,</span><span class="n">prop</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optQuiverProp</span><span class="p">{:})</span>
+<span class="n">quiverSection</span><span class="p">(</span><span class="mf">1.</span><span class="p">/</span><span class="n">vs2</span><span class="p">,</span><span class="n">prop</span><span class="p">,</span><span class="n">planeNormal</span><span class="p">,</span><span class="n">optQuiverProp</span><span class="p">{:})</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">axis</span> <span class="n">off</span> <span class="n">tight</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Vp'</span><span class="p">,</span><span class="s1">'Vs1'</span><span class="p">,</span><span class="s1">'Vs2'</span><span class="p">,</span><span class="s1">'pp'</span><span class="p">,</span><span class="s1">'ps1'</span><span class="p">,</span><span class="s1">'ps2'</span><span class="p">,</span><span class="s1">'n'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'Location'</span><span class="p">,</span><span class="s1">'eastOutside'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Slowness surface'</span><span class="p">)</span>
+
+<span class="n">mtexColorMap</span> <span class="n">blue2red</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,{</span><span class="s1">'km/s'</span><span class="p">,</span><span class="s1">'s/km'</span><span class="p">},</span><span class="s1">'location'</span><span class="p">,</span><span class="s1">'southOutside'</span><span class="p">)</span>
+<span class="n">drawNow</span><span class="p">(</span><span class="n">gcm</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/WaveVelocities_04.png" alt="" />
+
+</center>
+<p>In both panels, the black arrows show propagation direction. The coloured arrows show the three polarisations.</p>
+<p>The view looks along the section normal \(x\). Every propagation direction in this plane has its fast S-wave polarised exactly along \(x\), so the green <code class="language-plaintext highlighter-rouge">ps1</code> arrows point straight at the reader and project to a point. The legend still lists <code class="language-plaintext highlighter-rouge">ps1</code>, but only the cyan <code class="language-plaintext highlighter-rouge">pp</code> and the magenta <code class="language-plaintext highlighter-rouge">ps2</code> arrows have a length on screen, and both lie in the section plane.</p>
+<p>The phase panel is longest where a wave is fastest. The slowness panel is longest where that same wave is slowest.</p>
+<h2 id="28">Use the overview plot</h2>
+<p> <a href="stiffnessTensor.plotSeismicVelocities.html"><code class="language-plaintext highlighter-rouge">plotSeismicVelocities</code></a> collects the main velocity, anisotropy, ratio, and polarisation maps.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotSeismicVelocities</span><span class="p">(</span><span class="n">C</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/WaveVelocities_05.png" alt="" />
+
+</center>
+<p>Read the panels together: extrema in one wave need not coincide with extrema in splitting or in a velocity ratio.</p>
+<h2 id="30">The maths behind the wave speeds</h2>
+<p>Consider a plane wave with propagation direction \(n\), phase velocity \(v\), and polarisation \(p\). Its displacement field has the form</p>
+<p>\[u(x,t)=p\,f(n\mathbin{\cdot}x-vt).\]</p>
+<p>Insert this trial wave into the equation of motion \(\rho\,\partial_t^2u_i=\partial_j\sigma_{ij}\). Use Hooke's law \(\sigma_{ij}=C_{ijkl}\varepsilon_{kl}\) from <a href="AnisotropicTheory.html">Anisotropic Elasticity</a>. The result is the Christoffel equation</p>
+<p>\[C_{ijkl}n_jn_l\,p_k=\rho v^2p_i.\]</p>
+<p>The rank-two tensor \(T_{ik}(n)=C_{ijkl}n_jn_l\) is the Christoffel tensor. <a href="stiffnessTensor.ChristoffelTensor.html"><code class="language-plaintext highlighter-rouge">ChristoffelTensor</code></a> computes it for a chosen propagation direction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">T</span> <span class="o">=</span> <span class="n">ChristoffelTensor</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">vector3d</span><span class="o">.</span><span class="n">X</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">T = ChristoffelTensor (Olivine)
+  rank: 2 (3 × 3)
+ 
+ 320.5     0     0
+     0  78.7     0
+     0     0    77</code></pre></figure>
+<p>The symmetry \(C_{ijkl}=C_{klij}\) makes \(T\) symmetric. Its three eigenvalues are therefore real and its eigenvectors are mutually perpendicular. Positive-definite stiffness also makes all three eigenvalues positive. They correspond to three real wave speeds.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">pEigen</span><span class="p">,</span><span class="n">lambda</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eig</span><span class="p">(</span><span class="n">T</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">pEigen = vector3d (y↑→x)
+ size: 3 × 1
+ antipodal: true
+  x y z
+  0 0 1
+  0 1 0
+  1 0 0
+lambda =
+   77.0000
+   78.7000
+  320.5000</code></pre></figure>
+<p>MTEX returns these eigenvalues in ascending order. Divide by density and take square roots to recover speeds in km/s.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">vEigen</span> <span class="o">=</span> <span class="nb">sqrt</span><span class="p">(</span><span class="n">lambda</span><span class="o">.</span><span class="p">/</span><span class="n">rho</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">vEigen =
+    4.7907
+    4.8433
+    9.7739</code></pre></figure>
+<p>The largest value belongs to the P-wave, whose polarisation is closest to the propagation direction. The two smaller values belong to the fast and slow S-waves. The earlier call to <code class="language-plaintext highlighter-rouge">velocity</code> performs this decomposition and sorting automatically.</p>
+<h2 id="34">References</h2>
+<div>
+<ul>
+<li>E. H. Abramson, J. M. Brown, L. J. Slutsky, and J. Zaug, <a href="https://doi.org/10.1029/97JB00682">The elastic constants of San Carlos olivine to 17 GPa</a>, <i>Journal of Geophysical Research</i> 102(B6) (1997), 12253-12263, provides the olivine stiffness tensor used here.</li>
+<li>F. I. Fedorov, <i>Theory of Elastic Waves in Crystals</i>, Plenum Press, New York, 1968, derives the energy-velocity expression implemented by <code class="language-plaintext highlighter-rouge">energyVector</code>.</li>
+</ul>
+</div>
+<h2 id="35">Next</h2>
+<p>
+<a href="CPOSeismicProperties.html">Seismic Properties of Polycrystals</a> applies this workflow to measured preferred orientations. It averages the crystal tensors and interprets the aggregate seismic anisotropy.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/WaveVelocities.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

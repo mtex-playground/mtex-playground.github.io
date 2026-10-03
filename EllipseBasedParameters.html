@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Ellipse Based Shape Parameters | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="Fitting an ellipse to a grain replaces an outline of hundreds of vertices by four ingredients: where the grain sits, how long and wide it is, and which way it points. These quantities underpin many descriptions of grain shape fabric. This page explains how to compute and interpret them, and where an">
+<link rel="canonical" href="https://mtex-playground.github.io/EllipseBasedParameters.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EllipseBasedParameters.html#page",
+      "name": "Ellipse Based Shape Parameters",
+      "headline": "Ellipse Based Shape Parameters",
+      "description": "Fitting an ellipse to a grain replaces an outline of hundreds of vertices by four ingredients: where the grain sits, how long and wide it is, and which way it points. These quantities underpin many descriptions of grain shape fabric. This page explains how to compute and interpret them, and where an",
+      "url": "https://mtex-playground.github.io/EllipseBasedParameters.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EllipseBasedParameters.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EllipseBasedParameters.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Ellipse Based Shape Parameters</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Ellipse Based Shape Parameters</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_EllipseBasedParameters.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Grains/EllipseBasedParameters.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>Fitting an ellipse to a grain replaces an outline of hundreds of vertices by four ingredients: where the grain sits, how long and wide it is, and which way it points. These quantities underpin many descriptions of grain shape fabric. This page explains how to compute and interpret them, and where an ellipse stops being an adequate description.</p>
+<p>The page assumes that the grains have been <a href="GrainReconstruction.html">reconstructed</a> and that selecting complete grains is familiar from <a href="SelectingGrains.html">Selecting Grains</a>. <a href="GrainSmoothing.html">Grain Smoothing</a> explains why an outline reconstructed from a pixel grid should be smoothed before its shape is measured.</p>
+<p>The command is <a href="grain2d.fitEllipse.html"><code class="language-plaintext highlighter-rouge">[c,a,b] = grains.fitEllipse</code></a>. It returns the centroid <code class="language-plaintext highlighter-rouge">c</code> and the long and short half axes <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code> as vectors. The axis lengths are <code class="language-plaintext highlighter-rouge">norm(a)</code> and <code class="language-plaintext highlighter-rouge">norm(b)</code>, and their ratio is the <a href="grain2d.aspectRatio.html"><code class="language-plaintext highlighter-rouge">aspectRatio</code></a>.</p>
+<p>All measurements on this page describe grain sections in the map plane. They are not the dimensions or orientations of the full three-dimensional grains. A stereological model is needed to infer those quantities.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% load sample EBSD data set</span>
+<span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">mtexdata</span> <span class="n">forsterite</span> <span class="n">silent</span>
+
+<span class="c1">% reconstruct grains and smooth them</span>
+<span class="p">[</span><span class="n">grains</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'angle'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+
+<span class="c1">% a grain cut off by the edge of the map has no shape of its own</span>
+<span class="n">grains</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">isBoundary</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'indexed'</span><span class="p">),</span><span class="mi">10</span><span class="p">,</span><span class="s1">'moveTriplePoints'</span><span class="p">);</span>
+
+<span class="c1">% plot the grains</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_01.png" alt="" />
+
+</center>
+<p>The map now contains only indexed grains with complete outlines. Excluding grains at the map edge prevents truncated sections from being mistaken for strongly elongated grains. Smoothing removes most of the horizontal and vertical staircase inherited from the measurement grid. It does not recover sub-pixel boundary detail.</p>
+<h2 id="3">Fitting ellipses</h2>
+<p>Here are the fitted ellipses of the larger grains, drawn on top of the map.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">c</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span><span class="o">&gt;</span><span class="mi">200</span><span class="p">)</span><span class="o">.</span><span class="n">fitEllipse</span><span class="p">;</span>
+
+<span class="n">plotEllipse</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_02.png" alt="" />
+
+</center>
+<p>The white ellipses follow the position, elongation, and direction of their grains, but not the smaller turns of the outlines. Each ellipse has exactly the area of its grain. Its axes come from a principal component analysis of the boundary vertices, each weighted by the segments meeting there, so they follow how the outline is spread out rather than how the enclosed area is.</p>
+<p>The fit ignores enclosure loops when finding the principal directions. It also says nothing about lobes and inlets: fit an ellipse to a clover leaf and the result can be a circle. The option <code class="language-plaintext highlighter-rouge">'boundary'</code> retains the principal directions but scales the ellipse to the grain perimeter instead of its area.</p>
+<h2 id="5">Long and short axes</h2>
+<p>The directions alone are available as <a href="grain2d.longAxis.html"><code class="language-plaintext highlighter-rouge">grains.longAxis</code></a> and <a href="grain2d.shortAxis.html"><code class="language-plaintext highlighter-rouge">grains.shortAxis</code></a>. They are well defined only when the ellipse is far enough from a circle, and the aspect ratio is what says how far that is. It is 1 for a circle and grows without bound as the ellipse is drawn out.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% visualize the aspect ratio</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">aspectRatio</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="n">setColorRange</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'aspect ratio'</span><span class="p">)</span>
+
+<span class="c1">% and on top the long axes</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">quiver</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">longAxis</span><span class="p">,</span><span class="s1">'Color'</span><span class="p">,</span><span class="s1">'white'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_03.png" alt="" />
+
+</center>
+<p>Every grain gets an axis, including the round grains whose direction means little. The arrows may look equally prominent, but <code class="language-plaintext highlighter-rouge">quiver</code> scales each one to the diameter of its own grain. Read the arrows together with the colour: the axes of the high-aspect-ratio yellow grains deserve the most weight.</p>
+<h2 id="7">Shape preferred orientation</h2>
+<p>A crystal preferred orientation is an alignment of the lattices. A shape preferred orientation, or SPO, is an alignment of the grains as bodies, independent of what their lattices do. Both can occur without the other: a deformed rock usually has both, a sediment of flat mica flakes has a strong SPO and no CPO at all.</p>
+<p>A rose diagram asks whether the grain axes agree with one another. Here we also ask whether that preferred direction differs between two phases of the same rock. A long axis is an axis rather than a directed vector, so angles separated by 180 degrees represent the same alignment.</p>
+<h2 id="8">Long-axis distribution</h2>
+<p>A histogram of the long axis directions, one per phase. Each grain is weighted by its area, so that large grains count for more than small ones, and by <code class="language-plaintext highlighter-rouge">aspectRatio - 1</code>. A grain whose long axis is barely defined therefore contributes almost nothing.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">numBin</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="nb">area</span> <span class="o">.*</span> <span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">aspectRatio</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="nb">histogram</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">,</span><span class="n">numBin</span><span class="p">,</span> <span class="s1">'weights'</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">)</span>
+
+<span class="nb">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="s1">'enstatite'</span><span class="p">)</span><span class="o">.</span><span class="nb">area</span> <span class="o">.*</span> <span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'enstatite'</span><span class="p">)</span><span class="o">.</span><span class="n">aspectRatio</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nb">histogram</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'enstatite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">,</span><span class="n">numBin</span><span class="p">,</span><span class="s1">'weights'</span><span class="p">,</span><span class="n">weights</span><span class="p">)</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'Enstatite'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_04.png" alt="" />
+
+</center>
+<p>Neither rose is uniform: both put most of their weight into a similar steep direction. Each panel is normalised separately, so this plot compares preferred directions and spread, not the total amount of either phase.</p>
+<p>A weight defines the question being asked. The area and elongation weights above emphasise how much elongated material has each direction. For the density estimate below, each grain is instead weighted by the length of its long half axis, which the <code class="language-plaintext highlighter-rouge">longAxis</code> property carries in its norm. <a href="DensityEstimation.html">Density Estimation</a> develops the consequences of weights and smoothing bandwidth.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">tdfForsterite</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'weights'</span><span class="p">,</span><span class="nb">norm</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">));</span>
+
+<span class="n">tdfEnstatite</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'enstatite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'weights'</span><span class="p">,</span><span class="nb">norm</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'enstatite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">));</span></code></pre></figure>
+<p>The input was a list of vectors, so the result is a function on the sphere, an <code class="language-plaintext highlighter-rouge"><a href="S2FunHarmonic.S2FunHarmonic.html">S2FunHarmonic</a></code>. All long axes lie in the map plane, so we plot the section of the function through that plane.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="n">tdfForsterite</span><span class="p">,</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotSection</span><span class="p">(</span><span class="n">tdfEnstatite</span><span class="p">,</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">Z</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_05.png" alt="" />
+
+</center>
+<p>Both sections concentrate density in the same part of the map plane. Since only one angle is in play, a function on the circle is the more direct representation. <code class="language-plaintext highlighter-rouge">calcDensity</code> returns an <code class="language-plaintext highlighter-rouge"><a href="S1Fun.S1Fun.html">S1Fun</a></code> when given the angles <code class="language-plaintext highlighter-rouge">rho</code> and the option <code class="language-plaintext highlighter-rouge">'periodic'</code>. The option <code class="language-plaintext highlighter-rouge">'antipodal'</code> identifies directions separated by 180 degrees, and <code class="language-plaintext highlighter-rouge">'sigma'</code> sets the circular Gaussian smoothing scale.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">tdfForsterite</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'weights'</span><span class="p">,</span><span class="nb">norm</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">),</span> <span class="k">...</span>
+  <span class="s1">'periodic'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="n">tdfEnstatite</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'enstatite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'weights'</span><span class="p">,</span><span class="nb">norm</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'enstatite'</span><span class="p">)</span><span class="o">.</span><span class="n">longAxis</span><span class="p">),</span> <span class="k">...</span>
+  <span class="s1">'periodic'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">tdfForsterite</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">tdfEnstatite</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'long axes'</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">,</span><span class="s1">'Enstatite'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'southoutside'</span><span class="p">,</span><span class="s1">'numColumns'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1">% the plot has to be told which way the specimen is oriented</span>
+<span class="n">setView</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">how2plot</span><span class="p">)</span>
+
+<span class="c1">% report the preferred long-axis directions in the specimen frame</span>
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">longAxisPeakF</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">tdfForsterite</span><span class="p">);</span>
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">longAxisPeakE</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">tdfEnstatite</span><span class="p">);</span>
+<span class="n">longAxisPeakDegree</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">mod</span><span class="p">([</span><span class="n">longAxisPeakF</span> <span class="n">longAxisPeakE</span><span class="p">],</span><span class="nb">pi</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">longAxisPeakDegree =
+   74.2000   78.8000</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_06.png" alt="" />
+
+</center>
+<p>The printed maxima are 74.2 degrees for forsterite and 78.8 degrees for enstatite. As far as the long axes show, the two phases share one fabric rather than each having its own.</p>
+<h2 id="13">Shortest-caliper distribution</h2>
+<p>The long axis of an ellipse is not the only way to say which way a grain points, and for some shapes it is a poor one: for aligned rectangles the long axis of the fitted ellipse jumps between the two diagonals. The direction in which a grain is thinnest is more stable. The <a href="grain2d.caliper.html"><code class="language-plaintext highlighter-rouge">caliper</code></a>, or Feret diameter, is the width of a grain seen from a given direction, and the option <code class="language-plaintext highlighter-rouge">'shortestPerp'</code> returns the normal to the direction in which that width is smallest.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cPerpF</span> <span class="o">=</span> <span class="n">caliper</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'fo'</span><span class="p">),</span><span class="s1">'shortestPerp'</span><span class="p">);</span>
+<span class="n">cPerpE</span> <span class="o">=</span> <span class="n">caliper</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'en'</span><span class="p">),</span><span class="s1">'shortestPerp'</span><span class="p">);</span>
+
+<span class="n">S1F_fo</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">cPerpF</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="s1">'weights'</span><span class="p">,</span><span class="n">cPerpF</span><span class="o">.</span><span class="nb">norm</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'periodic'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+<span class="n">S1F_en</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">cPerpE</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="s1">'weights'</span><span class="p">,</span><span class="n">cPerpE</span><span class="o">.</span><span class="nb">norm</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'periodic'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">S1F_fo</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">S1F_en</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'perpendicular to short axes'</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">,</span><span class="s1">'Enstatite'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'southoutside'</span><span class="p">,</span><span class="s1">'numColumns'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">setView</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">how2plot</span><span class="p">)</span>
+
+<span class="c1">% report the preferred directions normal to the shortest calipers</span>
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">caliperPeakF</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">S1F_fo</span><span class="p">);</span>
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">caliperPeakE</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">S1F_en</span><span class="p">);</span>
+<span class="n">caliperPeakDegree</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">mod</span><span class="p">([</span><span class="n">caliperPeakF</span> <span class="n">caliperPeakE</span><span class="p">],</span><span class="nb">pi</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">caliperPeakDegree =
+   74.3000   82.0000</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_07.png" alt="" />
+
+</center>
+<p>The printed maximum is 74.3 degrees for forsterite and 82.0 degrees for enstatite. Two different definitions of which way a grain points agree on the fabric, which is the reassuring outcome.</p>
+<p>Both curves still carry the scatter of a finite grain population. Convolving with a kernel smooths them and makes the position of the maximum easier to read off.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">psi</span> <span class="o">=</span> <span class="n">S1DeLaValleePoussinKernel</span><span class="p">(</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="n">S1_fo_smooth</span> <span class="o">=</span> <span class="nb">conv</span><span class="p">(</span><span class="n">S1F_fo</span><span class="p">,</span><span class="nb">psi</span><span class="p">);</span>
+<span class="n">S1_en_smooth</span> <span class="o">=</span> <span class="nb">conv</span><span class="p">(</span><span class="n">S1F_en</span><span class="p">,</span><span class="nb">psi</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">S1_fo_smooth</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">S1_en_smooth</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'perpendicular to short axes'</span><span class="p">)</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">,</span><span class="s1">'Enstatite'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'southoutside'</span><span class="p">,</span><span class="s1">'numColumns'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">setView</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">how2plot</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_08.png" alt="" />
+
+</center>
+<p>The 10-degree <a href="S1DeLaValleePoussinKernel.html">de la Vall&eacute;e Poussin kernel</a> suppresses narrow fluctuations while retaining the broad preferred direction. A halfwidth is part of the analysis: increasing it can merge nearby peaks and move their apparent maxima.</p>
+<h2 id="16">SPO from boundary segments</h2>
+<p>Both measures so far describe a grain by one direction, and both need whole grains. Asking instead which way the boundary segments run uses the entire outline, concave parts included, and works on any selection of boundaries - the boundaries between two particular phases, for instance. Each segment direction is weighted by its <a href="grainBoundary.segLength.html"><code class="language-plaintext highlighter-rouge">segLength</code></a>. This is a boundary or surface fabric, not another estimate of the particle long-axis distribution.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">gbfun_fofo</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'fo'</span><span class="p">,</span><span class="s1">'fo'</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="k">...</span>
+    <span class="s1">'weights'</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'fo'</span><span class="p">,</span><span class="s1">'fo'</span><span class="p">)</span><span class="o">.</span><span class="n">segLength</span><span class="p">,</span><span class="s1">'periodic'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">);</span>
+<span class="n">gbfun_foen</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'fo'</span><span class="p">,</span><span class="s1">'en'</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="k">...</span>
+    <span class="s1">'weights'</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'fo'</span><span class="p">,</span><span class="s1">'en'</span><span class="p">)</span><span class="o">.</span><span class="n">segLength</span><span class="p">,</span><span class="s1">'periodic'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">);</span>
+<span class="n">gbfun_enen</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'en'</span><span class="p">,</span><span class="s1">'en'</span><span class="p">)</span><span class="o">.</span><span class="n">direction</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="k">...</span>
+    <span class="s1">'weights'</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'en'</span><span class="p">,</span><span class="s1">'en'</span><span class="p">)</span><span class="o">.</span><span class="n">segLength</span><span class="p">,</span><span class="s1">'periodic'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">gbfun_fofo</span><span class="p">,</span><span class="s1">'displayName'</span><span class="p">,</span><span class="s1">'Forsterite-Forsterite'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">gbfun_foen</span><span class="p">,</span><span class="s1">'displayName'</span><span class="p">,</span><span class="s1">'Forsterite-Enstatite'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">gbfun_enen</span><span class="p">,</span><span class="s1">'displayName'</span><span class="p">,</span><span class="s1">'Enstatite-Enstatite'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">off</span>
+
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'eastoutside'</span><span class="p">,</span><span class="s1">'numColumns'</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">setView</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">how2plot</span><span class="p">)</span>
+
+<span class="c1">% report the main forsterite-forsterite direction and the grid-axis peak</span>
+<span class="p">[</span><span class="n">fofoPeakDensity</span><span class="p">,</span><span class="n">fofoPeakDirection</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">gbfun_fofo</span><span class="p">);</span>
+<span class="n">fofoPeakDegree</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">mod</span><span class="p">(</span><span class="n">fofoPeakDirection</span><span class="p">,</span><span class="nb">pi</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">degree</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gridPeakRelativeHeight</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="k">...</span>
+  <span class="nb">eval</span><span class="p">(</span><span class="n">gbfun_fofo</span><span class="p">,</span><span class="mi">90</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="n">fofoPeakDensity</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">fofoPeakDegree =
+    75
+gridPeakRelativeHeight =
+    0.9700</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_09.png" alt="" />
+
+</center>
+<p>The forsterite-forsterite curve peaks at 75 degrees, agreeing with the two measures before it. It then stays almost as high all the way to the grid axis at 90 degrees, where its density is still 0.97 of the maximum. The grid contributes to this broad shoulder: before smoothing, every segment between measurement points is horizontal or vertical. Ten smoothing iterations removed most of this artefact, but not all of it. Peaks at exactly 0 and 90 degrees are the features to distrust here.</p>
+<h2 id="18">Characteristic shape</h2>
+<p>Laying all the boundary segments of a phase end to end, sorted by their direction, closes into a single polygon: the characteristic shape. It is an average outline in the precise sense of a length-weighted boundary direction distribution, not the arithmetic mean of registered grains. <a href="grainBoundary.characteristicShape.html"><code class="language-plaintext highlighter-rouge">characteristicShape</code></a> takes a list of <a href="BoundarySelect.html">boundaries</a> rather than whole grains, and the result answers to <code class="language-plaintext highlighter-rouge">aspectRatio</code> and <code class="language-plaintext highlighter-rouge">longAxis</code> like a grain does.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cshapeF</span> <span class="o">=</span> <span class="n">characteristicShape</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'F'</span><span class="p">)</span><span class="o">.</span><span class="nb">boundary</span><span class="p">);</span>
+<span class="n">cshapeE</span> <span class="o">=</span> <span class="n">characteristicShape</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'E'</span><span class="p">)</span><span class="o">.</span><span class="nb">boundary</span><span class="p">);</span>
+
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">cshapeF</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">cshapeE</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'Forsterite'</span><span class="p">,</span><span class="s1">'Enstatite'</span><span class="p">,</span><span class="s1">'Location'</span><span class="p">,</span><span class="s1">'eastoutside'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EllipseBasedParameters_10.png" alt="" />
+
+</center>
+<p>The two outlines are elongated the same way, which is the same conclusion the rose diagrams reached, now expressed as a shape. Their aspect ratios are 1.3289 for forsterite and 1.3394 for enstatite, so the strengths are similar as well.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">characteristicAspectRatio</span> <span class="o">=</span> <span class="k">...</span>
+  <span class="p">[</span><span class="n">cshapeF</span><span class="o">.</span><span class="n">aspectRatio</span> <span class="n">cshapeE</span><span class="o">.</span><span class="n">aspectRatio</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">characteristicAspectRatio =
+    1.3289    1.3394</code></pre></figure>
+<p>Whether a difference between two such shapes is more than noise is not something these numbers answer on their own. With one map per specimen there is one measurement of each, and the scatter to compare it against has to come from somewhere else - several maps, or a subdivision of the one map into regions.</p>
+<h2 id="21">Further reading</h2>
+<div>
+<ul>
+<li>K. F. Mulchrone and K. R. Choudhury, <a href="https://doi.org/10.1016/S0191-8141(03)00093-2">Fitting an ellipse to an arbitrary shape: implications for strain analysis</a>, <i>Journal of Structural Geology</i> 26 (2004), 143-153. This is the ellipse-fitting method cited by <a href="grain2d.fitEllipse.html"><code class="language-plaintext highlighter-rouge">fitEllipse</code></a>.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>R. Panozzo, <a href="https://doi.org/10.1016/0040-1951(83)90073-2">Two-dimensional analysis of shape-fabric using projections of digitized lines in a plane</a>, <i>Tectonophysics</i> 95 (1983), 279-294. It introduces the projection approach developed further in <a href="ProjectionBasedParameters.html">Projection Parameters</a>.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>R. Heilbronner and S. Barrett, <a href="https://doi.org/10.1007/978-3-642-10343-8">Image Analysis in Earth Sciences: Microstructures and Textures of Earth Materials</a>, Springer, 2014. The chapters on particle and surface fabrics distinguish the two kinds of directional information compared here.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>K. V. Mardia and P. E. Jupp, <a href="https://doi.org/10.1002/9780470316979">Directional Statistics</a>, Wiley, 1999. This is a general reference for circular and axial statistics.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<a href="https://www.iso.org/standard/74309.html">ISO 13067:2020</a>, <i>Microbeam analysis - Electron backscatter diffraction - Measurement of average grain size</i>. The standard distinguishes measurements on two-dimensional sections from quantities inferred for three-dimensional grains.</li>
+</ul>
+</div>
+<h2 id="22">Next</h2>
+<p>
+<a href="HullBasedParameters.html">Convex Hull Parameters</a> isolates bays and inlets that an ellipse discards. <a href="ProjectionBasedParameters.html">Projection Parameters</a> develops calipers, PAROR, SURFOR, and characteristic shapes without reducing each grain to one ellipse. Continue to <a href="GrainOrientationParameters.html">Grain Orientation Parameters</a> to compare this shape fabric with orientation variation inside the grains, or to <a href="GrainBoundaries.html">Grain Boundaries</a> when the boundary segments themselves are the subject.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EllipseBasedParameters.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

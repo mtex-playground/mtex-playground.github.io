@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Density Estimation | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/DensityEstimation_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/DensityEstimation_py.html#page",
+      "name": "Density Estimation",
+      "headline": "Density Estimation",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/DensityEstimation_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/DensityEstimation_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/DensityEstimation_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Density Estimation</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/DensityEstimation.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GeneralConcepts/DensityEstimation.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>Density estimation turns a finite sample into a continuous function. In texture analysis,
+the samples may be EBSD orientations, grain mean orientations, misorientation axes, or
+simulated orientations.</p>
+
+<p>Keep three parts of the calculation distinct:</p>
+
+<ul>
+  <li><strong>input:</strong> samples \(x_n\), possibly with statistical weights;</li>
+  <li><strong>assumption:</strong> nearby samples belong to a smoothly varying density;</li>
+  <li><strong>result:</strong> an estimate \(f_N\) of an unknown density \(f\).</li>
+</ul>
+
+<p>Pole-figure intensities are different input. They are sampled values of a projected pole
+density rather than random orientations. Recovering an ODF from them is an inverse problem,
+not the kernel estimate described here.</p>
+
+<p>The worked sequence starts with real numbers. It then applies the same construction to
+directions and orientations.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="begin-with-a-finite-sample">Begin with a finite sample</h2>
+
+<p>Use a mixture of two Gaussian densities as a known reference. The second argument of
+<code class="language-plaintext highlighter-rouge">Gaussian</code> is a width parameter \(\delta\). The profile is \(\exp(-(x-m)^2/\delta^2)\), so
+\(\delta\) is the standard deviation times \(\sqrt{2}\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">Gaussian</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">Gaussian</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># draw a sample from the density on [0,1]
+</span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">xN</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xN</span><span class="p">),</span> <span class="s">'o'</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markeredgecolor</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'density'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'true density'</span><span class="p">,</span> <span class="s">'sample'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-2.png" /></center>
+
+<p>The blue curve has a narrow mode near 0.2 and a broad mode near 0.5. More red samples occur
+where that curve is high. With only 20 samples, random gaps and clusters are still
+prominent.</p>
+
+<h2 id="a-histogram-depends-on-its-bins">A histogram depends on its bins</h2>
+
+<p>A histogram is the simplest density estimate. The <code class="language-plaintext highlighter-rouge">density=True</code> normalization puts the bar
+areas on the same scale as the reference density.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xN</span><span class="p">),</span> <span class="s">'o'</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markeredgecolor</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'none'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'density'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'true density'</span><span class="p">,</span> <span class="s">'sample'</span><span class="p">,</span> <span class="s">'histogram'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-3.png" /></center>
+
+<p>The estimate is piecewise constant, and changing the bin edges changes its steps. The bars
+hint at two modes, but they do not follow either mode smoothly. Kernel density estimation
+removes the bin edges.</p>
+
+<h2 id="replace-each-sample-by-a-kernel">Replace each sample by a kernel</h2>
+
+<p>A <em>kernel</em> is a small density profile placed at one observation. Start with a Gaussian of
+mean 0 and width 0.05.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psi</span> <span class="o">=</span> <span class="n">Gaussian</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">xN</span><span class="p">),</span> <span class="s">'o'</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markeredgecolor</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">'none'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">xN</span><span class="p">[</span><span class="n">n</span><span class="p">]),</span> <span class="s">'k'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'kernel contribution'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-4.png" /></center>
+
+<p>Every black curve has the same shape and total mass. Only its centre changes. Their mean is
+the kernel density estimate.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fN</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xN</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ind2color</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fN</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ind2color</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'density'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'true density'</span><span class="p">,</span> <span class="s">'kernel estimate'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-5.png" /></center>
+
+<p>The estimate is smooth, but it is not the true function. Its small peaks record the finite
+sample as well as the two features of the source.</p>
+
+<h2 id="kernel-width-decides-which-detail-survives">Kernel width decides which detail survives</h2>
+
+<p>Repeat the estimate with widths 0.01, 0.05, and 0.25.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">delta</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">delta</span><span class="p">:</span>
+  <span class="n">psiTrial</span> <span class="o">=</span> <span class="n">Gaussian</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">psiTrial</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">xN</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'density'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'$f$'</span><span class="p">,</span> <span class="s">'$f_{0.01}$'</span><span class="p">,</span> <span class="s">'$f_{0.05}$'</span><span class="p">,</span> <span class="s">'$f_{0.25}$'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-6.png" /></center>
+
+<p>The 0.01 estimate retains a noisy peak for almost every observation. The 0.25 estimate
+merges the two source modes and lowers their peaks. The middle curve balances sample-scale
+variation against lost structure. This is the bias–variance trade-off behind kernel
+selection.</p>
+
+<p>For one-dimensional real data, <a href="calcDensity.html">calcDensity</a> selects a smoothing width
+automatically. The estimate carries the width it chose as <code class="language-plaintext highlighter-rouge">bandwidth</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fAuto</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">autoBandwidth</span> <span class="o">=</span> <span class="n">fAuto</span><span class="p">.</span><span class="n">bandwidth</span>
+<span class="n">autoBandwidth</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.0438
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fAuto</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'density'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'true density'</span><span class="p">,</span> <span class="s">'automatic estimate'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-8.png" /></center>
+
+<p>The automatic estimate smooths the sample without reproducing every observation as a
+separate peak. In MATLAB’s draw its left mode sits on the true one at \(x = 0.2\), its right
+mode near \(x = 0.67\), well to the right of the true mode at \(x = 0.5\), and the taller of the
+two; the draw here is another one, so its modes sit elsewhere.</p>
+
+<p>The bandwidth is estimated from the same twenty samples, and twenty samples do not locate
+the broad component of the mixture. Read the estimate as one draw rather than as the density
+itself.</p>
+
+<p>For one-dimensional data, the <code class="language-plaintext highlighter-rouge">bandwidth</code> option fixes the smoothing parameter instead.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fFixed</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mf">0.004</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><a href="OptimalKernel_py.html">Optimal Kernel Selection</a> explains why no single width is best for
+every sample.</p>
+
+<h2 id="the-construction-also-works-in-several-dimensions">The construction also works in several dimensions</h2>
+
+<p>Draw 100 independent pairs whose x and y coordinates follow the same mixture. A row of
+<code class="language-plaintext highlighter-rouge">np.column_stack([xN, yN])</code> is now one two-dimensional observation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">xN</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">yN</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="n">yN</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s">'none'</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'scaled'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'y'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-10.png" /></center>
+
+<p>The sample cloud is concentrated near combinations of the two one-dimensional modes. The
+empty space between points is not assigned zero density; the next step estimates it from
+neighbouring observations.</p>
+
+<p>For \(d\)-dimensional data, the range has one column per coordinate. The first row contains
+the minima, and the second contains the maxima.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fN</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">xN</span><span class="p">,</span> <span class="n">yN</span><span class="p">]),</span> <span class="nb">range</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+
+<span class="n">xGrid</span><span class="p">,</span> <span class="n">yGrid</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">indexing</span><span class="o">=</span><span class="s">'ij'</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">fN</span><span class="p">(</span><span class="n">xGrid</span><span class="p">,</span> <span class="n">yGrid</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xGrid</span><span class="p">,</span> <span class="n">yGrid</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xGrid</span><span class="p">,</span> <span class="n">yGrid</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'LaboTeX'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'scaled'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xN</span><span class="p">,</span> <span class="n">yN</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'r'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'y'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-11.png" /></center>
+
+<p>The estimate is positive everywhere, but most of the square carries very little of it. The
+<code class="language-plaintext highlighter-rouge">LaboTeX</code> colour map starts at white, and most of the grid falls in the lowest contour band,
+so the field reads as a few pink islands on a white ground.</p>
+
+<p>White here means density below the first contour, not zero. The islands sit at the four
+combinations of the two one-dimensional modes. The pair of narrow modes near \(x = 0.2\),
+\(y = 0.2\) is by far the densest, and the pair of broad modes near \(x = 0.5\), \(y = 0.5\) is the
+faintest.</p>
+
+<h2 id="directions-need-kernels-on-the-sphere">Directions need kernels on the sphere</h2>
+
+<p>A directional kernel uses angular distance on the sphere rather than ordinary distance on a
+line. As a crystallographic example, estimate the distribution of misorientation axes along
+one phase boundary population. A misorientation axis is the direction about which one
+crystal must be rotated to match the other.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'forsterite'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span>
+
+<span class="c1"># Select boundaries between forsterite and enstatite grains.
+</span><span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">,</span> <span class="s">'Enstatite'</span><span class="p">]</span>
+<span class="c1"># the axes are taken with respect to the forsterite frame, the first of the misorientation
+</span><span class="n">misAxes</span> <span class="o">=</span> <span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">axis</span><span class="p">()</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">misAxes</span><span class="p">,</span> <span class="n">fundamentalRegion</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerFaceAlpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-12.png" /></center>
+
+<p>Symmetry maps equivalent axes into the same fundamental region. The points cluster instead
+of covering that region uniformly, so a density can summarize their preferred directions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># boundary segments of one grain pair repeat an axis, so the halfwidth is named
+</span><span class="n">axisDensity</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">misAxes</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">contourf</span><span class="p">(</span><span class="n">axisDensity</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'LaboTeX'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">misAxes</span><span class="p">,</span> <span class="n">markerEdgeAlpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'none'</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-13.png" /></center>
+
+<p>The contours join nearby black observations into broad maxima. The result is an
+<code class="language-plaintext highlighter-rouge">S2FunHarmonic</code> with the symmetry of the frame and supports the operations in
+<a href="S2FunOperations_py.html">Spherical Function Operations</a>.</p>
+
+<p>Repeat the calculation with a 5 degree halfwidth.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">axisDensity5</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">misAxes</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">contourf</span><span class="p">(</span><span class="n">axisDensity5</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'LaboTeX'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">misAxes</span><span class="p">,</span> <span class="n">markerEdgeAlpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'none'</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-14.png" /></center>
+
+<p>The smaller halfwidth keeps narrower, more fragmented maxima around the observations. That
+extra detail is not automatically extra information; it may be sampling variation.</p>
+
+<h2 id="orientations-need-kernels-in-orientation-space">Orientations need kernels in orientation space</h2>
+
+<p>Applying the construction to orientations produces an <em>orientation distribution function</em>
+(ODF). An ODF is a density over the possible crystal orientations of one phase in the
+specimen.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">forsteriteOri</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">].</span><span class="n">orientations</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">forsteriteOri</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">odf</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Forsterite → y↑→x)
+  bandwidth: 25
+  mean     : 1
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSection</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'LaboTeX'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">forsteriteOri</span><span class="p">,</span> <span class="n">markerEdgeAlpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'none'</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plot 2000 random orientations out of 152345 given orientations
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/DensityEstimation-16.png" /></center>
+
+<p>Each section cuts through the continuous ODF. The black measurements concentrate around the
+same section maxima, while the kernel fills the space between them.
+<a href="EBSD2ODF_py.html">ODF Estimation from EBSD Data</a> treats phase selection, correlated EBSD
+pixels, and ODF interpretation in detail.</p>
+
+<h2 id="weights-decide-what-population-the-density-describes">Weights decide what population the density describes</h2>
+
+<p>A weighted sample gives some observations more mass than others. Grain orientations make
+the physical choice clear. Equal weights answer “what fraction of grains has this
+orientation?” Pixel-count weights approximate “what fraction of the mapped area has this
+orientation?”</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'titanium'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span>
+<span class="n">indexedGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">]</span>
+
+<span class="c1"># one halfwidth for both, MATLAB's default, so that only the weights differ
+</span><span class="n">odfEqual</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">indexedGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">odfByPixel</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">indexedGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">indexedGrains</span><span class="p">.</span><span class="n">numPixel</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">weighting</span> <span class="o">=</span> <span class="p">[</span><span class="s">'equal grains'</span><span class="p">,</span> <span class="s">'grain pixel count'</span><span class="p">]</span>
+<span class="n">peakMRD</span> <span class="o">=</span> <span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">odfEqual</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="p">(</span><span class="n">odfByPixel</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">weighting</span><span class="p">,</span> <span class="n">peakMRD</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="o">&lt;</span><span class="mi">20</span><span class="si">}{</span><span class="n">p</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>equal grains        7.4525
+grain pixel count   9.0181
+</code></pre></div></div>
+
+<p>The unequal peaks, 7.6274 and 8.9863 mrd in MATLAB, show that weighting changes the
+estimated population, not just the plotting style. On a regular map, pixel count is
+proportional to mapped area. State the sampling unit before interpreting an ODF.</p>
+
+<h2 id="parametric-estimation-answers-a-different-question">Parametric estimation answers a different question</h2>
+
+<p>Kernel estimation assumes smoothness but does not prescribe one global shape. <em>Parametric
+density estimation</em> instead assumes that the unknown density belongs to a chosen family and
+estimates that family’s parameters.</p>
+
+<p>For a Gaussian, those parameters are the mean and standard deviation. The analogous models
+on spheres and in orientation space are Bingham distributions. See
+<a href="S2Bingham_py.html">Spherical Bingham Distribution</a> and <a href="BinghamODFs_py.html">Bingham ODFs</a> for
+fitting and checking those models.</p>
+
+<h2 id="the-maths-behind-kernel-density-estimation">The maths behind kernel density estimation</h2>
+
+<p>For equally weighted samples \(x_1,\ldots,x_N\) and a normalized kernel \(\psi\), the estimate
+is</p>
+
+\[f_N(x) = \frac{1}{N} \sum_{n=1}^N \psi(x-x_n).\]
+
+<p>Each observation contributes the same total mass. The kernel decides how far that mass
+spreads. For non-negative weights \(w_n\), MTEX replaces the equal average by a normalized
+weighted sum.</p>
+
+<p>On the rotation group, let \(o_n\) be orientations and let \(\psi\) be a radially symmetric
+kernel. The weighted ODF estimate is</p>
+
+\[f(o) = \frac{1}{\sum_{j=1}^{N} w_j} \sum_{n=1}^{N} w_n \psi(o o_n^{-1}).\]
+
+<p>MTEX also accounts for the symmetry-equivalent representatives carried by each
+orientation. Different phases generally have different crystal symmetries, so estimate an
+EBSD-derived ODF from one selected phase at a time. <a href="SO3Kernels_py.html">Kernels on SO(3)</a>
+compares the kernel families.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>
+    <p>Z. I. Botev, J. F. Grotowski, and D. P. Kroese,
+<a href="https://doi.org/10.1214/10-AOS799">Kernel density estimation via diffusion</a>,
+<em>The Annals of Statistics</em> 38 (2010), 2916–2957, gives the automatic estimator used by
+<code class="language-plaintext highlighter-rouge">calcDensity</code> for one-dimensional real data.</p>
+  </li>
+  <li>
+    <p>R. Hielscher, <a href="https://doi.org/10.1016/j.jmva.2013.03.014">Kernel density estimation on the rotation group and its application to
+crystallographic texture analysis</a>,
+<em>Journal of Multivariate Analysis</em> 119 (2013), 119–143, derives the orientation-space
+estimator and its fast algorithms.</p>
+  </li>
+  <li>
+    <p>C. Bingham, <a href="https://doi.org/10.1214/aos/1176342874">An antipodally symmetric distribution on the
+sphere</a>, <em>The Annals of Statistics</em> 2 (1974),
+1201–1225, introduces the parametric directional model used here as the alternative to a
+kernel estimate.</p>
+  </li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="OptimalKernel_py.html">Optimal Kernel Selection</a> turns the visual bias–variance trade-off
+into practical choices for directional and orientation data. It also explains when
+automatic selection is reliable.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/DensityEstimation_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

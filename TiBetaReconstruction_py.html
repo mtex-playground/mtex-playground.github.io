@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Parent Beta Phase Reconstruction in Titanium Alloys | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/TiBetaReconstruction_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/TiBetaReconstruction_py.html#page",
+      "name": "Parent Beta Phase Reconstruction in Titanium Alloys",
+      "headline": "Parent Beta Phase Reconstruction in Titanium Alloys",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/TiBetaReconstruction_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/TiBetaReconstruction_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/TiBetaReconstruction_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Parent Beta Phase Reconstruction in Titanium Alloys</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/TiBetaReconstruction.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/PhaseTransitions/TiBetaReconstruction.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>This page reconstructs the former beta-grain map of a titanium alloy from a nearly complete
+alpha-phase EBSD map. It continues the Burgers-variant example in
+<a href="ParentChildVariants_py.html">Parent and Child Variants</a> and uses the reconstruction ideas
+prepared by <a href="MartensiteVariants_py.html">Martensite Variants</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'alphaBetaTitanium'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># plot the measured alpha phase with inverse pole figure colours
+</span><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (alpha)'</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (alpha)'</span><span class="p">].</span><span class="n">orientations</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TiBetaReconstruction-1.png" /></center>
+
+<p>The map contains 99.8% alpha titanium and 0.2% beta titanium among its indexed
+measurements. The goal is to recover the original beta phase.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">phaseFraction</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (alpha)'</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (beta)'</span><span class="p">])])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">])</span>
+<span class="n">phaseFraction</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([99.7653,  0.2347])
+</code></pre></div></div>
+
+<p>The former beta-grain structure is almost visible by eye. Groups of alpha regions with
+related colours form larger blocks, but colour alone does not decide which regions came
+from the same beta grain.</p>
+
+<h2 id="set-the-parent-to-child-relationship">Set the parent-to-child relationship</h2>
+
+<p>We use the Burgers OR introduced on the first page. It aligns a beta \((110)\) plane with an
+alpha \((0001)\) plane and a beta \([1\bar{1}1]\) direction with an alpha \([\bar{2}110]\)
+direction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">beta2alpha</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">Burgers</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (beta)'</span><span class="p">].</span><span class="n">CS</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (alpha)'</span><span class="p">].</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">beta2alpha</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>misorientation (Ti (BETA) → Ti (alpha))
+  (110) || (0001)   [1̅11̅] || [21̅1̅0]
+</code></pre></div></div>
+
+<p>Every parent grain reconstruction method expects the OR in the parent-to-child direction.
+Passing its inverse would make all candidate parent orientations wrong even though their
+number still looked plausible.</p>
+
+<h2 id="segment-the-child-grains">Segment the child grains</h2>
+
+<p>A grain is a phase-homogeneous, spatially connected region of EBSD pixels produced by
+segmentation. A small angular threshold keeps alpha regions from different beta grains
+separate at this stage.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">removeQuadruplePoints</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The 1.5-degree threshold is deliberately small. If two alpha orientations from different
+beta grains were merged now, reconstruction could not separate them later.</p>
+
+<h2 id="set-up-the-reconstruction-job">Set up the reconstruction job</h2>
+
+<p>A <a href="parentGrainReconstructor.parentGrainReconstructor.html"><code class="language-plaintext highlighter-rouge">parentGrainReconstructor</code></a>
+stores the input, the current reconstruction, and the relation between them. Assigning
+<code class="language-plaintext highlighter-rouge">p2c</code> tells it which phase is the parent and which phase is the child.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job</span> <span class="o">=</span> <span class="n">parentGrainReconstructor</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">grains</span><span class="p">)</span>
+<span class="n">job</span><span class="p">.</span><span class="n">p2c</span> <span class="o">=</span> <span class="n">beta2alpha</span>
+<span class="n">job</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parentGrainReconstructor
+
+  phase   mineral     symmetry  grains  area   reconstructed
+  parent  Ti (BETA)   432       428     0.23%  0%           
+  child   Ti (alpha)  622       45804   100%                
+
+ OR: (110) || (0001)   [1̅11̅] || [21̅1̅0]
+   p2c fit: 0.82°, 1.2°, 1.6°, 3.1° (quintiles)
+   c2c fit: 0.71°, 1°, 1.3°, 1.8° (quintiles)
+</code></pre></div></div>
+
+<p>The displayed <code class="language-plaintext highlighter-rouge">job</code> summary reports the current parent and child grain counts, areas, and
+reconstructed fraction. The most useful properties are grouped below.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">job.grainsPrior</code> and <code class="language-plaintext highlighter-rouge">job.ebsdPrior</code> preserve the input grains and EBSD data.</li>
+  <li><code class="language-plaintext highlighter-rouge">job.grains</code> and <code class="language-plaintext highlighter-rouge">job.ebsd</code> expose the current grains and reconstructed EBSD data.</li>
+  <li><code class="language-plaintext highlighter-rouge">job.mergeId</code> maps each input grain <code class="language-plaintext highlighter-rouge">job.grainsPrior[ind]</code> to the current grain with the
+id <code class="language-plaintext highlighter-rouge">job.mergeId[ind]</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">job.numChildren</code> counts the input grains represented by each current grain.</li>
+  <li><code class="language-plaintext highlighter-rouge">job.parentGrains</code> and <code class="language-plaintext highlighter-rouge">job.childGrains</code> select the current parent and child grains.</li>
+  <li><code class="language-plaintext highlighter-rouge">job.isTransformed</code> marks input child grains assigned a parent orientation.</li>
+  <li><code class="language-plaintext highlighter-rouge">job.isMerged</code> marks input grains that have been combined into a current grain.</li>
+  <li><code class="language-plaintext highlighter-rouge">job.transformedGrains</code> selects the input child grains with a computed parent orientation.</li>
+</ul>
+
+<p>The class also provides several reconstruction routes and cleanup operations.</p>
+
+<ul>
+  <li><a href="parentGrainReconstructor.calcVariantGraph.html"><code class="language-plaintext highlighter-rouge">calcVariantGraph</code></a> constructs a variant
+graph.</li>
+  <li><a href="parentGrainReconstructor.clusterVariantGraph.html"><code class="language-plaintext highlighter-rouge">clusterVariantGraph</code></a> converts graph
+clusters into parent votes.</li>
+  <li><a href="parentGrainReconstructor.calcGBVotes.html"><code class="language-plaintext highlighter-rouge">calcGBVotes</code></a> obtains votes from child-child
+and parent-child grain boundaries.</li>
+  <li><a href="parentGrainReconstructor.calcTPVotes.html"><code class="language-plaintext highlighter-rouge">calcTPVotes</code></a> obtains votes from
+child-child-child triple points.</li>
+  <li><a href="parentGrainReconstructor.calcParentFromVote.html"><code class="language-plaintext highlighter-rouge">calcParentFromVote</code></a> transforms grains
+selected by votes.</li>
+  <li><a href="parentGrainReconstructor.calcParentFromGraph.html"><code class="language-plaintext highlighter-rouge">calcParentFromGraph</code></a> transforms and
+merges graph clusters.</li>
+  <li><a href="parentGrainReconstructor.mergeSimilar.html"><code class="language-plaintext highlighter-rouge">mergeSimilar</code></a> merges neighbouring parent
+grains with similar orientations.</li>
+  <li><a href="parentGrainReconstructor.mergeInclusions.html"><code class="language-plaintext highlighter-rouge">mergeInclusions</code></a> merges small enclosed
+grains into parent hosts.</li>
+</ul>
+
+<p>These operations can be repeated while refining a reconstruction. They are not arbitrary in
+order: graph clustering needs a graph, and vote-based transformation needs votes.</p>
+
+<h2 id="build-the-variant-graph">Build the variant graph</h2>
+
+<p>A <em>variant graph</em> has one node for every combination of child grain and candidate parent
+variant. Its edges connect compatible candidate variants of neighbouring grains.</p>
+
+<p><a href="parentGrainReconstructor.calcVariantGraph.html"><code class="language-plaintext highlighter-rouge">calcVariantGraph</code></a> converts angular fit
+into edge probability. Here 1.5 degrees is the misfit at which the default probability
+model gives an edge weight of one half.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job</span><span class="p">.</span><span class="n">calcVariantGraph</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">job</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parentGrainReconstructor
+
+  phase   mineral     symmetry  grains  area   reconstructed
+  parent  Ti (BETA)   432       428     0.23%  0%           
+  child   Ti (alpha)  622       45804   100%                
+
+ OR: (110) || (0001)   [1̅11̅] || [21̅1̅0]
+   p2c fit: 0.82°, 1.2°, 1.6°, 3.1° (quintiles)
+   c2c fit: 0.71°, 1°, 1.3°, 1.8° (quintiles)
+
+ variant graph: 546482 entries
+</code></pre></div></div>
+
+<h2 id="cluster-candidate-variants">Cluster candidate variants</h2>
+
+<p><a href="parentGrainReconstructor.clusterVariantGraph.html"><code class="language-plaintext highlighter-rouge">clusterVariantGraph</code></a> propagates
+compatibility through the graph. Three iterations produce probabilities for the candidate
+parents of each child grain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job</span><span class="p">.</span><span class="n">clusterVariantGraph</span><span class="p">(</span><span class="n">numIter</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">job</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parentGrainReconstructor
+
+  phase   mineral     symmetry  grains  area   reconstructed
+  parent  Ti (BETA)   432       428     0.23%  0%           
+  child   Ti (alpha)  622       45804   100%                
+
+ OR: (110) || (0001)   [1̅11̅] || [21̅1̅0]
+   p2c fit: 0.82°, 1.2°, 1.6°, 3.1° (quintiles)
+   c2c fit: 0.71°, 1°, 1.3°, 1.8° (quintiles)
+
+ votes: 45804 × 1
+   probabilities: 100%, 99%, 98%, 93% (quintiles)
+</code></pre></div></div>
+
+<p>The rows of <code class="language-plaintext highlighter-rouge">job.votes.prob</code> contain the candidate probabilities. The matching columns of
+<code class="language-plaintext highlighter-rouge">job.votes.parentId</code> contain their parent-variant IDs. The first column is the
+highest-ranked candidate for each grain.</p>
+
+<h2 id="transform-child-grains-to-candidate-parents">Transform child grains to candidate parents</h2>
+
+<p><em>Transform</em> is the first reconstruction step. Each selected child grain is assigned one
+candidate parent orientation and changes from the child phase to the parent phase.</p>
+
+<p><a href="parentGrainReconstructor.calcParentFromVote.html"><code class="language-plaintext highlighter-rouge">calcParentFromVote</code></a> accepts the
+highest-probability candidate here.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job</span><span class="p">.</span><span class="n">calcParentFromVote</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+
+<span class="n">reconstructedFraction</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">isTransformed</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">grainsPrior</span><span class="p">.</span><span class="n">phaseId</span> <span class="o">==</span> <span class="n">job</span><span class="p">.</span><span class="n">childPhaseId</span><span class="p">)</span>
+<span class="n">reconstructedFraction</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parentGrainReconstructor
+
+  phase   mineral     symmetry  grains  area  reconstructed
+  parent  Ti (BETA)   432       44447   99%   96%          
+  child   Ti (alpha)  622       1785    1.1%               
+
+ OR: (110) || (0001)   [1̅11̅] || [21̅1̅0]
+   p2c fit: 3.1°, 20°, 35°, 42° (quintiles)
+   c2c fit: 2.1°, 4.6°, 9.8°, 19° (quintiles)
+
+ votes: 1785 × 1
+   probabilities: 0%, 0%, 0%, 0% (quintiles)
+96.1030
+</code></pre></div></div>
+
+<p>At this stage, 96.10% of the input child grains have parent orientations.</p>
+
+<p>The displayed fraction reaches 99% after the inclusion cleanup below. Neighbouring
+candidates have not yet all been merged into their shared beta-grain footprints.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># define a beta-phase IPF colour key
+</span><span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (Beta)'</span><span class="p">])</span>
+<span class="n">ipfKey</span><span class="p">.</span><span class="n">ipfDirection</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">Y</span>
+
+<span class="c1"># plot the transformed beta grains
+</span><span class="n">parentColor</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">parentGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">parentGrains</span><span class="p">,</span> <span class="n">parentColor</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TiBetaReconstruction-9.png" /></center>
+
+<p>The map now contains many small regions with almost identical colours. Those regions are
+compatible parent candidates that still need the merge step.</p>
+
+<h2 id="merge-similar-parent-grains">Merge similar parent grains</h2>
+
+<p><em>Merge</em> is the second reconstruction step. Neighbouring transformed grains with compatible
+parent orientations are combined into one grain footprint.</p>
+
+<p><a href="parentGrainReconstructor.mergeSimilar.html"><code class="language-plaintext highlighter-rouge">mergeSimilar</code></a> uses an angular threshold.
+Here neighbours within 5 degrees are treated as one parent grain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job</span><span class="p">.</span><span class="n">mergeSimilar</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+
+<span class="n">parentColor</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">parentGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">parentGrains</span><span class="p">,</span> <span class="n">parentColor</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parentGrainReconstructor
+
+  phase   mineral     symmetry  grains  area  reconstructed
+  parent  Ti (BETA)   432       122     99%   96%          
+  child   Ti (alpha)  622       1742    1.1%               
+
+ OR: (110) || (0001)   [1̅11̅] || [21̅1̅0]
+   p2c fit: 3.2°, 19°, 35°, 41° (quintiles)
+   c2c fit: 4°, 9.2°, 17°, 22° (quintiles)
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TiBetaReconstruction-10.png" /></center>
+
+<p>The many similarly coloured fragments have coalesced into a small number of large beta
+grains. Their remaining enclosed specks require a separate topological cleanup.</p>
+
+<h2 id="merge-small-inclusions">Merge small inclusions</h2>
+
+<p>An inclusion is a grain entirely enclosed by another grain. Some small child grains remain
+as inclusions because no parent orientation was assigned to them confidently.</p>
+
+<p><a href="parentGrainReconstructor.mergeInclusions.html"><code class="language-plaintext highlighter-rouge">mergeInclusions</code></a> merges inclusions of at
+most 10 pixels into their surrounding parent grains.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">job</span><span class="p">.</span><span class="n">mergeInclusions</span><span class="p">(</span><span class="n">maxSize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+
+<span class="n">parentColor</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">parentGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">parentGrains</span><span class="p">,</span> <span class="n">parentColor</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>parentGrainReconstructor
+
+  phase   mineral     symmetry  grains  area  reconstructed
+  parent  Ti (BETA)   432       41      100%  99%          
+  child   Ti (alpha)  622       223     0.2%               
+
+ OR: (110) || (0001)   [1̅11̅] || [21̅1̅0]
+   p2c fit: 3.3°, 5.6°, 16°, 31° (quintiles)
+   c2c fit: 4.7°, 8.9°, 15°, 20° (quintiles)
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TiBetaReconstruction-11.png" /></center>
+
+<p>The large parent-grain shapes remain, while the small enclosed fragments no longer interrupt
+them. This operation changes topology rather than choosing another orientation variant.</p>
+
+<h2 id="reconstruct-a-parent-orientation-at-every-pixel">Reconstruct a parent orientation at every pixel</h2>
+
+<p>So far, parent orientations have been stored as grain means.
+<a href="parentGrainReconstructor.calcParentEBSD.html"><code class="language-plaintext highlighter-rouge">calcParentEBSD</code></a> transfers the
+reconstruction to an EBSD variable and assigns a parent orientation to every transformed
+child pixel.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">parentEBSD</span> <span class="o">=</span> <span class="n">job</span><span class="p">.</span><span class="n">calcParentEBSD</span><span class="p">()</span>
+
+<span class="n">parentColor</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">parentEBSD</span><span class="p">[</span><span class="s">'Ti (Beta)'</span><span class="p">].</span><span class="n">orientations</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">parentEBSD</span><span class="p">[</span><span class="s">'Ti (Beta)'</span><span class="p">],</span> <span class="n">parentColor</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TiBetaReconstruction-12.png" /></center>
+
+<p>The pixel map is piecewise consistent with the reconstructed grain map. It can now be
+analysed with ordinary EBSD tools while retaining the reconstructed beta phase and parent
+grain IDs.</p>
+
+<h2 id="check-the-per-pixel-reconstruction-fit">Check the per-pixel reconstruction fit</h2>
+
+<p><code class="language-plaintext highlighter-rouge">parentEBSD.fit</code> is a per-pixel property. It is the angular mismatch between the measured
+alpha orientation and the child variant predicted from its reconstructed beta-grain
+orientation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fitDegree</span> <span class="o">=</span> <span class="n">parentEBSD</span><span class="p">[</span><span class="s">'Ti (Beta)'</span><span class="p">].</span><span class="n">fit</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">fitQuantiles</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">nanquantile</span><span class="p">(</span><span class="n">fitDegree</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="p">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">fitDegree</span><span class="p">)],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fitQuantiles</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">parentEBSD</span><span class="p">,</span> <span class="n">parentEBSD</span><span class="p">.</span><span class="n">fit</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+<span class="n">setColorRange</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'LaboTeX'</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[1.1865 2.1077 3.6095]
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TiBetaReconstruction-13.png" /></center>
+
+<p>Low values indicate pixels consistent with the assigned Burgers variant. The median is 1.19
+degrees, 90% are below 2.10 degrees, and 99% are below 3.58 degrees.</p>
+
+<p>The black outlines show whether larger mismatches collect at reconstructed parent
+boundaries rather than filling a grain interior.</p>
+
+<h2 id="compare-reconstructed-boundaries-with-the-child-map">Compare reconstructed boundaries with the child map</h2>
+
+<p>The final plot returns to the measured alpha orientations. White lines show the smoothed
+reconstructed beta-grain boundaries.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (Alpha)'</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Ti (Alpha)'</span><span class="p">].</span><span class="n">orientations</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">parentGrains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">job</span><span class="p">.</span><span class="n">parentGrains</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">parentGrains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'White'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/TiBetaReconstruction-14.png" /></center>
+
+<p>The white boundaries enclose the large alpha-variant groups that were only hinted at by
+colour in the first map. The overlay is the final visual check that graph compatibility
+recovered the structure visible by eye.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>F. Niessen, T. Nyyssönen, A. A. Gazder, and R. Hielscher,
+<a href="https://doi.org/10.1107/S1600576721011560">Parent grain reconstruction from partially or fully transformed microstructures in MTEX</a>,
+<em>Journal of Applied Crystallography</em> 55 (2022), 180-194, defines the generic MTEX
+reconstruction framework and the <code class="language-plaintext highlighter-rouge">parentGrainReconstructor</code> class.</li>
+  <li>R. Hielscher, T. Nyyssönen, F. Niessen, and A. A. Gazder,
+<a href="https://doi.org/10.1016/j.mtla.2022.101399">The variant graph approach to improved parent grain reconstruction</a>,
+<em>Materialia</em> 22 (2022), 101399, gives the graph construction and clustering algorithm
+used here.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="MaParentGrainReconstruction_py.html">Parent Austenite Reconstruction</a> for a
+steel workflow that first fits the OR and then combines variant-graph reconstruction with
+further cleanup strategies.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/TiBetaReconstruction_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

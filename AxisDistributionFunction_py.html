@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Axis Distribution Function | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/AxisDistributionFunction_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/AxisDistributionFunction_py.html#page",
+      "name": "Axis Distribution Function",
+      "headline": "Axis Distribution Function",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/AxisDistributionFunction_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/AxisDistributionFunction_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/AxisDistributionFunction_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","AxisDistributionFunction","BoundaryMisorientations","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","ClusterDemo","Contribute2Doc","CrystalDirections","CrystalShapes","CrystalSymmetries","DensityEstimation","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDDenoising","EBSDExport","EBSDGROD","EBSDIPFMap","EBSDImport","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPlotting","EBSDProfile","EBSDReferenceFrame","EBSDSelect","EBSDTutorial","EllipseBasedParameters","GND","GrainExport","GrainGraphBasedReconstruction","GrainOrientationParameters","GrainReconstruction","GrainTutorial","Grain_dispersion_axes","Grains3D","Lankford","MATLABtoPython","MTEXScripts","MaParentGrainReconstruction","MartensiteVariants","MisorientationTheory","ODFModeling","ODFTheory","ODFTutorial","OptimalKernel","OrientationFundamentalRegion","OrientationInversePoleFigure","PhaseTransitions","PlotTypes","PoleFigure2ODF","PoleFigureDefocusing","PoleFigureDubna","PoleFigurePlot","PoleFigureSantaFe","PoleFigureTutorial","Properties","RandomSampling","RotationDefinition","RotationRepresentations","S2FunConcept","S2FunPlotting","SO3FunConcept","SchmidFactor","ShapeParameters","SigmaSections","SlipSystems","SlipTransmission","SubGrainBoundaries","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TiBetaReconstruction","TiltAndTwistBoundaries","TransparencyDemo","Twinning","TwinningBoundaries","VectorDefinition","VectorsDensityEstimation","WBV","WaveVelocities","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Axis Distribution Function</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/AxisDistributionFunction.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/Misorientations/AxisDistributionFunction.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A misorientation has an axis and an angle. The <em>axis distribution function</em> (ADF) keeps
+the crystal direction about which the rotation occurs and integrates out the angle. It is
+the spherical counterpart of the <a href="AngleDistributionFunction_py.html">angle distribution</a> and
+a marginal of the <a href="MisorientationDistributionFunction_py.html">misorientation distribution function</a>
+(MDF).</p>
+
+<p>MTEX represents an ADF by an <a href="S2FunConcept_py.html">S2Fun</a>. Start with
+<a href="MisorientationTheory_py.html">Theory of Misorientations</a> if symmetry-equivalent rotations
+and the fundamental region are unfamiliar. The kernel smoothing used below is introduced
+in <a href="DensityEstimation_py.html">Density Estimation</a>.</p>
+
+<h2 id="the-axis-distribution-of-random-orientations">The axis distribution of random orientations</h2>
+
+<p>Random crystal orientations do <em>not</em> produce a constant ADF. Crystal symmetry restricts
+every misorientation to a fundamental region. The largest permitted angle depends on the
+axis direction, so some axes represent more rotations than others.</p>
+
+<p>calcAxisDistribution computes this
+symmetry-only reference. Point group <code class="language-plaintext highlighter-rouge">432</code> gives the cubic example.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'432'</span><span class="p">)</span>
+
+<span class="n">adf</span> <span class="o">=</span> <span class="n">calcAxisDistribution</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span>
+<span class="n">adf</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S2FunHandle (432)
+  bandwidth hint: 128
+  antipodal     : true
+</code></pre></div></div>
+
+<p>Like any spherical function, <code class="language-plaintext highlighter-rouge">adf</code> can be plotted, evaluated, and integrated. The
+convenience command <a href="plotAxisDistribution.html">plotAxisDistribution</a> draws the same
+density. Passing both symmetries describes a same-phase pair, while <code class="language-plaintext highlighter-rouge">antipodal</code> applies
+<a href="MisorientationGrainExchangeSym_py.html">grain exchange symmetry</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotAxisDistribution</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/AxisDistributionFunction-2.png" /></center>
+
+<p>The light \([001]\) corner is the minimum. The red band towards the \([101]\)– \([111]\) edge
+is more probable because the fundamental region extends to larger angles there.</p>
+
+<p>MTEX normalizes a density to have mean one. The numerical range and its ratio quantify
+the variation visible in the colour scale.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">uniformRange</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">adf</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">max</span><span class="p">(</span><span class="n">adf</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">uniformRatio</span> <span class="o">=</span> <span class="n">uniformRange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">uniformRange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">uniformRange</span><span class="p">,</span> <span class="n">uniformRatio</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(array([0.5981, 1.5784]), 2.6390297639148077)
+</code></pre></div></div>
+
+<p>The density runs from 0.597 to 1.565 multiples of the mean, a factor of 2.620. A measured
+ADF must therefore be compared with this reference, not with a constant.</p>
+
+<h2 id="the-axis-distribution-of-boundary-misorientations">The axis distribution of boundary misorientations</h2>
+
+<p>A grain is a phase-homogeneous, spatially connected region of EBSD pixels produced by
+segmentation. A grain boundary is a segment between two neighbouring pixels that belong to
+different grains. Load the magnesium map, segment its indexed pixels at \(5^\circ\), and
+smooth the boundary geometry for five iterations. The plotting convention states the
+specimen frame used by this data set.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'twins'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># retain boundaries between magnesium grains
+</span><span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'Magnesium'</span><span class="p">,</span> <span class="s">'Magnesium'</span><span class="p">]</span>
+<span class="n">mori</span> <span class="o">=</span> <span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span>
+</code></pre></div></div>
+
+<p><a href="orientation.axis.html">axis</a> selects the smallest-angle symmetry-equivalent
+representative and returns its axis in the crystal frame. The summary reports one axis
+for each of the 2803 boundary segments.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">axesCrystal</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">mori</span><span class="p">)</span>
+<span class="n">axesCrystal</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (Magnesium)
+  size: 2808
+       h       k        i       l
+  2.2869  0.7481   -3.035  0.8841
+  2.2657  0.7759  -3.0416  0.8978
+  1.6211  1.5877  -3.2088  0.0292
+  1.6054  1.6034  -3.2089  0.0142
+  1.5557  0.0844  -1.6401  4.2605
+       ⋮       ⋮        ⋮       ⋮
+  1.6377  1.5704  -3.2081  0.0986
+   1.656  1.5521  -3.2081  0.0642
+  1.6592  1.5489  -3.2081  0.0483
+  1.6592  1.5489  -3.2081  0.0483
+  1.6054   1.603  -3.2084  0.0944
+</code></pre></div></div>
+
+<p>Each boundary segment contributes once by default. Passing its <code class="language-plaintext highlighter-rouge">segLength</code> as a weight
+instead estimates a distribution by boundary trace length. The \(5^\circ\) <code class="language-plaintext highlighter-rouge">halfwidth</code>
+controls the spherical kernel smoothing.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotAxisDistribution</span><span class="p">(</span><span class="n">mori</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">gB</span><span class="p">.</span><span class="n">segLength</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/AxisDistributionFunction-6.png" /></center>
+
+<p>The isolated maximum is the extension-twin prism axis. Computing the underlying spherical
+density returns a peak of 30.8 multiples of the mean and prints the indexed direction at
+that peak.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">peakDensity</span><span class="p">,</span> <span class="n">twinAxis</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">calcDensity</span><span class="p">(</span><span class="n">axesCrystal</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">gB</span><span class="p">.</span><span class="n">segLength</span><span class="p">))</span>
+
+<span class="n">peakDensity</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>30.8638
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">indexedTwinAxis</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">twinAxis</span><span class="p">)</span>
+<span class="n">indexedTwinAxis</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (Magnesium)
+  antipodal: true
+  h   k   i  l
+  2  -1  -1  0
+</code></pre></div></div>
+
+<h2 id="the-symmetry-only-reference-for-magnesium">The symmetry-only reference for magnesium</h2>
+
+<p>Use the two symmetries stored with the misorientation to plot the random reference for
+the same problem.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotAxisDistribution</span><span class="p">(</span><span class="n">mori</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">mori</span><span class="p">.</span><span class="n">SS</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/AxisDistributionFunction-9.png" /></center>
+
+<p>This reference is not essentially flat. It has the broad variation caused by hexagonal
+symmetry, but it has no isolated peak at the twin axis. The comparison separates a
+preferred boundary relationship from the geometry of the misorientation fundamental
+region.</p>
+
+<p>An ADF has discarded the angle, so an axis peak alone does not identify a twin law.
+Confirm the complete misorientation against the ideal relation, as in <a href="Twinning_py.html">Twinning</a>.</p>
+
+<h2 id="crystal-versus-specimen-coordinates">Crystal versus specimen coordinates</h2>
+
+<p>A reference frame is the coordinate system in which data are expressed; it is distinct
+from the symmetry attached to it. The crystal frame is fixed to the lattice, whereas the
+specimen frame is fixed to the sample. The crystal-coordinate ADF above asks which
+lattice direction is the axis.</p>
+
+<p>Passing two orientations separately to <code class="language-plaintext highlighter-rouge">plotAxisDistribution</code> asks where that axis points
+in the specimen frame. The two EBSD ids stored for every segment recover the orientations
+on its two sides. A segment that smoothing simplified or resampled no longer runs between
+one pair of pixels, and the port leaves its ids empty, so the pairs are read from the
+boundaries smoothed without those two stages, as the help of <code class="language-plaintext highlighter-rouge">smoothBoundary</code> advises.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gBp</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">refine</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">gBp</span> <span class="o">=</span> <span class="n">gBp</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'Magnesium'</span><span class="p">,</span> <span class="s">'Magnesium'</span><span class="p">]</span>
+<span class="n">ori1</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="n">gBp</span><span class="p">.</span><span class="n">ebsdId</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]].</span><span class="n">orientations</span>
+<span class="n">ori2</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="n">gBp</span><span class="p">.</span><span class="n">ebsdId</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]].</span><span class="n">orientations</span>
+
+<span class="n">plotAxisDistribution</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span> <span class="n">ori2</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">gBp</span><span class="p">.</span><span class="n">segLength</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/AxisDistributionFunction-10.png" /></center>
+
+<p>The directed axes occupy the full sphere because the stored first and second sides fix an
+order and the specimen symmetry is trivial. The single crystal direction becomes several
+specimen-frame clusters because each grain carries that lattice direction into a
+different sample direction.</p>
+
+<p>For an unordered same-phase population, add <code class="language-plaintext highlighter-rouge">antipodal</code> to identify opposite specimen
+directions. <a href="TiltAndTwistBoundaries_py.html">Tilt and Twist Boundaries</a> uses the
+specimen-coordinate axis to classify boundaries.</p>
+
+<h2 id="the-texture-dependent-uncorrelated-reference">The texture-dependent uncorrelated reference</h2>
+
+<p>There are three distinct comparisons. The measured boundary ADF is correlated because its
+grains touch. A symmetry-only ADF assumes random orientations. Between them lies the
+<em>uncorrelated</em> ADF predicted by the measured texture when grain orientations are paired
+independently.</p>
+
+<p>Estimate the magnesium ODF from grain mean orientations. Area weights make this a
+sampled-area texture rather than a one-grain-one-vote texture. The <code class="language-plaintext highlighter-rouge">Fourier</code> flag selects
+the harmonic representation used efficiently by <a href="SO3Fun.calcMDF.html">calcMDF</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mgGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[</span><span class="s">'Magnesium'</span><span class="p">]</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">mgGrains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">mgGrains</span><span class="p">.</span><span class="n">area</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">Fourier</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mdf</span> <span class="o">=</span> <span class="n">calcMDF</span><span class="p">(</span><span class="n">odf</span><span class="p">)</span>
+
+<span class="n">adfTexture</span> <span class="o">=</span> <span class="n">calcAxisDistribution</span><span class="p">(</span><span class="n">mdf</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">adfTexture</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/AxisDistributionFunction-11.png" /></center>
+
+<p>The texture-dependent reference has broad symmetry-related maxima, but it lacks the
+boundary distribution’s sharp twin-axis peak. Texture alone, under independent pairing,
+therefore does not explain that boundary population.</p>
+
+<h2 id="axis-and-angle-remain-coupled-in-the-mdf">Axis and angle remain coupled in the MDF</h2>
+
+<p>The ADF and angle distribution are separate marginals. Peaks in the two plots need not
+belong to the same misorientations, and the two marginals cannot reconstruct the full
+MDF.</p>
+
+<p>For an MDF \(f(\mathbf{h},\omega)\), MTEX evaluates the full-angle ADF as</p>
+
+\[A(\mathbf{h}) = \frac{2N}{\pi}\int_0^{\omega_{\max}(\mathbf{h})}
+f(\mathbf{h},\omega)\sin^2(\omega/2)\,\mathrm{d}\omega.\]
+
+<p>Here \(\mathbf{h}\) is the axis, \(\omega\) is the angle, and \(N\) accounts for the symmetry
+copies represented by the fundamental region. The upper limit \(\omega_{\max}(\mathbf{h})\)
+is why a uniform MDF has a non-constant ADF.</p>
+
+<p><a href="SO3Fun.calcAxisDistribution.html">calcAxisDistribution</a> accepts <code class="language-plaintext highlighter-rouge">minAngle</code> and
+<code class="language-plaintext highlighter-rouge">maxAngle</code> to study an angle window. Its <code class="language-plaintext highlighter-rouge">resolution</code> option is the angular quadrature
+step; reduce it when a narrow window must be integrated to better than percent accuracy.</p>
+
+<p>The axis-angle description is singular at zero angle. Small orientation errors can
+therefore produce large axis errors for low-angle rotations. Restrict the angle range
+before interpreting a low-angle axis maximum.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>A. Morawiec, <a href="https://doi.org/10.1107/S0108767396015115">Distributions of Misorientation Angles and Misorientation Axes for Crystallites with Different Symmetries</a>,
+<em>Acta Crystallographica A</em> 53 (1997), 273–285.</li>
+  <li>F. Basson, <a href="https://doi.org/10.1107/S002188989601045X">Probabilities of Random Disorientation Axes in Cubic Polycrystals</a>,
+<em>Journal of Applied Crystallography</em> 30 (1997), 102–106.</li>
+  <li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>,
+Springer, 2004, chapter 7.</li>
+  <li>A. Morawiec, <a href="https://doi.org/10.1107/S1600576724004692">On the Magnitude of Error in the Determination of Rotation Axes</a>,
+<em>Journal of Applied Crystallography</em> 57 (2024), 1059–1066.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="AngleDistributionFunction_py.html">Angle Distribution</a> keeps the angle and integrates out
+the axis. Return to <a href="MisorientationDistributionFunction_py.html">Misorientation Distribution Function</a>
+when the coupling between axis and angle matters. Continue to
+<a href="GrainBoundaries.html">Grain Boundaries</a> when the boundary plane and trace must be
+considered as well.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>The symmetry-only ADF is computed in closed form here, from the largest angle of the
+fundamental region about each axis, where MTEX expands it in harmonics up to bandwidth</p>
+<ol>
+  <li>The exact minimum and maximum are 0.598 and 1.578; the expansion rounds the maximum
+down to 1.565.</li>
+</ol>
+
+<p>Which side of a segment is first follows the numbering of the grains, the smaller id
+first. MATLAB numbers the grains along the y rows of the map first, the port along x, so
+many segments swap sides between the two and the directed specimen-frame axes of those
+segments reverse; the picture above differs from MATLAB’s by that, while every
+undirected distribution on this page agrees.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/AxisDistributionFunction_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"},{"page":"example_copper","title":"Grain Boundary Voids in Copper"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>
