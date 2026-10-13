@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Smoothing Algorithms | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/GrainSmoothingAdvanced_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/GrainSmoothingAdvanced_py.html#page",
+      "name": "Smoothing Algorithms",
+      "headline": "Smoothing Algorithms",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/GrainSmoothingAdvanced_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/GrainSmoothingAdvanced_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/GrainSmoothingAdvanced_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Smoothing Algorithms</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/GrainSmoothingAdvanced.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GrainBoundaries/GrainSmoothingAdvanced.py">edit page</a></font>
+
+<!--introduction-->
+
+<p><a href="GrainSmoothing_py.html">Grain Boundary Smoothing</a> introduces
+<a href="grain2d.smoothBoundary.html"><code class="language-plaintext highlighter-rouge">smoothBoundary</code></a>. This page explains its three stages,
+the tolerances they use, and the four filters available for the last stage.</p>
+
+<p>The page assumes that grains have already been reconstructed as in
+<a href="GrainReconstruction_py.html">Grain Reconstruction</a>. A grain boundary is one segment between
+neighbouring EBSD measurements that belong to different grains. A <em>chain</em> is a maximal
+run of those segments from one junction to the next.
+<a href="BoundaryProperties_py.html">Grain Boundary Properties</a> introduces this representation in
+detail.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'csl'</span><span class="p">)</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># characteristic length of the measured boundary segments
+</span><span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">.</span><span class="n">segLength</span><span class="p">)</span>
+
+<span class="c1"># compute the colours explicitly to keep the published output quiet
+</span><span class="n">indexed</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">]</span>
+<span class="n">colorKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">indexed</span><span class="p">)</span>
+<span class="n">ipfColors</span> <span class="o">=</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">indexed</span><span class="p">.</span><span class="n">orientations</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">indexed</span><span class="p">,</span> <span class="n">ipfColors</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="mi">313</span><span class="p">,</span> <span class="mi">353</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">156</span><span class="p">])</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'YellowGreen'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSmoothingAdvanced-3.png" /></center>
+
+<p>The yellow-green staircase is the measured boundary in the area used throughout the page.
+Its steps follow the square measurement grid rather than the physical boundary direction.</p>
+
+<h2 id="step-1-remove-the-grid-staircase">Step 1: remove the grid staircase</h2>
+
+<p>For an ideal straight boundary, the staircase is never farther than <code class="language-plaintext highlighter-rouge">d/sqrt(2)</code> from the
+line it approximates. The worst case is a boundary at 45 degree, whose corners lie
+exactly that far from the diagonal. <a href="grain2d.simplifyBoundary.html"><code class="language-plaintext highlighter-rouge">simplifyBoundary</code></a>
+therefore uses this as its default tolerance. It drops a vertex when removing it moves
+the boundary by less than the tolerance.</p>
+
+<p>This argument separates the ideal grid staircase from features at larger scales. It
+cannot distinguish a real feature at the grid scale from a sampling artefact.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grainsSimple</span> <span class="o">=</span> <span class="n">simplifyBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">d</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'YellowGreen'</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="mi">313</span><span class="p">,</span> <span class="mi">353</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">156</span><span class="p">])</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grainsSimple</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'Fuchsia'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSmoothingAdvanced-4.png" /></center>
+
+<p>The magenta boundary has lost the staircase and is much shorter. It also has far fewer
+vertices because essentially only the corners have survived.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'simplifying at a tolerance of </span><span class="si">{</span><span class="n">d</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">grains</span><span class="p">.</span><span class="n">scanUnit</span><span class="si">}</span><span class="s"> takes the boundary '</span>
+      <span class="sa">f</span><span class="s">'from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">)</span><span class="si">}</span><span class="s"> segments to </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsSimple</span><span class="p">.</span><span class="n">boundary</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>simplifying at a tolerance of 0.71 um takes the boundary from 21296 segments to 5240
+</code></pre></div></div>
+
+<h2 id="step-2-restore-evenly-spaced-samples">Step 2: restore evenly spaced samples</h2>
+
+<p>Smoothing the simplified result directly would be a mistake. A curved chain is now
+represented by a few long chords, and a Laplacian cuts the corners from the polygon they
+form. A circle with a radius of 15 pixels loses 14% of its area over 25 iterations that
+way, compared with 0.4% when this resampling step is included.</p>
+
+<p><a href="grain2d.refineBoundary.html"><code class="language-plaintext highlighter-rouge">refineBoundary</code></a> resamples each chain at equal arc length.
+It changes only the sampling, not the polygonal shape. The smoothing stage then receives
+evenly spaced degrees of freedom that are no longer tied to the measurement grid.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grainsRefined</span> <span class="o">=</span> <span class="n">refineBoundary</span><span class="p">(</span><span class="n">grainsSimple</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'resampling at </span><span class="si">{</span><span class="n">d</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">grains</span><span class="p">.</span><span class="n">scanUnit</span><span class="si">}</span><span class="s"> puts them back: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsSimple</span><span class="p">.</span><span class="n">boundary</span><span class="p">)</span><span class="si">}</span><span class="s"> segments '</span>
+      <span class="sa">f</span><span class="s">'to </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsRefined</span><span class="p">.</span><span class="n">boundary</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resampling at 1.00 um puts them back: 5240 segments to 18453
+</code></pre></div></div>
+
+<h2 id="step-3-smooth-the-resampled-boundary">Step 3: smooth the resampled boundary</h2>
+
+<p>Only now does the filter move the boundary. A <em>junction</em> is a vertex where the number of
+meeting segments is not two. Junctions remain fixed by default.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grainsSmooth</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grainsRefined</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">refine</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'YellowGreen'</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="mi">313</span><span class="p">,</span> <span class="mi">353</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">156</span><span class="p">])</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grainsSmooth</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'Fuchsia'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSmoothingAdvanced-7.png" /></center>
+
+<p>The magenta trace now follows the larger turns of the measured boundary without
+reproducing its pixel-scale steps.</p>
+
+<p>These three stages are exactly what <code class="language-plaintext highlighter-rouge">smoothBoundary(grains, 5)</code> performs. Both tolerances
+come from the median segment length measured <em>before</em> the first stage. After
+simplification, that median describes the straightened runs rather than the pixel
+spacing. The tolerances may also be set explicitly.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grainsCoarse</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="n">d</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">refine</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'resampling at </span><span class="si">{</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">grains</span><span class="p">.</span><span class="n">scanUnit</span><span class="si">}</span><span class="s"> instead leaves </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsCoarse</span><span class="p">.</span><span class="n">boundary</span><span class="p">)</span><span class="si">}</span><span class="s"> segments'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resampling at 2.00 um instead leaves 9358 segments
+</code></pre></div></div>
+
+<h2 id="what-preprocessing-changes">What preprocessing changes</h2>
+
+<p>Simplification and resampling change the number of boundary segments. A resampled
+segment no longer lies between one specific pair of EBSD measurements, so its row of
+<code class="language-plaintext highlighter-rouge">gB.ebsdId</code> no longer identifies the pixels on its two sides. Use <code class="language-plaintext highlighter-rouge">simplify=False</code> and
+<code class="language-plaintext highlighter-rouge">refine=False</code> when an analysis needs that per-segment association.</p>
+
+<p>Smoothing also changes lengths, areas, directions, and curvatures. It is a measurement
+choice, not merely a plotting choice. Record the filter and its settings when comparing
+maps or reporting shape statistics.</p>
+
+<h2 id="choose-the-filter">Choose the filter</h2>
+
+<p>A <a href="boundaryFilter.html"><code class="language-plaintext highlighter-rouge">boundaryFilter</code></a> controls the third stage.
+<a href="laplaceFilter.html"><code class="language-plaintext highlighter-rouge">laplaceFilter</code></a> and <a href="taubinFilter.html"><code class="language-plaintext highlighter-rouge">taubinFilter</code></a> apply a
+local averaging step a fixed number of times. Their effect therefore depends on how
+densely the boundary is sampled. <a href="curvatureFilter.html"><code class="language-plaintext highlighter-rouge">curvatureFilter</code></a> and
+<a href="huberFilter.html"><code class="language-plaintext highlighter-rouge">huberFilter</code></a> instead specify a smoothing length in map units, which
+does not change when the same sample is measured on a finer grid. That length makes the
+setting comparable between scans only when their spatial units and preprocessing are also
+comparable.</p>
+
+<p>Do not expect to distinguish sensible settings by eye on this map. All four results lie
+within a line width of one another, but their sub-pixel differences appear in boundary
+statistics. The following examples therefore compare grain areas.</p>
+
+<p>The reference has passed through simplification and resampling but not smoothing. In
+other words, zero below means zero filter iterations, not the original pixel boundary.
+Grains with reference areas no greater than <code class="language-plaintext highlighter-rouge">10*d^2</code> are excluded so that a few-pixel
+grain does not dominate the percentages.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ref</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">A0</span> <span class="o">=</span> <span class="n">ref</span><span class="p">.</span><span class="n">area</span>
+<span class="n">big</span> <span class="o">=</span> <span class="n">A0</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">d</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">A0</span> <span class="o">=</span> <span class="n">A0</span><span class="p">[</span><span class="n">big</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'area comparison uses </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">big</span><span class="p">)</span><span class="si">}</span><span class="s"> of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span><span class="si">}</span><span class="s"> grains'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>area comparison uses 443 of 523 grains
+</code></pre></div></div>
+
+<h2 id="the-laplace-filter">The Laplace filter</h2>
+
+<p><a href="laplaceFilter.html"><code class="language-plaintext highlighter-rouge">laplaceFilter</code></a> is the default. It replaces each movable vertex by a
+weighted local mean, <code class="language-plaintext highlighter-rouge">iter</code> times. It is fast and useful for plots, directions, and
+lengths, but repeated averaging pulls a convex grain inward. Nothing bounds that
+shrinkage.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aL5</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">).</span><span class="n">area</span><span class="p">[</span><span class="n">big</span><span class="p">]</span>
+<span class="n">aL25</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">25</span><span class="p">).</span><span class="n">area</span><span class="p">[</span><span class="n">big</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'grain area, laplaceFilter'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'   5 iterations </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">aL5</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.2</span><span class="n">f</span><span class="si">}</span><span class="s">% on average, </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">((</span><span class="n">aL5</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.1</span><span class="n">f</span><span class="si">}</span><span class="s">% for the worst grain'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'  25 iterations </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">aL25</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.2</span><span class="n">f</span><span class="si">}</span><span class="s">% on average, </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">((</span><span class="n">aL25</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.1</span><span class="n">f</span><span class="si">}</span><span class="s">% for the worst grain'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grain area, laplaceFilter
+   5 iterations  -0.67% on average,  -17.2% for the worst grain
+  25 iterations  -2.44% on average,  -61.5% for the worst grain
+</code></pre></div></div>
+
+<h2 id="the-taubin-filter">The Taubin filter</h2>
+
+<p><a href="taubinFilter.html"><code class="language-plaintext highlighter-rouge">taubinFilter</code></a> follows every smoothing pass with a slightly larger
+unshrinking pass. This approximately gives the area back instead of letting the mean area
+drift downwards. Areas still change, so the method is shrinkage resistant rather than
+exactly area preserving.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">aT5</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">taubinFilter</span><span class="p">(</span><span class="mi">5</span><span class="p">)).</span><span class="n">area</span><span class="p">[</span><span class="n">big</span><span class="p">]</span>
+<span class="n">aT25</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">taubinFilter</span><span class="p">(</span><span class="mi">25</span><span class="p">)).</span><span class="n">area</span><span class="p">[</span><span class="n">big</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'grain area, taubinFilter'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'   5 iterations </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">aT5</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.2</span><span class="n">f</span><span class="si">}</span><span class="s">% on average, </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">((</span><span class="n">aT5</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.1</span><span class="n">f</span><span class="si">}</span><span class="s">% for the worst grain'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'  25 iterations </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">aT25</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.2</span><span class="n">f</span><span class="si">}</span><span class="s">% on average, </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">((</span><span class="n">aT25</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.1</span><span class="n">f</span><span class="si">}</span><span class="s">% for the worst grain'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grain area, taubinFilter
+   5 iterations  -0.04% on average,   -2.5% for the worst grain
+  25 iterations  -0.08% on average,   -6.9% for the worst grain
+</code></pre></div></div>
+
+<p>On this small grain, the Laplace result in magenta cuts inside the measured staircase.
+The Taubin result in blue follows it more closely.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">area</span>
+<span class="n">gid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="mi">30</span><span class="p">)))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[</span><span class="n">gid</span><span class="p">].</span><span class="n">centroid</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'LightGray'</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">,</span>
+     <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="p">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">12</span><span class="p">,</span> <span class="n">c</span><span class="p">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">12</span><span class="p">,</span> <span class="n">c</span><span class="p">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">12</span><span class="p">,</span> <span class="n">c</span><span class="p">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">12</span><span class="p">])</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">25</span><span class="p">).</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'Fuchsia'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">taubinFilter</span><span class="p">(</span><span class="mi">25</span><span class="p">)).</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'DodgerBlue'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSmoothingAdvanced-12.png" /></center>
+
+<h2 id="the-curvature-filter">The curvature filter</h2>
+
+<p><a href="curvatureFilter.html"><code class="language-plaintext highlighter-rouge">curvatureFilter</code></a> has no iteration count. <code class="language-plaintext highlighter-rouge">smoothingLength</code> is the
+wavelength damped to half amplitude, in the units of the map. Detail finer than that
+length is suppressed more strongly, and coarser detail survives. This gives the parameter
+a physical meaning that an iteration count does not have.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F</span> <span class="o">=</span> <span class="n">curvatureFilter</span><span class="p">()</span>
+<span class="n">F</span><span class="p">.</span><span class="n">smoothingLength</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">d</span>
+
+<span class="n">aC</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">F</span><span class="p">).</span><span class="n">area</span><span class="p">[</span><span class="n">big</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'grain area, curvatureFilter at a smoothing length of </span><span class="si">{</span><span class="mi">8</span> <span class="o">*</span> <span class="n">d</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">grains</span><span class="p">.</span><span class="n">scanUnit</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'  </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">aC</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.2</span><span class="n">f</span><span class="si">}</span><span class="s">% on average, </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">((</span><span class="n">aC</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.1</span><span class="n">f</span><span class="si">}</span><span class="s">% for the worst grain'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grain area, curvatureFilter at a smoothing length of 8.0 um
+   -0.26% on average,  -19.8% for the worst grain
+</code></pre></div></div>
+
+<h2 id="the-huber-filter">The Huber filter</h2>
+
+<p><a href="huberFilter.html"><code class="language-plaintext highlighter-rouge">huberFilter</code></a> uses the same smoothing length but protects sharp
+corners. Gentle undulations are smoothed like <code class="language-plaintext highlighter-rouge">curvatureFilter</code>, while a genuinely
+faceted boundary keeps its facets. This protection can also preserve corners left by the
+pixel grid on a boundary that is really straight or smooth. Reach for this filter when
+the material is faceted, not by default.</p>
+
+<p><code class="language-plaintext highlighter-rouge">threshold</code> is the turning angle at one vertex of the result, not the total angle of a
+corner. Smoothing first spreads a corner over roughly <code class="language-plaintext highlighter-rouge">smoothingLength/h</code> vertices, where
+<code class="language-plaintext highlighter-rouge">h</code> is their spacing. The Huber step then sharpens it again. For a rasterized hexagon with
+<code class="language-plaintext highlighter-rouge">smoothingLength = 8*h</code>, measured 60 degree corners return as follows.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>threshold (degree)</th>
+      <th>30</th>
+      <th>15</th>
+      <th>8</th>
+      <th>4</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>recovered corner (degree)</td>
+      <td>22</td>
+      <td>28</td>
+      <td>49</td>
+      <td>68</td>
+      <td>80</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A threshold of 15 degree is appropriate for the
+<a href="EBSDDenoising.html"><code class="language-plaintext highlighter-rouge">halfQuadraticFilter</code></a> on orientations, but it would never activate
+corner protection here. The default boundary threshold is 5 degree.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">huberFilter</span><span class="p">()</span>
+<span class="n">G</span><span class="p">.</span><span class="n">smoothingLength</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">d</span>
+
+<span class="n">aH</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">G</span><span class="p">).</span><span class="n">area</span><span class="p">[</span><span class="n">big</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'grain area, huberFilter at the same smoothing length'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'  </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">aH</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.2</span><span class="n">f</span><span class="si">}</span><span class="s">% on average, </span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">((</span><span class="n">aH</span> <span class="o">-</span> <span class="n">A0</span><span class="p">)</span> <span class="o">/</span> <span class="n">A0</span><span class="p">)</span><span class="si">:</span><span class="o">+</span><span class="mf">6.1</span><span class="n">f</span><span class="si">}</span><span class="s">% for the worst grain'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grain area, huberFilter at the same smoothing length
+   -0.15% on average,   -7.5% for the worst grain
+</code></pre></div></div>
+
+<p>A synthetic Voronoi map provides a case whose boundaries are exactly straight. On that
+map, <code class="language-plaintext highlighter-rouge">huberFilter</code> doubles the scatter of the boundary directions compared with
+<code class="language-plaintext highlighter-rouge">curvatureFilter</code> because it protects raster corners as if they were facets. This is the
+cost of preserving real corners.</p>
+
+<h2 id="moving-junctions">Moving junctions</h2>
+
+<p>By default, all junctions remain fixed. The grains that touch and the junction positions
+therefore stay unchanged. Despite its name, <code class="language-plaintext highlighter-rouge">moveTriplePoints</code> releases every non-outer
+junction, not only triple points. The outer map boundary remains fixed unless
+<code class="language-plaintext highlighter-rouge">moveOuterBoundary</code> is also passed.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">iterations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s">'copper'</span><span class="p">)(</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">direction</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'LightGray'</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="mi">313</span><span class="p">,</span> <span class="mi">353</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">156</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+  <span class="n">gs</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">moveTriplePoints</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+  <span class="n">plot</span><span class="p">(</span><span class="n">gs</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'i'</span><span class="p">,</span> <span class="s">'i'</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  <span class="n">direction</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">gs</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'i'</span><span class="p">,</span> <span class="s">'i'</span><span class="p">].</span><span class="n">direction</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'1, 5, 10, and 25 iterations: dark to light'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSmoothingAdvanced-15.png" /></center>
+
+<p>As the colour lightens, the released junctions move and the grid staircase is suppressed
+a little further. A Laplacian provides no barrier against collapse, however, so this
+freedom can let a small grain shrink away.</p>
+
+<p>The direction histograms show the same progression. Each bar is weighted by segment
+length, and each panel is labelled with its iteration count. The radial scales differ, so
+compare the angular shapes rather than the absolute bar heights.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s">'constrained'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">direction</span><span class="p">):</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'polar'</span><span class="p">)</span>
+  <span class="n">histogram</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">iterations</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s"> iterations'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSmoothingAdvanced-16.png" /></center>
+
+<h2 id="the-maths-behind-the-filters">The maths behind the filters</h2>
+
+<p>The normalized boundary Laplacian <code class="language-plaintext highlighter-rouge">L</code> measures how far a vertex lies from the mean of its
+neighbours. The Laplace filter applies a low-pass step with gain \(1-\lambda k\). Its
+adjacency includes the vertex itself with the weight of its degree. A vertex with two
+neighbours therefore uses <code class="language-plaintext highlighter-rouge">(2*V + Vl + Vr)/4</code>. The documented default <code class="language-plaintext highlighter-rouge">lambda = 0.5</code>
+consequently acts at a rate of 0.25. The <code class="language-plaintext highlighter-rouge">'gauss'</code>, <code class="language-plaintext highlighter-rouge">'exp'</code>, and <code class="language-plaintext highlighter-rouge">'umbrella'</code> kernels
+reweight this adjacency by neighbour distance.</p>
+
+<p>The Taubin filter follows that step with a negative step <code class="language-plaintext highlighter-rouge">mu</code>. The gain of a pair is
+\((1-\lambda k)(1-\mu k)\), which is approximately one at low frequencies when <code class="language-plaintext highlighter-rouge">mu</code> is
+chosen slightly larger in magnitude than <code class="language-plaintext highlighter-rouge">lambda</code>. High-frequency boundary steps are
+damped while broad shape is restored.</p>
+
+<p>The curvature filter instead finds the vertices \(\mathbf{V}\) that minimize</p>
+
+\[\|\mathbf{V}-\mathbf{V}_0\|^2 + \alpha\|L\mathbf{V}\|^2.\]
+
+<p>The minimizer comes from one sparse linear system. Fixed junctions are eliminated from
+that system rather than penalized, so they stay exactly in place. On vertices sampled at
+spacing \(h\), the filter gain is \(1/(1+4\alpha\sin^4(\omega/2))\). The value of
+<code class="language-plaintext highlighter-rouge">smoothingLength</code> is the wavelength damped to half amplitude. Using the exact inverse
+rather than a small-angle approximation matters at short wavelengths: the approximation
+is already 20% wrong at four times the spacing. The implemented cutoff is within 0.05%
+of the requested value from three to 400 times the spacing.</p>
+
+<p>The Huber filter replaces the squared curvature penalty with a Huber function. It is
+quadratic below <code class="language-plaintext highlighter-rouge">threshold</code> and linear above it. A least-squares penalty spreads a large
+turn over many vertices and rounds a corner. A linear, \(\ell^1\)-like penalty
+concentrates the turn into fewer vertices and preserves the corner. MTEX solves this
+problem by iteratively reweighted least squares until it converges. The <code class="language-plaintext highlighter-rouge">maxIter</code>
+property is a safety limit, not a smoothing control.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<p>Douglas and Peucker introduced the line-reduction algorithm used in the first stage:
+<a href="https://doi.org/10.3138/FM57-6770-U75U-7727">Algorithms for the Reduction of the Number of Points Required to Represent a Digitized Line or Its Caricature</a>
+(1973).</p>
+
+<p>Taubin developed the shrinkage-resistant signal-processing filter:
+<a href="https://doi.org/10.1145/218380.218473">A Signal Processing Approach to Fair Surface Design</a>
+(1995).</p>
+
+<p>The corner-preserving penalty comes from Huber’s robust loss:
+<a href="https://doi.org/10.1214/aoms/1177703732">Robust Estimation of a Location Parameter</a>
+(1964).</p>
+
+<p>For area-derived EBSD grain-size reporting, see
+<a href="https://www.iso.org/standard/74309.html">ISO 13067:2020, Microbeam analysis - Electron backscatter diffraction - Measurement of average grain size</a>.
+The standard concerns two-dimensional sectional measurements; it does not turn a
+smoothing choice into a three-dimensional measurement.</p>
+
+<h2 id="related-measurements">Related measurements</h2>
+
+<p><a href="BoundaryCurvature_py.html">Boundary Curvature</a> shows how geometric smoothing affects
+curvature. <a href="ShapeParameters_py.html">Shape Parameters</a> develops the grain areas, perimeters,
+and shape descriptors that make filter choice a quantitative part of an analysis.</p>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="TwinningBoundaries_py.html">Inferring Twin Boundaries</a>, where a smoothed
+boundary network is classified by the misorientations across it.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>MATLAB’s zoom <code class="language-plaintext highlighter-rouge">axis([x0 x1 y0 y1])</code> after a map plot is <code class="language-plaintext highlighter-rouge">region=[x0, x1, y0, y1]</code> on its
+first plot, in the coordinates of the map. A filter is constructed with parentheses,
+<code class="language-plaintext highlighter-rouge">curvatureFilter()</code>, and its smoothing length is set on the object.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/GrainSmoothingAdvanced_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

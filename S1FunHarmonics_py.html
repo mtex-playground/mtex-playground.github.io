@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Fourier Series on the Circle | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/S1FunHarmonics_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/S1FunHarmonics_py.html#page",
+      "name": "Fourier Series on the Circle",
+      "headline": "Fourier Series on the Circle",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/S1FunHarmonics_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/S1FunHarmonics_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/S1FunHarmonics_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Fourier Series on the Circle</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/S1FunHarmonics.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/SphericalFunctions/S1FunHarmonics.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A function on the circle assigns a value to an in-plane angle \(\rho\). Its values repeat
+after \(2\pi\), so it is a \(2\pi\)-periodic function. Geometrically, its domain is also called
+the one-dimensional sphere \(\mathbb{S}^1\) or the one-dimensional torus.</p>
+
+<p>The preceding <a href="SphericalHarmonics_py.html">Spherical Harmonics</a> page introduced wave-like
+basis functions on the sphere. On the circle, only one integer mode remains, and the
+corresponding expansion is an ordinary Fourier series.</p>
+
+<p>MTEX uses functions on the circle whenever a scalar quantity depends on an in-plane angle.
+Typical examples are</p>
+
+<ul>
+  <li>angular density distributions of grain long axes or other in-plane shape directions,</li>
+  <li>distributions of grain-boundary segment directions, optionally weighted by their segment
+lengths,</li>
+  <li>caliper and projection lengths as functions of the projection direction, and</li>
+  <li>azimuth-angle distributions of three-dimensional directions.</li>
+</ul>
+
+<h2 id="start-from-an-explicit-formula">Start from an explicit formula</h2>
+
+<p>MTEX offers two complementary representations. An <a href="S1FunHandle.S1FunHandle.html">S1FunHandle</a>
+evaluates an explicit formula whenever a value is requested. An
+<a href="S1FunHarmonic.S1FunHarmonic.html">S1FunHarmonic</a> stores a finite set of Fourier
+coefficients.</p>
+
+<p>Begin with the formula</p>
+
+\[f(\rho)=1+\frac{1}{2}\cos(2\rho).\]
+
+<p>Pass the Python function to <code class="language-plaintext highlighter-rouge">S1FunHandle</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">S1F</span> <span class="o">=</span> <span class="n">S1FunHandle</span><span class="p">(</span><span class="k">lambda</span> <span class="n">rho</span><span class="p">:</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho</span><span class="p">))</span>
+<span class="n">S1F</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S1FunHandle
+  bandwidth hint: 1024
+</code></pre></div></div>
+
+<h2 id="plot-the-same-function-in-two-ways">Plot the same function in two ways</h2>
+
+<p>A polar plot places each value along its angle. A Cartesian plot unfolds the circle and
+shows angle on the horizontal axis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'polar'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">S1F</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'Polar Plot'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">S1F</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">polar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'Cartesian Plot'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S1FunHarmonics-2.png" /></center>
+
+<h2 id="read-the-two-views">Read the two views</h2>
+
+<p>The Cartesian view makes the two maxima over one full turn easy to count. The polar view
+makes their opposite in-plane directions visible. Both panels show the same function, and
+neither changes its representation.</p>
+
+<h2 id="construct-a-function-from-coefficients">Construct a function from coefficients</h2>
+
+<p>Within <code class="language-plaintext highlighter-rouge">S1FunHarmonic</code>, the <code class="language-plaintext highlighter-rouge">fhat</code> property stores coefficients from mode \(-N\) through
+mode \(N\). It therefore contains an odd number of entries, and the centre entry is the
+constant mode.</p>
+
+<p>As an example, the following Fourier coefficients describe the real-valued function
+\(f(\rho)=4+\cos\rho+2\sin(2\rho)\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fhat</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">1j</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1j</span><span class="p">]</span>
+<span class="n">S1FCoeff</span> <span class="o">=</span> <span class="n">S1FunHarmonic</span><span class="p">(</span><span class="n">fhat</span><span class="p">)</span>
+<span class="n">S1FCoeff</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S1FunHarmonic
+  bandwidth: 2
+  mean     : 4
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">coefficientMean</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">S1FCoeff</span><span class="p">)</span>
+<span class="n">coefficientMean</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'polar'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">S1FCoeff</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'Polar Plot'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">S1FCoeff</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">polar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'Cartesian Plot'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S1FunHarmonics-5.png" /></center>
+
+<h2 id="read-the-coefficient-example">Read the coefficient example</h2>
+
+<p>The two coefficients of magnitude \(0.5\) form the cosine term. The outer imaginary
+coefficients form the sine term. A real-valued function has conjugate coefficients in
+opposite modes.</p>
+
+<p>The centre entry is the mean value. In the vector as written it is 4, which is confirmed
+by <code class="language-plaintext highlighter-rouge">coefficientMean</code>.</p>
+
+<h2 id="approximate-a-formula-by-a-fourier-series">Approximate a formula by a Fourier series</h2>
+
+<p>Constructing an <code class="language-plaintext highlighter-rouge">S1FunHarmonic</code> from an <code class="language-plaintext highlighter-rouge">S1FunHandle</code> computes the Fourier coefficients.
+The <code class="language-plaintext highlighter-rouge">bandwidth</code> is the largest retained mode. A higher bandwidth generally improves the
+approximation but also increases the computational cost.</p>
+
+<p>Computations with bandwidth 1024 are still very fast in practice and usually provide a
+good approximation. The much smaller bandwidth 20 is already sufficient for the smooth
+function below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S1F</span> <span class="o">=</span> <span class="n">S1FunHandle</span><span class="p">(</span><span class="k">lambda</span> <span class="n">rho</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rho</span><span class="p">)))</span>
+<span class="n">S1FH</span> <span class="o">=</span> <span class="n">S1FunHarmonic</span><span class="p">(</span><span class="n">S1F</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">S1FH</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S1FunHarmonic
+  bandwidth: 20
+  mean     : 1.266
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rhoCheck</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
+<span class="n">maxApproximationError</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">S1F</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rhoCheck</span><span class="p">)</span> <span class="o">-</span> <span class="n">S1FH</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rhoCheck</span><span class="p">)))</span>
+<span class="n">maxApproximationError</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.5313e-14
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">S1F</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">S1FH</span><span class="p">,</span> <span class="s">'--'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="s">'S1FunHandle'</span><span class="p">,</span> <span class="s">'S1FunHarmonic'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S1FunHarmonics-8.png" /></center>
+
+<h2 id="read-the-approximation">Read the approximation</h2>
+
+<p>The solid formula and dashed Fourier approximation overlap throughout the circle. The
+printed maximum error on the check grid is about \(10^{-14}\), so the remaining difference is
+at the scale of floating-point round-off.</p>
+
+<h2 id="fit-values-sampled-at-angles">Fit values sampled at angles</h2>
+
+<p>A function is often known only at a finite set of angles.
+<a href="S1FunHarmonic.interpolate.html">S1FunHarmonic.interpolate</a> constructs a periodic
+trigonometric polynomial from those samples. The result can be evaluated at arbitrary
+angles, plotted, differentiated, or used in later computations.</p>
+
+<p>The bandwidth sets the number of Fourier modes in the interpolation. It should be large
+enough to resolve the measured angular variation. An unnecessarily large bandwidth can
+introduce oscillations or amplify noise.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho</span><span class="p">)</span>
+
+<span class="n">S1FI</span> <span class="o">=</span> <span class="n">S1FunHarmonic</span><span class="p">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+<span class="n">S1FI</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S1FunHarmonic
+  bandwidth: 3
+  mean     : 1
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sampleResidual</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">S1FI</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">-</span> <span class="n">values</span><span class="p">))</span>
+<span class="n">sampleResidual</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3.4361e-04
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="s">'x'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'samples'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">S1FI</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">polar</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'periodic fit'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S1FunHarmonics-11.png" /></center>
+
+<h2 id="read-the-sampled-data-fit">Read the sampled-data fit</h2>
+
+<p>The curve joins the angular trend and closes periodically between \(2\pi\) and zero. The
+default regularisation leaves a maximum residual of about \(3.4\cdot10^{-4}\) at these
+samples. Set bandwidth and regularisation deliberately when the data contain noise or
+sharp changes.</p>
+
+<h2 id="smooth-small-scale-oscillations">Smooth small-scale oscillations</h2>
+
+<p>A harmonic function obtained from measured or interpolated data can contain small-scale
+oscillations or noise. <a href="S1Fun.smooth.html">smooth</a> reduces those variations by
+convolution with an <a href="S1DeLaValleePoussinKernel.html">S1DeLaValleePoussinKernel</a>.</p>
+
+<p>The kernel halfwidth sets the angular scale of the smoothing. A small halfwidth preserves
+more local detail. A larger halfwidth produces a smoother function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="n">S1FunHandle</span><span class="p">(</span><span class="k">lambda</span> <span class="n">rho</span><span class="p">:</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">rho</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.15</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">20</span> <span class="o">*</span> <span class="n">rho</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">35</span> <span class="o">*</span> <span class="n">rho</span><span class="p">))</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">S1FunHarmonic</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+
+<span class="n">fSmooth</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">halfwidth</span><span class="o">=</span><span class="mi">8</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'original'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">fSmooth</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'smoothed'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S1FunHarmonics-12.png" /></center>
+
+<h2 id="read-the-smoothing-result">Read the smoothing result</h2>
+
+<p>The original curve has fine ripples from modes 20 and 35. The smoothed curve suppresses
+those ripples while retaining the broad mode-one and mode-two variation. Smoothing changes
+the function, so the halfwidth should be reported with any derived peak direction or
+density.</p>
+
+<h2 id="compute-integrals-and-extrema">Compute integrals and extrema</h2>
+
+<p>Standard operations apply directly to an <code class="language-plaintext highlighter-rouge">S1FunHarmonic</code>. Here <code class="language-plaintext highlighter-rouge">S1FH</code> is still the
+bandwidth-20 approximation of \(\exp(\cos\rho)\). <a href="S1Fun.mean.html">mean</a> returns its mean
+value, while <a href="S1Fun.sum.html">sum</a> returns its integral over the circle.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">meanValue</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">S1FH</span><span class="p">)</span>
+<span class="n">meanValue</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.2661
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">integralValue</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">S1FH</span><span class="p">)</span>
+<span class="n">integralValue</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7.9549
+</code></pre></div></div>
+
+<p><a href="S1Fun.max.html">max</a> and <a href="S1Fun.min.html">min</a> return both the extreme value and its
+angular position.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">maxValue</span><span class="p">,</span> <span class="n">maxPosition</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">S1FH</span><span class="p">)</span>
+<span class="n">minValue</span><span class="p">,</span> <span class="n">minPosition</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">S1FH</span><span class="p">)</span>
+<span class="n">extremePositionsDegree</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">maxPosition</span><span class="p">,</span> <span class="n">minPosition</span><span class="p">])</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'max </span><span class="si">{</span><span class="n">maxValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s"> at </span><span class="si">{</span><span class="n">extremePositionsDegree</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">, min </span><span class="si">{</span><span class="n">minValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s"> at </span><span class="si">{</span><span class="n">extremePositionsDegree</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>max 2.7183 at 0.0, min 0.3679 at 180.0
+</code></pre></div></div>
+
+<h2 id="read-the-operations">Read the operations</h2>
+
+<p>The mean is about 1.2661, and the integral is about 7.9549. Their ratio is \(2\pi\). The
+maximum is \(\mathrm e\) at zero degrees, while the minimum is \(\mathrm e^{-1}\) at 180
+degrees.</p>
+
+<h2 id="estimate-a-density-from-angular-data">Estimate a density from angular data</h2>
+
+<p>Periodic functions also arise after density estimation from circular data. For example,
+<code class="language-plaintext highlighter-rouge">rho</code> is the azimuth angle of a three-dimensional direction. Passing these angles with the
+<code class="language-plaintext highlighter-rouge">periodic</code> option makes <a href="calcDensity.html">calcDensity</a> return an <code class="language-plaintext highlighter-rouge">S1FunHarmonic</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">fun</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">rho</span><span class="p">,</span> <span class="n">periodic</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">fun</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S1FunHarmonic
+  bandwidth: 60
+  mean     : 1
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">densityMean</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span>
+<span class="n">densityMean</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.0000
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S1FunHarmonics-18.png" /></center>
+
+<h2 id="read-the-angular-density">Read the angular density</h2>
+
+<p>The directions were sampled uniformly, so the density fluctuates around a flat value
+rather than forming a stable preferred direction. Its mean is one because <code class="language-plaintext highlighter-rouge">calcDensity</code>
+normalizes the periodic density. A pronounced reproducible peak would instead indicate a
+preferred azimuth.</p>
+
+<h2 id="the-maths-behind-the-fourier-representation">The maths behind the Fourier representation</h2>
+
+<p>A \(2\pi\)-periodic function can be represented as a weighted sum of sines and cosines.
+MTEX uses the numerically convenient complex exponentials \(\mathrm e^{-\mathrm i k\rho}\).
+A finite series of bandwidth \(N\) is</p>
+
+\[f(\rho)=\sum_{k=-N}^{N}\hat f_k\,
+\mathrm e^{-\mathrm i k\rho}, \qquad \rho\in[0,2\pi).\]
+
+<p>MTEX uses the coefficient convention</p>
+
+\[\hat f_k=\frac{1}{2\pi}\int_0^{2\pi}f(\rho)\,
+\mathrm e^{\mathrm i k\rho}\,\mathrm d\rho.\]
+
+<p>The constant coefficient \(\hat f_0\) is therefore the mean value,</p>
+
+\[\operatorname{mean}(f)=\frac{1}{2\pi}\int_0^{2\pi}
+f(\rho)\,\mathrm d\rho.\]
+
+<p>The integral returned by <code class="language-plaintext highlighter-rouge">sum</code> is</p>
+
+\[\operatorname{sum}(f)=\int_0^{2\pi}f(\rho)\,\mathrm d\rho
+=2\pi\,\operatorname{mean}(f).\]
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>H. Schaeben,
+<a href="https://doi.org/10.1155/TSM.33.365">The de la Vallee Poussin Standard Orientation Density Function</a>,
+<em>Textures and Microstructures</em> 33 (1999), 365–373, relates the de la Vallee Poussin
+kernel to finite harmonic representations used for texture density estimation.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="EllipseBasedParameters_py.html">Ellipse Based Shape Parameters</a> to apply
+periodic density functions to grain long-axis and shortest-caliper directions.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>MATLAB’s <code class="language-plaintext highlighter-rouge">subplot(1,2,1)</code> becomes a polar axes when a polar plot goes into it; with
+matplotlib the page asks for <code class="language-plaintext highlighter-rouge">projection='polar'</code>. The random directions are seeded by
+NumPy’s generator, not MATLAB’s <code class="language-plaintext highlighter-rouge">rng default</code>, so the density differs from MATLAB’s in
+its fluctuations.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/S1FunHarmonics_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

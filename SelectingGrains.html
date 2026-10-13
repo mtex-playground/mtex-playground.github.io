@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Selecting Grains | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A grain2d variable is a list of grains. Selecting grains means indexing that list by position, phase, property, spatial coordinates, or mean orientation. Every selection is another grain list, so selections can be applied one after another.">
+<link rel="canonical" href="https://mtex-playground.github.io/SelectingGrains.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SelectingGrains.html#page",
+      "name": "Selecting Grains",
+      "headline": "Selecting Grains",
+      "description": "A grain2d variable is a list of grains. Selecting grains means indexing that list by position, phase, property, spatial coordinates, or mean orientation. Every selection is another grain list, so selections can be applied one after another.",
+      "url": "https://mtex-playground.github.io/SelectingGrains.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SelectingGrains.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SelectingGrains.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Selecting Grains</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Selecting Grains</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_SelectingGrains.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/Grains/SelectingGrains.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>A <a href="grain2d.grain2d.html">grain2d</a> variable is a list of grains. Selecting grains means indexing that list by position, phase, property, spatial coordinates, or mean orientation. Every selection is another grain list, so selections can be applied one after another.</p>
+<p>This page assumes that you have reconstructed grains as described in <a href="GrainReconstruction.html">Grain Reconstruction</a>. It also assumes that you can draw them as in <a href="GrainSpatialPlots.html">Plotting Grains</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span><span class="p">;</span>
+
+<span class="c1">% load sample EBSD data set</span>
+<span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">mtexdata</span> <span class="n">forsterite</span> <span class="n">silent</span>
+
+<span class="c1">% restrict it to a subregion of interest</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="nb">inpolygon</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,[</span><span class="mi">5</span> <span class="mi">2</span> <span class="mi">10</span> <span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span><span class="o">^</span><span class="mi">3</span><span class="p">));</span>
+
+<span class="c1">% reconstruct grains and store their ids with the measurements</span>
+<span class="p">[</span><span class="n">grains</span><span class="p">,</span><span class="n">ebsd</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="s1">'angle'</span><span class="p">,</span><span class="mi">5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'minPixel'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'alpha'</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span>
+
+<span class="c1">% smooth the boundaries</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="c1">% plot forsterite by orientation</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">)</span>
+
+<span class="c1">% plot the other two phases in grey</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'En'</span><span class="p">),</span><span class="s1">'FaceColor'</span><span class="p">,</span><span class="s1">'lightgray'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Di'</span><span class="p">),</span><span class="s1">'FaceColor'</span><span class="p">,</span><span class="s1">'darkgray'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_01.png" alt="" />
+
+</center>
+<p>The black network outlines every reconstructed grain. The forsterite measurements retain their orientation colours, while the two minor phases are grey so that later highlights remain easy to see.</p>
+<h2 id="3">By mouse</h2>
+<p> <a href="grain2d.selectInteractive.html"><code class="language-plaintext highlighter-rouge">selectInteractive</code></a> installs a mouse callback on the current figure. A click selects one grain, and additional clicks extend the selection. The global variable <code class="language-plaintext highlighter-rouge">indSelected</code> stores the selected positions in the current grain list.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">selectInteractive</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'gold'</span><span class="p">)</span>
+
+<span class="nb">clear</span> <span class="k">global</span> <span class="n">indSelected</span>
+<span class="k">global</span> <span class="n">indSelected</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_02.png" alt="" />
+
+</center>
+<p>Nobody clicks while this page is published. We therefore set <code class="language-plaintext highlighter-rouge">indSelected</code> to the list position of the grain at a known coordinate.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">indSelected</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="n">id2ind</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="mi">9000</span><span class="p">,</span><span class="mi">3500</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">);</span>
+
+<span class="n">mouseGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">indSelected</span><span class="p">)</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">mouseGrains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'gold'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">mouseGrains = grain2d (y↑→x)
+ 
+ Phase  Grains  Pixels     Mineral  Symmetry         Color
+     1       1     323  Forsterite       mmm  LightSkyBlue
+ 
+ boundary segments: 87 (4067 µm)
+ inner boundary segments: 0 (0 µm)
+ triple points: 6
+ 
+ Id   Phase   Pixels      meanRotation          GOS
+ 47       1      323   (131°,64°,250°)   0.00795279</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_03.png" alt="" />
+
+</center>
+<p>The gold outline marks the selected grain. If several grains had been clicked, every selected outline would be gold and <code class="language-plaintext highlighter-rouge">mouseGrains</code> would contain all of them.</p>
+<h2 id="6">By position</h2>
+<p>The expression <code class="language-plaintext highlighter-rouge">grains(x,y)</code> returns the grain containing the point <code class="language-plaintext highlighter-rouge">(x,y)</code> in map coordinates. It needs neither a figure nor a mouse click.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">x</span> <span class="o">=</span> <span class="mi">12000</span><span class="p">;</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">;</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'blue'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">'Marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'DisplayName'</span><span class="p">,</span><span class="s1">'A'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_04.png" alt="" />
+
+</center>
+<p>Marker A lies inside the thick blue outline. The coordinate is used for the lookup; its location in the current axes does not affect the result.</p>
+<h2 id="8">By phase</h2>
+<p>A grain is phase-homogeneous. A mineral name therefore selects every grain of that phase, and the displayed summary reports what came back.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">forsteriteGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="s1">'forsterite'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">forsteriteGrains = grain2d (y↑→x)
+ 
+ Phase  Grains  Pixels     Mineral  Symmetry         Color
+     1      61   14009  Forsterite       mmm  LightSkyBlue
+ 
+ boundary segments: 2825 (132934 µm)
+ inner boundary segments: 12 (568 µm)
+ triple points: 135
+ 
+ Properties: meanRotation, GOS</code></pre></figure>
+<p>The mineral name is the readable form of a condition on <code class="language-plaintext highlighter-rouge">phase</code>. This property stores one imported phase number per grain.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">firstFivePhase</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">phase</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">firstFivePhase =
+     1
+     3
+     2
+     1
+     1</code></pre></figure>
+<h2 id="10">By a property</h2>
+<p>A grain property has one value per grain. MATLAB operations on numeric arrays can therefore build indices from any such property. We begin with <a href="grain2d.area.html"><code class="language-plaintext highlighter-rouge">area</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">grainArea</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="nb">area</span><span class="p">;</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grainArea</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_05.png" alt="" />
+
+</center>
+<p>Large grains are bright and small grains are dark. This map shows where the extremes lie before any threshold is imposed.</p>
+<p> <a href="https://www.mathworks.com/help/matlab/ref/max.html"><code class="language-plaintext highlighter-rouge">max</code></a> returns the largest value and its position in the list. That position is an index, not a persistent grain ID.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">maxArea</span><span class="p">,</span><span class="n">maxIndex</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">grainArea</span><span class="p">)</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="n">maxIndex</span><span class="p">)</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">maxArea =
+   4.1122e+06
+maxIndex =
+    28</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_06.png" alt="" />
+
+</center>
+<p>The red outline encloses the brightest grain in the area map. Sorting generalises this selection from one grain to the largest few.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">sortedArea</span><span class="p">,</span><span class="n">sortedIndex</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sort</span><span class="p">(</span><span class="n">grainArea</span><span class="p">,</span><span class="s1">'descend'</span><span class="p">);</span>
+
+<span class="c1">% select the second to fifth largest grains</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="n">sortedIndex</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'orange'</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_07.png" alt="" />
+
+</center>
+<p>The orange outlines mark ranks two through five. The largest grain remains identifiable by its red outline from the preceding selection.</p>
+<h2 id="14">By a condition</h2>
+<p>A logical array with one value per grain can index the list directly. Here it selects every grain at least one quarter the size of the largest.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">condition</span> <span class="o">=</span> <span class="n">grainArea</span> <span class="o">&gt;</span> <span class="n">maxArea</span><span class="p">/</span><span class="mi">4</span><span class="p">;</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'yellow'</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_08.png" alt="" />
+
+</center>
+<p>The yellow outlines include more grains than the fixed rank selection. Their membership follows an area threshold rather than a chosen count.</p>
+<p>Conditions may be combined. The next selection requires a perimeter above 6000 map units and at least 600 measurements. The pixel-count condition excludes grains too small for their outline to support a useful shape interpretation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">condition</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="nb">perimeter</span> <span class="o">&gt;</span> <span class="mi">6000</span> <span class="o">&amp;</span> <span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span> <span class="o">&gt;=</span> <span class="mi">600</span><span class="p">;</span>
+
+<span class="n">selectedGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">selectedGrains</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">selectedGrains = grain2d (y↑→x)
+ 
+ Phase  Grains  Pixels     Mineral  Symmetry         Color
+     1       4    5248  Forsterite       mmm  LightSkyBlue
+ 
+ boundary segments: 737 (34466 µm)
+ inner boundary segments: 0 (0 µm)
+ triple points: 43
+ 
+ Id   Phase   Pixels       meanRotation      GOS
+ 28       1     1545    (167°,81°,251°)    0.013
+ 60       1     1047     (89°,99°,224°)   0.0077
+ 82       1     1208    (153°,68°,237°)   0.0081
+ 84       1     1448   (166°,127°,259°)    0.014</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_09.png" alt="" />
+
+</center>
+<p>Only the grains satisfying both conditions remain in the plot. Empty spaces belong to grains excluded by at least one condition.</p>
+<h2 id="17">By orientation</h2>
+<p> <a href="grain2d.findByOrientation.html"><code class="language-plaintext highlighter-rouge">findByOrientation</code></a> selects grains whose mean orientation lies within a specified angle of a reference orientation. It accounts for crystal symmetry, so equivalent descriptions of the same lattice orientation are treated as the same orientation.</p>
+<p>We use the first gold grain from above as the reference and a threshold of 20 degrees.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">referenceGrain</span> <span class="o">=</span> <span class="n">mouseGrains</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">similarGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="n">findByOrientation</span><span class="p">(</span><span class="n">referenceGrain</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">,</span><span class="mi">20</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">),</span><span class="n">ebsd</span><span class="p">(</span><span class="s1">'Fo'</span><span class="p">)</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">similarGrains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'gold'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">similarGrains = grain2d (y↑→x)
+ 
+ Phase  Grains  Pixels     Mineral  Symmetry         Color
+     1       3     523  Forsterite       mmm  LightSkyBlue
+ 
+ boundary segments: 164 (7766 µm)
+ inner boundary segments: 0 (0 µm)
+ triple points: 13
+ 
+ Id   Phase   Pixels      meanRotation     GOS
+ 18       1       19   (144°,74°,250°)    0.01
+ 47       1      323   (131°,64°,250°)   0.008
+ 55       1      181   (131°,64°,245°)   0.007</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_10.png" alt="" />
+
+</center>
+<p>Three grains are selected, and two share a boundary. Neighbours with mean orientations this close deserve a second look. The reconstruction may have split one grain, or the grains may have belonged together before another process separated them. <a href="GrainMerge.html">Merging Grains</a> develops this question.</p>
+<h2 id="19">List position and grain ID</h2>
+<p>A list position answers "which entry of this variable?" A grain ID answers "which reconstructed grain?" They are initially often equal, but a subset keeps the original IDs while its positions start again at one.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span>
+<span class="n">largeGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">numPixel</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">);</span>
+<span class="nb">text</span><span class="p">(</span><span class="n">largeGrains</span><span class="p">,</span><span class="n">largeGrains</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_11.png" alt="" />
+
+</center>
+<p>The labels are persistent grain IDs. They are not the positions of the labelled grains in <code class="language-plaintext highlighter-rouge">largeGrains</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">listPosition</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">grainId</span> <span class="o">=</span> <span class="n">largeGrains</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="n">listPosition</span><span class="p">);</span>
+<span class="nb">fprintf</span><span class="p">(</span><span class="s1">'list position %d has grain ID %d\n'</span><span class="p">,</span><span class="n">listPosition</span><span class="p">,</span><span class="n">grainId</span><span class="p">);</span>
+
+<span class="n">grainByPosition</span> <span class="o">=</span> <span class="n">largeGrains</span><span class="p">(</span><span class="n">listPosition</span><span class="p">);</span>
+<span class="n">grainById</span> <span class="o">=</span> <span class="n">largeGrains</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span><span class="n">grainId</span><span class="p">);</span>
+<span class="n">sameGrain</span> <span class="o">=</span> <span class="n">grainByPosition</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">grainById</span><span class="o">.</span><span class="n">id</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">list position 1 has grain ID 3
+sameGrain =
+  logical
+   1</code></pre></figure>
+<p>
+<code class="language-plaintext highlighter-rouge">largeGrains(1)</code> selects by position. The form <code class="language-plaintext highlighter-rouge">largeGrains('id',grainId)</code> searches the stored IDs. The printed logical value confirms that both expressions identify the same grain here.</p>
+<h2 id="22">From grains back to measurements</h2>
+<p>Every grain selection can be converted to the measurements it contains. This requires the <code class="language-plaintext highlighter-rouge">grainId</code> property that <a href="EBSD.calcGrains.html"><code class="language-plaintext highlighter-rouge">calcGrains</code></a> returned with the map.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">measurementsByGrain</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="n">grainById</span><span class="p">)</span>
+
+<span class="n">measurementsById</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="n">ebsd</span><span class="o">.</span><span class="n">grainId</span> <span class="o">==</span> <span class="n">grainId</span><span class="p">);</span>
+<span class="n">sameMeasurements</span> <span class="o">=</span> <span class="nb">isequal</span><span class="p">(</span><span class="n">measurementsByGrain</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="n">measurementsById</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">measurementsByGrain = EBSD (y↑→x)
+ 
+ Phase  Orientations    Mineral         Color  Symmetry  Crystal reference frame
+     2    346 (100%)  Enstatite  DarkSeaGreen       mmm                         
+ 
+ Properties: bands, bc, bs, error, mad, oldId, grainId
+ Scan unit : um
+ X × Y × Z : [5000 → 5550] × [3750 → 5850] × [0 → 0]
+ Normal vector: (0,0,1)
+ 
+sameMeasurements =
+  logical
+   1</code></pre></figure>
+<p>The first command displays the selected measurements. The printed logical value confirms that selecting by the grain object and matching the stored <code class="language-plaintext highlighter-rouge">ebsd.grainId</code> return the same subset.</p>
+<p>Applied to the largest grain, this relationship reveals the orientations measured inside one reconstructed grain.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">largestGrain</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="n">maxIndex</span><span class="p">);</span>
+<span class="n">largestGrainEbsd</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">(</span><span class="n">largestGrain</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">largestGrainEbsd</span><span class="p">,</span><span class="n">largestGrainEbsd</span><span class="o">.</span><span class="n">orientations</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'ipfDirection'</span><span class="p">,</span><span class="n">zvector</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">largestGrain</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_12.png" alt="" />
+
+</center>
+<p>The colours inside the black outline come from the individual measurements, not from one grain mean. On this grain the spread is small, under two and a half degrees, so the fill reads as a single shade and the unindexed white pixels are what stands out.</p>
+<p>A spread this size has to be measured rather than looked for. The mean and spread of the distribution are the subject of <a href="GrainOrientationParameters.html">Grain Orientation Parameters</a>.</p>
+<h2 id="25">Grains at the edge of the map</h2>
+<p>A grain touching the map edge continues outside the measured region. Its observed area and shape describe only the measured piece. Remove such grains before calculating per-grain size or shape statistics with <a href="grain2d.isBoundary.html"><code class="language-plaintext highlighter-rouge">isBoundary</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">interiorGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="o">~</span><span class="n">grains</span><span class="o">.</span><span class="n">isBoundary</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">interiorGrains</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_13.png" alt="" />
+
+</center>
+<p>The white band around the plot is occupied by the omitted edge grains. This exclusion is appropriate for comparing complete observed shapes. A standardised average grain-size measurement may prescribe a different boundary-counting rule, so follow the selected standard when reporting one.</p>
+<p>The boundary network shows what <code class="language-plaintext highlighter-rouge">isBoundary</code> tests. Each grain boundary segment stores the IDs of the two grains it separates. A segment at the map edge has no grain on one side, so the corresponding ID is zero.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% find segments with zero on one side</span>
+<span class="n">isOuterBoundary</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="o">.</span><span class="n">grainId</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="n">isOuterBoundary</span><span class="p">),</span><span class="s1">'lineColor'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">,</span><span class="s1">'lineWidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_14.png" alt="" />
+
+</center>
+<p>The red segments form the outer rim of the measured region. Their nonzero IDs identify exactly the grains removed above.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">boundaryGrainId</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="n">isOuterBoundary</span><span class="p">)</span><span class="o">.</span><span class="n">grainId</span><span class="p">;</span>
+<span class="n">boundaryGrainId</span><span class="p">(</span><span class="n">boundaryGrainId</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="n">boundaryGrainId</span> <span class="o">=</span> <span class="nb">unique</span><span class="p">(</span><span class="n">boundaryGrainId</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span><span class="n">boundaryGrainId</span><span class="p">))</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SelectingGrains_15.png" alt="" />
+
+</center>
+<p>Only the edge grains remain. The explicit <code class="language-plaintext highlighter-rouge">'id'</code> lookup is required because the values came from <code class="language-plaintext highlighter-rouge">grainBoundary.grainId</code> rather than from list positions.</p>
+<h2 id="29">Next</h2>
+<p>
+<a href="ShapeParameters.html">Shape Parameters</a> defines the area, perimeter, and other geometric properties used to build selections. The ellipse, convex hull, and projection pages that follow it provide further shape measures. <a href="GrainOrientationParameters.html">Grain Orientation Parameters</a> develops selections based on the orientation distribution inside each grain.</p>
+<p>Grain selections also lead back to the boundary network. <a href="BoundarySelect.html">Selecting Grain Boundaries</a> selects its segments, and <a href="GrainMerge.html">Merging Grains</a> uses selected boundaries to join grains.</p>
+<h2 id="30">Further reading</h2>
+<div>
+<ul>
+<li>F. Bachmann, R. Hielscher, and H. Schaeben, "Grain detection from 2d and 3d EBSD data - Specification of the MTEX algorithm", <i>Ultramicroscopy</i> 111 (2011), 1720-1733, <a href="https://doi.org/10.1016/j.ultramic.2011.08.002">doi:10.1016/j.ultramic.2011.08.002</a>. This paper derives the Voronoi-cell grain model whose IDs connect the grain list to the EBSD measurements.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<a href="https://doi.org/10.1520/E2627-13R19">ASTM E2627-13(2019)</a>, <i>Standard Practice for Determining Average Grain Size Using Electron Backscatter Diffraction (EBSD) in Fully Recrystallized Polycrystalline Materials</i>.</li>
+</ul>
+</div>
+<div>
+<ul>
+<li>
+<a href="https://www.iso.org/standard/74309.html">ISO 13067:2020</a>, <i>Microbeam analysis - Electron backscatter diffraction - Measurement of average grain size</i>. It distinguishes measurements on a two-dimensional section from inferences about three-dimensional grain size.</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SelectingGrains.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

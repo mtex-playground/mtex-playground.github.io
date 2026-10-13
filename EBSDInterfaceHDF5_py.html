@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Developer Guide: HDF5 EBSD JSON Configurations | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSDInterfaceHDF5_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSDInterfaceHDF5_py.html#page",
+      "name": "Developer Guide: HDF5 EBSD JSON Configurations",
+      "headline": "Developer Guide: HDF5 EBSD JSON Configurations",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/EBSDInterfaceHDF5_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSDInterfaceHDF5_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSDInterfaceHDF5_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Developer Guide: HDF5 EBSD JSON Configurations</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+        <p class="mx-langnote">This page is adapted for Python and differs from the MATLAB page.</p>
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/EBSDInterfaceHDF5.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/EBSDAnalysis/EBSDInterfaceHDF5.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>HDF5 is a container, not a single EBSD file format. One vendor may store Euler angles
+at <code class="language-plaintext highlighter-rouge">/EBSD/Data/Euler</code> and another at <code class="language-plaintext highlighter-rouge">/Site/EBSD/EulerAngles</code>. Each may also store much
+that MTEX does not read.</p>
+
+<p>MTEX therefore uses one importer, <a href="loadEBSD_h5.html">loadEBSD</a> of an HDF5 file, and a JSON
+configuration for each supported layout. The configurations are in
+<code class="language-plaintext highlighter-rouge">mtex/io/hdf5_config/</code>: Bruker, EDAX, EDAXh5, EMSphInx, Oxford and ThermoFisher, the
+same files as MATLAB’s <code class="language-plaintext highlighter-rouge">interfaces/hdf5_config/</code>. Supporting another HDF5 layout
+usually means adding a configuration, not another importer.</p>
+
+<p>This page is for developers writing or reviewing those configurations. For ordinary
+data import, begin with <a href="EBSDImport_py.html">Importing EBSD Data</a>. You should already
+understand HDF5 groups, data sets and attributes, JSON syntax and regular expressions.
+The <a href="https://support.hdfgroup.org/documentation/hdf5/latest/_h5_d_m__u_g.html">HDF5 data model</a>
+introduces the file-tree terminology.</p>
+
+<p>The configuration says where values live and how to turn them into an <code class="language-plaintext highlighter-rouge">EBSD</code> variable.
+It does not settle whether the vendor’s Euler-angle, crystal and specimen frames have
+been interpreted correctly. That separate check is taught in
+<a href="EBSDReferenceFrame_py.html">Reference Frame Alignment</a>.</p>
+
+<p>The reasoning behind the existing vendor files is recorded in MATLAB’s
+<code class="language-plaintext highlighter-rouge">interfaces/info.md</code> beside them. Keep format-specific decisions there, especially why
+a field must not be read or which reference frame a vendor states.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<h2 id="a-development-workflow">A development workflow</h2>
+
+<p>Start from the supported configuration whose tree most closely resembles the new file.
+Give the copy a new <code class="language-plaintext highlighter-rouge">settings.name</code>. The importer discovers every <code class="language-plaintext highlighter-rouge">.json</code> file in
+<code class="language-plaintext highlighter-rouge">mtex/io/hdf5_config/</code>, so no separate registration step is needed for an extension
+that already uses the HDF5 interface.</p>
+
+<p>First inspect an unsupported file with <code class="language-plaintext highlighter-rouge">h5py</code>, walking its groups and data sets, or
+with the <code class="language-plaintext highlighter-rouge">h5dump</code> tool of the HDF group. Define <code class="language-plaintext highlighter-rouge">settings</code> and the <code class="language-plaintext highlighter-rouge">ebsd.key</code> before
+asking MTEX to read it: no configuration is selected until <code class="language-plaintext highlighter-rouge">settings</code> matches.</p>
+
+<p>Once detection works, run a full import and inspect the phase ids, position and
+orientation counts, properties and reference frames; <code class="language-plaintext highlighter-rouge">ebsd.meta['h5']</code> records which
+path each configuration entry resolved to. A formatter error is a failed field, not a
+successful partial validation.</p>
+
+<h2 id="how-the-reader-evaluates-a-configuration">How the reader evaluates a configuration</h2>
+
+<p>The reader walks the JSON object and the HDF5 tree together. A normal leaf combines
+two decisions:</p>
+
+<ul>
+  <li><em><code class="language-plaintext highlighter-rouge">value</code></em> says what path to match, while <em><code class="language-plaintext highlighter-rouge">mode</code></em> says where and how to search. The
+result is a path inside the HDF5 file.</li>
+  <li><em><code class="language-plaintext highlighter-rouge">type</code></em> selects what to do with the value. It dispatches to a formatter named
+<code class="language-plaintext highlighter-rouge">&lt;category&gt;_&lt;type&gt;</code>, such as <code class="language-plaintext highlighter-rouge">position_direct</code>, <code class="language-plaintext highlighter-rouge">rotation_euler</code> or <code class="language-plaintext highlighter-rouge">cs_default</code>.
+The formatter returns the MTEX object or array required by the <code class="language-plaintext highlighter-rouge">EBSD</code> constructor.</li>
+</ul>
+
+<p>Nested objects mirror the constructor categories. A node may instead use <code class="language-plaintext highlighter-rouge">group</code> to
+collect the data sets of a group, <code class="language-plaintext highlighter-rouge">data</code> to inject a constant, or <code class="language-plaintext highlighter-rouge">load</code> to reuse a
+value cached earlier. Those forms do not perform the usual <code class="language-plaintext highlighter-rouge">mode</code> and <code class="language-plaintext highlighter-rouge">value</code> leaf
+search.</p>
+
+<h2 id="where-an-entry-is-searched">Where an entry is searched</h2>
+
+<p>Every path expression has a <code class="language-plaintext highlighter-rouge">mode</code>. The four names below are copied from
+the HDF5 reader, <code class="language-plaintext highlighter-rouge">mtex/io/h5.py</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><em>mode</em></th>
+      <th><em>searched below</em></th>
+      <th><em>matched against</em></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">absolute</code></td>
+      <td>nothing; the value is the path</td>
+      <td>the full path, literally</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">search_root</code></td>
+      <td>the enclosing <code class="language-plaintext highlighter-rouge">key</code></td>
+      <td>the full path</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">search_free</code></td>
+      <td>the group containing the selected map</td>
+      <td>the full path</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">search_set</code></td>
+      <td>the selected map itself</td>
+      <td>the path relative to it</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">absolute</code> is a case-sensitive literal path. It is appropriate for a rigid layout that
+never moves. The three search modes use case-insensitive regular expressions, which can
+survive small renamings between software versions. Anchor a regular expression whenever
+an accidental longer match would be harmful.</p>
+
+<p><code class="language-plaintext highlighter-rouge">search_free</code> is the mode to use when a value sits beside the selected map instead of
+inside it. EDAX, for example, keeps the step size in a <code class="language-plaintext highlighter-rouge">Sample</code> group beside <code class="language-plaintext highlighter-rouge">EBSD</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">search_set</code> is the only mode that distinguishes maps living in the same enclosing
+group. Oxford may store one map under <code class="language-plaintext highlighter-rouge">/1/EBSD</code> and a processed version under
+<code class="language-plaintext highlighter-rouge">/1/Data Processing</code>. A relative expression such as <code class="language-plaintext highlighter-rouge">^/Data/Phase$</code> resolves against
+the selected one and cannot drift into its neighbour.</p>
+
+<p>Here, a <em>selected map</em> means the EBSD acquisition chosen by the <code class="language-plaintext highlighter-rouge">dataSet</code> import
+option. It is not an HDF5 data set in the narrower sense of an array stored at one
+HDF5 path.</p>
+
+<h2 id="structural-and-control-keywords">Structural and control keywords</h2>
+
+<p><em><code class="language-plaintext highlighter-rouge">key</code></em> shifts the root for a branch. The matching group becomes the root for every
+nested entry, so their expressions can stay short. The <code class="language-plaintext highlighter-rouge">ebsd.key</code> identifies candidate
+maps. It may contain alternatives in one regular expression; their order is the
+preference order.</p>
+
+<p><em><code class="language-plaintext highlighter-rouge">multiple</code></em> turns one match into a list. The phase description uses it so that the
+<code class="language-plaintext highlighter-rouge">cs</code> block is evaluated once per phase. The number of phases is implied by the number
+of matches and is not read separately from the file. A regular expression that matches
+two data sets for one phase silently doubles the phase list and shifts every phase id
+in the map. Match exactly one data set per phase.</p>
+
+<p><em><code class="language-plaintext highlighter-rouge">optional</code></em> allows a missing path or branch to be skipped. By contrast, <em><code class="language-plaintext highlighter-rouge">fallback</code></em>
+supplies a value when its path is missing and therefore also makes that lookup
+optional. Use a fallback only when the substituted value is valid for every file
+covered by the configuration.</p>
+
+<p><em><code class="language-plaintext highlighter-rouge">data</code></em> supplies a constant from the JSON instead of reading the file. It is how a
+fixed angular unit, grid direction or crystal frame is stated. <em><code class="language-plaintext highlighter-rouge">group</code></em> reads all data
+sets directly below a matched group; additions also descend into subgroups.</p>
+
+<p><em><code class="language-plaintext highlighter-rouge">safe</code></em> caches a value under its field name. A later <em><code class="language-plaintext highlighter-rouge">load</code></em> entry names that cached
+field, optionally followed by a subfield. This avoids reading the same compound data
+set twice, as in <code class="language-plaintext highlighter-rouge">EDAXh5.json</code>.</p>
+
+<h2 id="the-categories">The categories</h2>
+
+<p><code class="language-plaintext highlighter-rouge">settings</code> identifies the vendor layout. Its <code class="language-plaintext highlighter-rouge">key_path</code> must resolve, and the value
+read there must contain one of the strings in <code class="language-plaintext highlighter-rouge">manufacturer_keys.data</code>. That field may
+be one string or a list.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ebsd</code> holds the map itself:</p>
+
+<ul>
+  <li><em><code class="language-plaintext highlighter-rouge">position</code></em> uses <code class="language-plaintext highlighter-rouge">type: "direct"</code> when the file stores an \(x\) and a \(y\) for every
+measurement. It uses <code class="language-plaintext highlighter-rouge">type: "indirect"</code> when step sizes and grid dimensions must be
+expanded into positions.</li>
+  <li><em><code class="language-plaintext highlighter-rouge">rotation</code></em> uses <code class="language-plaintext highlighter-rouge">type: "euler"</code> for separate angle arrays, <code class="language-plaintext highlighter-rouge">type: "euler_stack"</code>
+for one stacked array, or <code class="language-plaintext highlighter-rouge">type: "byMatrix"</code> for orientation matrices. Euler input
+needs <code class="language-plaintext highlighter-rouge">format: "degree"</code> or <code class="language-plaintext highlighter-rouge">format: "radian"</code>.</li>
+  <li><em><code class="language-plaintext highlighter-rouge">phase</code></em> is the per-measurement phase index. <code class="language-plaintext highlighter-rouge">type: "default"</code> preserves one-based
+ids, <code class="language-plaintext highlighter-rouge">type: "zeroBased"</code> converts the zero-based EMSphInx convention, and
+<code class="language-plaintext highlighter-rouge">type: "stack"</code> flattens a stacked phase array.</li>
+  <li><em><code class="language-plaintext highlighter-rouge">cs</code></em> creates one crystal symmetry per phase and therefore normally has
+<code class="language-plaintext highlighter-rouge">"multiple": true</code>. Its fields are <code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">space_group</code>, <code class="language-plaintext highlighter-rouge">lattice</code> and, when
+supplied by the format, <code class="language-plaintext highlighter-rouge">reference_frame</code> and <code class="language-plaintext highlighter-rouge">atoms</code>. The lattice may be one
+six-element array with <code class="language-plaintext highlighter-rouge">type: "all_together"</code>, an <code class="language-plaintext highlighter-rouge">angle</code> and a <code class="language-plaintext highlighter-rouge">dim</code> array, or six
+entries with <code class="language-plaintext highlighter-rouge">type: "separate"</code>.</li>
+  <li><em><code class="language-plaintext highlighter-rouge">header</code></em> collects the scan-level header. A header contains acquisition settings
+and vendor bookkeeping in the file’s native field layout. It becomes
+<code class="language-plaintext highlighter-rouge">ebsd.meta['header']</code> rather than a per-measurement property.</li>
+  <li><em><code class="language-plaintext highlighter-rouge">unitCell</code></em> can preserve the vendor’s step-size hint. <em><code class="language-plaintext highlighter-rouge">map_correction</code></em> relates
+the Euler-angle and map reference frames, while <em><code class="language-plaintext highlighter-rouge">how2plot</code></em> states how the map frame
+is laid out on screen.</li>
+</ul>
+
+<p>A <em>property</em> has one value per measurement and is subset with the map. <code class="language-plaintext highlighter-rouge">additions</code>
+turns every remaining per-measurement data set of a group into a property, descending
+into subgroups and prefixing their names. Its <code class="language-plaintext highlighter-rouge">group</code> may be a list, so a second
+analysis of the same site, such as the EDS element maps in an Oxford file, can be
+imported too. An <code class="language-plaintext highlighter-rouge">exclude</code> list keeps out values already read as coordinates or another
+core category.</p>
+
+<p>An <em>option</em> is scan-level data and is not resized when the map is subset. Every
+further top-level category is stored under <code class="language-plaintext highlighter-rouge">ebsd.meta[&lt;category&gt;]</code>; <code class="language-plaintext highlighter-rouge">eds</code> and
+<code class="language-plaintext highlighter-rouge">electron_image</code> use this path. Mark such a category optional when the vendor does not
+write it in every file.</p>
+
+<p>A crystal <code class="language-plaintext highlighter-rouge">reference_frame</code> entry fixes the Cartesian frame attached to a phase’s
+lattice. It is distinct from the phase’s point-group symmetry and from the
+specimen-frame correction in <code class="language-plaintext highlighter-rouge">map_correction</code>. Reading the right Euler numbers with
+the wrong one of these frames still gives a plausible but physically misaligned map.</p>
+
+<h2 id="a-minimal-configuration">A minimal configuration</h2>
+
+<p>The ThermoFisher configuration is the smallest of the six. It uses literal paths for
+its rigid outer tree, builds positions from the grid dimensions, reads stacked phases
+and Euler angles, and repeats the crystal symmetry branch once per phase.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "settings": {
+    "name": "ThermoFisher",
+    "key_path": { "mode": "absolute", "value": "/Info/SoftwareVersion" },
+    "manufacturer_keys": { "data": "xTalView" }
+  },
+  "ebsd": {
+    "type": "default",
+    "key": { "mode": "absolute", "value": "/Site/EBSD" },
+    "position": {
+      "type": "indirect",
+      "indirect": {
+        "step_size_x": { "mode": "absolute", "value": "/Site/Acquisition/StepSize" },
+        "step_size_y": { "mode": "absolute", "value": "/Site/Acquisition/StepSize" },
+        "grid_size_x": { "mode": "absolute", "value": "/Site/Acquisition/MapWidth" },
+        "grid_size_y": { "mode": "absolute", "value": "/Site/Acquisition/MapHeight" },
+        "first": { "data": "x" }
+      }
+    },
+    "phase": { "mode": "search_root", "value": "Phase", "type": "stack" },
+    "rotation": {
+      "type": "euler_stack",
+      "euler_stack": {
+        "format": { "data": "degree" },
+        "phi": { "mode": "search_root", "value": "EulerAngles" }
+      }
+    },
+    "cs": {
+      "type": "default",
+      "multiple": true,
+      "key": { "mode": "search_root", "value": "/EBSD/Phase" },
+      "default": {
+        "reference_frame": { "data": "X||a*, Z||c" },
+        "space_group": { "mode": "search_root", "value": "SpaceGroupNumber", "type": "default" },
+        "name": { "mode": "search_root", "value": "Name" },
+        "lattice": {
+          "angle": { "mode": "search_root", "value": "LatticeAngles" },
+          "dim": { "mode": "search_root", "value": "LatticeParameters" }
+        }
+      }
+    }
+  }
+}
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">data</code> entries in this example are constants. In particular, the crystal-frame
+string states X parallel to a-star and Z parallel to c; it is not a symmetry
+declaration.</p>
+
+<p>JSON permits neither comments nor trailing commas. Keep explanatory notes in <code class="language-plaintext highlighter-rouge">info.md</code>
+rather than in the configuration itself. The formal syntax is specified by
+<a href="https://www.rfc-editor.org/info/rfc8259">RFC 8259</a>.</p>
+
+<h2 id="check-the-configuration-on-the-bundled-file">Check the configuration on the bundled file</h2>
+
+<p>This bundled EMSphInx file exercises configuration detection, map selection and header
+construction. MATLAB reads it with <code class="language-plaintext highlighter-rouge">'headerOnly'</code>, without the per-measurement arrays;
+that lightweight preview is not ported, so the map is read whole and the same three
+inventories are displayed.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fname</span> <span class="o">=</span> <span class="n">mtexdatafile</span><span class="p">(</span><span class="s">'EMSphinx'</span><span class="p">)</span>
+<span class="n">ebsdHeader</span> <span class="o">=</span> <span class="n">EBSD</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">ebsdHeader</span><span class="p">.</span><span class="n">CSList</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  EMSphInx file with 4 data sets:
+  ▸ [0] /Scan 1/EBSD
+    [1] /Scan 2/EBSD
+    [2] /Scan 3/EBSD
+    [3] /Scan 4/EBSD
+  pick one by EBSD.load(fname, dataSet=3) or dataSet='Scan 4'
+phaseList
+  Phase  Mineral           Color         Symmetry  Crystal reference frame
+  0      notIndexed
+  1      Fe(alpha-iron)    LightSkyBlue  m-3m      Fe(alpha-iron)
+  2      Fe(gamma-iron)    DarkSeaGreen  m-3m      Fe(gamma-iron)
+  3      Co(alpha-cobalt)  Goldenrod     6/mmm     Co(alpha-cobalt)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsdHeader</span><span class="p">.</span><span class="n">phaseMap</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0, 1, 2, 3])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">list</span><span class="p">(</span><span class="n">ebsdHeader</span><span class="p">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'header'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['Grid Type', 'Notes', 'Operator', 'Pattern Center Calibration', 'Phase', 'Sample ID', 'Sample Tilt', 'Scan ID', 'Step X', 'Step Y', 'Working Distance', 'nColumns', 'nRows']
+</code></pre></div></div>
+
+<p>The output identifies EMSphInx, lists four maps and marks <code class="language-plaintext highlighter-rouge">Scan 1/EBSD</code> as selected.
+The phase list contains <code class="language-plaintext highlighter-rouge">notIndexed</code> and three indexed phases. The phase map and the
+native header-field names are also visible. These inventories are the purpose of the
+check, so they are deliberately displayed.</p>
+
+<p>Next perform a full import with the new configuration. Confirm that every property has
+one value per measurement and that phase ids address the intended crystal symmetries.
+Then apply the known-direction checks from
+<a href="EBSDReferenceFrame_py.html">Reference Frame Alignment</a>. A map that looks ordinary is not
+evidence that its frames are correct.</p>
+
+<p>A full HDF5 import also records the resolved source paths in <code class="language-plaintext highlighter-rouge">ebsd.meta['h5']</code>.
+<a href="EBSDExport_py.html">Exporting EBSD Data</a> uses that provenance to write changed values
+into a copy of the vendor file.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>The HDF Group,
+<a href="https://support.hdfgroup.org/documentation/hdf5/latest/_h5_d_m__u_g.html">HDF5 Data Model and File Structure</a>,
+defines groups, data sets, attributes and absolute paths.</li>
+  <li>T. Bray, editor,
+<a href="https://www.rfc-editor.org/info/rfc8259">RFC 8259: The JavaScript Object Notation Data Interchange Format</a>,
+Internet Standard 90, 2017, defines the JSON syntax accepted by Python’s <code class="language-plaintext highlighter-rouge">json</code>
+module.</li>
+  <li>M. A. Jackson et al.,
+<a href="https://doi.org/10.1186/2193-9772-3-4">h5ebsd: an archival data format for electron back-scatter diffraction data sets</a>,
+<em>Integrating Materials and Manufacturing Innovation</em> 3, 44–55, 2014, distinguishes a
+vendor-neutral archival EBSD layout from workflow files.</li>
+  <li>The <a href="https://github.com/oinanoanalysis/h5oina/blob/master/H5OINAFile.md">Oxford Instruments NanoAnalysis HDF5 File Specification</a>
+documents a public vendor layout, including units, required data sets and coordinate
+frames.</li>
+</ul>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSDInterfaceHDF5_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

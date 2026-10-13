@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Symmetrically Equivalent Orientations | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/OrientationSymmetry_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/OrientationSymmetry_py.html#page",
+      "name": "Symmetrically Equivalent Orientations",
+      "headline": "Symmetrically Equivalent Orientations",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/OrientationSymmetry_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/OrientationSymmetry_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/OrientationSymmetry_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Symmetrically Equivalent Orientations</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/OrientationSymmetry.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/CrystalOrientations/OrientationSymmetry.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A crystal cannot distinguish settings related by its point-group symmetry. One physical
+orientation therefore corresponds to a class of equivalent orthogonal transformations,
+not to one stored representative. MTEX carries that symmetry with the orientation and
+uses the whole class in symmetry-aware calculations.</p>
+
+<p>This page assumes that an orientation maps crystal coordinates into specimen
+coordinates, as developed in <a href="DefinitionAsCoordinateTransform_py.html">Theory</a>. It also
+assumes the point-group operations introduced in
+<a href="CrystalSymmetries_py.html">Crystal Symmetries</a>.</p>
+
+<p>A <em>symmetry</em> is the point group under which data are invariant. It is attached to a
+reference frame, but is not the frame itself. The crystal and specimen symmetries below
+are therefore attached to opposite sides of the orientation map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># hexagonal crystal symmetry, with 6 rotations about the c axis
+</span><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'6'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># specimen symmetry with a twofold axis along z
+</span><span class="n">ss</span> <span class="o">=</span> <span class="n">specimenFrame</span><span class="p">(</span><span class="s">'112'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># a generic orientation carrying both symmetries
+</span><span class="n">ori</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="s">'Bunge'</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="which-side-acts">Which Side Acts</h2>
+
+<p>Crystal symmetry acts on the input of the map, from the right. Specimen symmetry acts on
+its output, from the left. If <code class="language-plaintext highlighter-rouge">O</code> represents the stored orientation, every member of its
+class has the form</p>
+
+\[\mathbf{S}_{\mathrm{s}}\,\mathbf{O}\,\mathbf{S}_{\mathrm{c}}.\]
+
+<p>The six crystal operations give the following representatives.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># equivalent orientations with respect to crystal symmetry
+</span><span class="n">crystalEquivalents</span> <span class="o">=</span> <span class="n">ori</span> <span class="o">*</span> <span class="n">cs</span>
+<span class="n">crystalEquivalents</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>orientation (6 → y↑→x)
+  size: 6
+  Bunge Euler angles in degree
+  phi1  Phi  phi2
+    10   20    30
+    10   20    90
+    10   20   150
+    10   20   210
+    10   20   270
+    10   20   330
+</code></pre></div></div>
+
+<p>Only the third Euler angle \(\varphi_2\) changes, in steps of \(60^\circ\). In the Bunge
+convention it is the rotation applied first, in crystal coordinates, which is where the
+crystal symmetry acts.</p>
+
+<p>Specimen symmetry produces the other kind of equivalence.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># equivalent orientations with respect to specimen symmetry
+</span><span class="n">specimenEquivalents</span> <span class="o">=</span> <span class="n">ss</span> <span class="o">*</span> <span class="n">ori</span>
+<span class="n">specimenEquivalents</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>orientation (6 → y↑→x)
+  size: 2
+  Bunge Euler angles in degree
+  phi1  Phi  phi2
+    10   20    30
+   190   20    30
+</code></pre></div></div>
+
+<p>Now \(\varphi_1\) changes because it is applied last, in specimen coordinates. Combining
+both sides gives \(2 \times 6 = 12\) representatives.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">allEquivalents</span> <span class="o">=</span> <span class="n">ss</span> <span class="o">*</span> <span class="n">ori</span> <span class="o">*</span> <span class="n">cs</span>
+<span class="n">allEquivalents</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>orientation (6 → y↑→x)
+  size: 2 × 6
+  Bunge Euler angles in degree
+  phi1  Phi  phi2
+    10   20    30
+    10   20    90
+    10   20   150
+    10   20   210
+    10   20   270
+    10   20   330
+   190   20    30
+   190   20    90
+   190   20   150
+   190   20   210
+   190   20   270
+   190   20   330
+</code></pre></div></div>
+
+<p><a href="orientation.symmetrise.html">symmetrise</a> is the shortcut for this product. It returns a
+new orientation array; it does not alter <code class="language-plaintext highlighter-rouge">ori</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">classSize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">ori</span><span class="p">))</span>
+<span class="n">classSize</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>12
+</code></pre></div></div>
+
+<h2 id="proper-and-improper-operations">Proper and Improper Operations</h2>
+
+<p>Both groups in the first example contain only proper rotations. A full point group may
+also contain improper operations such as inversion or reflection. An orientation is a
+proper rotation, so only the proper half of a point group gives another setting of the
+crystal, and that is the half <code class="language-plaintext highlighter-rouge">symmetrise</code> lists. For cubic <code class="language-plaintext highlighter-rouge">m-3m</code> symmetry it returns
+the 24 rigid rotations out of the 48 orthogonal transformations of the group.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cubicOri</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="nb">id</span><span class="p">(</span><span class="n">crystalFrame</span><span class="p">(</span><span class="s">'m-3m'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cubicCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">cubicOri</span><span class="p">))</span>
+<span class="n">cubicCount</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>24
+</code></pre></div></div>
+
+<p>The 24 improper operations remain symmetries of the lattice. They act wherever lattice
+or diffraction equivalence is the subject, which is a question about directions: a
+crystal direction reduces over the full group of its frame and carries <code class="language-plaintext highlighter-rouge">antipodal</code> for
+Friedel’s law.</p>
+
+<h2 id="what-this-looks-like-in-a-pole-figure">What This Looks Like in a Pole Figure</h2>
+
+<p>One orientation and one crystal direction give a family of specimen directions. The
+<code class="language-plaintext highlighter-rouge">complete=True</code> flag keeps both hemispheres visible here so none of the twelve
+directions is folded into a smaller plotting region.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">complete</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'small'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/OrientationSymmetry-14.png" /></center>
+
+<p>Notice six poles in each hemisphere. The sixfold crystal symmetry creates the
+crystallographically equivalent direction family, and the twofold specimen symmetry
+repeats that family in the specimen frame. Without <code class="language-plaintext highlighter-rouge">complete=True</code>, <code class="language-plaintext highlighter-rouge">plotPF</code> exploits
+both antipodal equivalence and specimen symmetry and shows only the non-redundant part
+of this example.</p>
+
+<p>Which member a calculation produces depends on the stored representative.
+Symmetry-aware comparisons avoid making a physical result depend on that arbitrary
+choice.</p>
+
+<h2 id="coincidences">Coincidences</h2>
+
+<p>The product of the group sizes is the number of representatives before duplicates are
+removed. Some orientations make a left-side and a right-side operation describe the same
+transformation. At the identity orientation the crystal c axis and specimen z axis
+coincide, so the class has 12 entries but only 6 distinct ones. The <code class="language-plaintext highlighter-rouge">unique=True</code> option
+removes the duplicates.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">identityOri</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="nb">id</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">coincidentCounts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">identityOri</span><span class="p">)),</span> <span class="nb">len</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">identityOri</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">))]</span>
+<span class="n">coincidentCounts</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[12, 6]
+</code></pre></div></div>
+
+<h2 id="symmetry-in-every-comparison">Symmetry in Every Comparison</h2>
+
+<p>Because the class is what matters, the angle between two orientations is the smallest
+rotational angle over their equivalent representatives. A fixed probe orientation
+therefore has the same symmetry-aware angle to every equivalent of the rotation returned
+by <code class="language-plaintext highlighter-rouge">orientation.goss</code>. The named rotation is used only as a reproducible reference here.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">probe</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">37</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">48</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">23</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">referenceEquivalents</span> <span class="o">=</span> <span class="n">symmetrise</span><span class="p">(</span><span class="n">orientation</span><span class="p">.</span><span class="n">goss</span><span class="p">(</span><span class="n">cs</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">symmetryAwareAngles</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">probe</span><span class="p">,</span> <span class="n">referenceEquivalents</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">symmetryAwareAngles</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([28.9235, 28.9235, 28.9235, 28.9235, 28.9235, 28.9235])
+</code></pre></div></div>
+
+<p>Switching symmetry off compares the stored rotations directly. It gives six different
+angles, whose minimum is the repeated value above.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rawAngles</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">probe</span><span class="p">,</span> <span class="n">referenceEquivalents</span><span class="p">,</span> <span class="n">symmetry</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">rawAngles</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 55.3931,  28.9235,  75.3016, 132.464 , 169.2501, 111.1564])
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">symmetry=False</code> flag is implemented by <a href="orientation.angle.html">angle</a>,
+<a href="orientation.dot.html">dot</a>, and <a href="orientation.unique.html">unique</a>, among other
+orientation methods. Reach for it when an angle or dot product comes out smaller than
+expected. Leave it alone otherwise, because the symmetry-aware answer is normally the
+physically meaningful one.</p>
+
+<p>Do not pass <code class="language-plaintext highlighter-rouge">symmetry=False</code> to <a href="orientation.calcCluster.html">calcCluster</a>. That
+method does not define the flag, and an unknown option can be ignored silently.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">ori * cs</code> and <code class="language-plaintext highlighter-rouge">ss * ori</code> list the equivalents on one side, the group along a new axis,
+so <code class="language-plaintext highlighter-rouge">ss * ori * cs</code> is the full class shaped <code class="language-plaintext highlighter-rouge">(2, 6)</code>. The elements are the proper ones of
+each group, as <code class="language-plaintext highlighter-rouge">symmetrise</code> uses; an improper element would repeat an equivalent already
+in the list, an orientation being proper.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>,
+Springer, 2004, develops orientation space and the effects of crystal and specimen
+symmetry.</li>
+  <li>H.-J. Bunge, <a href="https://doi.org/10.1016/C2013-0-11769-2">Texture Analysis in Materials Science: Mathematical Methods</a>,
+Butterworths, English ed., 1982, establishes the Euler-angle and orientation
+conventions used in texture analysis.</li>
+  <li>R. Arnold, P. E. Jupp and H. Schaeben, <a href="https://doi.org/10.1107/S1600576723003187">Orientation relationships, orientational
+variants and the embedding approach</a>,
+<em>Journal of Applied Crystallography</em> 56 (2023), 725-736, describes crystal
+orientations as equivalence classes in \(\mathrm{SO}(3)/K\).</li>
+  <li><a href="https://www.iso.org/standard/82749.html">ISO 24173:2024</a>, <em>Microbeam analysis –
+Guidelines for orientation measurement using electron backscatter diffraction</em>, gives
+current guidance for reproducible EBSD orientation measurements.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>The region of rotation space that holds exactly one member of each class is the
+<a href="OrientationFundamentalRegion_py.html">Fundamental Region</a>. Symmetry of the specimen, and
+when it should be imposed at all, is <a href="SpecimenSymmetry_py.html">Specimen Symmetry</a>. The
+same minimum-angle rule becomes central when comparing two crystals in
+<a href="Misorientations.html">Misorientations</a>.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/OrientationSymmetry_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

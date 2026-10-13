@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>MTEX for Python developers | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/PythonDevelopers_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/PythonDevelopers_py.html#page",
+      "name": "MTEX for Python developers",
+      "headline": "MTEX for Python developers",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/PythonDevelopers_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/PythonDevelopers_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/PythonDevelopers_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">MTEX for Python developers</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/PythonDevelopers.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GeneralConcepts/PythonDevelopers.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>This page is for readers who know Python and want to use MTEX inside their own code: a
+package, a pipeline or a notebook that also uses NumPy, SciPy and matplotlib. It says where
+MTEX follows Python’s conventions, where it deliberately does not, and how to use it
+cleanly as a library.</p>
+
+<h2 id="why-the-names-follow-matlab">Why the names follow MATLAB</h2>
+
+<p>MTEX has been a MATLAB toolbox for twenty years. Its commands (<code class="language-plaintext highlighter-rouge">calcGrains</code>, <code class="language-plaintext highlighter-rouge">plotPF</code>,
+<code class="language-plaintext highlighter-rouge">symmetrise</code>), its classes (<code class="language-plaintext highlighter-rouge">vector3d</code>, <code class="language-plaintext highlighter-rouge">orientation</code>, <code class="language-plaintext highlighter-rouge">crystalFrame</code>) and its options
+(<code class="language-plaintext highlighter-rouge">minPixel</code>, <code class="language-plaintext highlighter-rouge">antipodal</code>) are the vocabulary of its documentation, of the papers that use
+it and of the forum answers. The Python port keeps that vocabulary, so every page of this
+documentation exists in both languages and a MATLAB script translates line by line
+(<a href="MATLABtoPython_py.html">MTEX in MATLAB and in Python</a>). The price is a naming style that
+differs from PEP 8: commands and properties are in camelCase, and most classes start with
+a lower case letter. Libraries that mirror an established system do the same, PySide’s
+<code class="language-plaintext highlighter-rouge">setWindowTitle</code> or SimpleITK’s <code class="language-plaintext highlighter-rouge">ReadImage</code>.</p>
+
+<p>Where a MATLAB name is a misnomer, a duplicate, a workaround for a limit of MATLAB or a
+typo, Python has a better one and only that: <code class="language-plaintext highlighter-rouge">plotPF</code> for <code class="language-plaintext highlighter-rouge">plotPF</code>, which draws no density
+when given orientations, keywords written positively as <code class="language-plaintext highlighter-rouge">thinning=False</code> for the flag
+<code class="language-plaintext highlighter-rouge">'nothinning'</code>, and one spelling <code class="language-plaintext highlighter-rouge">tol=</code> for a tolerance. The page
+<a href="MATLABtoPython_py.html">MTEX in MATLAB and in Python</a> lists them.</p>
+
+<p>Everything below the names is ordinary Python: NumPy arrays, keyword arguments, exceptions,
+docstrings and matplotlib figures.</p>
+
+<h2 id="importing">Importing</h2>
+
+<p>The pages of this documentation start with <code class="language-plaintext highlighter-rouge">from mtex import *</code>, which keeps the examples
+short and close to MATLAB. In code of your own, import the module or the names you use:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">mtex</span>
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="n">calcGrains</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">mtexdata</span>
+</code></pre></div></div>
+
+<p>The package has one flat namespace: every public command, class and constant is an
+attribute of <code class="language-plaintext highlighter-rouge">mtex</code>, whichever of its layers (<code class="language-plaintext highlighter-rouge">mtex.geometry</code>, <code class="language-plaintext highlighter-rouge">mtex.functions</code>,
+<code class="language-plaintext highlighter-rouge">mtex.maps</code>, …) defines it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mtex</span><span class="p">.</span><span class="n">orientation</span> <span class="ow">is</span> <span class="n">mtex</span><span class="p">.</span><span class="n">geometry</span><span class="p">.</span><span class="n">orientation</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>True
+</code></pre></div></div>
+
+<p>A star import brings in <code class="language-plaintext highlighter-rouge">min</code>, <code class="language-plaintext highlighter-rouge">max</code>, <code class="language-plaintext highlighter-rouge">sum</code> and <code class="language-plaintext highlighter-rouge">round</code> too. They act on MTEX objects and
+fall back to Python’s built-ins on everything else, so plain values behave as before:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="nb">max</span> <span class="k">as</span> <span class="n">mtexMax</span>
+<span class="n">mtexMax</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">mtexMax</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">mtexMax</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(3, 5, 9)
+</code></pre></div></div>
+
+<p>Importing MTEX takes about 0.2 s above NumPy. SciPy’s heavier modules, numba, matplotlib,
+h5py and PySide6 are imported only by the commands that need them.</p>
+
+<h2 id="installation-extras">Installation extras</h2>
+
+<p>The core needs NumPy, SciPy and finufft. The rest are extras of the <code class="language-plaintext highlighter-rouge">mtex</code> package:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Extra</th>
+      <th>Adds</th>
+      <th>For</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">numba</code></td>
+      <td>numba</td>
+      <td>the compiled kernels; without it the NumPy forms run, slower</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">io</code></td>
+      <td>h5py</td>
+      <td>the vendors’ HDF5 files</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">plot</code></td>
+      <td>matplotlib</td>
+      <td>every plot</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">plot3d</code></td>
+      <td>PyVista</td>
+      <td>the 3D scenes of volume maps</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">wizard</code></td>
+      <td>PySide6</td>
+      <td>the import wizard</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A library that only computes can depend on <code class="language-plaintext highlighter-rouge">mtex[numba]</code> and leave the drawing out.</p>
+
+<h2 id="containers-are-numpy-arrays">Containers are NumPy arrays</h2>
+
+<p>Every MTEX list, a list of vectors, rotations, orientations or Miller indices, holds one
+NumPy array of shape <code class="language-plaintext highlighter-rouge">(..., k)</code>: <code class="language-plaintext highlighter-rouge">k</code> coordinates per element and any shape in front. The
+container’s own shape is the shape in front; one element is a container of shape <code class="language-plaintext highlighter-rouge">()</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v</span> <span class="o">=</span> <span class="n">mtex</span><span class="p">.</span><span class="n">vector3d</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="n">random</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+<span class="n">v</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((4,), (4, 3), ())
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">data</code> is the stored array: quaternions for rotations, xyz for vectors. The coordinates a
+reader expects have their own properties and commands:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span> <span class="o">=</span> <span class="n">mtex</span><span class="p">.</span><span class="n">rotation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">v</span><span class="p">.</span><span class="n">xyz</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((4, 3), array([ 0.9254,  0.171 , -0.0302,  0.3368]), array([[ 0.7713, -0.6337,  0.0594],
+       [ 0.6131,  0.7146, -0.3368],
+       [ 0.171 ,  0.2962,  0.9397]]))
+</code></pre></div></div>
+
+<p>The containers index, reshape and broadcast as NumPy arrays do, and elementwise products
+broadcast their shapes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">R</span> <span class="o">=</span> <span class="n">mtex</span><span class="p">.</span><span class="n">rotation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="n">v</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(4, 5)
+</code></pre></div></div>
+
+<p>NumPy sees a container as its stored coordinates: <code class="language-plaintext highlighter-rouge">np.asarray(v)</code> is <code class="language-plaintext highlighter-rouge">v.data</code> without a
+copy, so a container can be handed to any function that takes an array. The arithmetic
+stays with MTEX: an array times a container is the container’s product, and NumPy’s
+elementwise functions (<code class="language-plaintext highlighter-rouge">np.sqrt</code>, <code class="language-plaintext highlighter-rouge">np.isnan</code>, …) refuse a container rather than act on
+its coordinates.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">is</span> <span class="n">v</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">full</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span><span class="p">).</span><span class="n">__name__</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(True, 'vector3d')
+</code></pre></div></div>
+
+<p>Build a container back from an array with its constructor.</p>
+
+<h2 id="properties-and-methods">Properties and methods</h2>
+
+<p>A property is a stored or cheaply derived value and is written without parentheses; every
+<code class="language-plaintext highlighter-rouge">is...</code> predicate is a property too. A computation is a method with parentheses, and is
+also a module command:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'forsterite'</span><span class="p">)</span>
+<span class="n">ori</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">].</span><span class="n">orientations</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">ori</span><span class="p">.</span><span class="n">antipodal</span><span class="p">,</span> <span class="n">ori</span><span class="p">.</span><span class="n">angle</span><span class="p">(),</span> <span class="n">mtex</span><span class="p">.</span><span class="n">angle</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(False, array([0.8892, 0.8887, 0.8908]), array([0.8892, 0.8887, 0.8908]))
+</code></pre></div></div>
+
+<p>Options are keyword arguments with their MTEX names. A positional string names something:
+the kind of Miller indices, an Euler convention, an alignment.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mtex</span><span class="p">.</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ori</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (Forsterite)
+  u  v  w
+  1  1  0
+</code></pre></div></div>
+
+<p>Every public command, class and method has a docstring, so <code class="language-plaintext highlighter-rouge">help(calcGrains)</code>, the
+editor’s hover and completion work. The methods MTEX attaches to classes from other
+modules are declared in the class bodies, so a static type checker and an editor see
+them without running the package.</p>
+
+<h2 id="frames-are-compared-by-identity">Frames are compared by identity</h2>
+
+<p>A crystal or specimen frame is a handle: constructing the same frame twice returns the
+same object, and MTEX compares frames with <code class="language-plaintext highlighter-rouge">is</code>. Objects carry their frames, and the
+frames carry the point group.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mtex</span><span class="p">.</span><span class="n">crystalFrame</span><span class="p">(</span><span class="s">'m-3m'</span><span class="p">,</span> <span class="n">mineral</span><span class="o">=</span><span class="s">'Iron'</span><span class="p">)</span> <span class="ow">is</span> <span class="n">mtex</span><span class="p">.</span><span class="n">crystalFrame</span><span class="p">(</span><span class="s">'m-3m'</span><span class="p">,</span> <span class="n">mineral</span><span class="o">=</span><span class="s">'Iron'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>True
+</code></pre></div></div>
+
+<h2 id="commands-that-change-their-input">Commands that change their input</h2>
+
+<p>Most commands return new objects. The exception to know is <code class="language-plaintext highlighter-rouge">calcGrains</code>, which writes the
+grain ids and the pixels it removes or absorbs into the map it is given. Pass a copy when
+the original must stay as it was:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>885
+</code></pre></div></div>
+
+<h2 id="session-state">Session state</h2>
+
+<p>MTEX keeps one session per Python process: the preferences of <code class="language-plaintext highlighter-rouge">setMTEXpref</code> and the
+register of frames. A preference changes the behaviour of every caller in the process.
+The preferences a user saves with <code class="language-plaintext highlighter-rouge">save=True</code> go to <code class="language-plaintext highlighter-rouge">mtex_settings.json</code> and are read at
+import; a library or a test that must see the defaults whatever the user saved sets the
+environment variable <code class="language-plaintext highlighter-rouge">MTEX_SETTINGS</code> to an empty string before importing MTEX. <code class="language-plaintext highlighter-rouge">mtex.reset()</code>
+returns the session to its defaults; a preference that is not set prints as <code class="language-plaintext highlighter-rouge">None</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mtex</span><span class="p">.</span><span class="n">setMTEXpref</span><span class="p">(</span><span class="s">'kernels'</span><span class="p">,</span> <span class="s">'numpy'</span><span class="p">)</span>
+<span class="n">mtex</span><span class="p">.</span><span class="n">getMTEXpref</span><span class="p">(</span><span class="s">'kernels'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'numpy'
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mtex</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mtex</span><span class="p">.</span><span class="n">getMTEXpref</span><span class="p">(</span><span class="s">'kernels'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>None
+</code></pre></div></div>
+
+<p>The preference <code class="language-plaintext highlighter-rouge">threads</code> sets the threads of numba, finufft and <code class="language-plaintext highlighter-rouge">scipy.fft</code>; by default it
+is the number of physical cores. The compiled kernels can be called from several Python
+threads at once.</p>
+
+<h2 id="plots-are-matplotlib">Plots are matplotlib</h2>
+
+<p>The plotting commands draw with matplotlib and return its artists. <code class="language-plaintext highlighter-rouge">parent=</code> draws into
+an axes of your own, so MTEX plots sit beside any other matplotlib content:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">mtex</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">].</span><span class="n">orientations</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="n">left</span><span class="p">)</span>
+<span class="n">right</span><span class="p">.</span><span class="n">hist</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">grainSize</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">right</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'pixels per grain'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PythonDevelopers-14.png" /></center>
+
+<h2 id="stability">Stability</h2>
+
+<p>The names of commands, classes and options are fixed from 1.0 on; internals, everything
+whose name starts with an underscore and the modules not re-exported by <code class="language-plaintext highlighter-rouge">mtex</code>, can change
+between releases.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/PythonDevelopers_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Plotting Grains | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/GrainSpatialPlots_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/GrainSpatialPlots_py.html#page",
+      "name": "Plotting Grains",
+      "headline": "Plotting Grains",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/GrainSpatialPlots_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/GrainSpatialPlots_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/GrainSpatialPlots_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Plotting Grains</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/GrainSpatialPlots.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/Grains/GrainSpatialPlots.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>MTEX represents a grain as a phase-homogeneous, spatially connected region of EBSD pixels
+produced by segmentation. For plotting, its outline is a polygon whose fill colour can
+come from the phase, the mean orientation, or one number computed for that grain.</p>
+
+<p>This page assumes that you have reconstructed grains as described in
+<a href="GrainReconstruction_py.html">Grain Reconstruction</a>. If inverse pole figure colours are new
+to you, read <a href="EBSDIPFMap_py.html">IPF Maps</a> first.</p>
+
+<p>A grain map differs from an EBSD map in one important way. An EBSD map has one colour
+per measurement, whereas a grain map has one colour per grain. It therefore shows the
+result of the reconstruction and none of the orientation scatter or
+measurement-to-measurement noise inside a grain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># import a demo data set
+</span><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'forsterite'</span><span class="p">)</span>
+
+<span class="c1"># perform grain segmentation; the grain ids are stored with the map
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="phase-maps">Phase maps</h2>
+
+<p>Called with no second argument, <code class="language-plaintext highlighter-rouge">plot</code> colours each grain by its phase. The colour is
+stored with the crystal symmetry of that phase.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-4.png" /></center>
+
+<p>The phase colour can be changed, which is the simplest way to make one phase stand out.
+Only the forsterite grains change from blue to salmon; the enstatite and diopside colours
+stay as they were.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span><span class="p">[</span><span class="s">'Fo'</span><span class="p">].</span><span class="n">CS</span><span class="p">.</span><span class="n">color</span> <span class="o">=</span> <span class="s">"salmon"</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-5.png" /></center>
+
+<p>A single grain, or any subset, can instead be given its own colour with <code class="language-plaintext highlighter-rouge">faceColor</code>.
+Here the largest grain is filled in grey and made partly transparent, so its boundary
+and the phase map below remain visible.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># detect the largest grain
+</span><span class="nb">id</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">area</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="nb">id</span><span class="p">],</span> <span class="n">faceColor</span><span class="o">=</span><span class="s">'darkgray'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-6.png" /></center>
+
+<h2 id="orientation-maps">Orientation maps</h2>
+
+<p>Passing the mean orientations as the second argument applies an inverse pole figure
+colour key. The key maps a chosen specimen direction into a crystal direction and assigns
+that crystal direction a colour. Each phase has its own symmetry and therefore needs its
+own key, so this is done one phase at a time.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="s">'Fo'</span><span class="p">],</span> <span class="n">grains</span><span class="p">[</span><span class="s">'Fo'</span><span class="p">].</span><span class="n">meanOrientation</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-7.png" /></center>
+
+<p>MTEX chooses the specimen z direction for this implicit form and reports the standard
+colour key in an interactive session. To choose the direction yourself, construct an
+<code class="language-plaintext highlighter-rouge">ipfColorKey</code> and ask it for the colours explicitly.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># a colour key for the forsterite phase
+</span><span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="s">'Fo'</span><span class="p">])</span>
+
+<span class="c1"># colour by which crystal direction points along specimen x
+</span><span class="n">ipfKey</span><span class="p">.</span><span class="n">ipfDirection</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">X</span>
+
+<span class="n">color</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="s">'Fo'</span><span class="p">].</span><span class="n">meanOrientation</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="s">'Fo'</span><span class="p">],</span> <span class="n">color</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-8.png" /></center>
+
+<p>The map has changed completely although the orientations have not. What the colours
+mean is stored in the key, which should accompany every such map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">ipfKey</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-9.png" /></center>
+
+<p>Red is [001], green is [100], and blue is [010]. A red grain in the map above therefore
+has its [001] axis close to specimen x. In the preceding map, where the implicit key used
+specimen z, red meant [001] close to z. A colour has no crystallographic meaning without
+the key that produced it.</p>
+
+<h2 id="colouring-by-a-grain-property">Colouring by a grain property</h2>
+
+<p>A numeric second argument must contain one value per grain. The colormap turns those
+values into colours. Here the value is the <code class="language-plaintext highlighter-rouge">aspectRatio</code>, the length-to-width ratio of
+the moment-equivalent ellipse fitted to the grain in this two-dimensional section.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">grains</span><span class="p">.</span><span class="n">aspectRatio</span><span class="p">())</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'aspect ratio'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-10.png" /></center>
+
+<p>Almost the whole map sits at the bottom of the colour range because a few ribbon-shaped
+grains reach an aspect ratio of 13 and stretch it. Fixing the range to the interval of
+interest makes the other grains visible.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">setColorRange</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="n">maxAspectRatio</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">aspectRatio</span><span class="p">())</span>
+<span class="n">maxAspectRatio</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>17.7579
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-11.png" /></center>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numClipped</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">aspectRatio</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">numClipped</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>9
+</code></pre></div></div>
+
+<p>The printed maximum rounds to 13, and the count confirms that eight grains lie above the
+chosen range. They are no longer distinguishable from one another, so every fixed colour
+range trades detail in the extremes for contrast through the rest.</p>
+
+<p>These shape values describe the observed section, not the full grain in three
+dimensions. A grain cut by the map edge is truncated as well, so remove <code class="language-plaintext highlighter-rouge">isBoundary</code>
+grains before calculating shape statistics. The map above keeps them because its purpose
+is display.</p>
+
+<h2 id="averaging-a-measurement-property-over-grains">Averaging a measurement property over grains</h2>
+
+<p>An EBSD property has one value per measurement and cannot be passed directly to a grain
+plot. <code class="language-plaintext highlighter-rouge">grainMean</code> reduces it to one value per grain. Here it averages the band contrast, a
+measure of diffraction-pattern quality, over the measurements assigned to each grain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">meanBandContrast</span> <span class="o">=</span> <span class="n">grainMean</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">,</span> <span class="n">grains</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">meanBandContrast</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'mean band contrast'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-13.png" /></center>
+
+<p>Every polygon now has a uniform fill. The pixel-scale variation of band contrast is
+gone, and each colour represents the mean for one reconstructed grain. Other reductions,
+such as <code class="language-plaintext highlighter-rouge">np.max</code>, can be passed to <code class="language-plaintext highlighter-rouge">grainMean</code> when the mean is not the quantity of
+interest.</p>
+
+<h2 id="colouring-a-direction">Colouring a direction</h2>
+
+<p>An angle needs a colormap that closes on itself. The long axis of a grain is an axis
+rather than a directed vector: 0 and 180 degrees describe the same alignment and must
+receive the same colour, or the map shows a seam where there is none.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># consider only elongated grains away from the map edge
+</span><span class="n">elongatedGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[(</span><span class="n">grains</span><span class="p">.</span><span class="n">aspectRatio</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">1.2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">grains</span><span class="p">.</span><span class="n">isBoundary</span><span class="p">]</span>
+
+<span class="c1"># angle of the long axis to specimen x, measured about the section normal
+</span><span class="n">omega</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">elongatedGrains</span><span class="p">.</span><span class="n">longAxis</span><span class="p">(),</span> <span class="n">grains</span><span class="p">.</span><span class="n">N</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">elongatedGrains</span><span class="p">,</span> <span class="n">omega</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># use a cyclic colormap and show its scale
+</span><span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'twilight'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'long-axis angle in degrees'</span><span class="p">)</span>
+
+<span class="n">fractionInBand</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">((</span><span class="n">omega</span> <span class="o">&gt;=</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">omega</span> <span class="o">&lt;=</span> <span class="mi">105</span> <span class="o">*</span> <span class="n">degree</span><span class="p">))</span>
+<span class="n">fractionInBand</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.5015
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-14.png" /></center>
+
+<p>Grains of the same colour are aligned in the same way, and green dominates the map in
+MATLAB’s cyclic map, the violet here. The printed fraction is close to one half: that
+many elongated interior grains lie between 60 and 105 degrees from specimen x, which is
+close to vertical in this plotting convention. The shapes say the same thing at a glance,
+and this clustering is the visual signature of a shape preferred orientation.</p>
+
+<p>This map is a diagnostic rather than a complete fabric analysis. A quantitative analysis
+should also decide how grains are weighted and whether phases are compared separately;
+<a href="EllipseBasedParameters_py.html">Ellipse Based Shape Parameters</a> develops those choices.</p>
+
+<h2 id="colouring-by-two-properties-at-once">Colouring by two properties at once</h2>
+
+<p>The long axis of a nearly round grain is arbitrary. The previous map gives the same
+visual weight to a direction that is well defined and to one that is not. A
+<code class="language-plaintext highlighter-rouge">planarColorKey</code> maps one property to hue and a second one to saturation: direction
+becomes the colour, and aspect ratio controls how strongly that colour is shown.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># hue from a cyclic colormap, periodic because the long axis is an axis
+</span><span class="n">pK</span> <span class="o">=</span> <span class="n">planarColorKey</span><span class="p">(</span><span class="s">'twilight'</span><span class="p">)</span>
+<span class="n">pK</span><span class="p">.</span><span class="n">periode</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span>
+
+<span class="c1"># aspect ratio 1 fades to white, which reads as pale grey beside the outlines
+# aspect ratio 3 and above is fully saturated
+</span><span class="n">pK</span><span class="p">.</span><span class="n">range2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">prop1</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">grains</span><span class="p">.</span><span class="n">longAxis</span><span class="p">(),</span> <span class="n">grains</span><span class="p">.</span><span class="n">N</span><span class="p">)</span>
+<span class="n">prop2</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">aspectRatio</span><span class="p">()</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">pK</span><span class="p">.</span><span class="n">property2color</span><span class="p">(</span><span class="n">prop1</span><span class="p">,</span> <span class="n">prop2</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-15.png" /></center>
+
+<p>The round grains have faded to nearly white, and only the elongated ones still carry a
+strong direction colour. The eye is no longer drawn to angles that have little meaning.
+The key itself can include the observed data range, so the reader can see which
+combinations occur.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pK</span><span class="p">.</span><span class="n">label1</span> <span class="o">=</span> <span class="s">'long-axis angle'</span>
+<span class="n">pK</span><span class="p">.</span><span class="n">label2</span> <span class="o">=</span> <span class="s">'aspect ratio'</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">pK</span><span class="p">,</span> <span class="n">prop1</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">prop2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-16.png" /></center>
+
+<p>Any pair of scalar grain properties can be combined in this way, provided the hue and
+saturation assignments are stated with the map.</p>
+
+<h2 id="the-measurements-inside-a-grain">The measurements inside a grain</h2>
+
+<p>A grain map hides the scatter within a grain by construction. To recover it, return to
+the measurements. The <code class="language-plaintext highlighter-rouge">grainId</code> property written into the map by <code class="language-plaintext highlighter-rouge">calcGrains</code> ties every
+measurement to a grain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># the largest grain
+</span><span class="nb">id</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">area</span><span class="p">)</span>
+
+<span class="c1"># the measurements inside it
+</span><span class="n">ebsdMaxGrain</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="n">ebsd</span><span class="p">.</span><span class="n">grainId</span> <span class="o">==</span> <span class="n">grains</span><span class="p">.</span><span class="nb">id</span><span class="p">[</span><span class="nb">id</span><span class="p">]]</span>
+
+<span class="c1"># the shorter form returns the same subset and displays its summary
+</span><span class="n">ebsdMaxGrain</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="n">grains</span><span class="p">[</span><span class="nb">id</span><span class="p">]]</span>
+<span class="n">ebsdMaxGrain</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EBSD (y↑→x)
+  size: 3197
+  Phase  Orientations  Mineral     Color   Symmetry  Crystal reference frame
+  1      3197 (100%)   Forsterite  salmon  mmm       Forsterite
+  properties    : bands, bc, bs, error, grainId, mad
+  scan unit     : um
+  X × Y         : [1.6e+04 → 1.935e+04] × [1550 → 6800]
+  square lattice: spacing 50
+</code></pre></div></div>
+
+<p>Colouring the measurements with the same key puts them and the grain map on the same
+scale.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">color</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ebsdMaxGrain</span><span class="p">.</span><span class="n">orientations</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsdMaxGrain</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="nb">id</span><span class="p">].</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">maxDeparture</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">angle</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="nb">id</span><span class="p">].</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">ebsdMaxGrain</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">].</span><span class="n">orientations</span><span class="p">))</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">maxDeparture</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6.0553
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-18.png" /></center>
+
+<p>Most of the 3193 measurements in the displayed summary have the same shade of blue. The
+narrow neck on the left is visibly lighter: its lattice is bent, and the printed maximum
+departure from the grain mean is 6 degrees.
+<a href="GrainOrientationParameters_py.html">Orientation Parameters</a> measures this variation rather
+than relying on the colour difference alone.</p>
+
+<p>Before reconstruction, the scattered white pixels had phase <code class="language-plaintext highlighter-rouge">notIndexed</code> because their
+diffraction patterns could not be indexed. The <code class="language-plaintext highlighter-rouge">alpha</code> closing absorbed them into the
+surrounding grain. They keep that phase and have no orientation to draw. The white bay
+in the middle is different: the outline is one closed loop that bends around it, so the
+bay lies outside the grain. A neighbouring forsterite grain fills it and touches this
+grain from the outside.</p>
+
+<h2 id="arrows-on-grains">Arrows on grains</h2>
+
+<p>A direction attached to each grain is often clearer as an arrow. <code class="language-plaintext highlighter-rouge">quiver</code> places one at
+every grain centroid.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load a single-phase data set
+</span><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↓→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'csl'</span><span class="p">)</span>
+
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">grains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">],</span> <span class="n">ipfDirection</span><span class="o">=</span><span class="n">zvector</span><span class="p">)</span>
+
+<span class="c1"># where one representative of the [100] family points in each grain
+</span><span class="nb">dir</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">meanOrientation</span> <span class="o">*</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">grains</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">quiver</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="nb">dir</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'black'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-19.png" /></center>
+
+<p>Each arrow is that [100] representative seen from above and is drawn one fifth of its
+grain’s diameter long. In cubic iron, the [100]-type directions are symmetry-equivalent.
+This example therefore demonstrates the arrow geometry rather than identifying one unique
+material direction.</p>
+
+<p>Arrow length otherwise carries no information except projection. An arrow appears short
+when it points steeply out of the section plane. Pass <code class="language-plaintext highlighter-rouge">scaling=False</code> when the vector
+magnitudes should set the lengths instead.</p>
+
+<p>An arrow pointing into the screen would be hidden below the map, so MTEX draws it tail
+first, ending at the grain centre. The small dot marks the centre to which it belongs.</p>
+
+<h2 id="labelling-grains">Labelling grains</h2>
+
+<p><code class="language-plaintext highlighter-rouge">text</code> writes an arbitrary string at the same centroid. Labelling every grain is
+unreadable, so this is normally done for a selection. Here the grains larger than 100
+pixels are labelled by id.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">grains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">250</span><span class="p">],</span> <span class="n">ipfDirection</span><span class="o">=</span><span class="n">zvector</span><span class="p">)</span>
+
+<span class="n">bigGrains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[</span><span class="n">grains</span><span class="p">.</span><span class="n">numPixel</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">]</span>
+
+<span class="n">text</span><span class="p">(</span><span class="n">bigGrains</span><span class="p">,</span> <span class="n">bigGrains</span><span class="p">.</span><span class="nb">id</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainSpatialPlots-20.png" /></center>
+
+<p>These ids are persistent grain identifiers, not necessarily positions in a subset.
+<a href="SelectingGrains_py.html">Selecting Grains</a> explains the distinction and uses them to
+recover individual grains and their measurements.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>
+    <p>G. Nolze and R. Hielscher, “Orientations - perfectly colored”, <em>Journal of Applied
+Crystallography</em> 49 (2016), 1786-1802,
+<a href="https://doi.org/10.1107/S1600576716012942">doi:10.1107/S1600576716012942</a>. This paper
+explains IPF colour continuity, uniqueness, and why the key is part of the
+interpretation.</p>
+  </li>
+  <li>
+    <p>P. Launeau, J.-L. Bouchez and K. Benn, “Shape preferred orientation of object
+populations: automatic analysis of digitized images”, <em>Tectonophysics</em> 180 (1990),
+201-211, <a href="https://doi.org/10.1016/0040-1951(90)90308-U">doi:10.1016/0040-1951(90)90308-U</a>.</p>
+  </li>
+  <li>
+    <p><a href="https://www.iso.org/standard/74309.html">ISO 13067:2020</a> distinguishes grain
+measurements made on a two-dimensional polished section from the three-dimensional
+grain size inferred from them.</p>
+  </li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="SelectingGrains_py.html">Selecting Grains</a> to build subsets by id, phase,
+position, property, or orientation. Then <a href="ShapeParameters_py.html">Shape Parameters</a> and
+<a href="GrainOrientationParameters_py.html">Orientation Parameters</a> turn the spatial patterns
+introduced here into quantitative grain measurements.</p>
+
+<h2 id="technical-details">Technical details</h2>
+
+<p>The shape parameters are methods with parentheses, <code class="language-plaintext highlighter-rouge">grains.aspectRatio()</code>,
+<code class="language-plaintext highlighter-rouge">grains.longAxis()</code>, as MATLAB implements them as methods. The cyclic colour map is
+matplotlib’s <code class="language-plaintext highlighter-rouge">twilight</code> where MATLAB uses <code class="language-plaintext highlighter-rouge">colorcet('C2')</code>, so the hues of the two
+direction maps differ while their structure is the same. <code class="language-plaintext highlighter-rouge">planarColorKey</code> wraps a
+periodic property modulo its <code class="language-plaintext highlighter-rouge">periode</code> before the hue lookup; MATLAB scales it by the
+largest value in the data, which coincides on a full turn.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/GrainSpatialPlots_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

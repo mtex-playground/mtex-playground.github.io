@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Bingham ODFs | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A Bingham orientation distribution function (ODF) is one compact model for a texture with different spreads in different directions. It uses one quadratic form. This form can describe a round or elongated peak, a peak spread along a fibre, or a surface-like distribution in orientation space. Kernel ">
+<link rel="canonical" href="https://mtex-playground.github.io/BinghamODFs.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/BinghamODFs.html#page",
+      "name": "Bingham ODFs",
+      "headline": "Bingham ODFs",
+      "description": "A Bingham orientation distribution function (ODF) is one compact model for a texture with different spreads in different directions. It uses one quadratic form. This form can describe a round or elongated peak, a peak spread along a fibre, or a surface-like distribution in orientation space. Kernel ",
+      "url": "https://mtex-playground.github.io/BinghamODFs.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/BinghamODFs.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/BinghamODFs.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Bingham ODFs</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Bingham ODFs</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_BinghamODFs.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/ODFAnalysis/BinghamODFs.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>A Bingham orientation distribution function (ODF) is one compact model for a texture with different spreads in different directions. It uses one quadratic form. This form can describe a round or elongated peak, a peak spread along a fibre, or a surface-like distribution in orientation space. <a href="DensityEstimation.html">Kernel density estimation</a> instead places one kernel at every measured orientation.</p>
+<p>This page assumes the normalization introduced in <a href="ODFTheory.html">ODF Theory</a> and the model families compared in <a href="ODFModeling.html">ODF Modeling</a>. It also uses the <a href="RotationRepresentations.html">unit-quaternion representation</a> of a rotation. Quaternions \(g\) and \(-g\) represent the same rotation. A Bingham density has the same value at both. Its antipodal symmetry is therefore exactly what a density on rotations requires.</p>
+<p>MTEX represents the result as an <a href="SO3FunBingham.SO3FunBingham.html">SO3FunBingham</a>. It therefore supports the same evaluation, plotting, and sampling interface as other <a href="SO3FunConcept.html">orientation functions</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Constructing a General Bingham ODF</h2>
+<p>A Bingham model needs four mutually orthogonal quaternion axes and four shape parameters. The axes are orthogonal in four-dimensional quaternion space; they are not four physical specimen directions. The example uses the identity quaternion basis as the axes.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'1'</span><span class="p">);</span>
+
+<span class="n">kappa</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span> <span class="mi">90</span> <span class="mi">80</span> <span class="mi">0</span><span class="p">];</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="nb">eye</span><span class="p">(</span><span class="n">cs</span><span class="p">);</span>
+
+<span class="n">odf</span> <span class="o">=</span> <span class="n">BinghamODF</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span><span class="n">U</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">odf = SO3FunBingham (1 → y↑→x)
+ 
+  kappa: 100 90 80 0
+  weight: 1</code></pre></figure>
+<p>The printed summary identifies a Bingham component and reports its four shape parameters. <a href="BinghamODF.html"><code class="language-plaintext highlighter-rouge">BinghamODF</code></a> normalizes the component, so its mean is 1 multiple of a random distribution (mrd).</p>
+<p>Pole figures project the ODF onto specimen directions. The unequal shape parameters make the pole-density features anisotropic rather than round.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">,</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span> <span class="mi">3</span><span class="p">]);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_01.png" alt="" />
+
+</center>
+<p>The same anisotropy appears in sections through orientation space. The peak changes position between the six panels. Each panel cuts a different part of the three-dimensional ODF.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'sections'</span><span class="p">,</span><span class="mi">6</span><span class="p">);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_02.png" alt="" />
+
+</center>
+<h2 id="5">Estimating the Parameters</h2>
+<p> <a href="orientation.calcBinghamODF.html"><code class="language-plaintext highlighter-rouge">calcBinghamODF</code></a> estimates a Bingham model from individual orientations. Those orientations may come from EBSD or from a simulation. This compact fit can work with far fewer measurements than a kernel estimate. It also assumes that one Bingham component is adequate.</p>
+<p>Start with a fibre ODF about a randomly chosen fibre.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odfTrue</span> <span class="o">=</span> <span class="n">fibreODF</span><span class="p">(</span><span class="n">fibre</span><span class="o">.</span><span class="nb">rand</span><span class="p">(</span><span class="n">cs</span><span class="p">));</span>
+
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odfTrue</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_03.png" alt="" />
+
+</center>
+<p>Each pole figure contains the ring expected from a fibre texture. The ring position differs between crystal directions, but it belongs to the same orientation-space fibre.</p>
+<p>Draw 2000 orientations from that ODF and add their pole points to all three panels with <a href="SO3Fun.discreteSample.html"><code class="language-plaintext highlighter-rouge">discreteSample</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">odfTrue</span><span class="p">,</span><span class="mi">2000</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ori</span><span class="p">,</span><span class="s1">'add2all'</span><span class="p">,</span><span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'k'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'none'</span><span class="p">,</span><span class="s1">'MarkerEdgeAlpha'</span><span class="p">,</span><span class="mf">0.2</span><span class="p">);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_04.png" alt="" />
+
+</center>
+<p>The black points fluctuate about the pole-density rings. They are a finite random sample, not a second texture component.</p>
+<p>Fit a Bingham distribution to the simulated orientations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span> <span class="o">=</span> <span class="n">calcBinghamODF</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span>
+
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">odf = SO3FunBingham (1 → y↑→x)
+ 
+  kappa: 0 2 182 182
+  weight: 1</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_05.png" alt="" />
+
+</center>
+<p>The fitted pole figures recover the rings of the original fibre ODF from the 2000 sampled orientations. Small irregularities in the point overlay are sampling variation; the fitted Bingham model itself is smooth.</p>
+<p>Internally, MTEX obtains the four axes from the sample orientation tensor. They are its eigenvectors. MTEX derives <code class="language-plaintext highlighter-rouge">odf.kappa</code> from the corresponding eigenvalues with a large-concentration approximation. Thus <code class="language-plaintext highlighter-rouge">calcBinghamODF</code> is a moment-based approximate fit. It is not a general maximum-likelihood optimizer. Reach for this model when one compact shape is plausible. Compare the fitted plots with the data before treating its parameters as a complete description.</p>
+<h2 id="9">Three Non-Uniform Cases</h2>
+<p>The general quaternion Bingham distribution is classified as bipolar, circular, or spherical. For texture work these correspond to a localized orientation peak, a fibre-like peak, and a surface-like distribution. Here "spherical" describes the set of maxima on the quaternion sphere; it does not mean a uniform ODF.</p>
+<h2 id="10">A Bipolar or Unimodal Distribution</h2>
+<p>A scalar shape parameter and a reference orientation define a unimodal Bingham distribution. <a href="BinghamODF.html"><code class="language-plaintext highlighter-rouge">BinghamODF</code></a> expands the scalar <code class="language-plaintext highlighter-rouge">20</code> to <code class="language-plaintext highlighter-rouge">[20 0 0 0]</code>. The reference orientation is the unique maximum, apart from its antipode and symmetry-equivalent descriptions.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'321'</span><span class="p">);</span>
+<span class="n">oriRef</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">45</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">0</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">0</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+
+<span class="n">odf</span> <span class="o">=</span> <span class="n">BinghamODF</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">oriRef</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'sections'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">odf = SO3FunBingham (321 → y↑→x)
+ 
+  kappa: 20 0 0 0
+  weight: 1</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_06.png" alt="" />
+
+</center>
+<p>The filled contours form localized patches. Crystal symmetry repeats the same physical peak; those repeated patches are not additional components.</p>
+<h2 id="12">A Circular or Fibre Distribution</h2>
+<p>Passing a <a href="fibre.fibre.html">fibre</a> with one shape parameter expands <code class="language-plaintext highlighter-rouge">20</code> to <code class="language-plaintext highlighter-rouge">[20 20 0 0]</code>. The two equal leading parameters make the density constant along the fibre, while the two zeros control its transverse decay.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">f</span> <span class="o">=</span> <span class="n">fibre</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">cs</span><span class="p">),</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">));</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="n">BinghamODF</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'sections'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">odf = SO3FunBingham (321 → y↑→x)
+ 
+  kappa: 20 20 0 0
+  weight: 1</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_07.png" alt="" />
+
+</center>
+<p>The high-density feature now continues through successive section panels instead of closing around one orientation. That continuity is the visual signature of the fibre.</p>
+<h2 id="14">A Spherical or Surface-Like Distribution</h2>
+<p>Three equal nonzero parameters give the spherical case. The omitted fourth value is padded with zero, so this call uses <code class="language-plaintext highlighter-rouge">[10 10 10 0]</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span> <span class="o">=</span> <span class="n">BinghamODF</span><span class="p">([</span><span class="mi">10</span> <span class="mi">10</span> <span class="mi">10</span><span class="p">],</span><span class="n">quaternion</span><span class="o">.</span><span class="nb">eye</span><span class="p">,</span><span class="n">cs</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'sections'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">odf = SO3FunBingham (321 → y↑→x)
+ 
+  kappa: 10 10 10 0
+  weight: 1</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/BinghamODFs_08.png" alt="" />
+
+</center>
+<p>This plot is not uniform: the density avoids the fourth quaternion axis and spreads its maxima over a two-dimensional set. A uniform distribution requires all four parameters to be equal. Because a common offset is irrelevant, MTEX can represent that case with <code class="language-plaintext highlighter-rouge">[0 0 0 0]</code>.</p>
+<h2 id="16">Reading the Parameters</h2>
+<p>Whichever constructor produced the model, <code class="language-plaintext highlighter-rouge">odf.A</code> holds its four principal quaternion axes as orientations. <code class="language-plaintext highlighter-rouge">odf.kappa</code> holds the shape parameter belonging to each axis. For a fitted model, these axes are the eigenvectors of the orientation tensor and the shape parameters are derived from its eigenvalues.</p>
+<p>Reconstruct the general example so the following output has deliberately unequal parameters.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span> <span class="o">=</span> <span class="n">BinghamODF</span><span class="p">([</span><span class="mi">100</span> <span class="mi">90</span> <span class="mi">80</span> <span class="mi">0</span><span class="p">],</span><span class="n">orientation</span><span class="o">.</span><span class="nb">eye</span><span class="p">(</span><span class="n">cs</span><span class="p">));</span>
+
+<span class="n">odf</span><span class="o">.</span><span class="n">A</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = orientation (321 → y↑→x)
+  size: 4 × 1
+ 
+  Bunge Euler angles in degree
+  phi1  Phi phi2
+     0    0    0
+     0  180    0
+    90  180  270
+   180    0    0</code></pre></figure>
+<p>The four displayed orientations are one orthogonal basis of quaternion space. Their row order matches the order of the following parameters.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span><span class="o">.</span><span class="n">kappa</span><span class="o">.'</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+   100    90    80     0</code></pre></figure>
+<p>The constructor preserves the supplied axis order. A fitted model keeps the eigenvector order returned by the orientation tensor calculation. Do not sort <code class="language-plaintext highlighter-rouge">odf.kappa</code> without applying the same permutation to <code class="language-plaintext highlighter-rouge">odf.A</code>. The classification below instead labels the parameters in descending order.</p>
+<p>The bipolar, circular, and spherical classification applies to the distribution on the quaternion sphere. With nontrivial crystal symmetry, MTEX averages over symmetry-equivalent copies. The resulting ODF may not look like one of the three unsymmetrised cases. The sums \(k_1+k_4\) and \(k_2+k_3\) no longer cleanly separate the visible shapes.</p>
+<h2 id="19">The Maths Behind the Model</h2>
+<p>The Bingham density on the unit-quaternion sphere is</p>
+<p>\[f(\mathbf{g};\mathbf{K},\mathbf{U}) = C(\mathbf{K})^{-1} \exp\!\left\{\mathbf{g}^{\mathrm{T}}\mathbf{U}\mathbf{K} \mathbf{U}^{\mathrm{T}}\mathbf{g}\right\},\qquad \mathbf{g}\in S^3,\]</p>
+<p>where \(\mathbf{U}\) is a \(4\times4\) orthogonal matrix. Its columns \(u_{1},\ldots,u_{4}\in S^3\) are the principal quaternion axes. \(\mathbf{K}\) is diagonal, with ordered entries \(k_1\geq k_2\geq k_3\geq k_4\). The normalizing constant is \(C(\mathbf{K})\). It is a confluent hypergeometric function with matrix argument.</p>
+<p>Adding the same constant to all four \(k_i\) changes the exponential and its normalizing constant by the same factor. Only three concentration differences are therefore identifiable. The matrix \(\mathbf{U}\) must also be estimated. This is a low-dimensional model, but it does not have only four fitted numbers.</p>
+<p>For ordered parameters, the three non-uniform cases satisfy</p>
+<div>
+<ul>
+<li>bipolar if \(k_1+k_4 &gt; k_2+k_3\),</li>
+<li>circular if \(k_1+k_4 = k_2+k_3\),</li>
+<li>spherical if \(k_1+k_4 &lt; k_2+k_3\).</li>
+</ul>
+</div>
+<p>The distribution is uniform if \(k_1=k_2=k_3=k_4\).</p>
+<h2 id="20">Further Reading</h2>
+<div>
+<ul>
+<li>
+<a href="https://doi.org/10.1214/aos/1176342874">Bingham (1974)</a> introduces the antipodally symmetric distribution and its statistical inference.</li>
+<li>
+<a href="https://doi.org/10.1023/B:MATG.0000048799.56445.59">Kunze and Schaeben (2004)</a> develop the quaternion classification and its interpretation for crystallographic textures and pole figures.</li>
+<li>
+<a href="https://doi.org/10.1107/S002188981003027X">Bachmann et al. (2010)</a> derive orientation-tensor statistics and the high-concentration approximation used for EBSD orientation data.</li>
+<li>
+<a href="https://doi.org/10.1002/9780470316979">Mardia and Jupp, Directional Statistics</a> provides the broader theory of axial and directional data.</li>
+</ul>
+</div>
+<h2 id="21">Next</h2>
+<p>The other model ODFs are <a href="RadialODFs.html">Radial ODFs</a> and <a href="FibreODFs.html">Fibre ODFs</a>. A nonparametric alternative does not assume one Bingham shape; see <a href="DensityEstimation.html">Density Estimation</a>. The shared plotting tools are introduced in <a href="ODFPlot.html">Plotting an ODF</a>.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/BinghamODFs.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

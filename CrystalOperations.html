@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Operations on Crystal Directions and Planes | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A Miller represents either a direct-lattice vector \([uvw]\) or a reciprocal-lattice normal \((hkl)\) in a crystal frame. It supports ordinary vector geometry, but comparisons have one extra input: crystal symmetry.">
+<link rel="canonical" href="https://mtex-playground.github.io/CrystalOperations.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/CrystalOperations.html#page",
+      "name": "Operations on Crystal Directions and Planes",
+      "headline": "Operations on Crystal Directions and Planes",
+      "description": "A Miller represents either a direct-lattice vector \\([uvw]\\) or a reciprocal-lattice normal \\((hkl)\\) in a crystal frame. It supports ordinary vector geometry, but comparisons have one extra input: crystal symmetry.",
+      "url": "https://mtex-playground.github.io/CrystalOperations.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/CrystalOperations.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/CrystalOperations.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Operations on Crystal Directions and Planes</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Operations on Crystal Directions and Planes</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_CrystalOperations.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/CrystalGeometry/CrystalOperations.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>A <a href="Miller.Miller.html"><code class="language-plaintext highlighter-rouge">Miller</code></a> represents either a direct-lattice vector \([uvw]\) or a reciprocal-lattice normal \((hkl)\) in a crystal frame. It supports ordinary vector geometry, but comparisons have one extra input: crystal symmetry.</p>
+<p>By default, <code class="language-plaintext highlighter-rouge">angle</code>, <code class="language-plaintext highlighter-rouge">dot</code> and <code class="language-plaintext highlighter-rouge">eq</code> compare a vector with the symmetry orbit of the other vector. In contrast, constructions such as <code class="language-plaintext highlighter-rouge">cross</code> act on the indexed vectors actually supplied. This page shows when to keep the default and when to request <code class="language-plaintext highlighter-rouge">'noSymmetry'</code>.</p>
+<p>Read <a href="CrystalDirections.html">Miller Indices</a> and <a href="LatticeMetric.html">Lattice Metric and Plane Geometry</a> first if direct and reciprocal indices are new. <a href="CrystalSymmetries.html">Crystal Symmetries</a> introduces the point groups used here, while <a href="VectorsAxes.html">Axes and Antipodal Symmetry</a> explains when opposite vectors represent the same axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">A Kikuchi Pattern as a Geometric Map</h2>
+<p>A simulated spherical Kikuchi pattern of quartz makes the operations visible. This is a master pattern on the sphere, not a raw planar detector image. The left plot shows the pattern, and the right plot shows its <a href="S2FunHarmonic.radon.html">spherical Radon transform</a>.</p>
+<p>A band centre is a great circle on the pattern. The transform maps that great circle to the point representing its plane normal.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">data</span> <span class="o">=</span> <span class="nb">load</span><span class="p">([</span><span class="n">mtexDataPath</span> <span class="nb">filesep</span> <span class="s1">'quartzPattern.mat'</span><span class="p">]);</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pattern</span><span class="p">;</span>
+
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">ax1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">plot</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">0.25</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'UVTW'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexColorMap</span> <span class="n">black2white</span>
+<span class="n">nextAxis</span>
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">ax2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">plot</span><span class="p">(</span><span class="n">pattern</span><span class="o">.</span><span class="n">radon</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">0.25</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'hkil'</span><span class="p">,</span><span class="s1">'noLabel'</span><span class="p">);</span>
+<span class="n">mtexColorMap</span> <span class="n">black2white</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_01.png" alt="" />
+
+</center>
+<p>The brightest bands belong to three strongly reflecting quartz forms: the hexagonal prism and the positive and negative rhombohedra. Each form is introduced below by one plane normal.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% extract the crystal symmetry</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">CS</span><span class="p">;</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'hkil'</span><span class="p">);</span> <span class="c1">% hexagonal prism</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'hkil'</span><span class="p">);</span> <span class="c1">% positive rhombohedron</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'hkil'</span><span class="p">);</span> <span class="c1">% negative rhombohedron</span></code></pre></figure>
+<p>Drawn in both plots, a plane is a great circle on the left and a point on the right. The matching colours identify the same plane in the two representations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">hold</span> <span class="n">on</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'lightBlue'</span><span class="p">)</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">)</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'yellow'</span><span class="p">)</span>
+
+<span class="n">opt</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'none'</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax2</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'labeled'</span><span class="p">,</span><span class="s1">'backgroundColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">};</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">opt</span><span class="p">{:},</span><span class="s1">'markerEdgeColor'</span><span class="p">,</span><span class="s1">'lightBlue'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">opt</span><span class="p">{:},</span><span class="s1">'markerEdgeColor'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">opt</span><span class="p">{:},</span><span class="s1">'markerEdgeColor'</span><span class="p">,</span><span class="s1">'yellow'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_02.png" alt="" />
+
+</center>
+<h2 id="5">Symmetrically Equivalent Planes and Directions</h2>
+<p>A <b>symmetry orbit</b> contains the vectors obtained by applying every operation of the crystal point group. Its members are symmetrically equivalent because the crystal cannot distinguish the corresponding settings.</p>
+<p>The family of directions equivalent to \([uvw]\) is written \(\langle uvw\rangle\). The family of planes equivalent to \((hkl)\) is written \(\{hkl\}\). <a href="Miller.symmetrise.html"><code class="language-plaintext highlighter-rouge">symmetrise</code></a> lists the orbit as directed vectors.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">symmetrise</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = Miller (alpha-quartz low)
+ size: 6 × 1
+   h  k  i  l
+   0 -1  1  1
+   0  1 -1 -1
+   1  0 -1  1
+   1 -1  0 -1
+  -1  1  0  1
+  -1  0  1 -1</code></pre></figure>
+<p>Quartz point group <code class="language-plaintext highlighter-rouge">321</code> has six operations, and none repeats this normal. The output therefore contains six directed normals. For this rhombohedron they form three opposite pairs.</p>
+<p>A geometric plane is unchanged when its normal is reversed. Thus the six directed normals describe three distinct plane axes. Adding the symmetry orbits to the plots accounts for the corresponding bands.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">hold</span> <span class="n">on</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'lightBlue'</span><span class="p">)</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">)</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'yellow'</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">opt</span><span class="p">{:},</span><span class="s1">'markerEdgeColor'</span><span class="p">,</span><span class="s1">'lightBlue'</span><span class="p">,</span><span class="s1">'symmetrised'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">opt</span><span class="p">{:},</span><span class="s1">'markerEdgeColor'</span><span class="p">,</span><span class="s1">'red'</span><span class="p">,</span><span class="s1">'symmetrised'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">opt</span><span class="p">{:},</span><span class="s1">'markerEdgeColor'</span><span class="p">,</span><span class="s1">'yellow'</span><span class="p">,</span><span class="s1">'symmetrised'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_03.png" alt="" />
+
+</center>
+<p>The option <code class="language-plaintext highlighter-rouge">'symmetrised'</code> on <code class="language-plaintext highlighter-rouge">plot</code> performs the same expansion. A plain <code class="language-plaintext highlighter-rouge">symmetrise</code> call keeps one entry per symmetry operation and may contain repeated vectors. Use <code class="language-plaintext highlighter-rouge">'unique'</code> when the number of distinct members is the question.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">directedNormalCount</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="s1">'unique'</span><span class="p">,</span><span class="s1">'noAntipodal'</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">directedNormalCount =
+     6</code></pre></figure>
+<p>The first count keeps opposite normals distinct. The <code class="language-plaintext highlighter-rouge">'antipodal'</code> option instead treats a vector and its negative as the same axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">planeAxisCount</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="s1">'unique'</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">planeAxisCount =
+     3</code></pre></figure>
+<p>The two outputs are 6 directed normals and 3 plane axes. Point-group equivalence and antipodal equivalence are separate choices; select the one that matches the physical object being described.</p>
+<h2 id="10">Multiplicity</h2>
+<p>The <a href="Miller.multiplicity.html"><code class="language-plaintext highlighter-rouge">multiplicity</code></a> is the number of distinct directed vectors in a symmetry orbit. It is the count returned by <code class="language-plaintext highlighter-rouge">symmetrise(...,'unique','noAntipodal')</code>. A direction on a symmetry axis has lower multiplicity because some operations leave it fixed.</p>
+<p>For diffraction with Friedel equivalence, opposite reflection normals contribute together. Using a Laue group includes that equivalence in the conventional multiplicity factor for a powder reflection.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">csCubic</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'m-3m'</span><span class="p">);</span>
+<span class="n">hCubic</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">csCubic</span><span class="p">);</span>
+
+<span class="n">multiplicity</span><span class="p">(</span><span class="n">hCubic</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     6
+    12
+     8</code></pre></figure>
+<p>The cubic \(\{100\}\), \(\{110\}\) and \(\{111\}\) forms have multiplicities 6, 12 and 8. The order of the indices does not determine this count; the stabilising symmetry of the direction does.</p>
+<h2 id="12">Are Two Normals Equivalent?</h2>
+<p>The two objects below are opposite directed normals. The operator <code class="language-plaintext highlighter-rouge">==</code> asks whether point group <code class="language-plaintext highlighter-rouge">321</code> maps one normal onto the other.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">r1</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'hkil'</span><span class="p">);</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'hkil'</span><span class="p">);</span>
+
+<span class="n">r1</span> <span class="o">==</span> <span class="n">r2</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+  logical
+   0</code></pre></figure>
+<p>The result is false because no operation of <code class="language-plaintext highlighter-rouge">321</code> makes that mapping. Treating the normals as axes makes their signs irrelevant.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">eq</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+  logical
+   1</code></pre></figure>
+<p>The second result is true. This distinction matters whenever directed crystal vectors, plane axes and Friedel-equivalent reflections appear in the same calculation.</p>
+<h2 id="15">Does a Direction Lie in a Plane?</h2>
+<p>A direction \([uvw]\) lies in a plane \((hkl)\) when their scalar product is zero. In three-index notation this is the <b>zone law</b>
+</p>
+<p>\[hu+kv+lw=0.\]</p>
+<p>Incidence concerns the two indices that were written. Use <code class="language-plaintext highlighter-rouge">'noSymmetry'</code> so that <code class="language-plaintext highlighter-rouge">dot</code> does not substitute a symmetry-equivalent vector.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">csOrtho</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'mmm'</span><span class="p">,[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">]);</span>
+<span class="n">plane</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">csOrtho</span><span class="p">,</span><span class="s1">'hkl'</span><span class="p">);</span>
+<span class="n">directionInPlane</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">csOrtho</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">);</span>
+
+<span class="nb">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span><span class="n">directionInPlane</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     0</code></pre></figure>
+<p>Zero confirms that \([1\bar{1}0]\) lies in \((110)\). In contrast, the result for \([100]\) is 1, so that direction does not lie in the plane.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">dot</span><span class="p">(</span><span class="n">plane</span><span class="p">,</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">csOrtho</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">),</span><span class="s1">'noSymmetry'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     1</code></pre></figure>
+<p>This Cartesian dot-product test also works with four-index trigonal and hexagonal notation. There is no need to translate the indices manually.</p>
+<h2 id="18">Zone Axes and Spanned Planes</h2>
+<p>Two lattice planes intersect along a lattice direction called a <b>zone axis</b>. Its direction is the cross product of their reciprocal normals.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">d1</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">cross</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">r</span><span class="p">))</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="s1">'marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'lightgreen'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'labeled'</span><span class="p">,</span><span class="s1">'backgroundColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax2</span><span class="p">,</span><span class="s1">'linecolor'</span><span class="p">,</span><span class="s1">'lightgreen'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">d1 = Miller (alpha-quartz low)
+   U  V  T  W
+  -1  2 -1  3</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_04.png" alt="" />
+
+</center>
+<p>The output uses <code class="language-plaintext highlighter-rouge">UVTW</code> because a cross product of two reciprocal normals is a direct-lattice direction. <a href="Miller.round.html"><code class="language-plaintext highlighter-rouge">round</code></a> rescales it to small integer indices.</p>
+<p>The green square lies where the two corresponding bands cross in the pattern. In the Radon plot, its green great circle passes through their two normal points.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">d2</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'uvw'</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">d2</span><span class="p">,</span><span class="s1">'marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'Orange'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'labeled'</span><span class="p">,</span><span class="s1">'backgroundColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="n">circle</span><span class="p">(</span><span class="n">d2</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax2</span><span class="p">,</span><span class="s1">'linecolor'</span><span class="p">,</span><span class="s1">'orange'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">d2 = Miller (alpha-quartz low)
+   u  v  w
+  -2  0  1</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_05.png" alt="" />
+
+</center>
+<p>Conversely, two direct-lattice directions span a plane. Their cross product is displayed in reciprocal <code class="language-plaintext highlighter-rouge">hkil</code> notation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">n</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">cross</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="n">d2</span><span class="p">))</span>
+
+<span class="n">circle</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="s1">'parent'</span><span class="p">,</span><span class="n">ax1</span><span class="p">,</span><span class="s1">'linecolor'</span><span class="p">,</span><span class="s1">'white'</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">opt</span><span class="p">{:},</span><span class="s1">'MarkerEdgeColor'</span><span class="p">,</span><span class="s1">'white'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">n = Miller (alpha-quartz low)
+  h  k  i  l
+  1 -2  1  2</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_06.png" alt="" />
+
+</center>
+<p>The white band contains <code class="language-plaintext highlighter-rouge">d1</code> and <code class="language-plaintext highlighter-rouge">d2</code> in the pattern. In the Radon plot, the white normal lies where the green and orange great circles intersect.</p>
+<h2 id="22">Symmetry-Reduced and Geometric Angles</h2>
+<p>By default, <a href="vector3d.angle.html"><code class="language-plaintext highlighter-rouge">angle</code></a> returns the smallest angle between the first vector and the symmetry orbit of the second. The result is independent of which equivalent index triplet was supplied.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">symmetryAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">)</span> <span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">symmetryAngle =
+   60.0000</code></pre></figure>
+<p>The point-group-reduced angle is \(60^\circ\). If the normals represent plane axes, include antipodal equivalence as well.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">axisAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">)</span> <span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">axisAngle =
+   1.2074e-06</code></pre></figure>
+<p>The result is numerically close to zero. To compare only the two Cartesian vectors as written, ignore crystal symmetry.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">geometricAngle</span> <span class="o">=</span> <span class="nb">angle</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span><span class="n">r2</span><span class="p">,</span><span class="s1">'noSymmetry'</span><span class="p">)</span> <span class="p">/</span> <span class="nb">degree</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">geometricAngle =
+  180.0000</code></pre></figure>
+<p>The geometric angle is \(180^\circ\) because the normals are exactly opposite. Thus the same two index sets give a \(60^\circ\) point-group angle, a near-zero plane-axis angle and a \(180^\circ\) geometric angle.</p>
+<p>The option <code class="language-plaintext highlighter-rouge">'noSymmetry'</code> is available to many commands that accept crystal directions or orientations. Use it when the indexed vectors themselves, rather than their symmetry classes, are the subject.</p>
+<h2 id="26">From the Crystal Frame into the Specimen Frame</h2>
+<p>An <a href="OrientationDefinition.html">orientation</a> states how a crystal is placed in the specimen. It maps a direction from the Cartesian crystal frame into the specimen frame.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">20</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'Bunge'</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ori</span> <span class="o">*</span> <span class="n">pattern</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">0.25</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span> <span class="n">black2white</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_07.png" alt="" />
+
+</center>
+<p>The whole pattern has moved rigidly with the crystal. Multiplying the zone axis by the same orientation returns a specimen direction rather than a <code class="language-plaintext highlighter-rouge">Miller</code> object.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">specimenDirection</span> <span class="o">=</span> <span class="n">ori</span> <span class="o">*</span> <span class="n">d1</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">specimenDirection</span><span class="p">,</span><span class="s1">'marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'lightgreen'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'label'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">),</span><span class="s1">'backgroundColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">specimenDirection = vector3d (y↑→x)
+       x       y       z
+  -0.427 -0.0286   0.592</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_08.png" alt="" />
+
+</center>
+<p>Applying the orientation to the full symmetry orbit marks every specimen direction in which this crystal family points.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ori</span><span class="o">*</span><span class="n">d1</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">,</span><span class="s1">'marker'</span><span class="p">,</span><span class="s1">'s'</span><span class="p">,</span><span class="s1">'MarkerFaceColor'</span><span class="p">,</span><span class="s1">'lightgreen'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'label'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span><span class="s1">'latex'</span><span class="p">),</span><span class="s1">'backgroundColor'</span><span class="p">,</span><span class="s1">'w'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/CrystalOperations_09.png" alt="" />
+
+</center>
+<p>That set is the <a href="OrientationPoleFigure.html">pole figure</a> of this one orientation for the family represented by <code class="language-plaintext highlighter-rouge">d1</code>.</p>
+<h2 id="30">Cartesian Components Without Crystal Metadata</h2>
+<p>Casting a <code class="language-plaintext highlighter-rouge">Miller</code> to <a href="vector3d.vector3d.html"><code class="language-plaintext highlighter-rouge">vector3d</code></a> copies its Cartesian components but drops the crystal symmetry and crystal frame. The result is <b>frame-free</b>: it has an empty frame and resolves against the session default when it is rendered.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cartesianDirection</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">cartesianDirection = vector3d (y↑→x)
+       x      y      z
+  -0.246  0.426  0.541</code></pre></figure>
+<p>The frame name shown in the display is therefore the current session default, not a frame stored by the vector. The empty stored frame confirms that distinction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">isFrameFree</span> <span class="o">=</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">cartesianDirection</span><span class="o">.</span><span class="n">frame</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">isFrameFree =
+  logical
+   1</code></pre></figure>
+<p>The result is true. This cast is not a frame change; it removes the information needed to interpret the components as lattice indices. A true frame change re-expresses the same physical object in a named frame and leaves the object itself untouched.</p>
+<p>The ordinary spherical coordinates remain available. Called without output arguments, <code class="language-plaintext highlighter-rouge">polar</code> prints the polar angle from +Z and the azimuth from +X in degrees.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">polar</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">polar angle    42.3°
+azimuthal angle   120.0°</code></pre></figure>
+<h2 id="33">References</h2>
+<div>
+<ul>
+<li>The International Union of Crystallography, <a href="https://dictionary.iucr.org/Zone_axis">Zone axis</a>, defines the zone axis and the Weiss zone law used for the incidence test.</li>
+<li>U. Shmueli, <a href="https://doi.org/10.1107/97809553602060000549">Reciprocal space in crystallography</a>, <i>International Tables for Crystallography B</i>, ch. 1.1, 2006, develops the direct and reciprocal geometry behind these operations.</li>
+<li>A. Looijenga-Vos and M. J. Buerger, <a href="https://doi.org/10.1107/97809553602060000506">Space-group determination and diffraction symbols</a>, <i>International Tables for Crystallography A</i>, ch. 3.1, 2006, explains Friedel equivalence and Laue symmetry in diffraction.</li>
+<li>N. C. Krieger Lassen, D. Juul Jensen and K. Conradsen, <a href="https://digitalcommons.usu.edu/microscopy/vol6/iss1/7/">Image Processing Procedures for Analysis of Electron Back Scattering Patterns</a>, <i>Scanning Microscopy</i> 6, article 7, 1992, introduces transform-based localisation of Kikuchi bands for automated indexing.</li>
+<li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>, Springer, 2004, develops symmetry orbits and symmetry-reduced angles for texture analysis.</li>
+</ul>
+</div>
+<h2 id="34">Next</h2>
+<p>Continue in chapter order with <a href="CrystalReferenceSystem.html">Reference System</a>, which explains how the lattice basis is embedded in the Cartesian crystal frame. <a href="FundamentalSector.html">Fundamental Sector</a> later selects one representative from each symmetry-equivalent direction family.</p>
+<p>Continue with <a href="OrientationDefinition.html">Defining Orientations</a> to place a crystal in a specimen. <a href="OrientationPoleFigure.html">Pole Figures</a> then plots where selected crystal directions point in that specimen.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/CrystalOperations.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

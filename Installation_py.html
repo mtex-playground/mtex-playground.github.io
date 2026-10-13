@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Installing MTEX for Python | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/Installation_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/Installation_py.html#page",
+      "name": "Installing MTEX for Python",
+      "headline": "Installing MTEX for Python",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/Installation_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/Installation_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/Installation_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Installing MTEX for Python</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/Installation.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GeneralConcepts/Installation.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>MATLAB comes as one program: the language, the editor, the command window and the figure
+windows are installed together. In Python these are separate pieces, and this page
+installs them one after the other:</p>
+
+<ol>
+  <li><strong>Python</strong>, the language that runs your scripts,</li>
+  <li><strong>VS Code</strong>, the editor in which you write and run them, playing the part of the MATLAB
+desktop,</li>
+  <li><strong>MTEX</strong>, installed into a folder of its own for your project.</li>
+</ol>
+
+<p>It takes about fifteen minutes and needs an internet connection. No previous knowledge of
+Python is assumed; if you already work with Python, the short version is
+<code class="language-plaintext highlighter-rouge">pip install "mtex[all]"</code> into an environment with Python 3.12 or later.</p>
+
+<h2 id="step-1-install-python">Step 1: Install Python</h2>
+
+<p>Install <strong>Python 3.14</strong>. Any version from 3.12 on works, but take 3.14 even when a newer
+one is offered: a Python version released only a few months ago often lacks the compiled
+packages MTEX builds on.</p>
+
+<p><strong>Windows.</strong> Open <a href="https://www.python.org/downloads/">python.org/downloads</a> and click
+<em>get the standalone installer for Python 3.14</em>. Run the downloaded file, and on its first
+screen tick <strong>Add python.exe to PATH</strong> before clicking <em>Install Now</em>. Without that tick,
+the other programs will not find Python.</p>
+
+<p><strong>macOS.</strong> Open <a href="https://www.python.org/downloads/">python.org/downloads</a>, download the
+macOS installer of Python 3.14 and run it. When it has finished, a Finder window with the
+new Python folder opens; double-click <strong>Install Certificates.command</strong> in it. Without this
+step, Python cannot download the MTEX sample data.</p>
+
+<p><strong>Linux.</strong> Most distributions bring Python. Open a terminal and type <code class="language-plaintext highlighter-rouge">python3 --version</code>.
+A version of 3.12 or later is fine; on Debian and Ubuntu also install the package that
+creates environments, <code class="language-plaintext highlighter-rouge">sudo apt install python3-venv</code>. With an older Python, install a
+current one with <a href="https://docs.astral.sh/uv/">uv</a>, see <em>Other ways</em> below.</p>
+
+<p>To check the installation, open a terminal (on Windows: press the Windows key, type
+<code class="language-plaintext highlighter-rouge">cmd</code> and press Enter; on macOS: the program <em>Terminal</em>) and type</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python --version
+</code></pre></div></div>
+
+<p>on Windows, or <code class="language-plaintext highlighter-rouge">python3 --version</code> on macOS and Linux. It should answer <code class="language-plaintext highlighter-rouge">Python 3.14.x</code>.</p>
+
+<h2 id="step-2-install-vs-code">Step 2: Install VS Code</h2>
+
+<p>Download Visual Studio Code from <a href="https://code.visualstudio.com/">code.visualstudio.com</a>
+and install it with its default settings. VS Code is a general editor; Python support
+comes as extensions:</p>
+
+<ol>
+  <li>Start VS Code and click the <em>Extensions</em> icon in the bar on the left (four small
+squares), or press Ctrl+Shift+X (Cmd+Shift+X on macOS).</li>
+  <li>Search for <strong>Python</strong> and install the extension published by Microsoft.</li>
+  <li>Search for <strong>Jupyter</strong> and install the extension published by Microsoft.</li>
+</ol>
+
+<p>The first lets VS Code run Python, the second gives the interactive window in which a
+script runs piece by piece and shows its figures, as MATLAB’s editor does with its
+sections.</p>
+
+<h2 id="step-3-a-project-folder-with-mtex">Step 3: A project folder with MTEX</h2>
+
+<p>Python keeps the packages a project uses in an <strong>environment</strong>: a folder, called <code class="language-plaintext highlighter-rouge">.venv</code>,
+inside the project folder, holding its own copy of MTEX and everything MTEX needs. It is
+the counterpart of adding MTEX to the MATLAB path, but per project, so a project keeps
+working when another one installs a different version. You create the environment once
+per project folder.</p>
+
+<ol>
+  <li>Create a folder for your analysis, for instance <code class="language-plaintext highlighter-rouge">Documents/mtex-first-steps</code>.</li>
+  <li>In VS Code choose <em>File &gt; Open Folder…</em> and open it. VS Code asks whether you trust
+the authors of the folder; answer <strong>Yes, I trust the authors</strong>. After any other answer
+VS Code works in <em>Restricted Mode</em>, shown at the bottom left of the window, and does not
+run Python: click <strong>Restricted Mode</strong> there and then <em>Trust</em>.</li>
+  <li>Press Ctrl+Shift+P (Cmd+Shift+P on macOS), type <strong>Python: Create Environment</strong> and
+choose it. Choose <strong>Venv</strong>, then the Python 3.14 you installed in step 1. A folder
+<code class="language-plaintext highlighter-rouge">.venv</code> appears in the file list on the left.</li>
+  <li>Open a terminal inside VS Code with <em>Terminal &gt; New Terminal</em>. Its prompt starts with
+<code class="language-plaintext highlighter-rouge">(.venv)</code>, which says the environment is active. Type</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install "mtex[all]" ipykernel
+</code></pre></div></div>
+
+<p>and wait until pip reports <em>Successfully installed</em>. This downloads MTEX and about 300 MB
+of packages it builds on. The quotes matter: without them, some terminals misread the
+square brackets.</p>
+
+<p>If the prompt does not start with <code class="language-plaintext highlighter-rouge">(.venv)</code>, close the terminal with the bin icon at its
+right and open a new one. If <code class="language-plaintext highlighter-rouge">(.venv)</code> is still missing, call the pip of the environment
+by its path:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.venv/bin/pip install "mtex[all]" ipykernel
+</code></pre></div></div>
+
+<p>on macOS and Linux, and <code class="language-plaintext highlighter-rouge">.venv\Scripts\pip install "mtex[all]" ipykernel</code> on Windows.</p>
+
+<p><code class="language-plaintext highlighter-rouge">mtex[all]</code> installs MTEX with every optional part: the compiled kernels (numba), the
+plotting (matplotlib), the HDF5 file formats (h5py), the 3D scenes (PyVista) and the
+import wizard (PySide6). A bare <code class="language-plaintext highlighter-rouge">pip install mtex</code> installs the computations only.
+<code class="language-plaintext highlighter-rouge">ipykernel</code> is what the interactive window runs your code with.</p>
+
+<h2 id="step-4-your-first-script">Step 4: Your first script</h2>
+
+<p>Choose <em>File &gt; New File…</em>, then <em>Python File</em>, and save it as <code class="language-plaintext highlighter-rouge">first.py</code> in the project
+folder. Type</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># %%
+</span><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># %%
+</span><span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'forsterite'</span><span class="p">)</span>
+<span class="n">ebsd</span>
+
+<span class="c1"># %%
+</span><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>A line <code class="language-plaintext highlighter-rouge"># %%</code> starts a <strong>cell</strong>, as <code class="language-plaintext highlighter-rouge">%%</code> starts a section in the MATLAB editor. Click into
+the first cell and press <strong>Shift+Enter</strong>: the cell runs in the <em>Interactive</em> window that
+opens on the right, and the cursor moves to the next cell. The first time, VS Code asks
+for a kernel; choose the one named <code class="language-plaintext highlighter-rouge">.venv</code>. Press Shift+Enter twice more. The second cell
+downloads a sample EBSD map and shows its summary, the third draws the phase map.</p>
+
+<p>The first run of many MTEX commands takes a few seconds longer than later ones: MTEX
+compiles its fast routines on first use and keeps them on disk for the next time.</p>
+
+<p>A few habits help:</p>
+
+<ul>
+  <li><strong>Variables.</strong> The <em>Variables</em> button in the toolbar of the interactive window lists
+the variables and their sizes, like MATLAB’s workspace.</li>
+  <li><strong>Run everything.</strong> <em>Run All</em> in the toolbar above the script runs every cell. The
+triangle at the top right, <em>Run Python File</em>, runs the script in the terminal instead;
+there it shows no figures, so use it only for scripts that save their results, for
+instance with <code class="language-plaintext highlighter-rouge">saveFigure('map.png')</code>.</li>
+  <li><strong>Figures in windows.</strong> The interactive window shows figures as pictures. To get
+separate figure windows that zoom and turn, as in MATLAB, run <code class="language-plaintext highlighter-rouge">%matplotlib qt</code> once in
+the interactive window.</li>
+  <li><strong>Start afresh.</strong> <em>Restart</em> in the toolbar of the interactive window clears all
+variables, like MATLAB’s <code class="language-plaintext highlighter-rouge">clear all</code>.</li>
+</ul>
+
+<h2 id="the-python-prompt-matlabs-command-window">The Python prompt: MATLAB’s command window</h2>
+
+<p>In MATLAB you type a command into the command window, press Enter and see the answer. In
+VS Code the same place is the input box at the bottom of the interactive window, marked
+<em>Type ‘python’ code here and press Shift+Enter to run</em>.</p>
+
+<ol>
+  <li>Click into the input box.</li>
+  <li>Type a command, for instance <code class="language-plaintext highlighter-rouge">ebsd['Forsterite']</code>.</li>
+  <li>Press <strong>Shift+Enter</strong>. A plain Enter starts a second line instead, so that a command
+can span several lines.</li>
+</ol>
+
+<p>The command runs with the variables of the cells you ran before, so after the first
+script <code class="language-plaintext highlighter-rouge">ebsd</code> is known here, and a variable you define here is known in the next cell of
+the script. The answer, or the figure, appears above the input box. In the box, the up
+arrow brings back the commands you typed earlier, and typing <code class="language-plaintext highlighter-rouge">ebsd.</code> followed by Ctrl+Space
+lists what <code class="language-plaintext highlighter-rouge">ebsd</code> offers.</p>
+
+<p>To get a prompt without opening a script first, press Ctrl+Shift+P (Cmd+Shift+P on macOS)
+and choose <strong>Jupyter: Create Interactive Window</strong>. A new interactive window opens with its
+input box; choose the kernel named <code class="language-plaintext highlighter-rouge">.venv</code> if VS Code asks, and start with</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<p>The terminal at the bottom of VS Code is a second kind of prompt: it runs system commands
+such as <code class="language-plaintext highlighter-rouge">pip install</code>, not Python. Typing <code class="language-plaintext highlighter-rouge">python</code> there starts a plain Python prompt,
+marked <code class="language-plaintext highlighter-rouge">&gt;&gt;&gt;</code>, which runs Python but shows no figures; leave it with <code class="language-plaintext highlighter-rouge">exit()</code>. Use the
+interactive window for MTEX and the terminal for installing.</p>
+
+<h2 id="working-through-the-documentation">Working through the documentation</h2>
+
+<p>Every page of this documentation is a script: the text you read, and the code between it,
+which produced every number and figure on the page. The best way to learn MTEX is to run a
+page yourself, section by section, and change it. MATLAB MTEX users know this from opening
+a documentation script in the MATLAB editor.</p>
+
+<p><strong>Get the page as a script.</strong> In the interactive window type</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">openDoc</span><span class="p">(</span><span class="s">'EBSDTutorial'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This writes the page <em>EBSD Tutorial</em> as the file <code class="language-plaintext highlighter-rouge">EBSDTutorial.py</code> into your project
+folder and opens it in the editor. The name of a page is the last part of its web address
+without <code class="language-plaintext highlighter-rouge">_py.html</code>: the page <code class="language-plaintext highlighter-rouge">.../EBSDTutorial_py.html</code> is <code class="language-plaintext highlighter-rouge">EBSDTutorial</code>. <code class="language-plaintext highlighter-rouge">openDoc()</code>
+without a name lists every page by chapter, and <code class="language-plaintext highlighter-rouge">openDoc('Tutorials')</code> the pages of one
+chapter. Instead of <code class="language-plaintext highlighter-rouge">openDoc</code> you can also click <em>download as script</em> at the top of a page
+on the website and save the file into your project folder. If you prefer notebooks,
+<code class="language-plaintext highlighter-rouge">openDoc('EBSDTutorial', notebook=True)</code> writes the page as <code class="language-plaintext highlighter-rouge">EBSDTutorial.ipynb</code> instead,
+which VS Code, JupyterLab and Jupyter Notebook open with the results below each cell.</p>
+
+<p>If the file does not open by itself (on macOS VS Code needs <em>Shell Command: Install ‘code’
+command in PATH</em> from Ctrl+Shift+P for that), click it in the file list on the left.</p>
+
+<p><strong>Read the script.</strong> The page is cut into cells, each starting with a line <code class="language-plaintext highlighter-rouge"># %%</code>:</p>
+
+<ul>
+  <li>a cell marked <code class="language-plaintext highlighter-rouge"># %% [markdown]</code> is text of the page, its lines starting with <code class="language-plaintext highlighter-rouge">#</code>,</li>
+  <li>a cell marked <code class="language-plaintext highlighter-rouge"># %%</code> alone is code,</li>
+  <li>above each cell VS Code shows the small links <em>Run Cell</em>, <em>Run Above</em> and <em>Debug Cell</em>.</li>
+</ul>
+
+<p><strong>Run it cell by cell.</strong> Click into the first cell and press <strong>Shift+Enter</strong> again and
+again. Every press runs one cell in the interactive window and moves on to the next: a text
+cell appears there as formatted text, a code cell prints its results and draws its figures.
+So the interactive window rebuilds the page as you go, and you can compare it with the page
+on the website. The first cell that needs sample data downloads it, which takes a moment
+once.</p>
+
+<p><strong>Keep the order.</strong> A cell uses the variables of the cells above it. When you jump ahead
+and a cell fails with <code class="language-plaintext highlighter-rouge">NameError: name 'ebsd' is not defined</code>, a cell above it has not
+run: click <em>Run Above</em> on the cell, then run it again.</p>
+
+<p><strong>Change things.</strong> The script is your copy; edit a number, an option or a colour and press
+<strong>Ctrl+Enter</strong>, which runs the cell again without moving on. To see the effect of a change
+on everything below, continue with Shift+Enter from there. <code class="language-plaintext highlighter-rouge">openDoc</code> never overwrites a
+script you have already, so your changes are safe; <code class="language-plaintext highlighter-rouge">openDoc('EBSDTutorial',
+overwrite=True)</code> brings back the original.</p>
+
+<p><strong>Start over.</strong> <em>Restart</em> in the toolbar of the interactive window forgets all variables;
+run the cells from the top again.</p>
+
+<p><strong>Where to start.</strong> The chapter <em>Tutorials</em> goes through a whole analysis:
+<a href="EBSDTutorial_py.html">EBSD Tutorial</a>, <a href="GrainTutorial_py.html">Grain Tutorial</a>,
+<a href="BoundaryTutorial_py.html">Grain Boundary Tutorial</a>, then
+<a href="PoleFigureTutorial_py.html">Pole Figure Tutorial</a> and <a href="ODFTutorial_py.html">ODF Tutorial</a>. For
+the ideas behind the commands continue with <a href="MTEXScripts_py.html">MTEX Scripts</a>. If you know
+MTEX from MATLAB, read <a href="MATLABtoPython_py.html">MTEX in MATLAB and in Python</a> first.</p>
+
+<h2 id="the-import-wizard">The import wizard</h2>
+
+<p>The import wizard opens EBSD files in a window and writes the Python script that imports
+them; see <a href="EBSDImport_py.html">EBSD Import</a>. Start it in the terminal of VS Code, with the
+environment active, by</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mtex-wizard
+</code></pre></div></div>
+
+<p>or from a script with <code class="language-plaintext highlighter-rouge">importWizard()</code>. Without <code class="language-plaintext highlighter-rouge">(.venv)</code> in the prompt, type
+<code class="language-plaintext highlighter-rouge">.venv/bin/mtex-wizard</code> on macOS and Linux and <code class="language-plaintext highlighter-rouge">.venv\Scripts\mtex-wizard</code> on Windows.</p>
+
+<h2 id="updating-mtex">Updating MTEX</h2>
+
+<p>In the terminal of VS Code, with <code class="language-plaintext highlighter-rouge">(.venv)</code> in the prompt, type</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install --upgrade "mtex[all]"
+</code></pre></div></div>
+
+<p>and restart the interactive window. <code class="language-plaintext highlighter-rouge">pip show mtex</code> tells the version you have. Without
+<code class="language-plaintext highlighter-rouge">(.venv)</code> in the prompt, call pip by its path as in step 3.</p>
+
+<h2 id="a-second-project">A second project</h2>
+
+<p>A new project folder needs its own environment: repeat step 3 there. To use one
+environment for several folders instead, choose <em>Python: Select Interpreter</em> from
+Ctrl+Shift+P in the new folder and pick <em>Enter interpreter path…</em>, then the file
+<code class="language-plaintext highlighter-rouge">.venv/Scripts/python.exe</code> (Windows) or <code class="language-plaintext highlighter-rouge">.venv/bin/python</code> (macOS, Linux) of the first
+project.</p>
+
+<h2 id="when-something-goes-wrong">When something goes wrong</h2>
+
+<p><strong><code class="language-plaintext highlighter-rouge">python</code> is not recognized, or opens the Microsoft Store (Windows).</strong> The tick <em>Add
+python.exe to PATH</em> was missed. Run the installer again, choose <em>Modify</em>, then <em>Next</em>, and
+tick <em>Add Python to environment variables</em>. Close and reopen every terminal and VS Code
+afterwards.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">ModuleNotFoundError: No module named 'mtex'</code>.</strong> The code runs in another Python than
+the one MTEX was installed into. For the interactive window, click the kernel name at its
+top right and choose <code class="language-plaintext highlighter-rouge">.venv</code>. For the terminal, look at the bottom right of the VS Code
+window: it names the Python in use; click it and choose the one in <code class="language-plaintext highlighter-rouge">.venv</code>.</p>
+
+<p><strong>The terminal refuses to activate the environment: <em>running scripts is disabled on this
+system</em> (Windows).</strong> Windows forbids the activation script by default. Type once</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+</code></pre></div></div>
+
+<p>in the terminal of VS Code, confirm, and open a new terminal.</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">CERTIFICATE_VERIFY_FAILED</code> when <code class="language-plaintext highlighter-rouge">mtexdata</code> downloads (macOS).</strong> The step <em>Install
+Certificates.command</em> of step 1 was skipped. Open the folder <em>Applications &gt; Python 3.14</em>
+and double-click it.</p>
+
+<p><strong>pip fails while building <code class="language-plaintext highlighter-rouge">finufft</code>.</strong> finufft, which MTEX uses for its fast Fourier
+transforms, ships ready compiled for Windows on Intel and AMD processors, macOS 14 or later
+on Apple silicon and Linux on Intel and AMD processors. On other machines (an Intel Mac,
+Windows on ARM) pip tries to compile it, which needs a C++ compiler and FFTW; the
+<a href="https://finufft.readthedocs.io/en/latest/install.html">finufft installation notes</a> explain
+how.</p>
+
+<p><strong>The import wizard reports missing system libraries (Linux).</strong> The window of the wizard
+is drawn by Qt, which uses libraries of the system that pip does not install. The message
+names them and, for Debian and Ubuntu, ends with the <code class="language-plaintext highlighter-rouge">sudo apt install</code> command that
+installs them. On other distributions install the packages that hold the named libraries;
+<code class="language-plaintext highlighter-rouge">libxcb-cursor.so.0</code>, the one most often missing, is in <code class="language-plaintext highlighter-rouge">xcb-util-cursor</code> on Fedora and
+Arch Linux.</p>
+
+<p><strong>The interactive window asks to install <code class="language-plaintext highlighter-rouge">ipykernel</code>.</strong> It was left out of step 3. Click
+<em>Install</em>, or type <code class="language-plaintext highlighter-rouge">pip install ipykernel</code> in the terminal.</p>
+
+<h2 id="other-ways">Other ways</h2>
+
+<p>Nothing on this page is tied to VS Code: MTEX runs in any Python environment, and the
+same <code class="language-plaintext highlighter-rouge">pip install "mtex[all]"</code> works in Spyder, PyCharm, JupyterLab or a plain terminal.</p>
+
+<p><strong>Anaconda or Miniforge.</strong> Create an environment and install MTEX into it with pip:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda create -n mtex python=3.14
+conda activate mtex
+pip install "mtex[all]" ipykernel
+</code></pre></div></div>
+
+<p>In VS Code choose the interpreter or kernel named <code class="language-plaintext highlighter-rouge">mtex</code>.</p>
+
+<p><strong>uv.</strong> <a href="https://docs.astral.sh/uv/">uv</a> installs Python and the packages in one tool. In
+the project folder:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>uv init --python 3.14
+uv add "mtex[all]" ipykernel
+</code></pre></div></div>
+
+<p><strong>The newest MTEX from GitHub.</strong> Install from the repository instead of the release:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip install "mtex[all] @ git+https://github.com/mtex-toolbox/pymtex"
+</code></pre></div></div>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/Installation_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

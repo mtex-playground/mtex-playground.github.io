@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>ODF Import | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="Importing an orientation distribution function (ODF) means creating an MTEX function from a file. The file may preserve an MTEX function exactly, or it may contain only a finite table from which a function must be reconstructed. Those are different operations even when both files contain Euler angle">
+<link rel="canonical" href="https://mtex-playground.github.io/ODFImport.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/ODFImport.html#page",
+      "name": "ODF Import",
+      "headline": "ODF Import",
+      "description": "Importing an orientation distribution function (ODF) means creating an MTEX function from a file. The file may preserve an MTEX function exactly, or it may contain only a finite table from which a function must be reconstructed. Those are different operations even when both files contain Euler angle",
+      "url": "https://mtex-playground.github.io/ODFImport.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/ODFImport.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/ODFImport.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">ODF Import</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>ODF Import</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_ODFImport.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/ODFAnalysis/ODFImport.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>Importing an orientation distribution function (ODF) means creating an MTEX function from a file. The file may preserve an MTEX function exactly, or it may contain only a finite table from which a function must be reconstructed. Those are different operations even when both files contain Euler angles and a fourth numeric column.</p>
+<p>This page assumes the density and mrd normalization introduced in <a href="ODFTheory.html">ODF Theory</a>. It also assumes the orientation map, Euler-angle conventions, and reference frames introduced in <a href="OrientationDefinition.html">Defining Orientations</a>. <a href="OrientationImport.html">Importing Crystal Orientations</a> details the generic text importer and its current limitations.</p>
+<p>MTEX supports the following common cases:</p>
+<div>
+<ul>
+<li>a <code class="language-plaintext highlighter-rouge">.mat</code> file with an MTEX ODF object -- lossless and binary;</li>
+<li>an MTEX ASCII file containing its components -- lossless for the supported component representations;</li>
+<li>a VPSC file containing weighted discrete orientations;</li>
+<li>a generic text table containing Euler angles and values or weights.</li>
+</ul>
+</div>
+<p>The MTEX ASCII description is intended to preserve supported components. In the current source tree, however, <a href="SO3Fun.load.html"><code class="language-plaintext highlighter-rouge">SO3Fun.load</code></a> has loaders only for generic and VPSC ODF files. There is no matching <code class="language-plaintext highlighter-rouge">loadODF_mtex</code> implementation. Use <code class="language-plaintext highlighter-rouge">.mat</code> when an exact round trip matters.</p>
+<p>The simplest interactive route is the <a href="import_wizard.html">import wizard</a>, started by typing <code class="language-plaintext highlighter-rouge">import_wizard</code> at the command line. It browses a folder and shows what each file contains. It can either create a variable or write an import script. The following example has the same form as that script.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% State how specimen x and y are drawn. This changes only the screen layout;</span>
+<span class="c1">% it does not rotate the imported orientations or change their reference frame.</span>
+<span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+
+<span class="c1">% define the crystal and specimen symmetries named in the file header</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'m-3m'</span><span class="p">);</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="n">specimenSymmetry</span><span class="p">(</span><span class="s1">'1'</span><span class="p">);</span>
+
+<span class="c1">% the file name</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="nb">fullfile</span><span class="p">(</span><span class="n">mtexDataPath</span><span class="p">,</span><span class="s1">'ODF'</span><span class="p">,</span><span class="s1">'odf.txt'</span><span class="p">);</span>
+
+<span class="c1">% load the data as tabulated function values</span>
+<span class="n">odfInterp</span> <span class="o">=</span> <span class="n">SO3Fun</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="s1">'CS'</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'SS'</span><span class="p">,</span><span class="n">ss</span><span class="p">,</span><span class="s1">'Bunge'</span><span class="p">,</span><span class="s1">'interp'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'ColumnNames'</span><span class="p">,{</span><span class="s1">'Euler 1'</span><span class="p">,</span><span class="s1">'Euler 2'</span><span class="p">,</span><span class="s1">'Euler 3'</span><span class="p">,</span><span class="s1">'weights'</span><span class="p">});</span>
+
+<span class="c1">% plot the imported function</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odfInterp</span><span class="p">,</span><span class="s1">'sections'</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Interpolating the ODF. This might take some time...
+Warning: Maximum number of iterations reached, result may not have converged to
+the optimum yet.</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/ODFImport_01.png" alt="" />
+
+</center>
+<p>The panels are sections through one three-dimensional function, not six separate pole figures. They reveal localized high-density regions in the imported texture. They do not reveal whether the fourth column was meant as function values or component masses. Either interpretation can produce a plausible texture plot.</p>
+<p>The file header calls its fourth column <code class="language-plaintext highlighter-rouge">value</code>. The logical name <code class="language-plaintext highlighter-rouge">'weights'</code> above merely tells the generic loader which column to use. The explicit <code class="language-plaintext highlighter-rouge">'interp'</code> flag records that the file contains function values instead of leaving that decision to the importer's heuristic.</p>
+<h2 id="3">What the Weights Mean</h2>
+<p>A generic ASCII table fixes orientations at finitely many points. It says nothing about the function between them. Its fourth column is also ambiguous. It may either</p>
+<div>
+<ol>
+<li>give the value of the ODF at that orientation, or</li>
+<li>give the volume of a bell-shaped component centred there.</li>
+</ol>
+</div>
+<p>A heading such as <code class="language-plaintext highlighter-rouge">weight</code> does not settle the question. The exporting program's documentation must say which quantity was written. MTEX therefore needs an interpretation, and that interpretation changes the resulting ODF.</p>
+<p>An ODF value is a density in multiples of a random distribution (mrd), not the volume fraction at one exact orientation. Volume fractions are integrals over regions of orientation space. See <a href="ODFCharacteristics.html">ODF Characteristics</a>.</p>
+<h2 id="4">Interpolation</h2>
+<p>The flag <code class="language-plaintext highlighter-rouge">'interp'</code> used above reads the fourth column as sampled function values. MTEX then seeks a radial-basis ODF that reproduces the tabulated values at the imported orientations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">fprintf</span><span class="p">([</span><span class="s1">'interpolation             : mean %.3f, texture index %.3f, '</span> <span class="k">...</span>
+  <span class="s1">'maximum %.2f mrd\n'</span><span class="p">],</span><span class="nb">mean</span><span class="p">(</span><span class="n">odfInterp</span><span class="p">),</span><span class="nb">norm</span><span class="p">(</span><span class="n">odfInterp</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">odfInterp</span><span class="p">));</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">interpolation             : mean 1.000, texture index 1.205, maximum 3.50 mrd</code></pre></figure>
+<p>The mean checks normalization. The texture index and maximum describe concentration, not volume fractions. They are useful here because the same rows will next be given the other interpretation.</p>
+<p>For this file, the default least-squares solver reports that it reached its iteration limit. The returned function is normalized, but that warning means convergence has not been established. Do not silence it. The options <code class="language-plaintext highlighter-rouge">'tol'</code> and <code class="language-plaintext highlighter-rouge">'maxit'</code> control termination, and the fitted values must be checked against the source table when interpolation accuracy matters.</p>
+<h2 id="6">Density Estimation</h2>
+<p>The flag <code class="language-plaintext highlighter-rouge">'density'</code> reads the fourth column as component masses. This is <a href="DensityEstimation.html">kernel density estimation</a>: MTEX centres a bell-shaped kernel at every imported orientation and scales it by the corresponding mass.</p>
+<p>The file does not contain the kernel halfwidth. It is a genuine free parameter. A narrow kernel leaves the individual components standing, whereas a wide kernel smears the texture out. The halfwidth must therefore come from knowledge of how the data were produced.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">halfwidths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span> <span class="mi">10</span> <span class="mi">20</span><span class="p">]</span><span class="o">*</span><span class="nb">degree</span><span class="p">;</span>
+<span class="n">odfDensity</span> <span class="o">=</span> <span class="nb">cell</span><span class="p">(</span><span class="nb">size</span><span class="p">(</span><span class="n">halfwidths</span><span class="p">));</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">halfwidths</span><span class="p">)</span>
+  <span class="n">odfDensity</span><span class="p">{</span><span class="n">i</span><span class="p">}</span> <span class="o">=</span> <span class="n">SO3Fun</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span><span class="s1">'CS'</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="s1">'SS'</span><span class="p">,</span><span class="n">ss</span><span class="p">,</span><span class="s1">'Bunge'</span><span class="p">,</span><span class="s1">'density'</span><span class="p">,</span><span class="k">...</span>
+    <span class="s1">'halfwidth'</span><span class="p">,</span><span class="n">halfwidths</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="k">...</span>
+    <span class="s1">'ColumnNames'</span><span class="p">,{</span><span class="s1">'Euler 1'</span><span class="p">,</span><span class="s1">'Euler 2'</span><span class="p">,</span><span class="s1">'Euler 3'</span><span class="p">,</span><span class="s1">'weights'</span><span class="p">});</span>
+  <span class="nb">fprintf</span><span class="p">([</span><span class="s1">'density, halfwidth %2d degrees: mean %.3f, texture index %.3f, '</span> <span class="k">...</span>
+    <span class="s1">'maximum %.2f mrd\n'</span><span class="p">],</span><span class="nb">round</span><span class="p">(</span><span class="n">halfwidths</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">),</span><span class="k">...</span>
+    <span class="nb">mean</span><span class="p">(</span><span class="n">odfDensity</span><span class="p">{</span><span class="n">i</span><span class="p">}),</span><span class="nb">norm</span><span class="p">(</span><span class="n">odfDensity</span><span class="p">{</span><span class="n">i</span><span class="p">})</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">odfDensity</span><span class="p">{</span><span class="n">i</span><span class="p">}));</span>
+<span class="k">end</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">density, halfwidth  5 degrees: mean 1.000, texture index 1.177, maximum 3.12 mrd
+density, halfwidth 10 degrees: mean 1.000, texture index 1.117, maximum 2.35 mrd
+density, halfwidth 20 degrees: mean 1.000, texture index 1.031, maximum 1.56 mrd</code></pre></figure>
+<p>The printed means remain one, while the texture index and maximum fall as the halfwidth increases. Smoothing redistributes the same normalized mass over a larger part of orientation space.</p>
+<p>The four {100} pole-density plots below compare the explicit interpolation with the three density estimates on one colour range. They all came from the same table. Notice how changing only the interpretation and halfwidth changes both the sharpness and peak height.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">odfVariants</span> <span class="o">=</span> <span class="p">[{</span><span class="n">odfInterp</span><span class="p">},</span><span class="n">odfDensity</span><span class="p">];</span>
+<span class="n">variantName</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'tabulated values'</span><span class="p">,</span><span class="s1">'density, 5 degrees'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'density, 10 degrees'</span><span class="p">,</span><span class="s1">'density, 20 degrees'</span><span class="p">};</span>
+
+<span class="n">mtexFig</span> <span class="o">=</span> <span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'large'</span><span class="p">);</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">numel</span><span class="p">(</span><span class="n">odfVariants</span><span class="p">)</span>
+  <span class="n">plotPDF</span><span class="p">(</span><span class="n">odfVariants</span><span class="p">{</span><span class="n">i</span><span class="p">},</span><span class="n">h</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'noTitle'</span><span class="p">);</span>
+  <span class="n">mtexTitle</span><span class="p">(</span><span class="n">variantName</span><span class="p">{</span><span class="n">i</span><span class="p">});</span>
+  <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">numel</span><span class="p">(</span><span class="n">odfVariants</span><span class="p">),</span> <span class="n">nextAxis</span><span class="p">;</span> <span class="k">end</span>
+<span class="k">end</span>
+<span class="n">setColorRange</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">);</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span><span class="s1">'mrd'</span><span class="p">);</span>
+<span class="n">drawNow</span><span class="p">(</span><span class="n">mtexFig</span><span class="p">);</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/ODFImport_02.png" alt="" />
+
+</center>
+<p>
+<a href="OptimalKernel.html">Optimal Kernel Selection</a> discusses halfwidth choice when the file contains a discrete sample of orientations. It cannot recover a halfwidth that an exporting program used before writing sampled ODF values.</p>
+<h2 id="9">When No Interpretation Is Specified</h2>
+<p>Without either flag, the generic importer uses a heuristic. Varying weights are interpreted as tabulated values, whereas equal weights are treated as a discrete sample for density estimation. This is convenient, but it cannot recover the meaning intended by the program that wrote the file. The varying values in this example would select interpolation, but a reusable script should still specify <code class="language-plaintext highlighter-rouge">'interp'</code> or <code class="language-plaintext highlighter-rouge">'density'</code> explicitly.</p>
+<h2 id="10">Validate the Import</h2>
+<p>Successful parsing is not validation. Check all of the following against the exporting program and a known feature of the specimen:</p>
+<div>
+<ul>
+<li>the Euler-angle convention and whether the stored map is active or passive;</li>
+<li>degrees or radians;</li>
+<li>crystal symmetry and the alignment of the crystal frame with the lattice;</li>
+<li>specimen symmetry and the physical directions of the specimen frame;</li>
+<li>the meaning of the fourth column and, for density estimation, the halfwidth.</li>
+</ul>
+</div>
+<p>The generic importer treats an Euler table as degrees only when at least one angle exceeds 15. A degree-valued file confined to smaller angles is silently read as radians. The <code class="language-plaintext highlighter-rouge">'radians'</code> flag cannot force such a file to be read as degrees, so inspect the original scale rather than trusting the plot.</p>
+<p>A reference frame is the coordinate system in which the data are expressed. It is distinct from the symmetry attached to that frame. The point group alone does not specify an alignment such as X || a*, Z || c. See <a href="CrystalReferenceSystem.html">The Crystal Reference System</a> and <a href="SpecimenSymmetry.html">Specimen Symmetry</a> before assigning either one.</p>
+<p>The mean ODF should normally be one. Pole figures, sections, and important peak locations should agree with the source. A plausible plot is not enough to distinguish a swapped axis from a genuinely different texture. When possible, map one known crystal direction into a known specimen direction. This breaks ambiguities that visual similarity can hide.</p>
+<h2 id="11">References</h2>
+<div>
+<ul>
+<li>H.-J. Bunge, <a href="https://doi.org/10.1016/C2013-0-11769-2">Texture Analysis in Materials Science: Mathematical Methods</a>, Butterworths, English ed., 1982, establishes ODF normalization and the Bunge Euler convention.</li>
+<li>H. Schaeben, <a href="https://doi.org/10.1107/S0021889892009270">Towards statistics of crystal orientations in quantitative texture analysis</a>, <i>Journal of Applied Crystallography</i> 26 (1993), 112--121, develops kernel orientation-density estimation and its smoothing parameter.</li>
+<li>M. M. Schmitt et al., <a href="https://doi.org/10.1107/S1600576723009275">Texture measurements on quartz single crystals to validate coordinate systems for neutron time-of-flight texture analysis</a>, <i>Journal of Applied Crystallography</i> 56 (2023), 1764--1775, demonstrates why software and specimen frames must be checked with a known asymmetric feature.</li>
+<li>R. A. Lebensohn and C. N. Tom&eacute;, <a href="https://doi.org/10.1016/0956-7151(93)90130-K">A self-consistent anisotropic approach for the simulation of plastic deformation and texture development of polycrystals</a>, <i>Acta Metallurgica et Materialia</i> 41 (1993), 2611--2624, introduces the VPSC formulation behind the weighted-orientation format.</li>
+</ul>
+</div>
+<h2 id="12">Next</h2>
+<p>
+<a href="ODFExport.html">ODF Export</a> explains what information each output format preserves. <a href="ODFPlot.html">Visualizing ODFs</a> develops the section and pole-density views used to validate a result. Continue with <a href="ODFCharacteristics.html">ODF Characteristics</a> when the imported function should be summarized by peak value, texture index, entropy, or volume fraction. VPSC deformation histories are handled in <a href="VPSCImport.html">Import from VPSC</a>.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/ODFImport.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

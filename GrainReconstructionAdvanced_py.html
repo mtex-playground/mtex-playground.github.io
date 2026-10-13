@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Advanced Grain Reconstruction | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/GrainReconstructionAdvanced_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/GrainReconstructionAdvanced_py.html#page",
+      "name": "Advanced Grain Reconstruction",
+      "headline": "Advanced Grain Reconstruction",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/GrainReconstructionAdvanced_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/GrainReconstructionAdvanced_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/GrainReconstructionAdvanced_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Advanced Grain Reconstruction</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/GrainReconstructionAdvanced.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/Grains/GrainReconstructionAdvanced.py">edit page</a></font>
+
+<!--introduction-->
+
+<p><a href="GrainReconstruction_py.html">Grain Reconstruction</a> introduced the threshold angle,
+<code class="language-plaintext highlighter-rouge">alpha</code>, and <code class="language-plaintext highlighter-rouge">minPixel</code>. This page shows how to replace parts of the reconstruction
+rather than tune those three settings.</p>
+
+<p>A <em>grain</em> is a phase-homogeneous, spatially connected region of EBSD pixels produced by
+segmentation. This page assumes that definition and the basic reconstruction workflow.
+If misorientation is new to you, first see
+<a href="MisorientationTheory_py.html">Misorientation Theory</a>.</p>
+
+<p>It helps to separate <code class="language-plaintext highlighter-rouge">calcGrains</code> into three operations:</p>
+
+<ol>
+  <li>partition the measured surface into cells</li>
+  <li>assign a connectivity to each pair of neighbouring cells</li>
+  <li>collect connected cells into grains</li>
+</ol>
+
+<p>The first sections replace the second operation. The later sections compare two spatial
+decompositions used by the first. Denoising orientations and filling missing
+orientations are separate preprocessing decisions; see
+<a href="EBSDDenoising_py.html">Denoising Orientation Maps</a> and
+<a href="EBSDFilling_py.html">Fill Missing Data in Orientation Maps</a>.</p>
+
+<p>We use the same subregion of the forsterite data set as the basic page.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'forsterite'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="n">ebsd</span><span class="p">.</span><span class="n">inpolygon</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<h2 id="the-grain-boundary-criterion">The grain boundary criterion</h2>
+
+<p>A <code class="language-plaintext highlighter-rouge">grainBoundaryCriterion</code> evaluates arrays of neighbouring pixel indices at once. It
+returns one connectivity per pair, from <code class="language-plaintext highlighter-rouge">0</code> for separated to <code class="language-plaintext highlighter-rouge">1</code> for fully connected.
+The discrete angle criterion uses three values:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">1</code> means no boundary</li>
+  <li><code class="language-plaintext highlighter-rouge">0.5</code> means a boundary drawn inside a connected grain</li>
+  <li><code class="language-plaintext highlighter-rouge">0</code> means a grain boundary that separates the cells</li>
+</ul>
+
+<p>Without clustering, every positive connectivity joins the graph used to form grains. A
+connectivity at or below <code class="language-plaintext highlighter-rouge">0.5</code> is also drawn as a boundary. A continuous criterion can
+therefore draw a boundary between two cells that remain connected through the grain.
+The soft-threshold example below makes this distinction visible.</p>
+
+<p>Normally <code class="language-plaintext highlighter-rouge">calcGrains</code> constructs a criterion from its options. It also accepts a
+criterion object directly. These calls perform the same reconstruction, so their
+summaries would only repeat one another.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsdUniform</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">grainsUniform</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsdUniform</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ebsdFromObject</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">grainsFromObject</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsdFromObject</span><span class="p">,</span> <span class="n">gbcAngle</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Option and criterion object give identical grain ids: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">ebsdUniform</span><span class="p">.</span><span class="n">grainId</span><span class="p">,</span> <span class="n">ebsdFromObject</span><span class="p">.</span><span class="n">grainId</span><span class="p">))</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Option and criterion object give identical grain ids: 1
+</code></pre></div></div>
+
+<p>MTEX supplies <code class="language-plaintext highlighter-rouge">gbcAngle</code>, <code class="language-plaintext highlighter-rouge">gbcSoft</code>, <code class="language-plaintext highlighter-rouge">gbcCustom</code>, <code class="language-plaintext highlighter-rouge">gbcVariants</code>, and <code class="language-plaintext highlighter-rouge">gbcFMC</code>. The
+default is <code class="language-plaintext highlighter-rouge">gbcAngle</code>. The <a href="GrainReconstruction_py.html">basic page</a> uses <code class="language-plaintext highlighter-rouge">gbcFMC</code> for
+deformed microstructures. The criterion <code class="language-plaintext highlighter-rouge">gbcVariants</code> separates variant ids during
+<a href="MaParentGrainReconstruction_py.html">parent grain reconstruction</a>. The three remaining
+alternatives are developed here.</p>
+
+<h2 id="phase-dependent-thresholds">Phase-dependent thresholds</h2>
+
+<p>Different phases may require different boundary angles. A list gives one threshold per
+phase, in the order of <code class="language-plaintext highlighter-rouge">ebsd.CSList</code>. Its displayed summary makes that order explicit.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span><span class="p">.</span><span class="n">CSList</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>phaseList
+  Phase  Mineral     Color         Symmetry  Crystal reference frame
+  0      notIndexed
+  1      Forsterite  LightSkyBlue  mmm       Forsterite
+  2      Enstatite   DarkSeaGreen  mmm       Enstatite
+  3      Diopside    Goldenrod     12/m1     Diopside
+  4      Silicon     LightCoral    m-3m      Silicon
+</code></pre></div></div>
+
+<p>The first entry is <code class="language-plaintext highlighter-rouge">notIndexed</code>. It is never used as an angular threshold, but it must
+be present. The other four entries belong to the four minerals. Here forsterite, the
+phase that carries the deformation in this specimen, is separated at 5 degrees. The
+other phases keep the 10 degree threshold.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span>   <span class="c1"># notIndexed, never used
+</span>             <span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span>    <span class="c1"># Forsterite
+</span>             <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span>   <span class="c1"># Enstatite
+</span>             <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span>   <span class="c1"># Diopside
+</span>             <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">]</span>   <span class="c1"># Silicon
+</span>
+<span class="n">grainsPhase</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">angle</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Forsterite grains: uniform 10 degree = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsUniform</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">])</span><span class="si">}</span><span class="s">; phase-dependent = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsPhase</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">])</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Forsterite grains: uniform 10 degree = 56; phase-dependent = 63
+</code></pre></div></div>
+
+<p>The printed counts show that the lower forsterite threshold splits that phase more
+finely. The other phases use exactly the same criterion as in the uniform
+reconstruction and are unchanged.</p>
+
+<p>An entry may itself be a pair <code class="language-plaintext highlighter-rouge">[highAngle, lowAngle]</code>. The first angle separates grains;
+the second records internal boundaries. See
+<a href="SubGrainBoundaries_py.html">Subgrain Boundaries</a> for that distinction.</p>
+
+<h2 id="soft-thresholds">Soft thresholds</h2>
+
+<p>A hard threshold is discontinuous in the data. Neighbouring pixels 9.9 degrees apart
+remain together, while pixels 10.1 degrees apart separate, although the physical
+distinction is unlikely to be that sharp.</p>
+
+<p><code class="language-plaintext highlighter-rouge">gbcSoft</code> replaces the step with an error function. Its two parameters are the centre
+angle and transition width. Connectivity then decreases gradually across the band.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grainsSoft</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">gbcSoft</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">grainsHard14</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">angle</span><span class="o">=</span><span class="mi">14</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">softPhaseCounts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">grainsSoft</span><span class="p">.</span><span class="n">phaseId</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">CSList</span><span class="p">))</span>
+<span class="n">hardPhaseCounts</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">grainsHard14</span><span class="p">.</span><span class="n">phaseId</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">CSList</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Soft [10 2] and hard 14 degree phase counts agree: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">softPhaseCounts</span><span class="p">,</span> <span class="n">hardPhaseCounts</span><span class="p">))</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Soft-criterion boundary segments inside grains: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsSoft</span><span class="p">.</span><span class="n">innerBoundary</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Soft [10 2] and hard 14 degree phase counts agree: 1
+Soft-criterion boundary segments inside grains: 28
+</code></pre></div></div>
+
+<p>On its own, the soft criterion still forms grains from positive graph connections. The
+error function reaches numerical zero only after its transition has saturated, so this
+example merely raises the effective splitting angle. Its phase counts match a hard 14
+degree threshold.</p>
+
+<p>The fractional values still record the transition band. A pair past the centre can have
+a boundary drawn while remaining connected inside its grain. Those weights become useful
+when <a href="GrainReconstructionMCL_py.html">Markovian Clustering</a> replaces connected components
+with a weighted graph clustering.</p>
+
+<h2 id="segmenting-by-another-per-pixel-property">Segmenting by another per-pixel property</h2>
+
+<p><code class="language-plaintext highlighter-rouge">gbcCustom</code> separates neighbouring pixels when a supplied per-pixel property differs by
+more than a threshold. The property may be numeric, a <code class="language-plaintext highlighter-rouge">vector3d</code>, or a <code class="language-plaintext highlighter-rouge">quaternion</code>.
+Vectors and quaternions are compared by their angle.</p>
+
+<p>The custom criterion compares only that property; it does not add a phase check. Subset
+a multiphase map to one phase, as below, or enforce phase separation in a criterion of
+your own. This keeps the resulting grains phase-homogeneous.</p>
+
+<p>Here grains are defined by their c-axis alone. Two forsterite pixels may belong to the
+same grain whenever their c-axes agree, regardless of the rotation about that axis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fo</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'Forsterite'</span><span class="p">]</span>
+<span class="n">cAxis</span> <span class="o">=</span> <span class="n">fo</span><span class="p">.</span><span class="n">orientations</span> <span class="o">*</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fo</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+
+<span class="n">grainsC</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">fo</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">gbcCustom</span><span class="p">(</span><span class="n">cAxis</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">grainsA</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">fo</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Full-orientation grains: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsA</span><span class="p">)</span><span class="si">}</span><span class="s">; c-axis grains: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">grainsC</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Full-orientation grains: 73; c-axis grains: 70
+</code></pre></div></div>
+
+<p>The flag <code class="language-plaintext highlighter-rouge">antipodal</code> is passed to <code class="language-plaintext highlighter-rouge">angle</code>. It makes the c-axis an axis rather than a
+direction. Without it, opposite senses of the same axis would be treated as different.</p>
+
+<p>Draw the ordinary reconstruction in black and the c-axis reconstruction in red. Black
+segments that remain visible mark boundaries across which the c-axes agree but the
+rotations about them differ.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">fo</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">ipfColor</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">fo</span><span class="p">.</span><span class="n">orientations</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">fo</span><span class="p">,</span> <span class="n">ipfColor</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grainsA</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'black'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grainsC</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'red'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainReconstructionAdvanced-10.png" /></center>
+
+<p>Only a few black segments remain on this specimen. The printed counts show that 69
+full-orientation grains become 66 c-axis grains. Such mergers would be more common in a
+material with a strong fibre texture.</p>
+
+<h2 id="writing-your-own-criterion">Writing your own criterion</h2>
+
+<p>A custom criterion is a subclass of <code class="language-plaintext highlighter-rouge">grainBoundaryCriterion</code>. Implement the method
+<code class="language-plaintext highlighter-rouge">connectivity(ebsd, i, j)</code>. The arrays <code class="language-plaintext highlighter-rouge">i</code> and <code class="language-plaintext highlighter-rouge">j</code> list neighbouring pixel indices and
+the output must have the same size.</p>
+
+<p>This example requires both a small misorientation and adequate band contrast. The
+second condition stops a grain from leaking through a chain of poorly indexed pixels.
+The value <code class="language-plaintext highlighter-rouge">minBC = 50</code> is specific to the data and acquisition settings; inspect the
+band-contrast distribution before choosing it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">gbcAngleAndBC</span><span class="p">(</span><span class="n">grainBoundaryCriterion</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minBC</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">threshold</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">minBC</span> <span class="o">=</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">minBC</span>
+
+  <span class="k">def</span> <span class="nf">connectivity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+
+    <span class="c1"># delegate the misorientation part
+</span>    <span class="n">out</span> <span class="o">=</span> <span class="n">gbcAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">threshold</span><span class="p">).</span><span class="n">connectivity</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+
+    <span class="c1"># veto connections through low band contrast
+</span>    <span class="n">bad</span> <span class="o">=</span> <span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">minBC</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">bc</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">minBC</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">[</span><span class="n">bad</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">out</span>
+</code></pre></div></div>
+
+<p>It can then be passed like any other criterion:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">gbcAngleAndBC</span><span class="p">(),</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="the-spatial-decomposition">The spatial decomposition</h2>
+
+<p>The option <code class="language-plaintext highlighter-rouge">alpha</code> changes the first reconstruction operation: the spatial support from
+which cells are built. By default, MTEX closes the indexed region with a raster disk
+whose radius is <code class="language-plaintext highlighter-rouge">alpha</code> pixel spacings. A <code class="language-plaintext highlighter-rouge">notIndexed</code> region narrower than <code class="language-plaintext highlighter-rouge">2*alpha</code> is
+crossed by surrounding cells; a wider region remains a separate <code class="language-plaintext highlighter-rouge">notIndexed</code> grain. The
+default is <code class="language-plaintext highlighter-rouge">alpha = 3.1</code>.</p>
+
+<p>The work of raster closing grows with the area of the disk. MATLAB’s flag <code class="language-plaintext highlighter-rouge">'delaunay'</code>
+instead computes a Delaunay triangulation of the indexed pixels and keeps a triangle
+when its circumradius is at most <code class="language-plaintext highlighter-rouge">alpha</code> pixel spacings, an exact alpha complex whose
+cost changes little as <code class="language-plaintext highlighter-rouge">alpha</code> grows; that route is not part of this port, the closing
+here is by a distance transform whose cost does not grow with the disk either.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">grainsRaster</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Elapsed time is </span><span class="si">{</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="si">:</span><span class="p">.</span><span class="mi">3</span><span class="n">f</span><span class="si">}</span><span class="s"> seconds.'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Elapsed time is 13.452 seconds.
+</code></pre></div></div>
+
+<h2 id="diagnose-the-notindexed-regions-first">Diagnose the <code class="language-plaintext highlighter-rouge">notIndexed</code> regions first</h2>
+
+<p>Choosing one <code class="language-plaintext highlighter-rouge">alpha</code> for a whole map need not be guesswork. <code class="language-plaintext highlighter-rouge">calcGrains</code> returns
+connected <code class="language-plaintext highlighter-rouge">notIndexed</code> areas as grains, so their size and shape can be inspected with
+the tools from <a href="ShapeParameters_py.html">Shape Parameters</a>. Setting <code class="language-plaintext highlighter-rouge">alpha = 0</code> closes
+nothing, so narrow <code class="language-plaintext highlighter-rouge">notIndexed</code> areas stay where they are instead of being absorbed into
+their neighbours.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grainsOpen</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">notIndexedGrains</span> <span class="o">=</span> <span class="n">grainsOpen</span><span class="p">[</span><span class="s">'notIndexed'</span><span class="p">]</span>
+<span class="n">notIndexedGrains</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grain2d (y↑→x)
+  size: 1064
+  Phase  Grains              Mineral     Color  Symmetry  Crystal reference frame
+  0      1064 (3229 pixels)  notIndexed
+  boundary segments: 7456, inner: 0, triple points: 807
+</code></pre></div></div>
+
+<p>Pixel counts give a first scale estimate. The equivalent-circle radius of a region with
+<code class="language-plaintext highlighter-rouge">n</code> pixels is <code class="language-plaintext highlighter-rouge">sqrt(n/pi)</code> pixel spacings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numPixel</span> <span class="o">=</span> <span class="n">notIndexedGrains</span><span class="p">.</span><span class="n">numPixel</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'median pixels: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">numPixel</span><span class="p">)</span><span class="si">:</span><span class="n">g</span><span class="si">}</span><span class="s">, 99th percentile: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">nanquantile</span><span class="p">(</span><span class="n">numPixel</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">)</span><span class="si">:</span><span class="n">g</span><span class="si">}</span><span class="s">, '</span>
+      <span class="sa">f</span><span class="s">'maximum: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">numPixel</span><span class="p">)</span><span class="si">}</span><span class="s">, maximum equivalent radius in pixels: </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">numPixel</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>median pixels: 1, 99th percentile: 31.85, maximum: 355, maximum equivalent radius in pixels: 10.63
+</code></pre></div></div>
+
+<p>The table shows that most areas are isolated failed measurements, while a few are
+regions in their own right. The largest contains 355 pixels and has an equivalent-circle
+radius of about 10.6 pixels. This radius suggests the scale to inspect; it does not
+predict the closing value by itself. Closing responds to the narrowest width and
+therefore also to shape.</p>
+
+<p>The ratio below is a quick size-and-compactness diagnostic. It is high for large,
+compact blobs and low for small or ragged areas. It is not a scale-free compactness
+measure because the numerator grows with area and the denominator counts boundary
+segments. Use <code class="language-plaintext highlighter-rouge">shapeFactor</code> when shape must be compared apart from size.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">notIndexedGrains</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">notIndexedGrains</span><span class="p">.</span><span class="n">numPixel</span> <span class="o">/</span> <span class="n">notIndexedGrains</span><span class="p">.</span><span class="n">boundarySize</span><span class="p">))</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'log(pixels / boundary segments)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/GrainReconstructionAdvanced-14.png" /></center>
+
+<p>High colours identify the larger, more compact holes that can justify preservation. Low
+colours mark isolated pixels and ragged indexing failures that a closing may reasonably
+absorb. The map is a diagnostic, not an automatic choice of <code class="language-plaintext highlighter-rouge">alpha</code>.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">notIndexed</code> pixel and an absent grid position have different experimental meanings.
+The first is a real measurement whose pattern could not be indexed; the second has no
+retained measurement. The spatial decomposition treats both as positions without an
+indexed orientation, so <code class="language-plaintext highlighter-rouge">alpha</code> acts on both. Deleting measurements therefore creates a
+gap for segmentation; it does not assign orientations there. To reconstruct
+orientations, see <a href="EBSDFilling_py.html">Fill Missing Data in Orientation Maps</a>.</p>
+
+<h2 id="choosing-the-next-step">Choosing the next step</h2>
+
+<p>Use a custom criterion when the physical separator is another per-pixel quantity. Use
+the spatial options when the uncertainty is where the map has support. In either case,
+repeat the reconstruction over defensible nearby settings before treating a grain count
+or size distribution as measured.</p>
+
+<p>Continue with <a href="GrainReconstructionMCL_py.html">Markovian Clustering</a> when fractional
+criterion weights should influence the grouping itself. The resulting boundaries and
+their internal boundaries are developed in <a href="GrainBoundaries.html">Grain Boundaries</a> and
+<a href="SubGrainBoundaries_py.html">Subgrain Boundaries</a>. Standards for reporting EBSD grain size
+are listed on the <a href="GrainReconstruction_py.html">basic reconstruction page</a>.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>F. Bachmann, R. Hielscher, and H. Schaeben,
+<a href="https://doi.org/10.1016/j.ultramic.2011.08.002">Grain Detection from 2d and 3d EBSD Data - Specification of the MTEX Algorithm</a>,
+<em>Ultramicroscopy</em> 111 (2011), 1720-1733. This paper derives the Voronoi
+reconstruction used by <code class="language-plaintext highlighter-rouge">calcGrains</code>.</li>
+  <li>H. Edelsbrunner, D. G. Kirkpatrick, and R. Seidel,
+<a href="https://doi.org/10.1109/TIT.1983.1056714">On the Shape of a Set of Points in the Plane</a>,
+<em>IEEE Transactions on Information Theory</em> 29 (1983), 551-559. This paper introduces
+planar alpha shapes.</li>
+  <li>P. Soille,
+<a href="https://doi.org/10.1007/978-3-662-05088-0">Morphological Image Analysis: Principles and Applications</a>,
+2nd ed., Springer, 2003. The chapters on dilation, erosion, opening, and closing
+provide the image-processing basis for the raster decomposition.</li>
+</ul>
+
+<h2 id="technical-details">Technical details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">calcGrains</code> writes into the map it is given, so every reconstruction here runs on
+<code class="language-plaintext highlighter-rouge">ebsd.copy()</code> to keep the comparisons on the same map. <code class="language-plaintext highlighter-rouge">gbcSoft([10 2]*degree)</code> is
+<code class="language-plaintext highlighter-rouge">gbcSoft(10 * degree, 2 * degree)</code>, and a custom criterion overrides <code class="language-plaintext highlighter-rouge">connectivity</code>
+where MATLAB’s overrides <code class="language-plaintext highlighter-rouge">doEvaluate</code>. The Delaunay route and the Markovian clustering
+are not ported; the closing is a distance transform at integer radius, which absorbs
+less than MATLAB’s raster disk at small <code class="language-plaintext highlighter-rouge">alpha</code>.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/GrainReconstructionAdvanced_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

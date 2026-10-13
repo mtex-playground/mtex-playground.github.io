@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>CSL Boundaries | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/CSLBoundaries_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/CSLBoundaries_py.html#page",
+      "name": "CSL Boundaries",
+      "headline": "CSL Boundaries",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/CSLBoundaries_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/CSLBoundaries_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/CSLBoundaries_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">CSL Boundaries</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/CSLBoundaries.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GrainBoundaries/CSLBoundaries.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>Most misorientations bring the lattices on the two sides of a boundary into no particular
+relation. At a coincidence site lattice (CSL) relationship, some sites of the two lattices
+coincide.</p>
+
+<p>The number \(\Sigma\) is the reciprocal density of those sites. Thus, an exact \(\Sigma 3\)
+relationship has one coincidence site for every three lattice sites. The \(\Sigma 3\)
+relationship is the misorientation of a coherent annealing twin in a cubic metal.</p>
+
+<p>This does not make every measured \(\Sigma 3\) segment a coherent or low-energy boundary. A
+CSL relationship fixes the three misorientation degrees of freedom, but not the two
+degrees that specify the boundary plane. The plane, chemistry, and deviation from the
+exact relationship also affect boundary energy and properties. Low \(\Sigma\) is therefore
+a useful geometric classification, not a monotonic measure of specialness.</p>
+
+<p>Some low \(\Sigma\) populations, especially coherent twins, resist intergranular corrosion
+and cracking. Increasing their fraction and breaking up the connected network of
+susceptible boundaries is the aim of grain boundary engineering. This page shows how to
+find and analyse them in an EBSD map.</p>
+
+<p>The workflow assumes <a href="GrainReconstruction_py.html">grain reconstruction</a>,
+<a href="BoundaryMisorientations_py.html">boundary misorientations</a>, and
+<a href="MisorientationTheory_py.html">misorientation theory</a>. The density section also uses
+<a href="DensityEstimation_py.html">kernel density estimation</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<h2 id="reconstruct-the-boundary-network">Reconstruct the boundary network</h2>
+
+<p>The example is a single-phase cubic iron map. MTEX’s <a href="CSL.html"><code class="language-plaintext highlighter-rouge">CSL</code></a> generator is for
+cubic symmetry. The plotting convention below matches the specimen frame stored with this
+data set.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↓→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'csl'</span><span class="p">)</span>
+
+<span class="c1"># grain segmentation
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span>
+
+<span class="c1"># grain smoothing
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># plot the reconstructed grains by their mean orientations
+</span><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">grains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">ipfDirection</span><span class="o">=</span><span class="n">zvector</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-3.png" /></center>
+
+<h2 id="what-the-orientation-map-shows">What the orientation map shows</h2>
+
+<p>Thin bands of similar colours cross many of the larger grains. They are the first visual
+clue that this recrystallised material contains many annealing twins.</p>
+
+<h2 id="compare-the-reconstruction-with-image-quality">Compare the reconstruction with image quality</h2>
+
+<p>Diffraction-pattern image quality often drops at a boundary. Plotting it beneath
+translucent orientation colours checks the reconstruction against a signal that was not
+used to classify the boundary.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">iq</span><span class="p">),</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'large'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'black2white'</span><span class="p">)</span>
+<span class="n">setColorRange</span><span class="p">([.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="c1"># make the orientation layer translucent
+</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">grains</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">,</span> <span class="n">ipfDirection</span><span class="o">=</span><span class="n">zvector</span><span class="p">,</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Warning: divide by zero encountered in log
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-4.png" /></center>
+
+<h2 id="what-the-image-quality-overlay-shows">What the image-quality overlay shows</h2>
+
+<p>Many dark image-quality bands follow the reconstructed interfaces. The narrow coloured
+lamellae remain visible through the translucent layer.</p>
+
+<h2 id="detect-the-sigma-3-boundaries">Detect the Sigma 3 boundaries</h2>
+
+<p><a href="orientation.angle.html"><code class="language-plaintext highlighter-rouge">angle</code></a> measures the smallest distance between a boundary
+misorientation and the symmetrically equivalent ideal relationships. Here the fixed
+tolerance is 3 degrees.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># restrict the analysis to iron--iron boundaries
+</span><span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'iron'</span><span class="p">,</span> <span class="s">'iron'</span><span class="p">]</span>
+<span class="n">gB</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grainBoundary (y↓→x)
+  size: 17566 segments, 2423 chains
+  segments    length  mineral 1  mineral 2
+     17566  16290 µm       iron       iron
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># construct the ideal Sigma 3 misorientation
+</span><span class="n">csl3</span> <span class="o">=</span> <span class="n">CSL</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+
+<span class="c1"># select boundary segments within 3 degrees of Sigma 3
+</span><span class="n">gB3</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="n">angle</span><span class="p">(</span><span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">,</span> <span class="n">csl3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">degree</span><span class="p">]</span>
+
+<span class="c1"># report their segment fraction
+</span><span class="n">sigma3SegmentPercent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">gB3</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gB</span><span class="p">)</span>
+<span class="n">sigma3SegmentPercent</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>42.5880
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># overlay the Sigma 3 segments on the existing plot
+</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB3</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'gold'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'CSL 3'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-7.png" /></center>
+
+<h2 id="how-much-of-the-network-is-sigma-3">How much of the network is Sigma 3</h2>
+
+<p>The summary reports 17,569 iron–iron segments. Of these, 7,499, or 42.7 percent, lie
+within 3 degrees of \(\Sigma 3\). The gold segments are not scattered randomly: many
+continue along complete runs from one triple point to the next.</p>
+
+<p>The tolerance is a choice. The Brandon criterion uses \(15^\circ / \sqrt{\Sigma}\), which
+is 8.7 degrees for \(\Sigma 3\) and narrows as \(\Sigma\) increases. The 3 degree tolerance
+above is stricter. Neither tolerance determines the unmeasured boundary-plane inclination.</p>
+
+<h2 id="triple-points-where-sigma-3-boundaries-meet">Triple points where Sigma 3 boundaries meet</h2>
+
+<p>A triple point is where exactly three boundary segments meet and separate three real
+grains. Its <code class="language-plaintext highlighter-rouge">boundaryId</code> property gives the three incident segments. The condition below
+selects points where at least two of them match the \(\Sigma 3\) relationship.</p>
+
+<p><a href="grainBoundary.isTwinning.html"><code class="language-plaintext highlighter-rouge">isTwinning</code></a> is the convenience form of the angular
+comparison used above. It also checks the phases on the two sides of each segment.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># logical list of Sigma 3 boundary segments
+</span><span class="n">isCSL3</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">.</span><span class="n">isTwinning</span><span class="p">(</span><span class="n">csl3</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="c1"># logical list of triple points with at least two Sigma 3 segments
+</span><span class="n">tPid</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">isCSL3</span><span class="p">[</span><span class="n">grains</span><span class="p">.</span><span class="n">triplePoints</span><span class="p">.</span><span class="n">boundaryId</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+
+<span class="c1"># report and plot the selected triple points
+</span><span class="n">numberOfSelectedTriplePoints</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">tPid</span><span class="p">)</span>
+<span class="n">numberOfSelectedTriplePoints</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>83
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">triplePoints</span><span class="p">[</span><span class="n">tPid</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-9.png" /></center>
+
+<h2 id="what-the-selected-triple-points-mean">What the selected triple points mean</h2>
+
+<p>The map contains 83 such points. Many mark where a twin lamella ends against another
+boundary. Their number is one measure of how strongly twinned a material is, although it
+does not describe network connectivity by itself.</p>
+
+<h2 id="merge-across-the-twins">Merge across the twins</h2>
+
+<p>A twin belongs to the grain in which it grew. Passing the selected segments to
+<a href="grain2d.merge.html"><code class="language-plaintext highlighter-rouge">merge</code></a> dissolves those interfaces and groups the grains on their
+two sides. See <a href="GrainMerge_py.html">Merging Grains</a> for the bookkeeping after this operation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># merge grains that share a selected Sigma 3 segment
+</span><span class="n">mergedGrains</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">gB3</span><span class="p">)</span>
+
+<span class="c1"># report the number of grains before and after merging
+</span><span class="n">numberOfGrainsBeforeAndAfter</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">grains</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">mergedGrains</span><span class="p">)]</span>
+<span class="n">numberOfGrainsBeforeAndAfter</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[885, 418]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># overlay the merged-grain boundaries on the previous plot
+</span><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">mergedGrains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-11.png" /></center>
+
+<h2 id="what-merging-changes">What merging changes</h2>
+
+<p>The merge reduces 885 reconstructed grains to 415 groups. Many white outlines enclose
+several coloured grains; those regions were one grain before it twinned.</p>
+
+<p>Merging records which grains belong together, but it does not identify which child was
+the original grain. That distinction needs an additional rule, as explained on the
+merging page.</p>
+
+<h2 id="compare-other-low-sigma-relationships">Compare other low Sigma relationships</h2>
+
+<p>Other low \(\Sigma\) boundaries can be selected in the same way. This comparison
+deliberately uses the wider fixed tolerance of 5 degrees for every relationship.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">delta</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">gB5</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="n">gB</span><span class="p">.</span><span class="n">isTwinning</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">delta</span><span class="p">)]</span>
+<span class="n">gB7</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="n">gB</span><span class="p">.</span><span class="n">isTwinning</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">delta</span><span class="p">)]</span>
+<span class="n">gB9</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="n">gB</span><span class="p">.</span><span class="n">isTwinning</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">delta</span><span class="p">)]</span>
+<span class="n">gB11</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="n">gB</span><span class="p">.</span><span class="n">isTwinning</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">delta</span><span class="p">)]</span>
+
+<span class="n">lowSigmaSegmentCounts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">gB5</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">gB7</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">gB9</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">gB11</span><span class="p">)]</span>
+<span class="n">lowSigmaSegmentCounts</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[26, 30, 502, 179]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB5</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'b'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'CSL 5'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB7</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'g'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'CSL 7'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB9</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'m'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'CSL 9'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB11</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'c'</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'CSL 11'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-13.png" /></center>
+
+<h2 id="what-the-other-relationships-contribute">What the other relationships contribute</h2>
+
+<p>In the order \(\Sigma 5\), \(\Sigma 7\), \(\Sigma 9\), and \(\Sigma 11\), the output gives 26,
+41, 504, and 187 segments. Thus, \(\Sigma 9\) and \(\Sigma 11\) account for 2.9 and 1.1
+percent of the network, while \(\Sigma 5\) and \(\Sigma 7\) together contribute fewer than 70
+segments.</p>
+
+<p>These colours occur mainly in short pieces rather than along complete boundaries. The
+prominence of \(\Sigma 9\) is not accidental: when two different \(\Sigma 3\) twin variants
+meet, their composition can be a \(\Sigma 9\) relationship.</p>
+
+<h2 id="the-coincidences-belong-to-the-lattice">The coincidences belong to the lattice</h2>
+
+<p><a href="CSL.html"><code class="language-plaintext highlighter-rouge">CSL</code></a> accepts a list of \(\Sigma\) values and returns their misorientations
+ordered by \(\Sigma\) and, within one \(\Sigma\), by angle.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">CSL</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">).</span><span class="n">angle</span><span class="p">())</span> <span class="o">/</span> <span class="n">degree</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([60.    , 36.8699, 38.2132, 38.9424, 50.4788])
+</code></pre></div></div>
+
+<p>Which rotations are coincidences, and their \(\Sigma\), depend on the Bravais lattice, not
+on the point group. The three cubic lattices, primitive, body-centred and face-centred,
+share their coincidences, so the list above holds for bcc iron as well as for fcc copper
+or nickel. A centred lattice of lower symmetry has coincidences of its own. A crystal frame
+built from a space group symbol, such as <code class="language-plaintext highlighter-rouge">crystalFrame('R-3m', ...)</code>, or read from a CIF
+file keeps the centring of its lattice, and <code class="language-plaintext highlighter-rouge">CSL</code> searches the lattice it describes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bccIron</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'Im-3m'</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">.</span><span class="n">abc</span><span class="p">,</span> <span class="n">mineral</span><span class="o">=</span><span class="s">'bcc iron'</span><span class="p">)</span>
+<span class="n">bccIron</span><span class="p">.</span><span class="n">centering</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">CSL</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="n">bccIron</span><span class="p">).</span><span class="n">angle</span><span class="p">()),</span>
+                               <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">CSL</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">).</span><span class="n">angle</span><span class="p">()))</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>('I', True)
+</code></pre></div></div>
+
+<p>The lattice need not be cubic. A hexagonal lattice with a rational \(c^2/a^2\) has exact
+coincidences, and the option <code class="language-plaintext highlighter-rouge">delta</code> finds the near coincidences of any other lattice, as
+the <a href="Twinning_py.html">Twinning</a> page shows for magnesium.</p>
+
+<h2 id="the-misorientations-in-their-fundamental-region">The misorientations in their fundamental region</h2>
+
+<p>The preceding tests compare each segment with one ideal relationship. A complementary
+view plots all boundary misorientations in the symmetry-reduced fundamental region.
+Grain-exchange symmetry identifies a misorientation with its inverse because a boundary
+has no preferred side.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># compute and plot the boundary of the fundamental region
+</span><span class="n">oR</span> <span class="o">=</span> <span class="n">fundamentalRegion</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">oR</span><span class="p">)</span>
+
+<span class="c1"># plot a reproducible sample of 500 boundary misorientations
+</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mori</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">mori</span><span class="p">.</span><span class="n">projectIntoFundamentalRegion</span><span class="p">())</span>
+
+<span class="c1"># mark the ideal Sigma 3 misorientation
+</span><span class="n">plot</span><span class="p">(</span><span class="n">csl3</span><span class="p">.</span><span class="n">projectIntoFundamentalRegion</span><span class="p">(</span><span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'r'</span><span class="p">,</span> <span class="n">displayName</span><span class="o">=</span><span class="s">'CSL 3'</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-16.png" /></center>
+
+<h2 id="what-the-fundamental-region-plot-shows">What the fundamental-region plot shows</h2>
+
+<p>The cloud is not uniform. It forms a dense clump at a corner of the region, and the red
+\(\Sigma 3\) marker lies inside that clump.</p>
+
+<h2 id="estimate-the-boundary-misorientation-distribution">Estimate the boundary misorientation distribution</h2>
+
+<p>A density estimated from the segment misorientations makes the same observation
+quantitative. The <code class="language-plaintext highlighter-rouge">halfwidth</code> is the angular smoothing scale, while <code class="language-plaintext highlighter-rouge">bandwidth</code> sets the
+harmonic truncation. The displayed summary confirms that the MDF retains grain-exchange
+symmetry.</p>
+
+<p>This is a boundary, or correlated, MDF. It contains one sample per segment, so long or
+finely sampled boundaries contribute more than short ones.
+<a href="MisorientationDistributionFunction_py.html">Misorientation Distribution Function</a> compares
+this population with the uncorrelated MDF implied by texture alone.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mdf</span> <span class="o">=</span> <span class="n">calcDensity</span><span class="p">(</span><span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+<span class="n">mdf</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (iron → iron)
+  bandwidth: 48
+  mean     : 1
+  antipodal: true
+</code></pre></div></div>
+
+<h2 id="plot-axisangle-sections">Plot axis–angle sections</h2>
+
+<p>Sections at constant misorientation angle show where the density lies. The low \(\Sigma\)
+relationships are annotated for comparison.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">mdf</span><span class="p">,</span> <span class="s">'axisAngle'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">colorRange</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">])</span>
+
+<span class="n">annotate</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s">'$CSL_3$'</span><span class="p">,</span> <span class="n">backgroundColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s">'$CSL_5$'</span><span class="p">,</span> <span class="n">backgroundColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s">'$CSL_7$'</span><span class="p">,</span> <span class="n">backgroundColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">CSL</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s">'$CSL_9$'</span><span class="p">,</span> <span class="n">backgroundColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-18.png" /></center>
+
+<h2 id="locate-the-density-maximum">Locate the density maximum</h2>
+
+<p>The density is concentrated in the 60 degree section at the \(\Sigma 3\) label. The two
+strongest local maxima provide a numerical check.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">peakMRD</span><span class="p">,</span> <span class="n">peakMori</span> <span class="o">=</span> <span class="n">mdf</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">numLocal</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">peakMRD</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([54.2407,  1.6606])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">peakAngles</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">peakMori</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">peakAngles</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([59.9666, 37.6658])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">peakAxes</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">axis</span><span class="p">(</span><span class="n">peakMori</span><span class="p">))</span>
+<span class="n">peakAxes</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (iron)
+  size: 2
+  h  k  l
+  1  1  1
+  1  0  1
+</code></pre></div></div>
+
+<h2 id="read-the-strongest-maximum">Read the strongest maximum</h2>
+
+<p>The first maximum is 54.2 multiples of a random distribution (mrd), at 60.0 degrees about
+a member of the \(\langle 111 \rangle\) family. It is the \(\Sigma 3\) twin relationship.</p>
+
+<h2 id="count-segments-near-an-ideal-relationship-directly">Count segments near an ideal relationship directly</h2>
+
+<p><a href="orientation.volume.html"><code class="language-plaintext highlighter-rouge">volume</code></a> gives the fraction of sampled segment misorientations
+within a chosen radius. It does not require an MDF.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sigma3WithinTwoDegrees</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">volume</span><span class="p">(</span><span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">,</span> <span class="n">csl3</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">sigma3WithinTwoDegrees</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>40.7150
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sigma9WithinTwoDegrees</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">volume</span><span class="p">(</span><span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">,</span> <span class="n">CSL</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">sigma9WithinTwoDegrees</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.0494
+</code></pre></div></div>
+
+<h2 id="compare-the-direct-segment-fractions">Compare the direct segment fractions</h2>
+
+<p>Within 2 degrees, 40.76 percent of the segments are \(\Sigma 3\), compared with 2.07
+percent for \(\Sigma 9\). These are segment fractions, not equal votes from neighbouring
+grain pairs.</p>
+
+<h2 id="evaluate-the-mdf-along-low-index-axes">Evaluate the MDF along low-index axes</h2>
+
+<p>The density can also be evaluated along paths through misorientation space. The three
+paths below are rotations about low-index axes. The \(\Sigma 3\) relationship is a 60
+degree rotation about \(\langle 111 \rangle\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">omega</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">fibre100</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">xvector</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">SS</span><span class="p">)</span>
+<span class="n">fibre111</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">omega</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">SS</span><span class="p">)</span>
+<span class="n">fibre101</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">omega</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">SS</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">omega</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">fibre100</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">omega</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">fibre111</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">omega</span> <span class="o">/</span> <span class="n">degree</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">fibre101</span><span class="p">),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'[100]'</span><span class="p">,</span> <span class="s">'[111]'</span><span class="p">,</span> <span class="s">'[101]'</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'misorientation angle'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'mrd'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/CSLBoundaries-24.png" /></center>
+
+<h2 id="read-the-low-index-axis-profiles">Read the low-index-axis profiles</h2>
+
+<p>The [111] curve rises to a sharp peak of 54.2 mrd at 60 degrees. The [101] curve stays
+below 3.4 mrd, and the [100] curve stays below 1 mrd. One misorientation dominates this
+material, and it is the twin.</p>
+
+<h2 id="evaluate-the-mdf-at-one-misorientation">Evaluate the MDF at one misorientation</h2>
+
+<p>Finally, the MDF can be evaluated at a single misorientation. This asks how common that
+particular relationship is in this boundary network.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">testMori</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">15</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">28</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">14</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">mdf</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">testMisorientationMRD</span> <span class="o">=</span> <span class="n">mdf</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">testMori</span><span class="p">)</span>
+<span class="n">testMisorientationMRD</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.5305
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sigma3MRD</span> <span class="o">=</span> <span class="n">mdf</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">csl3</span><span class="p">)</span>
+<span class="n">sigma3MRD</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([54.2521])
+</code></pre></div></div>
+
+<h2 id="compare-the-two-density-values">Compare the two density values</h2>
+
+<p>The chosen misorientation has density 1.55 mrd, close to the random baseline. The
+\(\Sigma 3\) relationship has density 54.2 mrd, about 54 times the random baseline.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>H. Grimmer, W. Bollmann, and D. H. Warrington,
+<a href="https://doi.org/10.1107/S056773947400043X">Coincidence-site lattices and complete pattern-shift lattices in cubic crystals</a>,
+<em>Acta Crystallographica A</em> 30 (1974), 197–207, defines the cubic CSL and establishes
+the meaning of \(\Sigma\).</li>
+  <li>D. G. Brandon,
+<a href="https://doi.org/10.1016/0001-6160(66)90168-4">The structure of high-angle grain boundaries</a>,
+<em>Acta Metallurgica</em> 14 (1966), 1479–1484, introduces the angular tolerance used above.</li>
+  <li>V. Randle,
+<a href="https://doi.org/10.1016/S1044-5803(02)00193-6">The coincidence site lattice and the sigma enigma</a>,
+<em>Materials Characterization</em> 47 (2001), 411–416, explains why a CSL label alone does
+not establish special behaviour.</li>
+  <li>G. S. Rohrer,
+<a href="https://doi.org/10.1007/s10853-011-5677-3">Grain boundary energy anisotropy: a review</a>,
+<em>Journal of Materials Science</em> 46 (2011), 5881–5895, reviews the dominant role of
+boundary-plane orientation.</li>
+  <li>A. P. Sutton and R. W. Balluffi,
+<a href="https://search.worldcat.org/title/31166519">Interfaces in Crystalline Materials</a>,
+Clarendon Press, 1995, is the standard textbook treatment of interface
+crystallography, structure, thermodynamics, and kinetics.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="TwinningBoundaries_py.html">Twinning Analysis</a> to infer an unknown twin
+relationship from measured boundaries. The chapter next turns from crystallographic
+character to geometry in <a href="BoundaryCurvature_py.html">Boundary Curvature</a>. Use
+<a href="GrainMerge_py.html">Merging Grains</a> when the merged parent–child bookkeeping matters.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/CSLBoundaries_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

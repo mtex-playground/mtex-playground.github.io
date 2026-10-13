@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="MTEX, EBSD, texture analysis, crystallographic texture, microstructure, pole figures, ODF, MATLAB, Python">
+
+
+<title>Texture and microstructure analysis | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="Analyse 2D and 3D EBSD maps, pole figures and orientations with MTEX, the free scientific toolbox for MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/index">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://mtex-playground.github.io/index#page",
+      "name": "Texture and microstructure analysis",
+      "headline": "Texture and microstructure analysis",
+      "description": "Analyse 2D and 3D EBSD maps, pole figures and orientations with MTEX, the free scientific toolbox for MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/index",
+      "mainEntityOfPage": "https://mtex-playground.github.io/index",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/index -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+</head>
+
+<body class="mx-body">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+<main class="mx-page">
+
+
+<section class="mx-hero">
+  <div class="mx-wrap mx-hero-grid">
+    <div class="mx-hero-text">
+      <div class="mx-eyebrow">Free and open source</div>
+      <h1>Texture and microstructure analysis</h1>
+      <p class="mx-lede">Analyse 2D and 3D EBSD maps, pole figures and orientations in MATLAB or Python. Every analysis step is a few lines of code.</p>
+      
+      <div class="mx-install">
+        <div class="mx-install-head">
+          <b>Install MTEX</b>
+          <div class="mx-seg" role="group" aria-label="Language">
+            <button type="button" data-lang="matlab">MATLAB</button>
+            <button type="button" data-lang="python">Python</button>
+          </div>
+        </div>
+        <div data-only="matlab">
+          <a class="mx-btn mx-btn-primary mx-install-dl" href="https://github.com/mtex-toolbox/mtex/releases/download/mtex-7.2.0/mtex-7.2.0.zip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>MTEX 7.2.0</a>
+          <p>Unzip and run <code>startup_mtex</code> in MATLAB R2022b or newer.</p>
+          <p class="mx-install-links"><a href="changelog">What is new</a><a href="download">All releases</a><a href="speed" data-dialog-open="mx-speed-dialog">Speed of the versions</a><a href="https://github.com/mtex-toolbox/mtex">Source on GitHub</a></p>
+        </div>
+        <div data-only="python">
+          <div class="mx-pip"><span>pip install "mtex[all]"</span><button type="button" data-copy='pip install "mtex[all]"'>Copy</button></div>
+          <p>MTEX for Python 1.0 · Python 3.12+ · no MATLAB licence needed.</p>
+          <p class="mx-install-links"><a href="MATLABtoPython_py.html">Coming from MATLAB</a><a href="speed" data-dialog-open="mx-speed-dialog">Speed against MATLAB</a><a href="https://github.com/mtex-toolbox/pymtex">Source on GitHub</a></p>
+        </div>
+        <a class="mx-install-wizard" href="get-started#wizard" data-dialog-open="mx-wizard-dialog"><img src="images/icons/importWizard.svg" alt=""><span><b>Import your own data</b>The import wizard reads your file and writes the script that loads it.</span></a>
+        <a class="mx-install-next" href="EBSDTutorial.html">Then follow the EBSD tutorial →</a>
+      </div>
+    </div>
+    <div class="mx-hero-community">
+      <div class="mx-people">
+        <div class="mx-faces"><img src="images/contributors/ralfHielscher.jpg" alt="" width="38" height="38"><img src="images/contributors/num3RIK.jpg" alt="" width="38" height="38"><img src="images/contributors/frankNiessen.jpg" alt="" width="38" height="38"><img src="images/contributors/AzdiarGazder.jpg" alt="" width="38" height="38"><img src="images/contributors/bjoerneske.jpg" alt="" width="38" height="38"><img src="images/contributors/tori-miller.jpg" alt="" width="38" height="38"><img src="images/contributors/nicholasbyres.jpg" alt="" width="38" height="38"><img src="images/contributors/flothesof.jpg" alt="" width="38" height="38"></div>
+        <p><b>You are not on your own.</b> Ask in the <a href="https://github.com/mtex-toolbox/mtex/discussions">forum</a> with 1,400 discussions, build on code of <a href="community">43 contributors</a>, and meet us at the <a href="workshop27">workshop</a> every year.</p>
+      </div>
+    </div>
+    
+    <div class="mx-card" id="mx-card">
+      <div class="mx-card-tabrow">
+      <div class="mx-card-tabs" id="mx-hero-tabs" role="tablist" aria-label="Steps of an analysis">
+        <button type="button" role="tab" id="mx-tab1" aria-controls="mx-pane1" aria-selected="true">Import</button><button type="button" role="tab" id="mx-tab2" aria-controls="mx-pane2" aria-selected="false" tabindex="-1">Grains</button><button type="button" role="tab" id="mx-tab3" aria-controls="mx-pane3" aria-selected="false" tabindex="-1">Clean</button><button type="button" role="tab" id="mx-tab4" aria-controls="mx-pane4" aria-selected="false" tabindex="-1">Twins</button><button type="button" role="tab" id="mx-tab5" aria-controls="mx-pane5" aria-selected="false" tabindex="-1">Texture</button><button type="button" role="tab" id="mx-tab6" aria-controls="mx-pane6" aria-selected="false" tabindex="-1">Parent grains</button><button type="button" role="tab" id="mx-tab7" aria-controls="mx-pane7" aria-selected="false" tabindex="-1">Properties</button><button type="button" role="tab" id="mx-tab8" aria-controls="mx-pane8" aria-selected="false" tabindex="-1">3D EBSD</button>
+      </div>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-hero-tabs" aria-label="More analysis steps" hidden>›</button>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane1" aria-labelledby="mx-tab1">
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% load a magnesium EBSD map</span>
+ebsd = <span class="k">EBSD.load</span>(<span class="s">'twins.h5'</span>);
+
+<span class="k">plot</span>(ebsd(<span class="s">'Magnesium'</span>),<span class="s">'ipfDirection'</span>,zvector)</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># load a magnesium EBSD map</span>
+ebsd = <span class="k">EBSD.load</span>(<span class="s">'twins.h5'</span>)
+
+<span class="k">plot</span>(ebsd[<span class="s">'Magnesium'</span>],ipfDirection=zvector)</pre>
+        
+        <div class="mx-card-figs" style="--n:1">
+          <figure id="mx-figure1-0"><div><img src="figures/hero/import_1.png" alt="orientation map"></div><figcaption>orientation map · <a href="data/twins.h5" download>twins.h5</a></figcaption></figure>
+        </div>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane2" aria-labelledby="mx-tab2" hidden>
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% reconstruct grains and smooth boundaries</span>
+[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,5*degree);
+grains = <span class="k">smoothBoundary</span>(grains,5);
+<span class="k">plot</span>(grains,<span class="s">'ipfDirection'</span>,zvector)</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># reconstruct grains and smooth boundaries</span>
+grains = <span class="k">calcGrains</span>(ebsd,angle=5*degree)
+grains = <span class="k">smoothBoundary</span>(grains,5)
+<span class="k">plot</span>(grains,ipfDirection=zvector)</pre>
+        
+        <div class="mx-card-figs" style="--n:1">
+          <figure id="mx-figure2-0"><div><img src="figures/hero/grains_1.png" alt="grains" loading="lazy"></div><figcaption>grains</figcaption></figure>
+        </div>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane3" aria-labelledby="mx-tab3" hidden>
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% denoise the orientations</span>
+ebsdS = <span class="k">smooth</span>(ebsd,l1TVFilter);
+
+<span class="c">% compare kernel average misorientation</span>
+<span class="k">plot</span>(ebsd,ebsd.KAM./degree)
+<span class="k">plot</span>(ebsdS,ebsdS.KAM./degree)</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># denoise the orientations</span>
+ebsdS = <span class="k">smooth</span>(ebsd,<span class="k">l1TVFilter</span>())
+
+<span class="c"># compare kernel average misorientation</span>
+<span class="k">plot</span>(ebsd,<span class="k">ebsd.KAM</span>()/degree)
+<span class="k">plot</span>(ebsdS,<span class="k">ebsdS.KAM</span>()/degree)</pre>
+        
+        <div class="mx-card-views" role="group" aria-label="Choose a result image">
+          <button type="button" data-view="0" aria-controls="mx-figure3-0" aria-pressed="true">Measured KAM</button><button type="button" data-view="1" aria-controls="mx-figure3-1" aria-pressed="false">Denoised KAM</button>
+        </div>
+        
+        <div class="mx-card-figs" style="--n:2">
+          <figure id="mx-figure3-0"><div><img src="figures/hero/clean_1.png" alt="Measured KAM" loading="lazy"></div><figcaption>Measured KAM</figcaption></figure><figure id="mx-figure3-1"><div><img src="figures/hero/clean_2.png" alt="Denoised KAM" loading="lazy"></div><figcaption>Denoised KAM</figcaption></figure>
+        </div>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane4" aria-labelledby="mx-tab4" hidden>
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% magnesium {10-12} extension twin</span>
+twin = <span class="k">orientation.byAxisAngle</span>(...
+  <span class="k">Miller</span>(1,0,-1,2,grains.CS),180*degree);
+gB = grains.<span class="k">boundary</span>(<span class="s">'Magnesium'</span>,<span class="s">'Magnesium'</span>);
+twinB = gB(gB.<span class="k">isTwinning</span>(twin,5*degree));
+<span class="k">plot</span>(twinB,<span class="s">'lineColor'</span>,<span class="s">'w'</span>,<span class="s">'lineWidth'</span>,3)
+
+<span class="c">% merge grains across twin boundaries</span>
+parents = <span class="k">merge</span>(grains,twinB);
+<span class="k">plot</span>(parents.boundary,<span class="s">'lineWidth'</span>,3)</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># magnesium {10-12} extension twin</span>
+twin = <span class="k">orientation.byAxisAngle</span>(
+  <span class="k">Miller</span>(1,0,-1,2,grains.CS),180*degree)
+gB = grains.boundary[<span class="s">'Magnesium'</span>,<span class="s">'Magnesium'</span>]
+twinB = gB[<span class="k">gB.isTwinning</span>(twin,5*degree)]
+<span class="k">plot</span>(twinB,lineColor=<span class="s">'w'</span>,lineWidth=3)
+
+<span class="c"># merge grains across twin boundaries</span>
+parents = <span class="k">merge</span>(grains,twinB)
+<span class="k">plot</span>(parents.boundary,lineWidth=3)</pre>
+        
+        <div class="mx-card-views" role="group" aria-label="Choose a result image">
+          <button type="button" data-view="0" aria-controls="mx-figure4-0" aria-pressed="true">Twin boundaries</button><button type="button" data-view="1" aria-controls="mx-figure4-1" aria-pressed="false">Merged parents</button>
+        </div>
+        
+        <div class="mx-card-figs" style="--n:2">
+          <figure id="mx-figure4-0"><div><img src="figures/hero/twins_1.png" alt="Twin boundaries" loading="lazy"></div><figcaption>Twin boundaries</figcaption></figure><figure id="mx-figure4-1"><div><img src="figures/hero/twins_2.png" alt="Merged parents" loading="lazy"></div><figcaption>Merged parents</figcaption></figure>
+        </div>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane5" aria-labelledby="mx-tab5" hidden>
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% estimate the orientation distribution</span>
+odf = <span class="k">calcDensity</span>(ebsd(<span class="s">'Magnesium'</span>).orientations,...
+  <span class="s">'halfwidth'</span>,10*degree);
+
+<span class="c">% show a pole figure and ODF sections</span>
+<span class="k">plotPDF</span>(odf,<span class="k">Miller</span>(0,0,0,1,odf.CS))
+<span class="k">plotSection</span>(odf,<span class="s">'sigma'</span>,<span class="s">'sections'</span>,9)</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># estimate the orientation distribution</span>
+odf = <span class="k">calcDensity</span>(ebsd[<span class="s">'Magnesium'</span>].orientations,
+  halfwidth=10*degree)
+
+<span class="c"># show a pole figure and ODF sections</span>
+<span class="k">plotPF</span>(odf,<span class="k">Miller</span>(0,0,0,1,odf.CS))
+<span class="k">plotSection</span>(odf,<span class="s">'sigma'</span>,sections=9)</pre>
+        
+        <div class="mx-card-views" role="group" aria-label="Choose a result image">
+          <button type="button" data-view="0" aria-controls="mx-figure5-0" aria-pressed="true">(0001) pole figure</button><button type="button" data-view="1" aria-controls="mx-figure5-1" aria-pressed="false">ODF sections</button>
+        </div>
+        
+        <div class="mx-card-figs" style="--n:2">
+          <figure id="mx-figure5-0"><div><img src="figures/hero/texture_1.png" alt="(0001) pole figure" loading="lazy"></div><figcaption>(0001) pole figure</figcaption></figure><figure id="mx-figure5-1"><div><img src="figures/hero/texture_2.png" alt="ODF sections" loading="lazy"></div><figcaption>ODF sections</figcaption></figure>
+        </div>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane6" aria-labelledby="mx-tab6" hidden>
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% reconstruct beta grains from alpha titanium</span>
+mtexdata alphaBetaTitanium
+job = <span class="k">parentGrainReconstructor</span>(ebsd);
+job.p2c = <span class="k">orientation.Burgers</span>(job.csParent,job.csChild);
+
+<span class="c">% group variants and assign parent orientations</span>
+job.<span class="k">calcVariantGraph</span>(<span class="s">'threshold'</span>,1.5*degree);
+job.<span class="k">clusterVariantGraph</span>(<span class="s">'numIter'</span>,3);
+job.calcParentFromVote;
+<span class="k">plot</span>(job.parentGrains,<span class="s">'ipfDirection'</span>,zvector)</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># reconstruct beta grains from alpha titanium</span>
+ebsd = <span class="k">mtexdata</span>(<span class="s">'alphaBetaTitanium'</span>)
+job = <span class="k">parentGrainReconstructor</span>(ebsd)
+job.p2c = <span class="k">orientation.Burgers</span>(job.csParent,job.csChild)
+
+<span class="c"># group variants and assign parent orientations</span>
+<span class="k">job.calcVariantGraph</span>(threshold=1.5*degree)
+<span class="k">job.clusterVariantGraph</span>(numIter=3)
+<span class="k">job.calcParentFromVote</span>()
+<span class="k">plot</span>(job.parentGrains,ipfDirection=zvector)</pre>
+        
+        <div class="mx-card-views" role="group" aria-label="Choose a result image">
+          <button type="button" data-view="0" aria-controls="mx-figure6-0" aria-pressed="true">Measured alpha</button><button type="button" data-view="1" aria-controls="mx-figure6-1" aria-pressed="false">Reconstructed beta</button>
+        </div>
+        
+        <div class="mx-card-figs" style="--n:2">
+          <figure id="mx-figure6-0"><div><img src="figures/hero/parent_1.png" alt="Measured alpha" loading="lazy"></div><figcaption>Measured alpha</figcaption></figure><figure id="mx-figure6-1"><div><img src="figures/hero/parent_2.png" alt="Reconstructed beta" loading="lazy"></div><figcaption>Reconstructed beta</figcaption></figure>
+        </div>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane7" aria-labelledby="mx-tab7" hidden>
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% single-crystal stiffness of magnesium (GPa)</span>
+Cij = [59.7 26.2 21.7 0 0 0;  26.2 59.7 21.7 0 0 0;
+       21.7 21.7 61.7 0 0 0;  0 0 0 16.4 0 0;
+       0 0 0 0 16.4 0;  0 0 0 0 0 16.75];
+C = <span class="k">stiffnessTensor</span>(Cij,ebsd(<span class="s">'Magnesium'</span>).CS);
+
+<span class="c">% average over the measured texture (Hill)</span>
+[~,~,CHill] = <span class="k">calcTensor</span>(ebsd(<span class="s">'Magnesium'</span>),C);
+<span class="k">plot</span>(C.YoungsModulus,<span class="s">'complete'</span>,<span class="s">'upper'</span>)
+<span class="k">plot</span>(CHill.YoungsModulus,<span class="s">'complete'</span>,<span class="s">'upper'</span>)</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># single-crystal stiffness of magnesium (GPa)</span>
+Cij = [[59.7,26.2,21.7,0,0,0], [26.2,59.7,21.7,0,0,0],
+       [21.7,21.7,61.7,0,0,0], [0,0,0,16.4,0,0],
+       [0,0,0,0,16.4,0], [0,0,0,0,0,16.75]]
+C = <span class="k">stiffnessTensor</span>(Cij,ebsd[<span class="s">'Magnesium'</span>].CS)
+
+<span class="c"># average over the measured texture (Hill)</span>
+CHill = <span class="k">calcTensor</span>(ebsd[<span class="s">'Magnesium'</span>],C,<span class="s">'Hill'</span>)
+<span class="k">plot</span>(<span class="k">C.YoungsModulus</span>(),complete=True,upper=True)
+<span class="k">plot</span>(<span class="k">CHill.YoungsModulus</span>(),complete=True,upper=True)</pre>
+        
+        <div class="mx-card-views" role="group" aria-label="Choose a result image">
+          <button type="button" data-view="0" aria-controls="mx-figure7-0" aria-pressed="true">Single crystal</button><button type="button" data-view="1" aria-controls="mx-figure7-1" aria-pressed="false">Textured polycrystal</button>
+        </div>
+        
+        <div class="mx-card-figs" style="--n:2">
+          <figure id="mx-figure7-0"><div><img src="figures/hero/properties_1.png" alt="Single crystal" loading="lazy"></div><figcaption>Single crystal</figcaption></figure><figure id="mx-figure7-1"><div><img src="figures/hero/properties_2.png" alt="Textured polycrystal" loading="lazy"></div><figcaption>Textured polycrystal</figcaption></figure>
+        </div>
+      </div>
+      
+      
+      <div class="mx-card-pane" role="tabpanel" id="mx-pane8" aria-labelledby="mx-tab8" hidden>
+        <pre data-code="matlab" aria-label="MATLAB code"><span class="c">% a 3D EBSD volume and its grains</span>
+fname = <span class="k">fullfile</span>(mtexEBSDPath,<span class="s">'SmallIN100_MeshStats.dream3d'</span>);
+ebsd = <span class="k">EBSD3.load</span>(fname);
+[grains,ebsd] = <span class="k">calcGrains</span>(ebsd,<span class="s">'angle'</span>,5*degree);
+<span class="k">plot</span>(grains,grains.meanOrientation,<span class="s">'edgeAlpha'</span>,0.1)
+
+[~,id] = <span class="k">max</span>(grains.volume);
+grains = <span class="k">reduceBoundary</span>(grains,2,<span class="s">'quadric'</span>);
+grains = <span class="k">smoothBoundary</span>(grains,<span class="k">taubinFilter</span>(20));
+<span class="k">plot</span>(grains(id),grains(id).meanOrientation,<span class="s">'edgeAlpha'</span>,0)
+camlight; lighting gouraud</pre>
+        <pre data-code="python" aria-label="Python code" hidden><span class="c"># a 3D EBSD volume and its grains</span>
+ebsd = <span class="k">EBSD3.load</span>(<span class="k">mtexdatafile</span>(<span class="s">'SmallIN100'</span>))
+grains = <span class="k">calcGrains</span>(ebsd,angle=5*degree)
+<span class="k">plot</span>(grains,grains.meanOrientation,edgeAlpha=0.1)
+
+id = <span class="k">grains.volume.argmax</span>()
+<span class="k">plot</span>(grains[id],grains[id].meanOrientation,edgeAlpha=0.2)</pre>
+        
+        <div class="mx-card-views" role="group" aria-label="Choose a result image">
+          <button type="button" data-view="0" aria-controls="mx-figure8-0" aria-pressed="true">3D grains</button><button type="button" data-view="1" aria-controls="mx-figure8-1" aria-pressed="false">Largest grain</button>
+        </div>
+        
+        <div class="mx-card-figs" style="--n:2">
+          <figure id="mx-figure8-0"><div><img src="figures/hero/3d_1.png" alt="3D grains" loading="lazy"></div><figcaption>3D grains</figcaption></figure><figure id="mx-figure8-1"><div><img src="figures/hero/3d_2.png" alt="Largest grain" loading="lazy"></div><figcaption>Largest grain</figcaption></figure>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+</section>
+
+
+<section class="mx-section mx-band" aria-labelledby="mx-what">
+  <div class="mx-wrap">
+    <div class="mx-head"><h2 id="mx-what">What MTEX gives you</h2></div>
+    <div class="mx-cols">
+      <div class="mx-col">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h13l-3-3M20 17H7l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Read data from any source</h3>
+        <p>Whatever the instrument, the data lands in one data model and runs through the same algorithms, so maps from different microscopes compare directly.</p>
+        <ul class="mx-items">
+          <li><a href="EBSDVendors.html">EBSD and ACOM from every major vendor</a></li>
+          <li><a href="EBSD3Analysis.html">3D data from Xnovo, DREAM.3D and Neper</a></li>
+          <li><a href="PoleFigureImport.html">X-ray and neutron pole figures</a></li>
+          <li><a href="EBSDExport.html">Export to vendor formats</a></li>
+        </ul>
+      </div>
+      <div class="mx-col">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Beyond the acquisition software</h3>
+        <p>MTEX goes on where acquisition software stops: it covers analyses the vendors leave out and brings diffraction and EBSD data together in one place.</p>
+        <ul class="mx-items">
+          <li><a href="PoleFigure2ODF.html">ODFs from X-ray and neutron pole figures</a></li>
+          <li><a href="MaParentGrainReconstruction.html">Parent grains for any orientation relationship</a></li>
+          <li><a href="TensorAverage.html">Tensor properties from texture</a></li>
+          <li><a href="EBSDDenoising.html">Variational denoising of orientation maps</a></li>
+        </ul>
+      </div>
+      <div class="mx-col">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Open, down to the algorithm</h3>
+        <p>No black box: every function is source code you can open, and every parameter is yours to set. The core algorithms are published in peer-reviewed papers.</p>
+        <ul class="mx-items">
+          <li><a href="https://github.com/mtex-toolbox/mtex">Source code on GitHub</a></li>
+          <li><a href="publications.html">The papers behind the algorithms</a></li>
+          <li><a href="#mx-ai">AI-assisted analysis you can check</a></li>
+          <li><a href="https://github.com/mtex-toolbox/mtex/blob/HEAD/CONTRIBUTING.md">Make your improvements part of MTEX</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-section" aria-labelledby="mx-ws">
+  <div class="mx-wrap">
+    <div class="mx-ws">
+      <img src="images/workshop26/20260310_090511.jpg" alt="Workshop participants in miner's overalls and helmets on the 2026 mine excursion">
+      <div class="mx-ws-text">
+        <div class="mx-eyebrow">Annual workshop · Freiberg · March 2027</div>
+        <h2 id="mx-ws">Workshop on Quantitative Microstructure Analysis</h2>
+        <p>Two weeks with the MTEX developers. The first week teaches texture and microstructure analysis from the ground up. In the second you bring your own data and work on it with experts from metallurgy, geology and semiconductors.</p>
+        <div class="mx-tags"><span class="mx-new">New in 2027</span><span>AI-assisted analysis</span><span>MTEX for Python</span></div>
+        <a class="mx-btn mx-btn-primary" href="workshop27">Programme and registration</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mx-section mx-band" aria-labelledby="mx-ai">
+  <div class="mx-wrap mx-ai-grid">
+    <div class="mx-ai-text">
+      <div class="mx-eyebrow">Describe it, get a script</div>
+      <h2 id="mx-ai">AI assistants write MTEX scripts you can check</h2>
+      <p>Describe your analysis in plain words and an assistant drafts the script. The documentation is mapped for AI tools in <a href="llms.txt"><code>llms.txt</code></a>. The result is ordinary code, so you read it, run it and keep it with your data.</p>
+      <div class="mx-prompt">
+        <span class="mx-who">You</span>
+        <p>I have an Oxford map <code>A.ctf</code> and an EDAX map <code>B.ang</code> of the same single-phase steel. Compare the grain size distributions.</p>
+      </div>
+    </div>
+    <div class="mx-code" aria-label="Script written by an assistant">
+      <header>
+        <span id="mx-code-name">compareGrainSize.m</span>
+        <div class="mx-lang" role="group" aria-label="Code language">
+          <button type="button" data-lang="matlab" aria-pressed="true"><span class="mx-dot-m"></span>MATLAB</button>
+          <button type="button" data-lang="python" aria-pressed="false"><span class="mx-dot-p"></span>Python</button>
+        </div>
+      </header>
+<pre data-code="matlab"><span class="c">% two vendors, one grain definition</span>
+ebsdA = <span class="k">EBSD.load</span>(<span class="s">'A.ctf'</span>);
+ebsdB = <span class="k">EBSD.load</span>(<span class="s">'B.ang'</span>);
+grainsA = <span class="k">calcGrains</span>(ebsdA,<span class="s">'angle'</span>,10*degree);
+grainsB = <span class="k">calcGrains</span>(ebsdB,<span class="s">'angle'</span>,10*degree);
+
+<span class="c">% shared bins, normalized for different map sizes</span>
+rA = grainsA(<span class="s">'indexed'</span>).equivalentRadius;
+rB = grainsB(<span class="s">'indexed'</span>).equivalentRadius;
+edges = <span class="k">linspace</span>(0,<span class="k">max</span>([rA(:);rB(:)]),21);
+<span class="k">histogram</span>(rA,edges,<span class="s">'Normalization'</span>,<span class="s">'pdf'</span>,...
+  <span class="s">'DisplayStyle'</span>,<span class="s">'stairs'</span>)
+hold on
+<span class="k">histogram</span>(rB,edges,<span class="s">'Normalization'</span>,<span class="s">'pdf'</span>,...
+  <span class="s">'DisplayStyle'</span>,<span class="s">'stairs'</span>)
+hold off
+<span class="k">xlabel</span>(<span class="s">'Equivalent radius (map length units)'</span>)
+<span class="k">ylabel</span>(<span class="s">'Probability density'</span>)
+<span class="k">legend</span>(<span class="s">'Oxford'</span>,<span class="s">'EDAX'</span>)</pre>
+<pre data-code="python" hidden>import numpy as np
+<span class="c"># two vendors, one grain definition</span>
+ebsdA = <span class="k">EBSD.load</span>(<span class="s">'A.ctf'</span>)
+ebsdB = <span class="k">EBSD.load</span>(<span class="s">'B.ang'</span>)
+grainsA = <span class="k">calcGrains</span>(ebsdA,angle=10*degree)
+grainsB = <span class="k">calcGrains</span>(ebsdB,angle=10*degree)
+
+<span class="c"># shared bins, normalized for different map sizes</span>
+rA = grainsA[<span class="s">'indexed'</span>].equivalentRadius
+rB = grainsB[<span class="s">'indexed'</span>].equivalentRadius
+edges = <span class="k">np.linspace</span>(0,<span class="k">max</span>(<span class="k">rA.max</span>(),<span class="k">rB.max</span>()),21)
+<span class="k">histogram</span>(rA,edges,density=True,histtype=<span class="s">'step'</span>,label=<span class="s">'Oxford'</span>)
+<span class="k">hold</span>(True)
+<span class="k">histogram</span>(rB,edges,density=True,histtype=<span class="s">'step'</span>,label=<span class="s">'EDAX'</span>)
+<span class="k">hold</span>(False)
+<span class="k">xlabel</span>(<span class="s">'Equivalent radius (map length units)'</span>)
+<span class="k">ylabel</span>(<span class="s">'Probability density'</span>)
+<span class="k">legend</span>()</pre>
+    </div>
+  </div>
+</section>
+
+
+
+<dialog class="mx-dialog" id="mx-speed-dialog" data-hash="speed" aria-labelledby="mx-speed-title">
+  <div class="mx-dialog-head">
+    <h2 id="mx-speed-title">How fast MTEX is</h2>
+    <button type="button" class="mx-dialog-close" data-dialog-close aria-label="Close">×</button>
+  </div>
+  <p>Each point is one of 90 operations: across, its time in MTEX 6.1.1; up, its time in another version. Below the solid line is faster.</p>
+  
+<div class="mx-speed" id="mx-speed">
+  <div class="mx-speed-legend" role="group" aria-label="Versions shown"></div>
+  <div class="mx-speed-plot">
+    <svg viewBox="0 0 640 560" role="img" aria-label="Time of each operation in every MTEX version against its time in MTEX 6.1.1, on logarithmic axes"></svg>
+    <div class="mx-speed-tip" hidden></div>
+  </div>
+</div>
+<script type="application/json" id="mx-speed-data">{"measured":"2026-10-11","base":"6.1.1","versions":["5.11.2","6.1.1","7.0.0","7.1.0","7.2","pymtex"],"times":{"analysis_birefringence":{"5.11.2":20.379,"6.1.1":19.202,"7.0.0":22.744,"7.1.0":18.161,"7.2":19.121,"pymtex":4.9335},"analysis_classix":{"7.0.0":3817.431,"7.1.0":3691.403,"7.2":3632.31,"pymtex":621.2352},"analysis_cluster":{"5.11.2":982.389,"6.1.1":1023.091,"7.0.0":992.767,"7.1.0":923.515,"7.2":882.991,"pymtex":203.5319},"analysis_cluster_directions":{"5.11.2":354.862,"6.1.1":329.93,"7.0.0":174.458,"7.1.0":166.18,"7.2":197.594,"pymtex":40.6253},"analysis_cluster_orientations":{"7.0.0":477.916,"7.1.0":475.88,"7.2":1110.646,"pymtex":57.1047},"analysis_components":{"5.11.2":2357.884,"6.1.1":2669.218,"7.0.0":2911.339,"7.1.0":2526.993,"7.2":3327.946,"pymtex":1545.6586},"analysis_gbnd":{"6.1.1":2406.983,"7.0.0":2346.439,"7.1.0":1657.705,"7.2":1691.933,"pymtex":75.999},"analysis_gnd":{"7.0.0":12918.976,"7.1.0":12807.872,"7.2":1376.235,"pymtex":69.9434},"analysis_halfwidth_s2_cons":{"7.2":409.461,"pymtex":185.1498},"analysis_halfwidth_s2_ucv":{"7.2":561.84,"pymtex":136.8447},"analysis_halfwidth_so3_cons":{"7.2":1041.678,"pymtex":382.7946},"analysis_halfwidth_so3_ucv":{"7.2":8271.568,"pymtex":461.9518},"analysis_odf_max":{"5.11.2":1570.763,"6.1.1":1474.645,"7.0.0":1398.118,"7.1.0":1398.436,"7.2":1258.755,"pymtex":406.6686},"analysis_optimal_s2":{"7.0.0":1313.079,"7.1.0":724.98,"7.2":1808.569,"pymtex":358.639},"analysis_optimal_so3":{"7.0.0":103147.362,"7.1.0":18045.235,"7.2":54261.963,"pymtex":956.6325},"analysis_schmid":{"5.11.2":33.394,"6.1.1":27.105,"7.0.0":25.684,"7.1.0":29.108,"7.2":25.977,"pymtex":12.482},"embedding_embed_6mmm":{"5.11.2":4601.558,"6.1.1":4547.826,"7.0.0":4618.304,"7.1.0":708.393,"7.2":765.364,"pymtex":207.9802},"embedding_embed_m3m":{"5.11.2":421.293,"6.1.1":399.227,"7.0.0":401.737,"7.1.0":122.747,"7.2":133.403,"pymtex":36.2212},"embedding_mean_6mmm":{"5.11.2":4550.283,"6.1.1":4489.966,"7.0.0":4499.039,"7.1.0":607.599,"7.2":649.445,"pymtex":198.0619},"embedding_mean_m3m":{"5.11.2":389.435,"6.1.1":379.255,"7.0.0":358.002,"7.1.0":82.277,"7.2":93.093,"pymtex":80.9768},"embedding_project_6mmm":{"5.11.2":16412.683,"6.1.1":16154.735,"7.0.0":16557.148,"7.1.0":4353.083,"7.2":4473.605,"pymtex":1458.5233},"embedding_project_m3m":{"5.11.2":802.826,"6.1.1":881.478,"7.0.0":894.771,"7.1.0":481.142,"7.2":509.979,"pymtex":407.954},"functions_rbf_direct":{"5.11.2":4590.059,"6.1.1":9074.306,"7.0.0":4729.378,"7.1.0":4706.765,"7.2":4938.061,"pymtex":8.9675},"functions_rbf_harmonic":{"5.11.2":1195.006,"6.1.1":2499.971,"7.0.0":1386.637,"7.1.0":589.309,"7.2":1264.671,"pymtex":6.9648},"functions_s2_eval":{"5.11.2":18.592,"6.1.1":22.028,"7.0.0":24.717,"7.1.0":24.138,"7.2":24.255,"pymtex":14.455},"functions_s2_interpolate":{"6.1.1":211.797,"7.0.0":427.489,"7.1.0":228.812,"7.2":213.946,"pymtex":165.0876},"functions_s2_quadrature":{"5.11.2":31.115,"6.1.1":27.244,"7.0.0":31.379,"7.1.0":30.458,"7.2":34.498,"pymtex":15.296},"functions_so3_eval":{"5.11.2":42.879,"6.1.1":57.0,"7.0.0":52.395,"7.1.0":44.16,"7.2":54.714,"pymtex":25.1098},"functions_so3_interpolate":{"5.11.2":742.931,"6.1.1":5449.261,"7.0.0":13185.258,"7.1.0":2066.462,"7.2":2005.065,"pymtex":610.5533},"functions_so3_quadrature":{"5.11.2":295.336,"6.1.1":353.298,"7.0.0":322.507,"7.1.0":94.079,"7.2":101.592,"pymtex":34.2176},"geometry_dot_mori_mori2":{"5.11.2":4664.373,"6.1.1":1608.269,"7.0.0":1758.105,"7.1.0":1738.571,"7.2":1683.669,"pymtex":48.7965},"geometry_dot_mori_mref":{"5.11.2":1441.406,"6.1.1":841.277,"7.0.0":937.481,"7.1.0":908.612,"7.2":897.654,"pymtex":37.4646},"geometry_dot_ori_ori2":{"5.11.2":132.952,"6.1.1":92.652,"7.0.0":111.523,"7.1.0":109.009,"7.2":119.626,"pymtex":11.9795},"geometry_dot_ori_ref":{"5.11.2":119.521,"6.1.1":86.18,"7.0.0":107.367,"7.1.0":106.287,"7.2":106.505,"pymtex":3.9149},"geometry_grid_build":{"5.11.2":7.622,"6.1.1":3.104,"7.0.0":3.139,"7.1.0":2.854,"7.2":2.35,"pymtex":0.1751},"geometry_grid_nearest":{"5.11.2":22.73,"6.1.1":24.891,"7.0.0":25.936,"7.1.0":21.56,"7.2":23.854,"pymtex":19.2227},"geometry_grid_radius":{"5.11.2":24.721,"6.1.1":28.542,"7.0.0":29.527,"7.1.0":26.129,"7.2":38.279,"pymtex":6.9365},"geometry_p2fr_m":{"5.11.2":1054.243,"6.1.1":986.911,"7.0.0":1050.138,"7.1.0":1006.875,"7.2":1016.633,"pymtex":15.0371},"geometry_p2fr_mori_mori2":{"5.11.2":5856.521,"6.1.1":5761.584,"7.0.0":6217.774,"7.1.0":5808.26,"7.2":10502.608,"pymtex":46.2815},"geometry_p2fr_mori_mref":{"5.11.2":1221.211,"6.1.1":1123.274,"7.0.0":1230.417,"7.1.0":1179.97,"7.2":1185.103,"pymtex":36.6894},"geometry_p2fr_ori_ori2":{"5.11.2":285.194,"6.1.1":224.619,"7.0.0":227.897,"7.1.0":212.19,"7.2":220.996,"pymtex":7.3498},"geometry_p2fr_ori_ref":{"5.11.2":269.541,"6.1.1":194.32,"7.0.0":211.208,"7.1.0":196.886,"7.2":196.129,"pymtex":7.5468},"geometry_r_s":{"5.11.2":9.307,"6.1.1":9.209,"7.0.0":10.496,"7.1.0":10.287,"7.2":10.644,"pymtex":5.2804},"geometry_r_v":{"5.11.2":18.536,"6.1.1":20.161,"7.0.0":18.186,"7.1.0":17.117,"7.2":17.435,"pymtex":4.6173},"io_export_h5":{"6.1.1":87594.159,"7.0.0":130641.949,"7.1.0":1196.398,"7.2":1199.345,"pymtex":257.8333},"io_load_1C_1":{"5.11.2":6880.735,"6.1.1":5773.881,"7.0.0":6617.568,"7.1.0":14952.879,"7.2":7112.722,"pymtex":614.7781},"io_load_ang":{"5.11.2":632.185,"6.1.1":670.428,"7.0.0":408.41,"7.1.0":427.902,"7.2":507.239,"pymtex":16.5877},"io_load_ang_PAGR":{"5.11.2":33150.47,"6.1.1":32301.77,"7.0.0":29300.691,"7.1.0":30726.716,"7.2":30472.861,"pymtex":2888.3288},"io_load_ang_SAM":{"5.11.2":4577.478,"6.1.1":7946.858,"7.0.0":4136.311,"7.1.0":4198.475,"7.2":4368.65,"pymtex":841.4871},"io_load_ctf":{"5.11.2":1263.922,"6.1.1":647.464,"7.0.0":578.841,"7.1.0":565.195,"7.2":586.391,"pymtex":52.2189},"io_load_dubna":{"5.11.2":205.701,"6.1.1":318.346,"7.0.0":289.281,"7.1.0":261.821,"7.2":263.112,"pymtex":7.6915},"io_load_h5_edax":{"7.0.0":1235.479,"7.1.0":1265.794,"7.2":3155.417,"pymtex":398.6721},"io_load_h5oina_copper29":{"6.1.1":3878.166,"7.0.0":548.404,"7.1.0":543.839,"7.2":1913.872,"pymtex":111.8402},"io_load_osc":{"5.11.2":662.995,"6.1.1":605.739,"7.0.0":495.765,"7.1.0":720.984,"7.2":465.531,"pymtex":23.7667},"maps3d_calcgrains3d_in100":{"7.1.0":1929.166,"7.2":1848.816,"pymtex":875.672},"maps3d_calcgrains3d_sim":{"7.1.0":232.454,"7.2":231.784,"pymtex":113.3417},"maps3d_kam3d_in100":{"7.2":1519.164,"pymtex":882.9089},"maps3d_load_dream3d":{"7.1.0":213.066,"7.2":206.986,"pymtex":118.1913},"maps3d_load_xnovo":{"7.1.0":307.664,"7.2":316.158,"pymtex":67.9879},"maps_aspect":{"5.11.2":17.105,"6.1.1":20.248,"7.0.0":12.889,"7.1.0":19.723,"7.2":19.319,"pymtex":0.3818},"maps_calcgrains":{"6.1.1":317.283,"7.0.0":302.226,"7.1.0":322.532,"7.2":299.148,"pymtex":61.5461},"maps_calcgrains_1C_1":{"6.1.1":30433.799,"7.0.0":14527.261,"7.1.0":14889.946,"7.2":15080.105,"pymtex":2377.3057},"maps_grod":{"5.11.2":21.056,"6.1.1":23.471,"7.0.0":21.318,"7.1.0":23.492,"7.2":16.106,"pymtex":17.9065},"maps_kam":{"5.11.2":217.123,"6.1.1":687.002,"7.0.0":77.053,"7.1.0":74.54,"7.2":93.863,"pymtex":3.5079},"maps_perimeter":{"5.11.2":1.116,"6.1.1":1.139,"7.0.0":0.839,"7.1.0":1.232,"7.2":1.239,"pymtex":0.2349},"maps_smooth_boundary":{"5.11.2":7.85,"6.1.1":8.684,"7.0.0":52.742,"7.1.0":52.814,"7.2":43.861,"pymtex":20.621},"maps_smooth_fill_ferrite":{"7.0.0":3495.165,"7.1.0":3476.815,"7.2":4093.209,"pymtex":81.7554},"maps_smooth_fill_twins":{"7.0.0":1274.602,"7.1.0":1289.252,"7.2":2190.727,"pymtex":22.7362},"maps_smooth_hq_ferrite":{"7.2":8401.946,"pymtex":705.6955},"maps_smooth_hq_twins":{"7.2":7348.05,"pymtex":298.9755},"maps_smooth_l1tv_ferrite":{"7.2":7337.168,"pymtex":633.4725},"maps_smooth_l1tv_twins":{"7.2":3877.244,"pymtex":419.0296},"maps_smooth_mean_ferrite":{"7.0.0":1931.275,"7.1.0":2114.998,"7.2":1207.461,"pymtex":28.0443},"maps_smooth_mean_twins":{"7.0.0":496.466,"7.1.0":494.305,"7.2":252.699,"pymtex":12.4523},"maps_smooth_spline_ferrite":{"7.0.0":6294.481,"7.1.0":7198.892,"7.2":3306.725,"pymtex":56.1568},"maps_smooth_spline_twins":{"7.0.0":1197.653,"7.1.0":1255.197,"7.2":1193.318,"pymtex":20.224},"maps_trueebsd_distortion":{"7.1.0":2581.55,"7.2":2532.903,"pymtex":1253.1456},"maps_trueebsd_undistort":{"7.1.0":233.66,"7.2":190.796,"pymtex":130.0827},"plotting_ipf_6mmm":{"5.11.2":69.737,"6.1.1":69.295,"7.0.0":70.706,"7.1.0":71.463,"7.2":72.566,"pymtex":2.8758},"plotting_ipf_exact_6mmm":{"5.11.2":98.709,"6.1.1":68.495,"7.0.0":58.059,"7.1.0":60.852,"7.2":66.124,"pymtex":39.0054},"plotting_ipf_exact_m3m":{"5.11.2":264.717,"6.1.1":146.77,"7.0.0":145.917,"7.1.0":133.711,"7.2":153.859,"pymtex":42.5346},"plotting_ipf_m3m":{"5.11.2":310.149,"6.1.1":156.62,"7.0.0":153.523,"7.1.0":142.27,"7.2":157.999,"pymtex":2.4935},"tensors_average_odf":{"5.11.2":745.306,"6.1.1":48.04,"7.0.0":44.439,"7.1.0":37.299,"7.2":40.152,"pymtex":7.4727},"tensors_average_ori":{"5.11.2":1719.038,"6.1.1":1645.885,"7.0.0":1775.873,"7.1.0":1759.859,"7.2":1583.212,"pymtex":8.525},"tensors_inv":{"5.11.2":1374.639,"6.1.1":1300.192,"7.0.0":1297.789,"7.1.0":1588.878,"7.2":1354.988,"pymtex":10.6208},"tensors_rotate":{"5.11.2":390.927,"6.1.1":371.576,"7.0.0":404.208,"7.1.0":82.213,"7.2":85.677,"pymtex":11.7189},"tensors_taylor":{"5.11.2":15434.543,"6.1.1":15626.314,"7.0.0":15742.003,"7.1.0":15427.152,"7.2":132.733,"pymtex":30.1176},"tensors_taylor_fun":{"5.11.2":31383.355,"6.1.1":30253.429,"7.0.0":30877.207,"7.1.0":30796.505,"7.2":359.82,"pymtex":245.232},"tensors_velocity":{"5.11.2":44.916,"6.1.1":42.383,"7.0.0":45.592,"7.1.0":30.221,"7.2":21.16,"pymtex":22.2437},"tensors_youngs":{"5.11.2":36.795,"6.1.1":33.773,"7.0.0":40.165,"7.1.0":14.549,"7.2":17.979,"pymtex":6.0715}}}</script>
+<script src="js/mx-speed.js" defer></script>
+
+  <p class="mx-dialog-more"><a href="speed">All numbers and how they were measured →</a></p>
+</dialog>
+
+<dialog class="mx-dialog" id="mx-wizard-dialog" data-hash="wizard" aria-labelledby="mx-wizard-title">
+  <div class="mx-dialog-head">
+    <h2 id="mx-wizard-title"><img src="images/icons/importWizard.svg" alt="">Import your own data</h2>
+    <button type="button" class="mx-dialog-close" data-dialog-close aria-label="Close">×</button>
+  </div>
+  <p>The import wizard reads your file, shows the map, and writes the script that loads it.</p>
+  
+<div class="mx-wizard" data-only="matlab">
+  <a href="images/importWizard.png" target="_blank" rel="noopener" title="Open the picture at full size"><img class="mx-wizard-shot" src="images/importWizard.png" width="1920" height="1149" alt="The MTEX import wizard in MATLAB: a file browser on the left, the phase table across the top, the two coordinate systems at the top right and an orientation map below" loading="lazy"></a>
+  <p>Type this in the MATLAB command window:</p>
+  <pre class="mx-wizard-cmd"><code>import_wizard</code></pre>
+  <ol>
+    <li>Double-click your file in the tree on the left. The wizard reads it and draws the map.</li>
+    <li>Check the phase table: mineral names, symmetries and lattice parameters.</li>
+    <li>Check the two coordinate systems against your specimen.</li>
+    <li>Click <b>Generate import script</b>. The script loads the file without the wizard and becomes the first step of your analysis.</li>
+  </ol>
+  <p class="mx-small">EBSD, pole figure and ODF files of all common vendors. MATLAB R2022b or newer.</p>
+</div>
+<div class="mx-wizard" data-only="python">
+  <a href="figures/python/importWizard.png" target="_blank" rel="noopener" title="Open the picture at full size"><img class="mx-wizard-shot" src="figures/python/importWizard.png" width="1600" height="900" alt="The MTEX import wizard in Python: a file browser on the left, the phase table across the top, the two coordinate systems at the top left and an orientation map below" loading="lazy"></a>
+  <p>Type this in the interactive window of VS Code or in any Python session:</p>
+  <pre class="mx-wizard-cmd"><code>from mtex import *
+ebsd = importWizard()</code></pre>
+  <p>or, from a terminal, <code>mtex-wizard</code>.</p>
+  <ol>
+    <li>Click your file in the browser on the left. The wizard reads it and draws the map.</li>
+    <li>Check the phase table: mineral names, symmetries and lattice parameters.</li>
+    <li>Check the two coordinate systems, <i>map</i> and <i>Euler</i>, against your specimen.</li>
+    <li>Click <b>write script</b>. The script loads the file without the wizard and becomes the first step of your analysis.</li>
+  </ol>
+  <p class="mx-small">EBSD files of all common vendors. Installed with <code>pip install "mtex[all]"</code>.</p>
+</div>
+
+  <p class="mx-dialog-more"><a href="get-started-matlab#5-import-your-own-data" data-only="matlab">Step by step, from installing MATLAB to your own map →</a><a href="get-started-python#6-import-your-own-data" data-only="python">Step by step, from installing Python to your own map →</a></p>
+</dialog>
+
+
+<script>
+// the language buttons of the install box drive the switch in the top bar
+document.querySelectorAll('.mx-seg [data-lang]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelector('.mx-lang-switch [data-lang="' + b.getAttribute('data-lang') + '"]').click();
+  });
+});
+document.querySelectorAll('[data-copy]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function () { b.textContent = 'Copied'; });
+  });
+});
+</script>
+<script src="js/mx-home.js" defer></script>
+<script src="js/mx-dialog.js" defer></script>
+
+</main>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Spin Tensors as Infinitesimal Changes of Rotations | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/RotationSpinTensor_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/RotationSpinTensor_py.html#page",
+      "name": "Spin Tensors as Infinitesimal Changes of Rotations",
+      "headline": "Spin Tensors as Infinitesimal Changes of Rotations",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/RotationSpinTensor_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/RotationSpinTensor_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/RotationSpinTensor_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Spin Tensors as Infinitesimal Changes of Rotations</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/RotationSpinTensor.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/Rotations/RotationSpinTensor.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A spin tensor is a skew-symmetric matrix that describes an infinitesimal rotation. Its
+three independent entries give an axis scaled by an angle, or by an angular rate when
+the independent variable is time.</p>
+
+<p>This page assumes the active rotations introduced in
+<a href="RotationDefinition_py.html">Defining Rotations</a>, the multiplication order in
+<a href="RotationOperations_py.html">Calculating with Rotations</a>, and the tangent vectors
+introduced in <a href="RotationTangentSpace_py.html">Tangent Spaces</a>.</p>
+
+<p>MTEX uses a <a href="spinTensor.spinTensor.html">spinTensor</a> as the matrix form of a tangent
+vector on the rotation group SO(3). MTEX calls its two coordinate representations left
+and right.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="a-small-rotation">A Small Rotation</h2>
+
+<p>Start from a reference rotation and perturb it on the right about the Cartesian
+direction \((1,2,3)\). The constructor normalizes the axis, and the small angle is
+\(\delta=0.01^\circ\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rotRef</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="s">'Bunge'</span><span class="p">)</span>
+<span class="n">axis123</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">increment</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">axis123</span><span class="p">,</span> <span class="n">delta</span><span class="p">)</span>
+<span class="n">rotNext</span> <span class="o">=</span> <span class="n">rotRef</span> <span class="o">*</span> <span class="n">increment</span>
+</code></pre></div></div>
+
+<p>For the path \(R(\delta)=R\,P(\delta)\), a finite-difference approximation to the tangent
+matrix is</p>
+
+\[T = \left.\frac{\mathrm d R(\delta)}{\mathrm d\delta}\right|_{0} \simeq \frac{R(\delta)-R}{\delta}.\]
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">T</span> <span class="o">=</span> <span class="p">(</span><span class="n">rotNext</span><span class="p">.</span><span class="n">matrix</span><span class="p">()</span> <span class="o">-</span> <span class="n">rotRef</span><span class="p">.</span><span class="n">matrix</span><span class="p">())</span> <span class="o">/</span> <span class="n">delta</span>
+<span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[-0.5399, -0.6025,  0.5816],
+       [ 0.753 , -0.5816,  0.1368],
+       [-0.2648,  0.114 ,  0.0122]])
+</code></pre></div></div>
+
+<p>The tangent matrix <code class="language-plaintext highlighter-rouge">T</code> is not itself skew symmetric. Dividing out the reference rotation
+from the right or left gives two skew representations of the same tangent:</p>
+
+\[S_{\rm left}=T R^{-1}, \qquad S_{\rm right}=R^{-1}T.\]
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">invR</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">rotRef</span><span class="p">))</span>
+<span class="n">SLeft</span> <span class="o">=</span> <span class="n">T</span> <span class="o">@</span> <span class="n">invR</span>
+<span class="n">SRight</span> <span class="o">=</span> <span class="n">invR</span> <span class="o">@</span> <span class="n">T</span>
+<span class="n">SLeft</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[-0.0001, -0.9575,  0.2758],
+       [ 0.9575, -0.0001,  0.085 ],
+       [-0.2758, -0.085 , -0.    ]])
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SRight</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[-0.0001, -0.8018,  0.5345],
+       [ 0.8018, -0.0001, -0.2672],
+       [-0.5345,  0.2673, -0.    ]])
+</code></pre></div></div>
+
+<p>The small diagonal entries are a second-order finite-difference residual. Constructing a
+<code class="language-plaintext highlighter-rouge">spinTensor</code> extracts the antisymmetric part. Its axial vector uses the convention</p>
+
+\[S\,x = \omega \mathbin{\times} x.\]
+
+<p>Multiplication by \(\sqrt{14}\) undoes the normalization of \((1,2,3)\). The right
+coordinates recover the input axis, while the left coordinates are that axis expressed
+after the reference rotation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scaledAxisRight</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">(</span><span class="n">spinTensor</span><span class="p">(</span><span class="n">SRight</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">scaledAxisRight</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (y↑→x)
+  x  y  z
+  1  2  3
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scaledAxisLeft</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">(</span><span class="n">spinTensor</span><span class="p">(</span><span class="n">SLeft</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">scaledAxisLeft</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (y↑→x)
+       x     y     z
+  -0.318  1.03  3.58
+</code></pre></div></div>
+
+<h2 id="seeing-the-instantaneous-motion">Seeing the Instantaneous Motion</h2>
+
+<p>A spin tensor is easier to read through its action on a direction. The red arrow is the
+rotation axis, and the grey arrow is a direction on the black orbit. The blue arrow is
+its instantaneous velocity.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rotationAxis</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">axis123</span><span class="p">)</span>
+<span class="n">v0</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">rotationAxis</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">orbit</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">rotationAxis</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">v0</span>
+<span class="n">velocity</span> <span class="o">=</span> <span class="n">cross</span><span class="p">(</span><span class="n">rotationAxis</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">arrow3d</span><span class="p">(</span><span class="mf">1.25</span> <span class="o">*</span> <span class="n">rotationAxis</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="s">'red'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">arrow3d</span><span class="p">(</span><span class="mf">0.999</span> <span class="o">*</span> <span class="n">v0</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="p">[.</span><span class="mi">45</span><span class="p">,</span> <span class="p">.</span><span class="mi">45</span><span class="p">,</span> <span class="p">.</span><span class="mi">45</span><span class="p">])</span>
+<span class="n">arrow3d</span><span class="p">(</span><span class="mf">0.9</span> <span class="o">*</span> <span class="n">normalize</span><span class="p">(</span><span class="n">velocity</span><span class="p">),</span> <span class="n">anchor</span><span class="o">=</span><span class="n">v0</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="s">'blue'</span><span class="p">,</span> <span class="n">arrowWidth</span><span class="o">=</span><span class="mf">0.035</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">orbit</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">orbit</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">orbit</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="s">'k'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+
+<span class="c1"># look at the orbit plane from above, so the three arrows do not overlap
+</span><span class="n">ax</span><span class="p">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">elev</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">azim</span><span class="o">=-</span><span class="mi">180</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/RotationSpinTensor-11.png" /></center>
+
+<p>Notice that the blue arrow is tangent to the black orbit. It is also perpendicular to
+both the red axis and the grey direction, as the cross product in
+\(Sx=\omega\mathbin{\times}x\) requires.</p>
+
+<h2 id="when-a-spin-tensor-is-a-rate">When a Spin Tensor Is a Rate</h2>
+
+<p>The matrices above are derivatives with respect to rotation angle, not time. They become
+angular-velocity tensors only for a time-dependent rotation \(R(t)\):</p>
+
+\[W_{\rm left}=\dot R R^{-1}, \qquad W_{\rm right}=R^{-1}\dot R.\]
+
+<p>In continuum mechanics the spatial velocity gradient \(L=\nabla v\) splits into a symmetric
+rate of deformation and a spin tensor,</p>
+
+\[L=D+W, \qquad D=\tfrac12(L+L^T), \qquad W=\tfrac12(L-L^T).\]
+
+<p>Thus <code class="language-plaintext highlighter-rouge">spinTensor</code> can store either a finite rotation increment or a rate. Its units and
+physical meaning come from the quantity used to construct it.</p>
+
+<h2 id="finite-changes-with-log-and-exp">Finite Changes with Log and Exp</h2>
+
+<p>Matrix subtraction is useful only for a small perturbation. For a finite change,
+<a href="quaternion.log.html">log</a> returns the exact tangent generator at a reference rotation.
+Here the perturbation angle is one radian. The third argument names the side of the
+tangent space, and <code class="language-plaintext highlighter-rouge">spinTensor</code> gives the matrix form.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">finiteAngle</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">finiteIncrement</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">axis123</span><span class="p">,</span> <span class="n">finiteAngle</span><span class="p">)</span>
+<span class="n">rotEnd</span> <span class="o">=</span> <span class="n">rotRef</span> <span class="o">*</span> <span class="n">finiteIncrement</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SRight</span> <span class="o">=</span> <span class="n">spinTensor</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">rotEnd</span><span class="p">,</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'right'</span><span class="p">))</span>
+<span class="n">SRight</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spinTensor (y↑→x)
+  rank: 2 (3 × 3)
+        0  -0.8018   0.5345
+   0.8018        0  -0.2673
+  -0.5345   0.2673        0
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SLeft</span> <span class="o">=</span> <span class="n">spinTensor</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">rotEnd</span><span class="p">,</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'left'</span><span class="p">))</span>
+<span class="n">SLeft</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spinTensor (y↑→x)
+  rank: 2 (3 × 3)
+        0  -0.9575  0.2758
+   0.9575        0   0.085
+  -0.2758   -0.085       0
+</code></pre></div></div>
+
+<p>Unlike the finite-difference matrices, the displayed results are exactly skew symmetric.
+Their axial vectors point along the right and left coordinate triplets shown above, with
+length equal to the one-radian angle.</p>
+
+<p>The vector forms contain the same three components without the skew-symmetric matrix
+wrapper.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vRight</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">rotEnd</span><span class="p">,</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'right'</span><span class="p">)</span>
+<span class="n">vLeft</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">rotEnd</span><span class="p">,</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'left'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spinVectorResidual</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">norm</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="n">SRight</span><span class="p">)</span> <span class="o">-</span> <span class="n">vector3d</span><span class="p">(</span><span class="n">vRight</span><span class="p">)),</span> <span class="n">norm</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="n">SLeft</span><span class="p">)</span> <span class="o">-</span> <span class="n">vector3d</span><span class="p">(</span><span class="n">vLeft</span><span class="p">))])</span>
+<span class="n">spinVectorResidual</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0., 0.])
+</code></pre></div></div>
+
+<p>Both zero residuals confirm that spin tensors and rotation vectors are two
+representations of the same tangent coordinates.</p>
+
+<p><a href="vector3d.exp.html">exp</a> applies those coordinates, as a vector or as a spin tensor, back
+at the reference rotation. All four reconstructions below should return <code class="language-plaintext highlighter-rouge">rotEnd</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rotFromRightVector</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="n">vRight</span><span class="p">),</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'right'</span><span class="p">)</span>
+<span class="n">rotFromLeftVector</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="n">vLeft</span><span class="p">),</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'left'</span><span class="p">)</span>
+<span class="n">rotFromRightSpin</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">SRight</span><span class="p">,</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'right'</span><span class="p">)</span>
+<span class="n">rotFromLeftSpin</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">SLeft</span><span class="p">,</span> <span class="n">rotRef</span><span class="p">,</span> <span class="s">'left'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">roundTripError</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">rotEnd</span><span class="p">,</span> <span class="n">cat</span><span class="p">(</span><span class="n">rotFromRightVector</span><span class="p">,</span> <span class="n">rotFromLeftVector</span><span class="p">,</span> <span class="n">rotFromRightSpin</span><span class="p">,</span> <span class="n">rotFromLeftSpin</span><span class="p">))</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">roundTripError</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0., 0., 0., 0.])
+</code></pre></div></div>
+
+<p>The displayed errors are at floating-point level. Rotation logarithms use a principal
+branch with angles up to \(180^\circ\). At exactly \(180^\circ\) the two signs of the axis
+describe the same rotation, so the logarithm is not unique.</p>
+
+<h2 id="under-crystal-symmetry">Under Crystal Symmetry</h2>
+
+<p>For an orientation, right coordinates belong to the crystal frame and left coordinates
+belong to the specimen frame. The crystal frame is the Cartesian reference frame glued
+to the phase’s lattice basis. The specimen frame is the reference frame in which the
+sample is expressed.</p>
+
+<p>Define a one-radian perturbation about the trigonal crystal direction \((1,2,\bar3,3)\)
+and apply it on the right.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'321'</span><span class="p">)</span>
+<span class="n">oriRef</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="s">'Bunge'</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">crystalIncrement</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cs</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">oriEnd</span> <span class="o">=</span> <span class="n">oriRef</span> <span class="o">*</span> <span class="n">crystalIncrement</span>
+</code></pre></div></div>
+
+<p>The right tangent is expressed in crystal coordinates. Converting it to
+Miller indices recovers the direction used above.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crystalAxis</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="n">oriEnd</span><span class="p">,</span> <span class="n">oriRef</span><span class="p">,</span> <span class="s">'right'</span><span class="p">),</span> <span class="n">oriEnd</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">recoveredCrystalAxis</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">crystalAxis</span><span class="p">)</span>
+<span class="n">recoveredCrystalAxis</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vector3d (321)
+  h  k   i  l
+  1  2  -3  3
+</code></pre></div></div>
+
+<p>The left tangent gives the same change in specimen coordinates.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">specimenVector</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">oriEnd</span><span class="p">,</span> <span class="n">oriRef</span><span class="p">,</span> <span class="s">'left'</span><span class="p">)</span>
+<span class="n">specimenVector</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3TangentVector (left, y↑→x)
+  reference: orientation (321 → y↑→x)
+      x      y      z
+  0.162  0.428  0.889
+</code></pre></div></div>
+
+<p>Applying the crystal-frame tangent returns the endpoint. The displayed value is the
+angular round-trip error in degrees.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">oriFromCrystalVector</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="n">crystalAxis</span><span class="p">,</span> <span class="n">oriRef</span><span class="p">,</span> <span class="s">'right'</span><span class="p">)</span>
+<span class="n">orientationRoundTripError</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">oriEnd</span><span class="p">,</span> <span class="n">oriFromCrystalVector</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">orientationRoundTripError</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.9083e-14
+</code></pre></div></div>
+
+<p><a href="orientation.log.html">orientation.log</a> first chooses the shortest symmetry-equivalent
+change. This makes the tangent describe the two crystal orientations rather than their
+stored representatives. Pass <code class="language-plaintext highlighter-rouge">symmetry=False</code> only when the unreduced rotation
+representatives are the intended objects.</p>
+
+<h2 id="the-maths-behind-left-and-right-coordinates">The Maths Behind Left and Right Coordinates</h2>
+
+<p>Let \([\omega]_\times\) denote the skew matrix whose axial vector is \(\omega\). For the
+right-perturbed path \(R(\delta)=R\exp(\delta[\omega]_{\times})\),</p>
+
+\[T=R[\omega]_{\times}, \qquad S_{\rm right}=[\omega]_{\times}, \qquad S_{\rm left}=R[\omega]_{\times}R^{-1}.\]
+
+<p>Conjugating a skew matrix rotates its axial vector. Therefore
+\(\omega_{\rm left}=R\omega_{\rm right}\). Left and right describe one tangent at one base
+rotation; only the coordinate frame changes.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>,
+Springer, 2004, develops the geometry of rotation space and small orientation changes.</li>
+  <li>A. Morawiec, <a href="https://doi.org/10.1107/S002188989000512X">The rotation rate field and geometry of orientation space</a>,
+Journal of Applied Crystallography 23 (1990) 374–377, relates infinitesimal rotations
+to texture evolution.</li>
+  <li>M. E. Gurtin, E. Fried, and L. Anand, <a href="https://doi.org/10.1017/CBO9780511762956">The Mechanics and Thermodynamics of Continua</a>,
+Cambridge University Press, 2010, develops stretching and spin in continuum kinematics.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="TensorDefinition_py.html">Tensors</a> introduces the typed tensors used in the material
+description, including <a href="velocityGradientTensor.velocityGradientTensor.html">velocityGradientTensor</a>.
+<a href="TaylorModel_py.html">Taylor Model</a> computes crystallographic spin, and
+<a href="TextureEvolution_py.html">Texture Evolution</a> applies those increments to a population of
+crystal orientations.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>MATLAB names the four tangent representations <code class="language-plaintext highlighter-rouge">SO3TangentSpace.leftVector</code>,
+<code class="language-plaintext highlighter-rouge">rightVector</code>, <code class="language-plaintext highlighter-rouge">leftSpinTensor</code> and <code class="language-plaintext highlighter-rouge">rightSpinTensor</code>; here <code class="language-plaintext highlighter-rouge">log</code> takes the side as
+<code class="language-plaintext highlighter-rouge">'left'</code> or <code class="language-plaintext highlighter-rouge">'right'</code> and returns the vector, and <code class="language-plaintext highlighter-rouge">spinTensor</code> of that vector is its
+matrix form, <code class="language-plaintext highlighter-rouge">vector3d</code> of a spin tensor its axial vector. <code class="language-plaintext highlighter-rouge">exp</code> takes either form with
+the reference and the side. The orbit is a matplotlib line, as MATLAB’s <code class="language-plaintext highlighter-rouge">plot3</code> is
+MATLAB’s own.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/RotationSpinTensor_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Ambiguity of the Pole Figure to ODF Reconstruction Problem | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A pole figure is a two-dimensional projection of an orientation distribution function (ODF). Reconstructing the three-dimensional ODF from those projections is therefore an inverse problem without a unique answer.">
+<link rel="canonical" href="https://mtex-playground.github.io/PoleFigure2ODFAmbiguity.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/PoleFigure2ODFAmbiguity.html#page",
+      "name": "Ambiguity of the Pole Figure to ODF Reconstruction Problem",
+      "headline": "Ambiguity of the Pole Figure to ODF Reconstruction Problem",
+      "description": "A pole figure is a two-dimensional projection of an orientation distribution function (ODF). Reconstructing the three-dimensional ODF from those projections is therefore an inverse problem without a unique answer.",
+      "url": "https://mtex-playground.github.io/PoleFigure2ODFAmbiguity.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/PoleFigure2ODFAmbiguity.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/PoleFigure2ODFAmbiguity.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Ambiguity of the Pole Figure to ODF Reconstruction Problem</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Ambiguity of the Pole Figure to ODF Reconstruction Problem</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_PoleFigure2ODFAmbiguity.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/PoleFigureAnalysis/PoleFigure2ODFAmbiguity.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>A pole figure is a two-dimensional projection of an orientation distribution function (ODF). Reconstructing the three-dimensional ODF from those projections is therefore an inverse problem without a unique answer.</p>
+<p>This page assumes the definitions of an ODF and mrd from <a href="ODFTheory.html">ODF Theory</a>, and the projection developed in <a href="ODFPoleFigure.html">Pole Figures of an ODF</a>. The practical reconstruction workflow is introduced in <a href="PoleFigure2ODF.html">ODF Reconstruction</a>.</p>
+<p>Three sources of ambiguity must be kept apart because only the first can be reduced by measuring more:</p>
+<div>
+<ul>
+<li>too few pole figures - different ODFs can agree on the ones that were measured and differ on the ones that were not</li>
+<li>Friedel's law - ordinary diffraction cannot tell a direction from its opposite, so the noncentrosymmetric part of a texture is not measured at all</li>
+<li>odd-degree harmonics - even a complete set of antipodal pole figures leaves part of the ODF undetermined</li>
+</ul>
+</div>
+<p>Friedel's law underlies the last two losses, but they appear differently. The first is a symmetry ambiguity, while the second is the null space of the pole-figure transform. The latter produces the ghost effect and motivates ghost correction.</p>
+<h2 id="2">Too few pole figures</h2>
+<p>Experiments measure only a handful of lattice planes. The number needed generally grows as the texture becomes weaker and the crystal symmetry becomes lower. A classical sampling argument puts it on the order of the square root of the number of measured directions in each pole figure, which is far beyond routine measurements.</p>
+<p>What that costs is best seen on two ODFs built to be different. The first has three components, rotations by 90 degrees about the three coordinate axes:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">setMTEXpref</span><span class="p">(</span><span class="s1">'defaultColorMap'</span><span class="p">,</span><span class="s1">'LaboTeX'</span><span class="p">)</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'mmm'</span><span class="p">);</span>
+
+<span class="n">orix</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">xvector</span><span class="p">,</span><span class="mi">90</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">oriy</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">yvector</span><span class="p">,</span><span class="mi">90</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">oriz</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">zvector</span><span class="p">,</span><span class="mi">90</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+
+<span class="n">odf1</span> <span class="o">=</span> <span class="n">unimodalODF</span><span class="p">([</span><span class="n">orix</span><span class="p">,</span><span class="n">oriy</span><span class="p">,</span><span class="n">oriz</span><span class="p">]);</span></code></pre></figure>
+<p>The second has three as well, rotations about (1,1,1) by 0, 120 and 240 degrees:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),[</span><span class="mi">0</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">240</span><span class="p">]</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">odf2</span> <span class="o">=</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">ori</span><span class="p">);</span></code></pre></figure>
+<p>The two share no component. Their sigma sections make the different peak positions visible.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_01.png" alt="" />
+
+</center>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">odf2</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_02.png" alt="" />
+
+</center>
+<p>Both textures put their bright peaks in the sigma = 0 and sigma = 90 degree sections, but at different positions inside them: where one has a single peak at the centre, the other has four at the rim. This confirms that the two model textures have no common component.</p>
+<p>Yet seven of their pole figures are identical - (100), (010), (001), (110), (101), (011) and (111). The eighth drawn here, (120), is not, which is how one can tell them apart at all.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">},</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">)</span>
+
+
+<span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf2</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_03.png" alt="" />
+
+</center>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_04.png" alt="" />
+
+</center>
+<p>The first seven panels have the same maxima and contours in both figures. Only the (120) panel changes, at the lower right.</p>
+<p>So if only those seven were measured, no algorithm could decide which ODF produced them. The question worth asking is what MTEX returns in that situation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% 1. step: simulate pole figure data</span>
+<span class="n">pf</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">h</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">7</span><span class="p">),</span><span class="s1">'upper'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_05.png" alt="" />
+
+</center>
+<p>These seven simulated pole figures contain no panel that distinguishes the two model ODFs.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% reconstruct an ODF</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">)</span>
+
+<span class="c1">% compare the mean density at the two sets of component orientations</span>
+<span class="n">densityAtModes7</span> <span class="o">=</span> <span class="p">[</span><span class="nb">mean</span><span class="p">(</span><span class="n">odf</span><span class="o">.</span><span class="nb">eval</span><span class="p">([</span><span class="n">orix</span><span class="p">,</span><span class="n">oriy</span><span class="p">,</span><span class="n">oriz</span><span class="p">])),</span> <span class="k">...</span>
+  <span class="nb">mean</span><span class="p">(</span><span class="n">odf</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">))]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">densityAtModes7 =
+   66.1665   66.1665</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_06.png" alt="" />
+
+</center>
+<p>The two values printed above are the mean density at the components of <code class="language-plaintext highlighter-rouge">odf1</code> and <code class="language-plaintext highlighter-rouge">odf2</code>. Both are 66.1665 mrd, although only <code class="language-plaintext highlighter-rouge">odf1</code> generated the data. Any mixture would fit the seven pole figures equally well. MTEX returns an admissible ODF close to uniform, which is a defensible choice but still not the true answer.</p>
+<p>Adding five more lattice planes to the measurement changes the picture.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% 1. step: simulate pole figure data for all crystal directions</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">,</span><span class="n">Miller</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">},</span><span class="n">cs</span><span class="p">)];</span>
+<span class="n">pf</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">);</span>
+
+<span class="c1">% reconstruct an ODF</span>
+<span class="n">odf</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">)</span>
+
+<span class="c1">% compare reconstructed and true densities at both sets of modes</span>
+<span class="n">densityAtModes12</span> <span class="o">=</span> <span class="p">[</span><span class="nb">mean</span><span class="p">(</span><span class="n">odf</span><span class="o">.</span><span class="nb">eval</span><span class="p">([</span><span class="n">orix</span><span class="p">,</span><span class="n">oriy</span><span class="p">,</span><span class="n">oriz</span><span class="p">])),</span> <span class="k">...</span>
+  <span class="nb">mean</span><span class="p">(</span><span class="n">odf</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">)),</span><span class="nb">mean</span><span class="p">(</span><span class="n">odf1</span><span class="o">.</span><span class="nb">eval</span><span class="p">([</span><span class="n">orix</span><span class="p">,</span><span class="n">oriy</span><span class="p">,</span><span class="n">oriz</span><span class="p">])),</span> <span class="k">...</span>
+  <span class="nb">mean</span><span class="p">(</span><span class="n">odf1</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">))]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">densityAtModes12 =
+  128.4721    5.3985  129.6016         0</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_07.png" alt="" />
+
+</center>
+<p>The four values are the reconstructed densities at the <code class="language-plaintext highlighter-rouge">odf1</code> and <code class="language-plaintext highlighter-rouge">odf2</code> modes, followed by the two true densities. The unwanted modes fall from 66.1665 to 5.3985 mrd, while the wanted modes rise from 66.1665 to 128.4721 mrd. The true values are 129.6016 and 0 mrd. Five more lattice planes have nearly resolved this ambiguity. This is the one ambiguity that more measurement can cure.</p>
+<h2 id="11">Friedel's law</h2>
+<p>Under Friedel's law, a diffraction peak is the same for a lattice plane and its opposite. An ordinary diffraction pole figure is therefore antipodally symmetric whether the crystal point group is or not.</p>
+<p>Consider point group -43m, which has no fourfold axis, and two orientations that differ by 90 degrees about the third Euler axis.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'-43m'</span><span class="p">);</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori1</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">60</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+
+<span class="n">ori2</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">60</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="mi">100</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">},</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">ori2</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_08.png" alt="" />
+
+</center>
+<p>The large and small markers do not coincide in the (111) and (123) panels. The two orientations are therefore distinct under -43m.</p>
+<p>Now impose antipodal symmetry, as ordinary diffraction does.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotPDF</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">ori2</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_09.png" alt="" />
+
+</center>
+<p>Every small marker now lies inside a large marker. The measurement cannot distinguish these orientations.</p>
+<p>Imposing antipodal symmetry on all pole figures is the same as adding the inversion to the point group, that is, replacing it by its Laue group. Doing that explicitly gives the same picture:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori1</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="n">ori1</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">Laue</span><span class="p">;</span>
+<span class="n">ori2</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="n">ori2</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">Laue</span><span class="p">;</span>
+<span class="n">h</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">CS</span><span class="o">.</span><span class="n">Laue</span><span class="p">;</span>
+
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">ori1</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">ori2</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_10.png" alt="" />
+
+</center>
+<p>The marker pairs still coincide, confirming the equivalence between antipodal pole figures and Laue symmetry.</p>
+<p>So an ODF reconstructed from diffraction pole figures is always centrosymmetric: its point group is a Laue group, and the noncentrosymmetric part of the texture is not lost by the algorithm but was never measured. No amount of additional ordinary pole figures recovers it. If the crystal point group is already a Laue group, as it is for most materials measured this way, this symmetry step costs nothing.</p>
+<p>This statement assumes ordinary kinematic diffraction. Anomalous or resonant scattering can distinguish opposite directions and has been used to determine the odd part of a texture.</p>
+<h2 id="16">The odd order harmonics</h2>
+<p>The third ambiguity survives even a complete set of pole figures and a centrosymmetric crystal. Consider triclinic symmetry and a weak unimodal ODF at the identity:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'-1'</span><span class="p">);</span>
+
+<span class="n">odf1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">uniformODF</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">/</span><span class="mi">3</span> <span class="o">*</span> <span class="k">...</span>
+  <span class="n">unimodalODF</span><span class="p">(</span><span class="n">orientation</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="n">cs</span><span class="p">),</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">cs</span><span class="p">),</span><span class="s1">'antipodal'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_11.png" alt="" />
+
+</center>
+<p>The three pole figures contain broad, weak maxima. They are the complete diffraction data used for the harmonic comparison below.</p>
+<p>Written as a harmonic series it is the same function in another representation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf1</span> <span class="o">=</span> <span class="n">FourierODF</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>
+
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">cs</span><span class="p">))</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_12.png" alt="" />
+
+</center>
+<p>The pole figures are unchanged by converting the representation.</p>
+<p>Its coefficients decay quickly, which is why cutting the series at degree 10 loses nothing here.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_13.png" alt="" />
+
+</center>
+<p>The spectrum falls rapidly towards zero by degree 10.</p>
+<p>Now build a second ODF that differs only in the odd order coefficients - all of them set to zero.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">A</span> <span class="o">=</span> <span class="nb">mod</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+<span class="n">odf2</span> <span class="o">=</span> <span class="nb">conv</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">odf2</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span>
+
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'odf1'</span><span class="p">,</span><span class="s1">'odf2'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_14.png" alt="" />
+
+</center>
+<p>The second spectrum agrees at every even degree and is zero at every odd degree. Nevertheless, all pole figures of <code class="language-plaintext highlighter-rouge">odf2</code> are identical to those of <code class="language-plaintext highlighter-rouge">odf1</code>:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotPDF</span><span class="p">(</span><span class="n">odf2</span><span class="p">,</span><span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">cs</span><span class="p">),</span><span class="s1">'antipodal'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_15.png" alt="" />
+
+</center>
+<p>The odd order coefficients simply do not appear in a pole figure. Nothing in the data distinguishes the two functions, and they are not the same function - along the alpha fibre:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">alphaFibre</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">zvector</span><span class="p">,(</span><span class="o">-</span><span class="mi">180</span><span class="p">:</span><span class="mi">180</span><span class="p">)</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="n">cs</span><span class="p">);</span>
+
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span><span class="n">odf1</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">alphaFibre</span><span class="p">),</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span><span class="n">odf2</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">alphaFibre</span><span class="p">),</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'odf1'</span><span class="p">,</span><span class="s1">'odf2'</span><span class="p">)</span>
+<span class="nb">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">])</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_16.png" alt="" />
+
+</center>
+<p>The two curves differ along the fibre even though their pole figures do not. Setting the odd degrees to zero has changed the ODF, not merely its representation.</p>
+<p>Flipping the sign of the odd coefficients instead of zeroing them makes the point sharper.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf1</span> <span class="o">=</span> <span class="mi">4</span><span class="p">/</span><span class="mi">5</span> <span class="o">*</span> <span class="n">uniformODF</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">/</span><span class="mi">5</span> <span class="o">*</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">orientation</span><span class="o">.</span><span class="n">id</span><span class="p">(</span><span class="n">cs</span><span class="p">),</span><span class="s1">'halfwidth'</span><span class="p">,</span><span class="mi">30</span><span class="o">*</span><span class="nb">degree</span><span class="p">);</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.^</span><span class="p">(</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">)</span><span class="o">'</span><span class="p">;</span>
+<span class="n">odf2</span> <span class="o">=</span> <span class="nb">conv</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">A</span><span class="p">);</span>
+
+<span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span><span class="n">odf1</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">alphaFibre</span><span class="p">),</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span><span class="n">odf2</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">alphaFibre</span><span class="p">),</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'odf1'</span><span class="p">,</span><span class="s1">'odf2'</span><span class="p">)</span>
+<span class="nb">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">])</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_17.png" alt="" />
+
+</center>
+<p>One ODF has a single preferred orientation at the identity; the other has preferred orientations at every 180 degree rotation. They have the same pole figures. No reconstruction method can prefer one over the other on the evidence.</p>
+<p>Matthies' way out is a physical prior, not additional information in the data. A real texture is usually a uniform background plus a few components. Among the ODFs that fit the data, ghost correction therefore prefers the one with the largest uniform portion. MTEX applies this correction by default.</p>
+<h2 id="24">Ghost correction at work</h2>
+<p>Simulate seven distinct pole figures from the peaked ODF above.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span> <span class="k">...</span>
+  <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">cs</span><span class="p">);</span>
+<span class="n">pf</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="n">h</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_18.png" alt="" />
+
+</center>
+<p>These smooth pole figures constrain the even-degree coefficients but contain no direct evidence for the missing odd degrees.</p>
+<p>Reconstruct with the default, which includes ghost correction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf_rec1</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span></code></pre></figure>
+<p>Reconstruct once more without ghost correction.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf_rec2</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'noGhostCorrection'</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span></code></pre></figure>
+<p>Along the alpha fibre the corrected reconstruction recovers <code class="language-plaintext highlighter-rouge">odf1</code> closely, while the uncorrected one lands between <code class="language-plaintext highlighter-rouge">odf1</code> and <code class="language-plaintext highlighter-rouge">odf2</code> - a peak that is too low sitting on a background that is too high.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span><span class="n">odf_rec1</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">alphaFibre</span><span class="p">),</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">:</span><span class="mi">180</span><span class="p">,</span><span class="n">odf_rec2</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">alphaFibre</span><span class="p">),</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'odf rec1'</span><span class="p">,</span><span class="s1">'odf rec2'</span><span class="p">)</span>
+<span class="nb">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">])</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_19.png" alt="" />
+
+</center>
+<p>The harmonic coefficients say the same thing in the natural language of the problem. Without correction, the recovered odd-degree coefficients are far too small.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">odf1</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'bandwidth'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">odf2</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">odf_rec1</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">odf_rec2</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="nb">legend</span><span class="p">(</span><span class="s1">'odf1'</span><span class="p">,</span><span class="s1">'odf2'</span><span class="p">,</span><span class="s1">'odf rec1'</span><span class="p">,</span><span class="s1">'odf rec2'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_20.png" alt="" />
+
+</center>
+<h2 id="29">The Santa Fe example</h2>
+<p>Historically, the ghost effect is tied to the Santa Fe model ODF. This standard texture gives different inversion programs the same known truth to reconstruct.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span> <span class="o">=</span> <span class="n">SantaFe</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_21.png" alt="" />
+
+</center>
+<p>The sections show several broad components on a nonzero background. That combination makes the model sensitive to an incorrect uniform portion.</p>
+<p>Simulate diffraction pole figures from it:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% crystal directions</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},{</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">},</span><span class="n">odf</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span>
+
+<span class="c1">% simulate pole figures</span>
+<span class="n">pf</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">SantaFe</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">);</span>
+
+<span class="c1">% plot them</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_22.png" alt="" />
+
+</center>
+<p>The four pole figures contain the projections that both reconstructions below must reproduce.</p>
+<p>Reconstruct twice.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% one with ghost correction</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span>
+
+<span class="c1">% one without ghost correction</span>
+<span class="n">rec2</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span><span class="s1">'noGhostCorrection'</span><span class="p">,</span><span class="s1">'silent'</span><span class="p">);</span></code></pre></figure>
+<p>Both reproduce the measured pole figures. This is the crux of the whole page: agreeing with the data is not evidence of being right.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="n">pf</span><span class="o">.</span><span class="n">h</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_23.png" alt="" />
+
+</center>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plotPDF</span><span class="p">(</span><span class="n">rec2</span><span class="p">,</span><span class="n">pf</span><span class="o">.</span><span class="n">h</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'complete'</span><span class="p">,</span><span class="s1">'upper'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_24.png" alt="" />
+
+</center>
+<p>The same maxima and contour shapes appear in both sets of recalculated pole figures. Agreement with the measured projections does not select the correct ODF.</p>
+<p>The ODFs, however, differ - and the extra components in the second one are the ghosts.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span>
+<span class="nb">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="s1">'gray'</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_25.png" alt="" />
+
+</center>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">rec2</span><span class="p">,</span><span class="s1">'gray'</span><span class="p">,</span><span class="s1">'contourf'</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_26.png" alt="" />
+
+</center>
+<p>Extra maxima appear in the uncorrected sections even though they did not spoil the pole-figure fit. Once more, the harmonic coefficients show where they come from.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span><span class="p">;</span>
+<span class="c1">% the harmonic coefficients of the sample ODF</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">SantaFe</span><span class="p">,</span><span class="s1">'bandwidth'</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span>
+
+<span class="c1">% keep plot for adding the next plots</span>
+<span class="nb">hold</span> <span class="n">on</span>
+
+<span class="c1">% the harmonic coefficients of the reconstruction with ghost correction:</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="s1">'bandwidth'</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1">% the harmonic coefficients of the reconstruction without ghost correction:</span>
+<span class="n">plotSpektra</span><span class="p">(</span><span class="n">rec2</span><span class="p">,</span><span class="s1">'bandwidth'</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'MarkerSize'</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">legend</span><span class="p">({</span><span class="s1">'true ODF'</span><span class="p">,</span><span class="s1">'with ghost correction'</span><span class="p">,</span><span class="s1">'without ghost correction'</span><span class="p">})</span>
+<span class="c1">% next plot command overwrites plot</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">setMTEXpref</span><span class="p">(</span><span class="s1">'defaultColorMap'</span><span class="p">,</span><span class="s1">'WhiteJet'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/PoleFigure2ODFAmbiguity_27.png" alt="" />
+
+</center>
+<p>Cubic crystal and orthorhombic sample symmetry leave degree 9 as the only odd degree with weight here, and that is where the three curves part: the true value 0.29 is met by the corrected reconstruction and missed by the uncorrected one, which reaches 0.10. Every even degree is reproduced either way. Ghost correction has selected a physically plausible member of the solution family; it has not created new measured information.</p>
+<h2 id="38">Further reading</h2>
+<div>
+<ul>
+<li>R.-J. Roe, <a href="https://doi.org/10.1063/1.1714396">Description of crystallite orientation in polycrystalline materials. III. General solution to pole figure inversion</a>, <i>Journal of Applied Physics</i> 36, 2024-2031, 1965. This is the classical harmonic solution and its ambiguity.</li>
+<li>S. Matthies and G. W. Vinel, <a href="https://doi.org/10.1002/pssb.2221120254">On the reproduction of the orientation distribution function of texturized samples from reduced pole figures using the conception of a conditional ghost correction</a>, <i>physica status solidi (b)</i> 112, K111-K114, 1982. This introduces the conditional ghost correction used by MTEX.</li>
+<li>R. Hielscher and H. Schaeben, <a href="https://doi.org/10.1107/S0021889808030112">A novel pole figure inversion method: specification of the MTEX algorithm</a>, <i>Journal of Applied Crystallography</i> 41, 1024-1037, 2008. This specifies the component method implemented by <a href="PoleFigure.calcODF.html"><code class="language-plaintext highlighter-rouge">calcODF</code></a>.</li>
+<li>H.-J. Bunge and C. Esling, <a href="https://doi.org/10.1107/S0021889881009308">Determination of the odd part of the texture function by anomalous scattering</a>, <i>Journal of Applied Crystallography</i> 14, 253-255, 1981. This explains the experimental exception to the ordinary Friedel limitation.</li>
+</ul>
+</div>
+<h2 id="39">Next</h2>
+<p>
+<a href="PoleFigure2ODFGhostCorrection.html">Ghost Effect Analysis</a> quantifies what the correction buys on a deliberately weak texture. <a href="PoleFigureSantaFe.html">The Santa Fe Example</a> then adds counting noise and compares both reconstructions with the known model.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/PoleFigure2ODFAmbiguity.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

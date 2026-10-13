@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Vector Fields in Orientation Space | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A vector field on the rotation group assigns a tangent vector to every orientation. Evaluating an SO3VectorField at an orientation \(R\) returns an SO3TangentVector attached to \(R\).">
+<link rel="canonical" href="https://mtex-playground.github.io/SO3FunVectorField.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SO3FunVectorField.html#page",
+      "name": "Vector Fields in Orientation Space",
+      "headline": "Vector Fields in Orientation Space",
+      "description": "A vector field on the rotation group assigns a tangent vector to every orientation. Evaluating an SO3VectorField at an orientation \\(R\\) returns an SO3TangentVector attached to \\(R\\).",
+      "url": "https://mtex-playground.github.io/SO3FunVectorField.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SO3FunVectorField.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SO3FunVectorField.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Vector Fields in Orientation Space</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Vector Fields in Orientation Space</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_SO3FunVectorField.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/SO3Functions/SO3FunVectorField.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>A vector field on the rotation group assigns a tangent vector to every orientation. Evaluating an <a href="SO3VectorField.SO3VectorField.html">SO3VectorField</a> at an orientation \(R\) returns an <a href="SO3TangentVector.SO3TangentVector.html">SO3TangentVector</a> attached to \(R\).</p>
+<p>Read <a href="RotationTangentSpace.html">The Tangent Space on the Rotation Group</a> first for the definition of tangent vectors and their left and right representations. Vector fields model orientation-dependent spin in Taylor and Sachs calculations. The gradient of an orientation distribution function (ODF) is another important example.</p>
+<!--/introduction-->
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">A first vector field: the gradient of an ODF</h2>
+<p>Consider the model ODF for a quartz specimen known as the Dubna texture. The gradient points in the direction of the fastest local increase of the ODF, and its norm gives that rate of increase.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf</span> <span class="o">=</span> <span class="n">SO3Fun</span><span class="o">.</span><span class="n">dubna</span><span class="p">;</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">odf</span><span class="o">.</span><span class="n">grad</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">G = SO3VectorFieldHarmonic (Quartz → y↑→x)
+  bandwidth: 48
+  tangent space: leftVector</code></pre></figure>
+<p>Evaluation at one sampled orientation returns the tangent vector attached to that orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori</span> <span class="o">=</span> <span class="n">odf</span><span class="o">.</span><span class="n">discreteSample</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">G</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3TangentVector (y↑→x)
+ intern symmetries: Quartz → y↑→x
+ tangentSpace: leftVector
+     x    y    z
+  60.5 -106 29.6</code></pre></figure>
+<p>Plot the ODF in sigma sections and draw the gradient arrows on top.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">7.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_01.png" alt="" />
+
+</center>
+<p>The arrows point uphill towards the nearest local maximum. Their lengths increase where the ODF changes more steeply. This ascent direction is the basis of the <a href="SO3Fun.steepestDescent.html">steepest-descent algorithm</a> used by <a href="SO3Fun.max.html"><code class="language-plaintext highlighter-rouge">max</code></a> and <a href="SO3Fun.calcComponents.html"><code class="language-plaintext highlighter-rouge">calcComponents</code></a>.</p>
+<h2 id="6">Three representations</h2>
+<p>MTEX provides three interchangeable representations. A harmonic or RBF field stores three scalar component functions using the array convention introduced in <a href="SO3FunVectorValued.html">Vector-Valued Orientation Functions</a>.</p>
+<p>
+   <table class="usertable">
+      <tr>
+         <td>
+               <p>representation</p>
+         </td>
+         <td>
+               <p>class</p>
+         </td>
+         <td>
+               <p>when to use it</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>three harmonic component functions</p>
+         </td>
+         <td>
+               <p>
+                  <a href="SO3VectorFieldHarmonic.SO3VectorFieldHarmonic.html">
+                     <tt>SO3VectorFieldHarmonic</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>differentiation and global spectral approximation</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>three radial-basis component functions</p>
+         </td>
+         <td>
+               <p>
+                  <a href="SO3VectorFieldRBF.SO3VectorFieldRBF.html">
+                     <tt>SO3VectorFieldRBF</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>approximation by local kernels</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>an evaluation formula</p>
+         </td>
+         <td>
+               <p>
+                  <a href="SO3VectorFieldHandle.SO3VectorFieldHandle.html">
+                     <tt>SO3VectorFieldHandle</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>an explicit rule that can be evaluated at any orientation</p>
+         </td>
+      </tr>
+   </table>
+</p>
+<p>All three representations support the common <a href="SO3VectorField.SO3VectorField.html">SO3VectorField</a> operations.</p>
+<h2 id="7">Left and right tangent-vector coordinates</h2>
+<p>An <a href="SO3VectorField.SO3VectorField.html">SO3VectorField</a> has a requested tangent-space representation and two associated symmetries. Left coordinates are the default. The <a href="SO3VectorField.right.html"><code class="language-plaintext highlighter-rouge">right</code></a> and <a href="SO3VectorField.left.html"><code class="language-plaintext highlighter-rouge">left</code></a> methods re-express the same geometric vectors; they do not change the vectors or their base orientations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">GR</span> <span class="o">=</span> <span class="n">right</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">GR</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">);</span>
+<span class="n">vRight</span> <span class="o">=</span> <span class="n">right</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">));</span>
+<span class="nb">norm</span><span class="p">(</span><span class="n">v</span><span class="o">-</span><span class="n">vRight</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">GR = SO3VectorFieldHarmonic (Quartz → y↑→x)
+  bandwidth: 48
+  tangent space: rightVector
+  intern symmetries: Quartz → y↑→x
+  intern tangent space: leftVector
+ 
+ans =
+     0</code></pre></figure>
+<p>The zero residual shows that converting the field before evaluation and converting the evaluated tangent vector give the same result. Arithmetic also converts compatible fields to a common representation automatically.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">G</span> <span class="o">+</span> <span class="n">GR</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3VectorFieldHarmonic (Quartz → y↑→x)
+  bandwidth: 48
+  tangent space: leftVector</code></pre></figure>
+<h2 id="9">Why the visible symmetries change</h2>
+<p>A field has an internal tangent-space representation used for storage and an external representation requested through its <code class="language-plaintext highlighter-rouge">tangentSpace</code> property. Evaluation first constructs the tangent vector in the internal representation and then converts it to the requested representation.</p>
+<p>Symmetry acts differently on the two coordinate choices. For a right-represented tangent vector, evaluations at symmetry-equivalent orientations are meaningful only with respect to the left symmetry. For a left-represented tangent vector, the reverse applies.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ori</span> <span class="o">=</span> <span class="n">orientation</span><span class="o">.</span><span class="nb">rand</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">CS</span><span class="p">,</span><span class="n">G</span><span class="o">.</span><span class="n">SS</span><span class="p">);</span>
+<span class="n">G</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">)</span>
+<span class="n">GR</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3TangentVector (y↑→x)
+ intern symmetries: Quartz → y↑→x
+ size: 6 × 1
+ tangentSpace: leftVector
+        x        y        z
+  -0.0585   0.0209 -0.00396
+  -0.0585   0.0209 -0.00396
+  -0.0585   0.0209 -0.00396
+  -0.0585   0.0209 -0.00396
+  -0.0585   0.0209 -0.00396
+  -0.0585   0.0209 -0.00396
+ 
+ans = SO3TangentVector (Quartz)
+ intern symmetries: Quartz → y↑→x
+ size: 6 × 1
+ tangentSpace: rightVector
+         x        y        z
+   0.00932 -0.00683  -0.0612
+    0.0106 -0.00465   0.0612
+   -0.0106 -0.00465  -0.0612
+  -0.00932 -0.00683   0.0612
+   0.00126   0.0115  -0.0612
+  -0.00126   0.0115   0.0612</code></pre></figure>
+<p>MTEX therefore keeps the original crystal and specimen symmetries in two hidden properties. The symmetry of the internal three-component <a href="SO3Fun.SO3Fun.html">SO3Fun</a> depends on the internal tangent space. The externally visible symmetry depends on the requested tangent space. This is why <code class="language-plaintext highlighter-rouge">G</code> and <code class="language-plaintext highlighter-rouge">GR</code> have different external symmetries even though they describe the same field.</p>
+<h2 id="11">Operations on vector fields</h2>
+<p>The following operations apply to vector fields <code class="language-plaintext highlighter-rouge">VF</code>, <code class="language-plaintext highlighter-rouge">VF1</code> and <code class="language-plaintext highlighter-rouge">VF2</code>:</p>
+<div>
+<ul>
+<li>sums, differences, scaling and division</li>
+<li>inner products with <a href="SO3VectorField.dot.html"><code class="language-plaintext highlighter-rouge">dot(VF1,VF2)</code></a>
+</li>
+<li>cross products with <a href="SO3VectorField.cross.html"><code class="language-plaintext highlighter-rouge">cross(VF1,VF2)</code></a>
+</li>
+<li>norms with <a href="SO3VectorField.norm.html"><code class="language-plaintext highlighter-rouge">norm(VF)</code></a>
+</li>
+<li>squared norms with <a href="SO3VectorField.normSquare.html"><code class="language-plaintext highlighter-rouge">normSquare(VF)</code></a>
+</li>
+<li>normalization with <a href="SO3VectorField.normalize.html"><code class="language-plaintext highlighter-rouge">normalize(VF)</code></a>
+</li>
+<li>rotation with <a href="SO3VectorField.rotate.html"><code class="language-plaintext highlighter-rouge">rotate(VF,rot)</code></a>
+</li>
+<li>averages with <a href="SO3VectorField.mean.html"><code class="language-plaintext highlighter-rouge">mean(VF)</code></a>
+</li>
+</ul>
+</div>
+<p>Since a gradient is itself a vector field, MTEX can also compute its divergence, curl and scalar antiderivative.</p>
+<h2 id="12">Divergence and the Laplacian</h2>
+<p>Treating <code class="language-plaintext highlighter-rouge">G</code> as an orientation-space velocity field gives an intuitive reading of its divergence. Negative divergence marks a sink where nearby orientations condense. Positive divergence marks a source where they spread apart.</p>
+<p>The divergence of a gradient equals the Laplacian of its scalar field. Plot the two calculations side by side at the same sigma section.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">div</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">,</span><span class="mi">60</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">laplace</span><span class="p">(</span><span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="n">odf</span><span class="p">)),</span><span class="s1">'sigma'</span><span class="p">,</span><span class="mi">60</span><span class="o">*</span><span class="nb">degree</span><span class="p">)</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_02.png" alt="" />
+
+</center>
+<p>The source and sink regions, contour shapes and colour scale agree in the two panels. The left panel was computed from the vector field, whereas the right panel was computed directly from the ODF.</p>
+<h2 id="14">Curl and conservative fields</h2>
+<p>Curl describes the axis of local circulation within orientation space. The curl of a gradient is zero, so the next plot should contain no nonzero arrows.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="nb">curl</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_03.png" alt="" />
+
+</center>
+<p>Vanishing curl identifies a conservative field: a field that is the gradient of a scalar potential. The <a href="SO3VectorField.antiderivative.html"><code class="language-plaintext highlighter-rouge">antiderivative</code></a> method reconstructs that potential.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf2</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">antiderivative</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">odf2 = SO3FunHarmonic (Quartz → y↑→x)
+  bandwidth: 48
+  weight: 0</code></pre></figure>
+<p>A gradient loses the additive constant of its source function. Restoring the original mean makes the reconstructed potential coincide with <code class="language-plaintext highlighter-rouge">odf</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">odf2</span> <span class="o">=</span> <span class="n">odf2</span> <span class="o">+</span> <span class="nb">mean</span><span class="p">(</span><span class="n">odf</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">odf2</span><span class="p">,</span><span class="s1">'sigma'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_04.png" alt="" />
+
+</center>
+<h2 id="17">Define a field by an evaluation formula</h2>
+<p>An anonymous function is convenient when a vector formula is known. The following rule uses the rotation axis multiplied by the rotation angle, with cubic symmetry on both sides.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'432'</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">mori</span><span class="p">)</span> <span class="nb">axis</span><span class="p">(</span><span class="n">mori</span><span class="p">)</span> <span class="o">.*</span> <span class="nb">angle</span><span class="p">(</span><span class="n">mori</span><span class="p">);</span>
+<span class="n">VF</span> <span class="o">=</span> <span class="n">SO3VectorFieldHandle</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">cs</span><span class="p">,</span><span class="n">cs</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">cs = crystalSymmetry (⊙c→a)
+ 
+  symmetry: 432    
+  elements: 24     
+  a, b, c : 1, 1, 1
+ 
+ 
+VF = SO3VectorFieldHandle (432 → 1)
+  tangent space: leftVector
+  intern symmetries: 432 → 432</code></pre></figure>
+<p>Evaluating a \(10^\circ\) rotation about \([1\;2\;3]\) and reducing the axis to small integers recovers the expected direction ratio \(1:2:3\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">round</span><span class="p">(</span><span class="n">VF</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">orientation</span><span class="o">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="mi">10</span><span class="o">*</span><span class="nb">degree</span><span class="p">)))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3TangentVector (crystal)
+ intern symmetries: 432 → 432
+ tangentSpace: leftVector
+  x y z
+  1 2 3</code></pre></figure>
+<p>The following axis-angle plot samples the formula throughout the cubic fundamental region. Arrow count is consistent with that small region. The arrow directions have not been verified independently against <code class="language-plaintext highlighter-rouge">eval</code> for an <a href="SO3VectorFieldHandle.SO3VectorFieldHandle.html">SO3VectorFieldHandle</a>, so use the plot qualitatively and treat evaluated values as authoritative.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">quiver3</span><span class="p">(</span><span class="n">VF</span><span class="p">,</span><span class="s1">'axisAngle'</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">7.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">,</span><span class="k">...</span>
+  <span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_05.png" alt="" />
+
+</center>
+<h2 id="20">Convert a field to harmonic form</h2>
+<p>Passing any <a href="SO3VectorField.SO3VectorField.html">SO3VectorField</a> to the harmonic constructor expands its three components by quadrature.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3VectorFieldHarmonic</span><span class="p">(</span><span class="n">VF</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3VectorFieldHarmonic (432 → 1)
+  bandwidth: 64
+  tangent space: leftVector
+  intern symmetries: 432 → 432</code></pre></figure>
+<h2 id="21">Fit harmonic components to sampled values</h2>
+<p>A second construction starts from rotations and one <a href="vector3d.vector3d.html">vector3d</a> value at each rotation. The first array dimension again corresponds to nodes.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">nodes</span> <span class="o">=</span> <span class="n">equispacedSO3Grid</span><span class="p">(</span><span class="n">specimenSymmetry</span><span class="p">(</span><span class="s1">'1'</span><span class="p">),</span><span class="s1">'points'</span><span class="p">,</span><span class="mf">1e3</span><span class="p">);</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">(:);</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">vector3d</span><span class="o">.</span><span class="n">byPolar</span><span class="p">(</span><span class="nb">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">nodes</span><span class="o">.</span><span class="nb">angle</span><span class="p">),</span><span class="n">nodes</span><span class="o">.</span><span class="n">phi2</span><span class="o">+</span><span class="nb">pi</span><span class="p">/</span><span class="mi">2</span><span class="p">);</span></code></pre></figure>
+<p>The approximation below produces a harmonic vector field with bandwidth 16.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3VF1</span> <span class="o">=</span> <span class="n">SO3VectorFieldHarmonic</span><span class="o">.</span><span class="n">approximate</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">'bandwidth'</span><span class="p">,</span><span class="mi">16</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">SO3VF1 = SO3VectorFieldHarmonic (y↑→x → y↑→x)
+  bandwidth: 16
+  tangent space: leftVector</code></pre></figure>
+<h2 id="23">Construct by quadrature of a function handle</h2>
+<p>A handle that accepts a <a href="rotation.rotation.html">rotation</a> and returns a <a href="vector3d.vector3d.html">vector3d</a> can also be passed directly to quadrature. Here the earlier cubic formula produces a harmonic vector field.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3VF2</span> <span class="o">=</span> <span class="n">SO3VectorFieldHarmonic</span><span class="o">.</span><span class="n">quadrature</span><span class="p">(</span><span class="o">@</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="n">f</span><span class="p">(</span><span class="n">v</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">SO3VF2 = SO3VectorFieldHarmonic (y↑→x → y↑→x)
+  bandwidth: 64
+  tangent space: leftVector</code></pre></figure>
+<h2 id="24">Construct from three scalar harmonic functions</h2>
+<p>A three-component <a href="SO3FunHarmonic.SO3FunHarmonic.html">SO3FunHarmonic</a> can be wrapped directly. Its first, second and third entries become the \(x\), \(y\) and \(z\) components of the vector field.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="nb">rand</span><span class="p">(</span><span class="mf">1e3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">SO3VF3</span> <span class="o">=</span> <span class="n">SO3VectorFieldHarmonic</span><span class="p">(</span><span class="n">SO3F</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">SO3F = SO3FunHarmonic (y↑→x → y↑→x)
+  isReal: false
+  size: 3 × 1
+  bandwidth: 9
+  weights: [0.7 0.05 0.75]
+ 
+ 
+SO3VF3 = SO3VectorFieldHarmonic (y↑→x → y↑→x)
+  isReal: false
+  bandwidth: 9
+  tangent space: leftVector</code></pre></figure>
+<h2 id="25">Application: orientation-dependent spin in the Taylor model</h2>
+<p>Taylor theory accommodates a prescribed strain by activating slip systems in each crystal. The antisymmetric part of the resulting deformation describes the local lattice spin, and therefore the local misorientation predicted for each orientation. Without an input orientation, <a href="strainTensor.calcTaylor.html"><code class="language-plaintext highlighter-rouge">calcTaylor</code></a> returns this spin as an <a href="SO3VectorField.SO3VectorField.html">SO3VectorField</a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="p">(</span><span class="s1">'432'</span><span class="p">);</span>
+<span class="n">sS</span> <span class="o">=</span> <span class="n">slipSystem</span><span class="o">.</span><span class="n">bcc</span><span class="p">(</span><span class="n">cs</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">sS = slipSystem (432)
+ size: 1 × 3
+ 
+   u    v    w  | h    k    l CRSS
+   1   -1    1    0    1    1    1
+  -1    1    1    2    1    1    1
+  -1    1    1    3    2    1    1</code></pre></figure>
+<p>Set plane strain with \(q=0\) and calculate the spin field for the symmetrised body-centred-cubic slip systems.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">q</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="n">strainTensor</span><span class="p">(</span><span class="nb">diag</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span><span class="n">q</span> <span class="o">-</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">q</span><span class="p">)]))</span>
+<span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="o">~</span><span class="p">,</span><span class="n">W</span><span class="p">]</span> <span class="o">=</span> <span class="n">calcTaylor</span><span class="p">(</span><span class="n">epsilon</span><span class="p">,</span><span class="n">sS</span><span class="o">.</span><span class="n">symmetrise</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">epsilon = strainTensor (y↑→x)
+  type: Lagrange 
+  rank: 2 (3 × 3)
+ 
+  1  0  0
+  0  0  0
+  0  0 -1
+ 
+W = SO3VectorFieldHarmonic (1 → y↑→x)
+  bandwidth: 32
+  tangent space: rightSpinTensor
+  intern symmetries: 432 → y↑→x
+  intern tangent space: leftVector</code></pre></figure>
+<p>Display the spin directions in four Euler-angle sections.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">sP</span> <span class="o">=</span> <span class="n">phi1Sections</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span><span class="n">specimenSymmetry</span><span class="p">(</span><span class="s1">'222'</span><span class="p">));</span>
+<span class="n">sP</span><span class="o">.</span><span class="n">phi1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">70</span><span class="p">)</span><span class="o">*</span><span class="nb">degree</span><span class="p">;</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">sP</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">7.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span> <span class="mi">2</span><span class="p">])</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_06.png" alt="" />
+
+</center>
+<p>Direction and length vary with orientation, showing that the Taylor model predicts a different local misorientation across orientation space. The value at the copper orientation can be retrieved directly.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">WCopper</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">orientation</span><span class="o">.</span><span class="nb">copper</span><span class="p">(</span><span class="n">cs</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">WCopper = spinTensor (crystal)
+  rank: 2 (3 × 3)
+ 
+ *10^-2
+      0      0  32.15
+      0      0  32.15
+ -32.15 -32.15      0</code></pre></figure>
+<h2 id="29">The amount of spin</h2>
+<p>The norm of the spin vector is the angle of local misorientation. Its maximum locates the orientation with the largest predicted rotation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">oriMax</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="n">W</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">oriMax = orientation (432 → y↑→x)
+ 
+  Bunge Euler angles in degree
+     phi1     Phi    phi2
+  268.696 45.4283 63.3496</code></pre></figure>
+<p>Plot the norm at \(0.5^\circ\) resolution and overlay the more coarsely sampled vector field. The background shows magnitude, the arrows show direction, and the annotation marks <code class="language-plaintext highlighter-rouge">oriMax</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="n">W</span><span class="p">),</span><span class="n">sP</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">mtexColorMap</span> <span class="n">LaboTeX</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">sP</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">7.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'color'</span><span class="p">,</span><span class="s1">'black'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">oriMax</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_07.png" alt="" />
+
+</center>
+<h2 id="31">Compare spin with a crystal direction</h2>
+<p>Since <code class="language-plaintext highlighter-rouge">W</code> gives the rotation axis of the local misorientation, its inner product with a chosen direction measures signed alignment. Here the direction is crystal \([100]\).</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="nb">dot</span><span class="p">(</span><span class="n">W</span><span class="p">,</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">cs</span><span class="p">)),</span><span class="n">sP</span><span class="p">,</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">mtexColorMap</span> <span class="n">blue2red</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_08.png" alt="" />
+
+</center>
+<p>Positive and negative regions indicate parallel and antiparallel components along \([100]\). Values near zero indicate that the spin axis is locally perpendicular to that direction.</p>
+<h2 id="33">Sources and sinks of the Taylor spin field</h2>
+<p>Finally compute the divergence of <code class="language-plaintext highlighter-rouge">W</code>. As in the gradient example, negative values are sinks and positive values are sources in orientation space.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">flux</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">div</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">flux</span><span class="p">,</span><span class="n">sP</span><span class="p">,</span><span class="s1">'resolution'</span><span class="p">,</span><span class="mf">0.5</span><span class="o">*</span><span class="nb">degree</span><span class="p">,</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">2</span> <span class="mi">2</span><span class="p">],</span><span class="k">...</span>
+  <span class="s1">'faceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">mtexColorMap</span> <span class="n">blue2red</span>
+<span class="n">mtexColorbar</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">flux = SO3FunHarmonic (432 → y↑→x)
+  bandwidth: 32
+  weight: 0</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorField_09.png" alt="" />
+
+</center>
+<p>The alternating red and blue regions show that the Taylor spin field moves orientations towards some parts of orientation space and away from others.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">close</span> <span class="nb">all</span></code></pre></figure>
+<h2 id="35">References</h2>
+<div>
+<ul>
+<li>A. Morawiec, <a href="https://doi.org/10.1007/978-3-662-09156-2">Orientations and Rotations: Computations in Crystallographic Textures</a>, Springer, 2004, develops the tangent-space geometry used for gradients and vector fields on \(\mathrm{SO}(3)\).</li>
+<li>H.-J. Bunge, <a href="https://doi.org/10.1002/crat.19700050112">Some applications of the Taylor theory of polycrystal plasticity</a>, <i>Kristall und Technik</i> 5 (1970), 145--175, gives the orientation-dependent Taylor factors and spin fields used in the final example.</li>
+</ul>
+</div>
+<h2 id="36">Next</h2>
+<p>Continue with <a href="SO3Kernels.html">Rotational Kernel Functions</a> to understand the localized basis functions used by the RBF representation listed on this page.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SO3FunVectorField.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

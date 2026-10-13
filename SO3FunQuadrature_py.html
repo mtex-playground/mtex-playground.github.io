@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Quadrature of Orientation-Dependent Functions | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/SO3FunQuadrature_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SO3FunQuadrature_py.html#page",
+      "name": "Quadrature of Orientation-Dependent Functions",
+      "headline": "Quadrature of Orientation-Dependent Functions",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/SO3FunQuadrature_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SO3FunQuadrature_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SO3FunQuadrature_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Quadrature of Orientation-Dependent Functions</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/SO3FunQuadrature.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/SO3Functions/SO3FunQuadrature.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>The preceding interpolation pages start from observations at fixed orientations.
+Quadrature addresses a different problem: the function can be evaluated at orientations
+chosen by MTEX. Those evaluations may come from an <code class="language-plaintext highlighter-rouge">SO3Fun</code>, a Python function, a
+simulation, or a physical experiment that can be queried at prescribed orientations.</p>
+
+<p>MTEX chooses a grid of orientations and matching integration weights. It then converts the
+evaluated values into the Fourier coefficients of an
+<a href="SO3FunHarmonicRepresentation_py.html">SO3FunHarmonic</a>. This page shows the one-command route
+and the explicit grid–evaluate–quadrature sequence.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="approximate-a-known-function">Approximate a known function</h2>
+
+<p>Use the Dubna orientation distribution function (ODF) as the evaluator. An ODF is a
+nonnegative orientation-dependent density with mean 1.</p>
+
+<p>The <a href="SO3FunHarmonic.SO3FunHarmonic.html">SO3FunHarmonic</a> constructor falls back on
+<a href="SO3FunHarmonic.quadrature.html">SO3FunHarmonic.quadrature</a> only when its input has no
+faster route of its own. The Dubna ODF is an <code class="language-plaintext highlighter-rouge">SO3FunRBF</code>, which builds its coefficients
+from its centres and kernel, so no quadrature grid is used in the call below. The explicit
+sequence later on this page takes the quadrature route.</p>
+
+<p>The bandwidth is the largest harmonic degree retained in the result. Bandwidth 14 is
+deliberately lower than the bandwidth of the supplied ODF, so this first conversion is an
+approximation rather than exact recovery.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf</span> <span class="o">=</span> <span class="n">SO3Fun</span><span class="p">.</span><span class="n">dubna</span><span class="p">()</span>
+<span class="n">odf</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunRBF (Quartz → y↑→x)
+  multimodal components
+    kernel: de la Vallee Poussin, halfwidth 5°
+    center: 20040 orientations
+    weight: 1
+    Bunge Euler angles in degree
+    phi1   Phi  phi2    weight
+      90  2.49   210   3.2e-06
+      90  2.49   215  4.22e-06
+      90  2.49   220  5.37e-06
+      90  2.49   225  5.75e-06
+      90  2.49   230   5.4e-06
+       ⋮     ⋮     ⋮         ⋮
+     7.5  97.1   7.5  1.58e-06
+    52.5  97.1   292  1.21e-05
+    57.5  97.1   298  8.61e-06
+    62.5  97.1   302   6.1e-06
+    67.5  97.1   308  5.68e-06
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odfHarmonic</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">odfHarmonic</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Quartz → y↑→x)
+  bandwidth: 14
+  mean     : 1
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">relativeApproximationError</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="n">odfHarmonic</span><span class="p">)</span>
+<span class="n">relativeApproximationError</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.1866
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunQuadrature-5.png" /></center>
+
+<p>The original section plot contains narrow maxima as well as broad regions of high density.
+Compare it with the bandwidth-limited result.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">odfHarmonic</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunQuadrature-6.png" /></center>
+
+<p>The main maxima stay in the same sections, but their sharpest structure is smoothed. The
+printed error is truncation alone, since this route carries no quadrature step. Raising
+the bandwidth represents finer angular detail but requires more evaluations.</p>
+
+<p>Clenshaw–Curtis is the default quadrature scheme. Add the <code class="language-plaintext highlighter-rouge">'GaussLegendre'</code> flag to
+select the other predefined scheme.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odfGauss</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="n">odf</span><span class="p">,</span> <span class="s">'GaussLegendre'</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">odfGauss</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Quartz → y↑→x)
+  bandwidth: 14
+  mean     : 1
+</code></pre></div></div>
+
+<h2 id="choose-and-evaluate-the-quadrature-nodes">Choose and evaluate the quadrature nodes</h2>
+
+<p>When evaluations come from an external routine, construct the quadrature grid explicitly.
+The next function stands in for a simulation or experiment. Replace only its body in an
+application; the remaining sequence stays the same.</p>
+
+<p>Exactness can only be tested against a band-limited function. Truncate the known ODF at
+bandwidth 14 to create such a reference for this controlled example.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bw</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="n">odf</span><span class="p">)</span>
+<span class="n">reference</span><span class="p">.</span><span class="n">bandwidth</span> <span class="o">=</span> <span class="n">bw</span>
+<span class="n">experiment</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ori</span><span class="p">:</span> <span class="n">reference</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">reference</span><span class="p">.</span><span class="n">CS</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="n">reference</span><span class="p">.</span><span class="n">SS</span>
+
+<span class="n">CC_grid</span> <span class="o">=</span> <span class="n">quadratureSO3Grid</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="s">'ClenshawCurtis'</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span>
+<span class="n">CC_orientations</span> <span class="o">=</span> <span class="n">CC_grid</span><span class="p">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">CC_values</span> <span class="o">=</span> <span class="n">experiment</span><span class="p">(</span><span class="n">CC_orientations</span><span class="p">)</span>
+<span class="n">CC_result</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">.</span><span class="n">quadrature</span><span class="p">(</span><span class="n">CC_grid</span><span class="p">,</span> <span class="n">CC_values</span><span class="p">)</span>
+<span class="n">CC_result</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Quartz → y↑→x)
+  bandwidth: 14
+  mean     : 1
+</code></pre></div></div>
+
+<p>The symmetry of the crystal and specimen makes many nodes equivalent. <code class="language-plaintext highlighter-rouge">CC_grid.flatten()</code>
+contains the smaller set of distinct nodes on which the expensive evaluator is called. The
+grid object retains the mapping and weights needed to integrate over the complete
+orientation space.</p>
+
+<p><a href="SO3FunHarmonic.interpolate.html">SO3FunHarmonic.interpolate</a> recognizes a
+<code class="language-plaintext highlighter-rouge">quadratureSO3Grid</code> and performs the same calculation. For example,
+<code class="language-plaintext highlighter-rouge">SO3FunHarmonic.interpolate(CC_grid, CC_values)</code> is equivalent here.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numberOfCCEvaluations</span> <span class="o">=</span> <span class="n">CC_grid</span><span class="p">.</span><span class="n">size</span>
+<span class="n">numberOfCCEvaluations</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4060
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numberOfCCFullGridNodes</span> <span class="o">=</span> <span class="n">CC_grid</span><span class="p">.</span><span class="n">fullGrid</span><span class="p">.</span><span class="n">size</span>
+<span class="n">numberOfCCFullGridNodes</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8700
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CCRecoveryError</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">CC_result</span><span class="p">)</span>
+<span class="n">CCRecoveryError</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4.0744e-09
+</code></pre></div></div>
+
+<h2 id="compare-the-two-schemes">Compare the two schemes</h2>
+
+<p>Gauss–Legendre uses fewer nodes in the second Euler angle. It therefore needs about half
+as many function evaluations as Clenshaw–Curtis at the same bandwidth. The transform
+itself is slightly more time-consuming, so Gauss–Legendre is most attractive when each
+external evaluation is expensive.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GL_grid</span> <span class="o">=</span> <span class="n">quadratureSO3Grid</span><span class="p">(</span><span class="n">bw</span><span class="p">,</span> <span class="s">'GaussLegendre'</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span>
+<span class="n">GL_orientations</span> <span class="o">=</span> <span class="n">GL_grid</span><span class="p">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">GL_values</span> <span class="o">=</span> <span class="n">experiment</span><span class="p">(</span><span class="n">GL_orientations</span><span class="p">)</span>
+<span class="n">GL_result</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">.</span><span class="n">quadrature</span><span class="p">(</span><span class="n">GL_grid</span><span class="p">,</span> <span class="n">GL_values</span><span class="p">)</span>
+<span class="n">GL_result</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Quartz → y↑→x)
+  bandwidth: 14
+  mean     : 1
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numberOfGLEvaluations</span> <span class="o">=</span> <span class="n">GL_grid</span><span class="p">.</span><span class="n">size</span>
+<span class="n">numberOfGLEvaluations</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2250
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numberOfGLFullGridNodes</span> <span class="o">=</span> <span class="n">GL_grid</span><span class="p">.</span><span class="n">fullGrid</span><span class="p">.</span><span class="n">size</span>
+<span class="n">numberOfGLFullGridNodes</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4500
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GLRecoveryError</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">GL_result</span><span class="p">)</span>
+<span class="n">GLRecoveryError</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6.2838e-09
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">schemeDifference</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">CC_result</span><span class="p">,</span> <span class="n">GL_result</span><span class="p">)</span>
+<span class="n">schemeDifference</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5.5621e-09
+</code></pre></div></div>
+
+<p>For this bandwidth and symmetry, the printed counts of distinct nodes are 4060 for
+Clenshaw–Curtis and 2250 for Gauss–Legendre. Thus Gauss–Legendre uses 55 percent as many
+external evaluations. Both recover the reference to the numerical accuracy of the
+transforms, and their difference is of the same small order.</p>
+
+<p>Both rules are exact, up to numerical transform accuracy, for rotational harmonic
+functions whose bandwidth does not exceed the grid bandwidth. They need not return the same
+truncation of a function containing higher degrees. This distinction is why the example
+tests exactness with <code class="language-plaintext highlighter-rouge">reference</code> rather than directly with the bandwidth-48 <code class="language-plaintext highlighter-rouge">odf</code>.</p>
+
+<h2 id="when-the-orientations-cannot-be-chosen">When the orientations cannot be chosen</h2>
+
+<p>Quadrature is not appropriate when an instrument has already fixed the sample
+orientations. Random orientations do not become a quadrature rule merely because there are
+many of them. Use <a href="SO3FunApproximationTheory_py.html">interpolation from discrete data</a> in
+that case.</p>
+
+<p>If an external experiment can be run at arbitrary orientations, the quadrature grid is the
+optimal structured choice for a harmonic result. If an RBF result is required instead,
+evaluate an <a href="equispacedSO3Grid.html">equispacedSO3Grid</a> and pass the resulting
+orientation–value pairs to <a href="SO3FunRBF.interpolate.html">SO3FunRBF.interpolate</a>.</p>
+
+<h2 id="quadrature-is-not-rbf-fitting">Quadrature is not RBF fitting</h2>
+
+<p><a href="RBFApproximationTheory_py.html">RBF-Kernel Interpolation</a> develops the RBF workflow in full.
+An <a href="SO3FunRBF.SO3FunRBF.html">SO3FunRBF</a> represents a function as a weighted sum of
+rotational kernels centred at chosen orientations. Its spatial method chooses the
+coefficients by minimizing pointwise error at an evaluation grid. LSQR is the default
+unconstrained solver. Although stationarity can be expressed through the normal equations,
+LSQR does not form those equations explicitly.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">density</code> flag selects modified least squares, <code class="language-plaintext highlighter-rouge">mlsq</code>. It constrains the weights to be
+nonnegative, and MTEX normalizes the result to mean 1. The commands <code class="language-plaintext highlighter-rouge">min(F)</code> and <code class="language-plaintext highlighter-rouge">mean(F)</code>
+check these two density properties after a fit.</p>
+
+<p>These constructor forms summarize the choices described on the RBF page:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F</span> <span class="o">=</span> <span class="n">SO3FunRBF</span><span class="p">(</span><span class="n">odfHarmonic</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">SO3FunRBF</span><span class="p">(</span><span class="n">odfHarmonic</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">SO3AbelPoissonKernel</span><span class="p">(</span><span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">centres</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">odfHarmonic</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">SO3FunRBF</span><span class="p">(</span><span class="n">odfHarmonic</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">psi</span><span class="p">,</span> <span class="n">SO3Grid</span><span class="o">=</span><span class="n">centres</span><span class="p">)</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">SO3FunRBF</span><span class="p">(</span><span class="n">odfHarmonic</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">approxresolution</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">kernel</code> or <code class="language-plaintext highlighter-rouge">halfwidth</code> chooses the radial kernel. <code class="language-plaintext highlighter-rouge">SO3Grid</code> supplies its centres, while
+<code class="language-plaintext highlighter-rouge">resolution</code> constructs a centre grid. <code class="language-plaintext highlighter-rouge">approxresolution</code> controls the separate grid on
+which the input function is evaluated. Use <code class="language-plaintext highlighter-rouge">calcError(odfHarmonic, F)</code> to compare a fitted
+representation with its source.</p>
+
+<h2 id="spatial-and-harmonic-rbf-errors">Spatial and harmonic RBF errors</h2>
+
+<p>The default RBF method minimizes pointwise error between the source \(f\) and the RBF model
+\(g\) at evaluation orientations \(x_m\):</p>
+
+\[\sum_{m=1}^M \lvert f(x_m)-g(x_m)\rvert^2.\]
+
+<p>The <code class="language-plaintext highlighter-rouge">harmonic</code> flag instead chooses the kernel weights so that the Fourier coefficients of
+\(f\) and \(g\) are close. It minimizes</p>
+
+\[\sum_{n=0}^N\sum_{k,l=-n}^n
+\lvert\hat f_n^{k,l}-\hat g_n^{k,l}\rvert^2.\]
+
+<p>The spatial method is usually better suited to sharp, high-bandwidth functions. The
+harmonic system is better suited to low bandwidth because its matrix grows quickly with the
+number of Fourier coefficients. Select it with <code class="language-plaintext highlighter-rouge">SO3FunRBF(odfHarmonic, harmonic=True)</code>.</p>
+
+<p>Both <code class="language-plaintext highlighter-rouge">lsqr</code> and <code class="language-plaintext highlighter-rouge">mlsq</code> stop according to <code class="language-plaintext highlighter-rouge">tol</code> and <code class="language-plaintext highlighter-rouge">maxIter</code>. Their default tolerance is
+<code class="language-plaintext highlighter-rouge">1e-3</code>. Unconstrained <code class="language-plaintext highlighter-rouge">lsqr</code> uses at most 30 iterations, whereas <code class="language-plaintext highlighter-rouge">mlsq</code> uses at most 100.
+Tighten these settings only when a validation error or a physical conclusion requires it.</p>
+
+<h2 id="the-maths-behind-quadrature">The maths behind quadrature</h2>
+
+<p>A band-limited rotational function is a finite series of
+<a href="WignerFunctions_py.html">Wigner-D functions</a>:</p>
+
+\[f(R)=\sum_{n=0}^N\sum_{k,l=-n}^n
+\hat f_n^{k,l}D_n^{k,l}(R).\]
+
+<p>Its Fourier coefficients are integrals over orientation space with the normalized Haar
+measure \(\mu\):</p>
+
+\[\hat f_n^{k,l}=\int_{\mathrm{SO}(3)} f(R)\,
+\overline{D_n^{k,l}(R)}\,\mathrm{d}\mu(R).\]
+
+<p>A quadrature rule replaces each integral by values at nodes \(R_m\) and prescribed weights
+\(\omega_m\):</p>
+
+\[\hat f_n^{k,l}\approx\sum_{m=1}^M \omega_m f(R_m)
+\overline{D_n^{k,l}(R_m)}.\]
+
+<p>The weights are part of the rule. Treating all structured nodes equally, or substituting
+arbitrary random orientations, changes the integral. MTEX combines periodic quadrature in
+the first and third Euler angles with either Clenshaw–Curtis or Gauss–Legendre nodes in
+the second angle.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>P. J. Kostelec and D. N. Rockmore,
+<a href="https://doi.org/10.1007/s00041-008-9013-5">FFTs on the rotation group</a>, <em>Journal of
+Fourier Analysis and Applications</em> 14 (2008), 145–179, develops fast Fourier transforms
+for band-limited functions on \(\mathrm{SO}(3)\).</li>
+  <li>H. Schaeben, F. Bachmann, and J.-J. Fundenberger,
+<a href="https://doi.org/10.1007/s10853-016-0496-1">Construction of weighted crystallographic orientations capturing a given orientation density function</a>,
+<em>Journal of Materials Science</em> 52 (2017), 2077–2090, develops the positive normalized
+RBF approximation summarized above.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="SO3FunHarmonicRepresentation_py.html">Harmonic Representation</a> to inspect and
+manipulate the Fourier coefficients produced by quadrature. Then use
+<a href="RadialODFs_py.html">Radial Basis Functions</a> to study the kernel representation contrasted
+with quadrature on this page.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>MATLAB’s <code class="language-plaintext highlighter-rouge">numel(grid)</code> and <code class="language-plaintext highlighter-rouge">grid(:)</code> are <code class="language-plaintext highlighter-rouge">grid.size</code> and <code class="language-plaintext highlighter-rouge">grid.flatten()</code>. The port merges
+every pair of nodes that are one orientation under the symmetries, 4060 and 2250 distinct
+nodes where MATLAB counts 4500 and 2400; the full grids of 8700 and 4500 nodes agree. The
+recovery errors are 4e-9 and 6e-9 for MATLAB’s 4e-8 and 7e-8, the approximation error
+0.2003 for MATLAB’s 0.1996 from the reconstruction of the Dubna ODF.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SO3FunQuadrature_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

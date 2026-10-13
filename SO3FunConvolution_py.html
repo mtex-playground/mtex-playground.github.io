@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Convolution of Rotational and Spherical Functions | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/SO3FunConvolution_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SO3FunConvolution_py.html#page",
+      "name": "Convolution of Rotational and Spherical Functions",
+      "headline": "Convolution of Rotational and Spherical Functions",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/SO3FunConvolution_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SO3FunConvolution_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SO3FunConvolution_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Convolution of Rotational and Spherical Functions</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/SO3FunConvolution.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/SO3Functions/SO3FunConvolution.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>Convolution combines two functions by averaging their overlap while one argument is
+rotated. It is used to smooth a function, transfer an orientation distribution to
+directions, and construct rotation-dependent similarities. A cross-correlation uses the
+same machinery but may also require inversion or complex conjugation, depending on its
+convention.</p>
+
+<p>Four combinations occur in MTEX:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>first input</th>
+      <th>second input</th>
+      <th>result</th>
+      <th>compatibility</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SO3Fun</code></td>
+      <td><code class="language-plaintext highlighter-rouge">SO3Fun</code></td>
+      <td><code class="language-plaintext highlighter-rouge">SO3Fun</code></td>
+      <td>first right = second left</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">S2Fun</code></td>
+      <td><code class="language-plaintext highlighter-rouge">S2Fun</code></td>
+      <td><code class="language-plaintext highlighter-rouge">SO3Fun</code></td>
+      <td>spherical frames must agree</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SO3Fun</code></td>
+      <td><code class="language-plaintext highlighter-rouge">S2Fun</code></td>
+      <td><code class="language-plaintext highlighter-rouge">S2Fun</code></td>
+      <td>rotational left = spherical symmetry</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SO3Fun</code> or <code class="language-plaintext highlighter-rouge">S2Fun</code></td>
+      <td>matching radial kernel</td>
+      <td>same domain as function</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The left and right sides are defined on
+<a href="SO3FunSymmetricFunctions_py.html">Symmetry of Orientation-Dependent Functions</a>. Matching
+means the same point group in the same reference frame, not merely point groups with the
+same printed name.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="convolve-two-rotational-functions">Convolve two rotational functions</h2>
+
+<p>The inner sides are integrated out. Consequently, the right symmetry of the first function
+must match the left symmetry of the second. The result inherits its left symmetry from the
+first function and its right symmetry from the second.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">.</span><span class="n">example</span><span class="p">()</span>
+
+<span class="n">ss1</span> <span class="o">=</span> <span class="n">specimenFrame</span><span class="p">()</span>
+<span class="n">ss2</span> <span class="o">=</span> <span class="n">specimenFrame</span><span class="p">(</span><span class="s">'222'</span><span class="p">)</span>
+<span class="n">centre</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ss1</span><span class="p">,</span> <span class="n">ss2</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">SO3DeLaValleePoussinKernel</span><span class="p">(</span><span class="n">halfwidth</span><span class="o">=</span><span class="mi">15</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">SO3FunRBF</span><span class="p">(</span><span class="n">centre</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="n">c</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Quartz → y↑→x)
+  bandwidth: 17
+  mean     : 1
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">resultLeftSymmetry</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">frameB</span>
+<span class="n">resultLeftSymmetry</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>specimenFrame (specimen, y↑→x)
+  symmetry: 222
+  elements: 4
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">resultRightSymmetry</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">frameA</span>
+<span class="n">resultRightSymmetry</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crystalFrame (⊙c→a)
+  mineral        : Quartz
+  symmetry       : 321
+  elements       : 6
+  a, b, c        : 4.916, 4.916, 5.405
+  reference frame: X||a*, Y||b, Z||c
+</code></pre></div></div>
+
+<p>Here <code class="language-plaintext highlighter-rouge">f.frameA</code> and <code class="language-plaintext highlighter-rouge">g.frameB</code> are both the identity specimen symmetry. The result therefore
+keeps the <code class="language-plaintext highlighter-rouge">222</code> left symmetry of <code class="language-plaintext highlighter-rouge">f</code> and the quartz right symmetry of <code class="language-plaintext highlighter-rouge">g</code>.</p>
+
+<p>Check one value against direct numerical integration. The <code class="language-plaintext highlighter-rouge">SO3Fun</code> mean uses normalized
+orientation-space measure, so it implements the factor \(1/(8\pi^2)\) in the integral stated
+below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">c</span><span class="p">.</span><span class="n">SS</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">convolutionValue</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="n">integrand</span> <span class="o">=</span> <span class="n">SO3FunHandle</span><span class="p">(</span><span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">f</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rotation</span><span class="p">(</span><span class="n">q</span><span class="p">))</span> <span class="o">*</span> <span class="n">g</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">rotation</span><span class="p">(</span><span class="n">q</span><span class="p">))</span> <span class="o">*</span> <span class="n">r</span><span class="p">))</span>
+<span class="n">integralValue</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">integrand</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">SO3CheckDifference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">convolutionValue</span> <span class="o">-</span> <span class="n">integralValue</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'convolution </span><span class="si">{</span><span class="n">convolutionValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, integral </span><span class="si">{</span><span class="n">integralValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, difference </span><span class="si">{</span><span class="n">SO3CheckDifference</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>convolution 0.7023, integral 0.7041, difference 0.0018
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConvolution-6.png" /></center>
+
+<p>The strongest regions are shifted and broadened copies of the input ODF. The maximum drops
+from about 94 to about 10, the bandwidth from 48 to 17, and the peak moves.</p>
+
+<p>The plot covers the fundamental region of the inherited <code class="language-plaintext highlighter-rouge">222</code> and quartz symmetries, so
+symmetrically equivalent copies are folded into it rather than drawn beside one another.
+The printed difference measures the accuracy of the independent, coarser numerical
+integration used for the check.</p>
+
+<h2 id="swap-the-argument-order">Swap the argument order</h2>
+
+<p>Convolution on the rotation group is not commutative in general. A right-sided form can be
+evaluated by swapping the function order, provided the new inner symmetry pair is
+compatible.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">fRight</span> <span class="o">=</span> <span class="n">SO3FunRBF</span><span class="p">(</span><span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">g</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">g</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">),</span> <span class="n">kernel</span><span class="p">)</span>
+<span class="n">cRight</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">fRight</span><span class="p">)</span>
+<span class="n">cRight</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (Quartz → y↑→x)
+  bandwidth: 17
+  mean     : 1
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rRight</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">cRight</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">cRight</span><span class="p">.</span><span class="n">SS</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">rightConvolutionValue</span> <span class="o">=</span> <span class="n">cRight</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rRight</span><span class="p">)</span>
+<span class="n">qRight</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="n">fRight</span><span class="p">.</span><span class="n">frameA</span><span class="p">.</span><span class="n">stripSym</span><span class="p">(),</span> <span class="n">fRight</span><span class="p">.</span><span class="n">frameB</span><span class="p">.</span><span class="n">stripSym</span><span class="p">(),</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">rightSamples</span> <span class="o">=</span> <span class="n">fRight</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">qRight</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rRight</span> <span class="o">*</span> <span class="n">inv</span><span class="p">(</span><span class="n">qRight</span><span class="p">))</span>
+<span class="n">rightIntegralEstimate</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rightSamples</span><span class="p">)</span>
+<span class="n">rightStandardError</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">rightSamples</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rightSamples</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">rightCheckDifference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rightConvolutionValue</span> <span class="o">-</span> <span class="n">rightIntegralEstimate</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'convolution </span><span class="si">{</span><span class="n">rightConvolutionValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, estimate </span><span class="si">{</span><span class="n">rightIntegralEstimate</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, '</span>
+      <span class="sa">f</span><span class="s">'standard error </span><span class="si">{</span><span class="n">rightStandardError</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, difference </span><span class="si">{</span><span class="n">rightCheckDifference</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>convolution 0.1909, estimate 0.1928, standard error 0.0018, difference 0.0019
+</code></pre></div></div>
+
+<p>This Monte Carlo estimate checks the right-sided integral written in the maths section.
+Compare its difference with the printed standard error. It is not a claim that <code class="language-plaintext highlighter-rouge">conv(f,
+g)</code> and <code class="language-plaintext highlighter-rouge">conv(g, f)</code> are generally equal.</p>
+
+<p>Arrays of <code class="language-plaintext highlighter-rouge">SO3Fun</code> objects may also be convolved. Two arrays are combined element by
+element, as described for <a href="SO3FunVectorValued_py.html">vector-valued rotational functions</a>.</p>
+
+<h2 id="convolve-two-spherical-functions">Convolve two spherical functions</h2>
+
+<p>Rotating one spherical function against another produces a function of the rotation, not
+another spherical function. The output measures their overlap for every relative
+orientation. Its right symmetry comes from the first spherical function and its left
+symmetry from the second.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">()</span>
+<span class="n">sphereF</span> <span class="o">=</span> <span class="n">S2FunHarmonic</span><span class="p">(</span><span class="n">S2Fun</span><span class="p">.</span><span class="n">smiley</span><span class="p">(),</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">sphereG</span> <span class="o">=</span> <span class="n">S2FunHarmonic</span><span class="p">(</span><span class="n">S2DeLaValleePoussinKernel</span><span class="p">())</span>
+<span class="n">sphereCorrelation</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">sphereF</span><span class="p">,</span> <span class="n">sphereG</span><span class="p">)</span>
+<span class="n">sphereCorrelation</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SO3FunHarmonic (1 → y↑→x)
+  bandwidth: 25
+  mean     : 0.006417
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rSphere</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">sphereCorrelation</span><span class="p">.</span><span class="n">CS</span><span class="p">,</span> <span class="n">sphereCorrelation</span><span class="p">.</span><span class="n">SS</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">sphereConvolutionValue</span> <span class="o">=</span> <span class="n">sphereCorrelation</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rSphere</span><span class="p">)</span>
+<span class="n">sphereIntegrand</span> <span class="o">=</span> <span class="n">S2FunHandle</span><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">sphereF</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">rSphere</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">sphereG</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+<span class="n">sphereGrid</span> <span class="o">=</span> <span class="n">equispacedS2Grid</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">1</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">sphereIntegralValue</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sphereIntegrand</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">sphereGrid</span><span class="p">))</span>
+<span class="n">sphereCheckDifference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sphereConvolutionValue</span> <span class="o">-</span> <span class="n">sphereIntegralValue</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'convolution </span><span class="si">{</span><span class="n">sphereConvolutionValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">e</span><span class="si">}</span><span class="s">, integral </span><span class="si">{</span><span class="n">sphereIntegralValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">e</span><span class="si">}</span><span class="s">, difference </span><span class="si">{</span><span class="n">sphereCheckDifference</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>convolution -1.1909e-06, integral -1.1123e-06, difference 7.86e-08
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">sphereCorrelation</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConvolution-11.png" /></center>
+
+<p>The section plot changes as the smiley pattern moves into and out of alignment with the
+zonal second function. This is why two inputs on the sphere produce an output on the
+rotation group.</p>
+
+<h2 id="convolve-a-rotational-and-a-spherical-function">Convolve a rotational and a spherical function</h2>
+
+<p>A rotational function can transport a spherical function through all orientations and
+average the result. The output is spherical. The spherical symmetry must match the left
+symmetry of the rotational function, and the output inherits the rotational function’s
+right symmetry.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rotF</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">.</span><span class="n">example</span><span class="p">()</span>
+<span class="n">sphereH</span> <span class="o">=</span> <span class="n">S2FunHarmonic</span><span class="p">(</span><span class="n">S2Fun</span><span class="p">.</span><span class="n">smiley</span><span class="p">(),</span> <span class="n">rotF</span><span class="p">.</span><span class="n">frameB</span><span class="p">)</span>
+<span class="n">directionF</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">rotF</span><span class="p">,</span> <span class="n">sphereH</span><span class="p">)</span>
+<span class="n">directionF</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S2FunHarmonic (Quartz)
+  bandwidth: 48
+  mean     : 0.006417
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vCrystal</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">directionF</span><span class="p">.</span><span class="n">frame</span><span class="p">)</span>
+<span class="n">directionValue</span> <span class="o">=</span> <span class="n">directionF</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">vCrystal</span><span class="p">)</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">qDirection</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="n">rotF</span><span class="p">.</span><span class="n">CS</span><span class="p">.</span><span class="n">stripSym</span><span class="p">(),</span> <span class="n">rotF</span><span class="p">.</span><span class="n">frameB</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">directionSamples</span> <span class="o">=</span> <span class="n">rotF</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">qDirection</span><span class="p">)</span> <span class="o">*</span> <span class="n">sphereH</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">qDirection</span> <span class="o">*</span> <span class="n">vCrystal</span><span class="p">)</span>
+<span class="n">directionIntegralEstimate</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">directionSamples</span><span class="p">)</span>
+<span class="n">directionStandardError</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">directionSamples</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">directionSamples</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">directionCheckDifference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">directionValue</span> <span class="o">-</span> <span class="n">directionIntegralEstimate</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'convolution </span><span class="si">{</span><span class="n">directionValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, estimate </span><span class="si">{</span><span class="n">directionIntegralEstimate</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, '</span>
+      <span class="sa">f</span><span class="s">'standard error </span><span class="si">{</span><span class="n">directionStandardError</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, difference </span><span class="si">{</span><span class="n">directionCheckDifference</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>convolution 0.0342, estimate 0.0340, standard error 0.0014, difference 0.0002
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">directionF</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConvolution-14.png" /></center>
+
+<p>Bright directions receive large contributions from many orientations where both input
+functions are large. Unlike the preceding section plot, this result needs only a direction
+on the sphere for evaluation.</p>
+
+<p>The Monte Carlo orientations cover the full rotation group. <code class="language-plaintext highlighter-rouge">stripSym</code> removes the quartz
+point group while retaining its crystal frame. Using a symmetry-reduced fundamental region
+would be invalid for this check, because a fixed Miller representative makes the integrand
+nonsymmetric. The check difference should be interpreted against its sampling standard
+error, not as deterministic quadrature error.</p>
+
+<h2 id="use-the-inverse-action-variant">Use the inverse-action variant</h2>
+
+<p>A second convention acts on the spherical argument with the inverse rotation. It applies
+when the rotational function has trivial left symmetry and its right symmetry matches the
+spherical symmetry. Add <code class="language-plaintext highlighter-rouge">'inv'</code>, or equivalently invert the rotational function before
+calling <code class="language-plaintext highlighter-rouge">conv</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sphereHInv</span> <span class="o">=</span> <span class="n">S2FunHarmonic</span><span class="p">(</span><span class="n">S2Fun</span><span class="p">.</span><span class="n">smiley</span><span class="p">(),</span> <span class="n">rotF</span><span class="p">.</span><span class="n">CS</span><span class="p">)</span>
+<span class="n">directionInv</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">rotF</span><span class="p">,</span> <span class="n">sphereHInv</span><span class="p">,</span> <span class="n">inverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">directionInvEquivalent</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">rotF</span><span class="p">),</span> <span class="n">sphereHInv</span><span class="p">)</span>
+
+<span class="n">vSpecimen</span> <span class="o">=</span> <span class="n">xvector</span>
+<span class="n">inverseActionValue</span> <span class="o">=</span> <span class="n">directionInv</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">vSpecimen</span><span class="p">)</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">qInverse</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="n">rotF</span><span class="p">.</span><span class="n">CS</span><span class="p">.</span><span class="n">stripSym</span><span class="p">(),</span> <span class="n">rotF</span><span class="p">.</span><span class="n">frameB</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">inverseSamples</span> <span class="o">=</span> <span class="n">rotF</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">qInverse</span><span class="p">)</span> <span class="o">*</span> <span class="n">sphereHInv</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">qInverse</span><span class="p">)</span> <span class="o">*</span> <span class="n">vSpecimen</span><span class="p">)</span>
+<span class="n">inverseIntegralEstimate</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">inverseSamples</span><span class="p">)</span>
+<span class="n">inverseStandardError</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">std</span><span class="p">(</span><span class="n">inverseSamples</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">inverseSamples</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">inverseActionCheckDifference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">inverseActionValue</span> <span class="o">-</span> <span class="n">inverseIntegralEstimate</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'convolution </span><span class="si">{</span><span class="n">inverseActionValue</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, estimate </span><span class="si">{</span><span class="n">inverseIntegralEstimate</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, '</span>
+      <span class="sa">f</span><span class="s">'standard error </span><span class="si">{</span><span class="n">inverseStandardError</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">, difference </span><span class="si">{</span><span class="n">inverseActionCheckDifference</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>convolution 0.0148, estimate 0.0148, standard error 3.18e-04, difference 7.30e-05
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">comparisonGrid</span> <span class="o">=</span> <span class="n">equispacedS2Grid</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">inverseFlagDifference</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">directionInv</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">comparisonGrid</span><span class="p">)</span> <span class="o">-</span> <span class="n">directionInvEquivalent</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">comparisonGrid</span><span class="p">)))</span>
+<span class="n">inverseFlagDifference</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0
+</code></pre></div></div>
+
+<p>The small final difference verifies that <code class="language-plaintext highlighter-rouge">'inv'</code> and <code class="language-plaintext highlighter-rouge">conv(inv(rotF), sphereHInv)</code>
+implement the same variant. The two action conventions should not be mixed: \(qv\) and
+\(q^{-1}v\) generally produce different averages.</p>
+
+<h2 id="smooth-with-a-rotational-kernel">Smooth with a rotational kernel</h2>
+
+<p>An <code class="language-plaintext highlighter-rouge">SO3Kernel</code> is a radial rotational function: it depends only on the rotation angle.
+Convolution with it attenuates harmonic degrees according to the kernel coefficients.
+Radiality also makes this particular convolution commutative, even though convolution of
+two general rotational functions is not.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">psi</span> <span class="o">=</span> <span class="n">SO3DeLaValleePoussinKernel</span><span class="p">(</span><span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">smoothSource</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="n">rotF</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">rotF</span><span class="p">.</span><span class="n">bandwidth</span><span class="p">,</span> <span class="n">psi</span><span class="p">.</span><span class="n">bandwidth</span><span class="p">))</span>
+<span class="n">smoothF</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">smoothSource</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
+<span class="n">smoothFReverse</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span> <span class="n">smoothSource</span><span class="p">)</span>
+<span class="n">kernelCommutationError</span> <span class="o">=</span> <span class="n">calcError</span><span class="p">(</span><span class="n">smoothF</span><span class="p">,</span> <span class="n">smoothFReverse</span><span class="p">)</span>
+<span class="n">kernelCommutationError</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotSpectrum</span><span class="p">([</span><span class="n">smoothSource</span><span class="p">,</span> <span class="n">smoothF</span><span class="p">],</span> <span class="n">figSize</span><span class="o">=</span><span class="s">'small'</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="s">'before convolution'</span><span class="p">,</span> <span class="s">'after convolution'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConvolution-18.png" /></center>
+
+<p>The convolved spectrum lies below the original at higher harmonic degrees. Those degrees
+encode rapid angular variation, so their attenuation is the spectral signature of
+smoothing.</p>
+
+<h2 id="smooth-with-a-spherical-kernel">Smooth with a spherical kernel</h2>
+
+<p>An <code class="language-plaintext highlighter-rouge">S2Kernel</code> is a zonal spherical function. Convolving an <code class="language-plaintext highlighter-rouge">S2Fun</code> with it produces another
+<code class="language-plaintext highlighter-rouge">S2Fun</code> and smooths angular variation around every direction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sphericalSource</span> <span class="o">=</span> <span class="n">S2Fun</span><span class="p">.</span><span class="n">smiley</span><span class="p">()</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">S2DeLaValleePoussinKernel</span><span class="p">(</span><span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">sphericalSmooth</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">sphericalSource</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+<span class="n">sphericalSmooth</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>S2FunHarmonic
+  bandwidth: 25
+  mean     : 0.006417
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">sphericalSmooth</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/SO3FunConvolution-20.png" /></center>
+
+<p>The face remains recognizable, while the sharp boundaries of its features are softened by
+the 10 degree kernel.</p>
+
+<p>The same kernel can be regarded as a spherical function and convolved with
+<code class="language-plaintext highlighter-rouge">sphericalSource</code> to produce an <code class="language-plaintext highlighter-rouge">SO3Fun</code>. The two results agree when the direction \(v\) and
+rotation \(R\) satisfy \(v=R^{-1}e_3\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">rKernel</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">zvector</span><span class="p">)</span>
+<span class="n">kernelAsFunction</span> <span class="o">=</span> <span class="n">S2FunHarmonic</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+<span class="n">sphericalOnSO3</span> <span class="o">=</span> <span class="n">conv</span><span class="p">(</span><span class="n">sphericalSource</span><span class="p">,</span> <span class="n">kernelAsFunction</span><span class="p">)</span>
+<span class="n">kernelFormDifference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sphericalSmooth</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">-</span> <span class="n">sphericalOnSO3</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">rKernel</span><span class="p">))</span>
+<span class="n">kernelFormDifference</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8.3267e-17
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xi</span> <span class="o">=</span> <span class="n">equispacedS2Grid</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">1</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">sphericalKernelIntegral</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sphericalSource</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">*</span> <span class="n">phi</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">v</span><span class="p">))))</span>
+<span class="n">sphericalKernelCheckDifference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sphericalSmooth</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">-</span> <span class="n">sphericalKernelIntegral</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'integral </span><span class="si">{</span><span class="n">sphericalKernelIntegral</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, difference </span><span class="si">{</span><span class="n">sphericalKernelCheckDifference</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">e</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>integral 0.1779, difference 4.64e-05
+</code></pre></div></div>
+
+<h2 id="the-maths-behind-convolution">The maths behind convolution</h2>
+
+<p>MTEX uses normalized Haar measure. If \(\mathrm{d}q\) denotes the usual unnormalized measure
+with volume \(8\pi^2\), convolution of compatible rotational functions is</p>
+
+\[(f*g)(R)=\frac{1}{8\pi^2}\int_{\mathrm{SO}(3)}
+f(q)g(q^{-1}R)\,\mathrm{d}q.\]
+
+<p>If \(f\) has left symmetry \(S_L\) and right symmetry \(S_x\), while \(g\) has left symmetry \(S_x\)
+and right symmetry \(S_R\), the result has left symmetry \(S_L\) and right symmetry \(S_R\).
+Swapping the order gives the right-sided form</p>
+
+\[(g*f)(R)=\frac{1}{8\pi^2}\int_{\mathrm{SO}(3)}
+f(q)g(Rq^{-1})\,\mathrm{d}q.\]
+
+<p>The sphere has volume \(4\pi\). For two spherical functions, MTEX uses</p>
+
+\[(f*g)(R)=\frac{1}{4\pi}\int_{\mathbb S^2}
+f(R^{-1}\xi)g(\xi)\,\mathrm{d}\xi.\]
+
+<p>The two rotational–spherical actions are</p>
+
+\[(f*h)(\xi)=\frac{1}{8\pi^2}\int_{\mathrm{SO}(3)}
+f(q)h(q\xi)\,\mathrm{d}q\]
+
+<p>and, with <code class="language-plaintext highlighter-rouge">'inv'</code>,</p>
+
+\[(f*h)(\xi)=\frac{1}{8\pi^2}\int_{\mathrm{SO}(3)}
+f(q)h(q^{-1}\xi)\,\mathrm{d}q.\]
+
+<p>Finally, a zonal spherical kernel \(\psi\) satisfies</p>
+
+\[(f*\psi)(v)=\frac{1}{4\pi}\int_{\mathbb S^2}
+f(\xi)\psi(\xi\mathbin{\cdot}v)\,\mathrm{d}\xi.\]
+
+<p>Regarding the kernel as the spherical function \(\psi(\xi\mathbin{\cdot}e_3)\) instead gives
+an <code class="language-plaintext highlighter-rouge">SO3Fun</code>. Its value at \(R\) equals the spherical result at \(v=R^{-1}e_3\). For an
+<code class="language-plaintext highlighter-rouge">SO3Kernel</code>, \(\omega(q^{-1}R)=\omega(Rq^{-1})\) explains the special commutativity.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>P. J. Kostelec and D. N. Rockmore,
+<a href="https://doi.org/10.1007/s00041-008-9013-5">FFTs on the rotation group</a>, <em>Journal of
+Fourier Analysis and Applications</em> 14 (2008), 145–179, develops the Fourier transform on
+\(\mathrm{SO}(3)\) that turns convolution into multiplication of Wigner coefficient
+matrices.</li>
+  <li>H.-J. Bunge, <a href="https://doi.org/10.1016/C2013-0-11769-2">Texture Analysis in Materials Science: Mathematical Methods</a>,
+Butterworths (1982), gives the harmonic framework for ODFs, pole figures, and their
+rotational integral operators.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="SO3FunVectorValued_py.html">Vector-Valued Functions</a> to apply the elementwise
+array behaviour introduced above. The following <a href="SO3FunVectorField_py.html">Rotational Vector Fields</a>
+page extends the domain to vector-valued fields with a rotating tangent space.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>MATLAB’s <code class="language-plaintext highlighter-rouge">S2FunHarmonicSym(sF, cs)</code> is <code class="language-plaintext highlighter-rouge">S2FunHarmonic(sF, cs)</code> here, a function in the
+frame of its symmetry; the random draws are NumPy’s, so the checks agree with MATLAB’s in
+kind, not in their digits. MATLAB’s <code class="language-plaintext highlighter-rouge">smoothSource = rotF; smoothSource.bandwidth = …</code>
+copies the function; the page builds the truncated copy with the constructor, since the
+Python assignment would change <code class="language-plaintext highlighter-rouge">rotF</code> itself.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SO3FunConvolution_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

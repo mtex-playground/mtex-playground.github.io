@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Lattice Metric and Plane Geometry | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/LatticeMetric_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/LatticeMetric_py.html#page",
+      "name": "Lattice Metric and Plane Geometry",
+      "headline": "Lattice Metric and Plane Geometry",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/LatticeMetric_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/LatticeMetric_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/LatticeMetric_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Lattice Metric and Plane Geometry</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/LatticeMetric.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/CrystalGeometry/LatticeMetric.py">edit page</a></font>
+
+<!--introduction-->
+
+<p><a href="CrystalDirections_py.html">Miller indices</a> identify a lattice direction or plane family.
+The <em>lattice metric</em> supplies the lengths and angles that turn those indices into
+physical geometry. It determines the length of \([uvw]\), the normal to \((hkl)\), and the
+spacing between neighbouring \((hkl)\) planes.</p>
+
+<p>In MTEX, a <a href="crystalFrame.crystalFrame.html">crystalFrame</a> bundles point symmetry with a
+crystal frame. The crystal frame carries the lattice basis and its metric; symmetry
+states which operations leave crystal data invariant. Keeping those ideas separate
+matters because a lattice metric can have more symmetry than the atoms placed in its
+cell.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'12/m1'</span><span class="p">,</span> <span class="p">[</span><span class="mf">5.2</span><span class="p">,</span> <span class="mf">6.3</span><span class="p">,</span> <span class="mf">7.1</span><span class="p">],</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">90</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="s">'X||a'</span><span class="p">,</span> <span class="n">mineral</span><span class="o">=</span><span class="s">'Example monoclinic crystal'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="reading-the-lattice-parameters">Reading the Lattice Parameters</h2>
+
+<p>The three axis lengths and the three interaxial angles are available as <code class="language-plaintext highlighter-rouge">abc</code> and <code class="language-plaintext highlighter-rouge">abg</code>.
+MTEX does not attach a unit label to the axis lengths: it preserves the numerical scale
+supplied by the user or data file. Angstrom is common for crystallographic data, but any
+consistent length unit works.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span><span class="p">.</span><span class="n">abc</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([5.2, 6.3, 7.1])
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span><span class="p">.</span><span class="n">abg</span> <span class="o">/</span> <span class="n">degree</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([ 90., 106.,  90.])
+</code></pre></div></div>
+
+<h2 id="the-unit-cell">The Unit Cell</h2>
+
+<p>The unit cell is the parallelepiped spanned by \(\vec a\), \(\vec b\) and \(\vec c\).
+Repeating it by integer multiples of these three vectors fills the lattice. The cell
+geometry does not say which atoms or other motif are repeated at its translation points.</p>
+
+<h2 id="the-seven-crystal-systems">The Seven Crystal Systems</h2>
+
+<p>A crystal system restricts which lattice parameters may differ. MTEX records the system
+in <code class="language-plaintext highlighter-rouge">cs.lattice</code> and supplies its conventional default angles. The constructor checks
+required equal axis lengths. For a monoclinic point group, it also checks the two right
+angles associated with the selected unique axis.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>crystal system</th>
+      <th>conventional lattice metric</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>triclinic</td>
+      <td>no required equal lengths or right angles</td>
+    </tr>
+    <tr>
+      <td>monoclinic</td>
+      <td>two right angles; the third angle may differ</td>
+    </tr>
+    <tr>
+      <td>orthorhombic</td>
+      <td>independent \(a,b,c\); all angles \(90^\circ\)</td>
+    </tr>
+    <tr>
+      <td>tetragonal</td>
+      <td>\(a=b\ne c\); all angles \(90^\circ\)</td>
+    </tr>
+    <tr>
+      <td>trigonal</td>
+      <td>conventional hexagonal setting in MTEX: \(a=b\ne c\), \(\gamma=120^\circ\)</td>
+    </tr>
+    <tr>
+      <td>hexagonal</td>
+      <td>\(a=b\ne c\), \(\gamma=120^\circ\)</td>
+    </tr>
+    <tr>
+      <td>cubic</td>
+      <td>\(a=b=c\); all angles \(90^\circ\)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>MTEX represents trigonal and hexagonal point groups using the same conventional
+hexagonal metric; their threefold and sixfold point symmetries distinguish the systems.</p>
+
+<p>The monoclinic point-group symbol also states which axis is unique. The pages on
+<a href="CrystalReferenceSystem_py.html">crystal reference frames</a> and
+<a href="SymmetryAlignment_py.html">axis alignment</a> explain how those lattice axes are placed in
+MTEX’s Cartesian crystal frame.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span><span class="p">.</span><span class="n">lattice</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;latticeType.monoclinic: 2&gt;
+</code></pre></div></div>
+
+<h2 id="the-reciprocal-basis">The Reciprocal Basis</h2>
+
+<p>Lattice planes are most naturally described in the basis dual to the direct-lattice
+vectors. If</p>
+
+\[V=\vec a\cdot(\vec b\times\vec c),\]
+
+<p>then</p>
+
+\[\vec a^*=\frac{\vec b\times\vec c}{V},\qquad \vec b^*=\frac{\vec c\times\vec a}{V},\qquad \vec c^*=\frac{\vec a\times\vec b}{V}.\]
+
+<p>The direct and reciprocal bases are dual: each direct axis has dot product one with its
+matching reciprocal axis and zero with the other two. MTEX provides them as <code class="language-plaintext highlighter-rouge">axes</code> and
+axesDual.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">directBasis</span> <span class="o">=</span> <span class="n">cs</span><span class="p">.</span><span class="n">axes</span>
+<span class="n">reciprocalBasis</span> <span class="o">=</span> <span class="n">cs</span><span class="p">.</span><span class="n">axesDual</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cellVolume</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">det</span><span class="p">(</span><span class="n">directBasis</span><span class="p">))</span>
+<span class="n">cellVolume</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>223.5856
+</code></pre></div></div>
+
+<p>The output is 223.5856 in the cube of the lattice-parameter unit. The defining duality
+is seen directly in the matrix of pairwise dot products.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dot</span><span class="p">(</span><span class="n">directBasis</span><span class="p">,</span> <span class="n">reciprocalBasis</span><span class="p">,</span> <span class="n">outer</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 1.,  0., -0.],
+       [ 0.,  1.,  0.],
+       [ 0.,  0.,  1.]])
+</code></pre></div></div>
+
+<p>The result is the identity matrix. Reciprocal axes have inverse-length units, and MTEX
+uses the crystallographic convention without a factor \(2\pi\). Direct and reciprocal axes
+are parallel in an orthogonal lattice; in a monoclinic or triclinic lattice they
+generally are not.</p>
+
+<p>The schematic shows the direct basis at the lower left and the reciprocal basis from a
+second lattice point. The red points are translation-equivalent positions, while the
+blue points illustrate a repeated motif. Notice in particular that \(\vec a\) and
+\(\vec a^*\) are not parallel.</p>
+
+<p><img src="figures/python/latticeReciprocalBasis.png" alt="" /></p>
+
+<h2 id="lengths-of-lattice-directions">Lengths of Lattice Directions</h2>
+
+<p>A direct-lattice direction is a real vector</p>
+
+\[\vec m=u\vec a+v\vec b+w\vec c.\]
+
+<p>Its <a href="vector3d.norm.html">norm</a> is therefore a physical length, not just a plotting
+radius. The indices are coefficients in the generally oblique lattice basis, not
+Cartesian components. For example, \([101]\) spans one \(\vec a\) and one \(\vec c\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">norm</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7.5563
+</code></pre></div></div>
+
+<p>The value 7.5563 is in the same units as <code class="language-plaintext highlighter-rouge">cs.abc</code>. Multiplying all indices by two leaves
+the geometric direction unchanged, up to numerical rounding, but doubles the vector
+length. The option <code class="language-plaintext highlighter-rouge">symmetry=False</code> compares the two vectors as written rather than
+searching their symmetry-equivalent directions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angle</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">),</span> <span class="n">symmetry</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">norm</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">))</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2
+</code></pre></div></div>
+
+<p>The angle is numerically zero, while the length ratio is 2.</p>
+
+<p>Use <a href="vector3d.normalize.html">normalize</a> when only the direction matters. Keep the
+original magnitude when the lattice translation or Burgers-vector length is part of the
+calculation.</p>
+
+<h2 id="interplanar-spacing">Interplanar Spacing</h2>
+
+<p>The normal of \((hkl)\) is a reciprocal-lattice vector. MTEX uses the crystallographic
+convention without a factor \(2\pi\), so its length is the inverse of the interplanar
+spacing returned by dspacing:</p>
+
+\[d_{hkl}=\frac{1}{\lVert\vec n_{hkl}\rVert}.\]
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d100</span> <span class="o">=</span> <span class="n">dspacing</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="n">d100</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4.9986
+</code></pre></div></div>
+
+<p>MTEX returns 4.9986, which is smaller than \(a=5.2\). In this monoclinic cell, \(\vec a\) is
+not perpendicular to the \((100)\) planes. The spacing is the component of \(\vec a\)
+normal to those planes, not generally the length of \(\vec a\).</p>
+
+<p>The same command works for a list. For a cubic lattice with parameter \(a=3.6\), the
+familiar result is \(d_{hkl}=a/\sqrt{h^2+k^2+l^2}\).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">csCubic</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'m-3m'</span><span class="p">,</span> <span class="p">[</span><span class="mf">3.6</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">])</span>
+<span class="n">hCubic</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">csCubic</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dspacing</span><span class="p">(</span><span class="n">hCubic</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([3.6   , 2.5456, 2.0785])
+</code></pre></div></div>
+
+<p>The \((100)\), \((110)\), and \((111)\) spacings are 3.6000, 2.5456, and 2.0785. In a cubic
+lattice the spacing decreases as the squared-index sum \(h^2+k^2+l^2\) increases.</p>
+
+<h2 id="the-maths-behind-the-metric">The Maths Behind the Metric</h2>
+
+<p>Put the direct-basis vectors into \(A=[\vec a\ \vec b\ \vec c]\). The <em>metric matrix</em> is
+the matrix of their pairwise dot products,</p>
+
+\[G=A^{\mathrm T}A,\qquad G_{ij}=\vec a_i\mathbin{\cdot}\vec a_j.\]
+
+<p>MTEX obtains it directly from the basis vectors.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">metricMatrix</span> <span class="o">=</span> <span class="n">dot</span><span class="p">(</span><span class="n">directBasis</span><span class="p">,</span> <span class="n">directBasis</span><span class="p">,</span> <span class="n">outer</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">metricMatrix</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 27.04  ,   0.    , -10.1765],
+       [  0.    ,  39.69  ,   0.    ],
+       [-10.1765,   0.    ,  50.41  ]])
+</code></pre></div></div>
+
+<p>The diagonal entries are \(a^2\), \(b^2\), and \(c^2\). The off-diagonal entries contain the
+interaxial angles, so the nonzero \(a\) – \(c\) terms record the monoclinic angle
+\(\beta=106^\circ\).</p>
+
+<p>For the direct-index column \(\mathbf u=(u,v,w)^{\mathrm T}\) and the reciprocal-index
+column \(\mathbf h=(h,k,l)^{\mathrm T}\),</p>
+
+\[\lVert\vec m\rVert^2=\mathbf u^{\mathrm T}G\mathbf u, \qquad G^*=G^{-1},\qquad d_{hkl}=\frac{1}{\sqrt{\mathbf h^{\mathrm T}G^*\mathbf h}}.\]
+
+<p>These equations are the matrix form of the <code class="language-plaintext highlighter-rouge">norm</code> and <code class="language-plaintext highlighter-rouge">dspacing</code> calculations above.
+They also give \(V=\sqrt{\det G}\) for the unit-cell volume.</p>
+
+<h2 id="what-a-crystal-symmetry-does-not-store">What a Crystal Symmetry Does Not Store</h2>
+
+<p>The crystal geometry used here contains point symmetry and a crystal frame with its
+lattice metric. It does not model an atomic basis, Wyckoff positions, or the
+translational parts of a space group. In particular, the 14 Bravais lattices
+distinguish translational centring, whereas <code class="language-plaintext highlighter-rouge">crystalFrame</code> retains the associated
+crystal system and point group.</p>
+
+<p>A CIF can supply lattice parameters and a space-group symbol. When MTEX constructs a
+<code class="language-plaintext highlighter-rouge">crystalFrame</code> from that information, it reduces the space group to its point group for
+this geometry. Structure factors and systematic absences therefore require information
+outside this model.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>A. Authier, <a href="https://www.iucr.org/education/pamphlets/4/full-text">The reciprocal lattice</a>,
+IUCr Teaching Pamphlet 4, develops the direct and reciprocal bases, plane spacings, and
+their diffraction interpretation.</li>
+  <li>H. Wondratschek and M. I. Aroyo, <a href="https://onlinelibrary.wiley.com/iucr/itc/Ac/ch1o5v0001/sec1o5o2o2/">Metric tensors of direct and reciprocal lattices</a>,
+<em>International Tables for Crystallography A</em>, section 1.5.2.2, gives the tensor
+formulation.</li>
+  <li>The International Union of Crystallography, <a href="https://www.iucr.org/resources/cif/dictionaries/browse/cif_core1">Core CIF dictionary</a>,
+standardises unit-cell lengths, angles, volumes, and reciprocal-cell quantities used by
+crystallographic files.</li>
+  <li>C. Giacovazzo, editor, <a href="https://doi.org/10.1093/acprof:oso/9780199573653.001.0001">Fundamentals of Crystallography</a>,
+3rd ed., Oxford University Press, 2011, places lattice geometry within structural
+crystallography and diffraction.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="CrystalOperations_py.html">Operations</a> uses direct and reciprocal geometry for incidence
+tests, zone axes, angles, and multiplicities. <a href="CrystalReferenceSystem_py.html">Reference System</a>
+explains how the lattice basis is embedded in a Cartesian crystal frame.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">cs.axes</code> and <code class="language-plaintext highlighter-rouge">cs.axesDual</code> are three vectors in the crystal frame’s Cartesian
+coordinates, derived from the stored basis; <code class="language-plaintext highlighter-rouge">det(v)</code> of three vectors is the
+determinant of their matrix and <code class="language-plaintext highlighter-rouge">dot(..., outer=True)</code> the matrix of pairwise products, as NumPy
+arrays.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/LatticeMetric_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

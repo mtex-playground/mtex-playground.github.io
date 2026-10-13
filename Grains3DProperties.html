@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Properties of Three-Dimensional Grains | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="Three-Dimensional Grains defines the grain3d collection and its polyhedral representation. Three-dimensional grains retain material properties such as meanOrientation, but their size and shape require volume and surface measures rather than planar area and perimeter.">
+<link rel="canonical" href="https://mtex-playground.github.io/Grains3DProperties.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/Grains3DProperties.html#page",
+      "name": "Properties of Three-Dimensional Grains",
+      "headline": "Properties of Three-Dimensional Grains",
+      "description": "Three-Dimensional Grains defines the grain3d collection and its polyhedral representation. Three-dimensional grains retain material properties such as meanOrientation, but their size and shape require volume and surface measures rather than planar area and perimeter.",
+      "url": "https://mtex-playground.github.io/Grains3DProperties.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/Grains3DProperties.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/Grains3DProperties.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Properties of Three-Dimensional Grains</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Properties of Three-Dimensional Grains</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_Grains3DProperties.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/EBSD3Analysis/Grains3DProperties.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>
+<a href="Grains3D.html">Three-Dimensional Grains</a> defines the <a href="grain3d.grain3d.html">grain3d</a> collection and its polyhedral representation. Three-dimensional grains retain material properties such as <code class="language-plaintext highlighter-rouge">meanOrientation</code>, but their size and shape require volume and surface measures rather than planar area and perimeter.</p>
+<p>Start with size: how much material belongs to the large grains? Then distinguish elongated grains from compact ones, and identify shapes cut short by the measurement boundary. These questions need different measures and different statistical weights.</p>
+<!--/introduction-->
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span></code></pre></figure>
+<h2 id="2">Load the example microstructure</h2>
+<p>The bundled data set is a Neper tessellation. The previous <a href="NeperInterface.html">Neper Interface</a> page explains how such a collection is generated or imported. Loading the existing file needs no Neper installation. Its lengths are expressed in the tessellation coordinate units; assign a physical scale before comparing with an experiment.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="c1">% Assign trigonal quartz symmetry, as on the Neper Interface page.</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">crystalSymmetry</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="s1">'quartz.cif'</span><span class="p">);</span>
+<span class="n">tessFile</span> <span class="o">=</span> <span class="nb">fullfile</span><span class="p">(</span><span class="n">mtexDataPath</span><span class="p">,</span><span class="s1">'Neper'</span><span class="p">,</span><span class="s1">'my100grains.tess'</span><span class="p">);</span>
+<span class="n">grains</span> <span class="o">=</span> <span class="n">grain3d</span><span class="o">.</span><span class="nb">load</span><span class="p">(</span><span class="n">tessFile</span><span class="p">,</span><span class="s1">'CS'</span><span class="p">,</span><span class="n">cs</span><span class="p">)</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">,</span><span class="s1">'edgeAlpha'</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">setCamera</span><span class="p">(</span><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default3D</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">grains = grain3d (y↑→x)
+ 
+ Phase  Grains  Volume  Mineral  Symmetry  Crystal reference frame
+     2    1000      32   Quartz       321        X||a*, Y||b, Z||c
+ 
+ boundary faces: 7131
+ 
+ Properties: meanRotation</code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_01.png" alt="" />
+
+</center>
+<p>Each colour represents one mean orientation. The faceted outlines are the boundary polygons from which the geometric properties are computed.</p>
+<h2 id="4">Compare size measures</h2>
+<p>Diameter, surface area, and volume answer different questions. The diameter spans the two most distant vertices. Surface sums the areas of all faces, while volume measures the enclosed polyhedron. Their units follow the mesh coordinates: length, length squared, and length cubed. A tessellation has no experimental length calibration merely because it can be plotted.</p>
+<p>Select by grain ID so the choice remains meaningful after subsetting.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">grainId</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+<span class="n">grain</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span><span class="n">grainId</span><span class="p">);</span>
+
+<span class="n">grain</span><span class="o">.</span><span class="n">diameter</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+    0.4954</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">grain</span><span class="o">.</span><span class="nb">surface</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+    0.4797</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">grain</span><span class="o">.</span><span class="nb">volume</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+    0.0238</code></pre></figure>
+<p>Equal volumes need not mean equal elongation or equal surface area. The equivalent-sphere diameter provides a size measure independent of surface roughness; sphericity compares the measured surface with that of a sphere enclosing the same volume. A sphere has sphericity one.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">equivalentDiameter</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">grains</span><span class="o">.</span><span class="nb">volume</span><span class="p">/</span><span class="nb">pi</span><span class="p">)</span><span class="o">.^</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">sphericity</span> <span class="o">=</span> <span class="p">(</span><span class="mi">36</span><span class="o">*</span><span class="nb">pi</span><span class="p">)</span><span class="o">^</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">grains</span><span class="o">.</span><span class="nb">volume</span><span class="o">.^</span><span class="p">(</span><span class="mi">2</span><span class="p">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="n">grains</span><span class="o">.</span><span class="nb">surface</span><span class="p">;</span></code></pre></figure>
+<p>Face and neighbourhood counts provide complementary structural measures.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">grain</span><span class="o">.</span><span class="n">numFaces</span><span class="p">,</span> <span class="n">grain</span><span class="o">.</span><span class="n">numNeighbors</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+  1×2 sparse double row vector (2 nonzeros)
+   (1,1)       12
+   (1,2)       11</code></pre></figure>
+<p>A triangulated interface can contain many mesh faces but still separate only two grains. <code class="language-plaintext highlighter-rouge">numFaces</code> depends on the mesh; <code class="language-plaintext highlighter-rouge">numNeighbors</code> describes grain connectivity. A face on the outside has no neighbouring grain.</p>
+<h2 id="10">Which grains are completely inside the measurement?</h2>
+<p>A grain meeting the measurement hull is truncated: its measured volume is only the part inside the box. The zero grain ID identifies the exterior and lets us find these grains without relying on a bounding-box tolerance. Make this selection on the full collection, before selecting a phase.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">;</span>
+<span class="n">hullIds</span> <span class="o">=</span> <span class="nb">unique</span><span class="p">(</span><span class="n">gB</span><span class="o">.</span><span class="n">grainId</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">gB</span><span class="o">.</span><span class="n">grainId</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">),:));</span>
+<span class="nb">isInterior</span> <span class="o">=</span> <span class="o">~</span><span class="nb">ismember</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="n">hullIds</span><span class="p">);</span>
+<span class="p">[</span><span class="nb">length</span><span class="p">(</span><span class="n">grains</span><span class="p">),</span> <span class="nb">nnz</span><span class="p">(</span><span class="nb">isInterior</span><span class="p">)]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+        1000         527</code></pre></figure>
+<p>Interior grains have complete measured shapes. Excluding hull grains also preferentially excludes large grains, which are more likely to meet the box. Report the selection with a size distribution. Below we retain the whole synthetic tessellation so that the two weightings use the same set.</p>
+<h2 id="12">Number-weighted and volume-weighted distributions</h2>
+<p>MATLAB's numeric <a href="https://www.mathworks.com/help/matlab/ref/histogram.html"><code class="language-plaintext highlighter-rouge">histogram</code></a> gives every grain one count. This answers how many grains fall in a size interval. <a href="grain3d.histogram.html"><code class="language-plaintext highlighter-rouge">histogram(grains,...)</code></a> weights each grain by its volume and reports relative volume in percent. For questions about the fraction of material in an interval, this is the more realistic view.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">volumeEdges</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">volume</span><span class="p">)</span><span class="o">+</span><span class="nb">eps</span><span class="p">,</span><span class="mi">21</span><span class="p">);</span>
+<span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]);</span>
+<span class="nb">histogram</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">volume</span><span class="p">,</span><span class="n">volumeEdges</span><span class="p">,</span><span class="s1">'FaceColor'</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'grain volume (length units^3)'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'number of grains'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Number weighted'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="nb">histogram</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="nb">volume</span><span class="p">,</span><span class="n">volumeEdges</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Volume weighted'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_02.png" alt="" />
+
+</center>
+<p>Large grains are relatively inconspicuous in the count histogram but gain weight in the second panel. Neither weighting is universally preferable; the denominator must match the scientific question.</p>
+<p>The same distinction applies to any other property. Here the horizontal coordinate is surface area, while the weight remains grain volume.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">surfaceEdges</span> <span class="o">=</span> <span class="nb">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">surface</span><span class="p">)</span><span class="o">+</span><span class="nb">eps</span><span class="p">,</span><span class="mi">16</span><span class="p">);</span>
+<span class="n">newMtexFigure</span><span class="p">(</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]);</span>
+<span class="nb">histogram</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">surface</span><span class="p">,</span><span class="n">surfaceEdges</span><span class="p">,</span><span class="s1">'FaceColor'</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'surface area (length units^2)'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'number of grains'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Number weighted'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span>
+<span class="nb">histogram</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="nb">surface</span><span class="p">,</span><span class="n">surfaceEdges</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'surface area (length units^2)'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s1">'Volume weighted'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_03.png" alt="" />
+
+</center>
+<p>The right panel asks what fraction of the total material belongs to grains in each surface-area interval. It does not show a surface-area fraction.</p>
+<h2 id="15">Relate diameter and volume</h2>
+<p>A scatter plot tests how two measures covary. Taking the cube root of volume puts both axes in units of length. Similar grain shapes should lie near a common trend; elongated or irregular grains can depart from it.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">figure</span>
+<span class="nb">scatter</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">volume</span><span class="o">.^</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">3</span><span class="p">),</span><span class="n">grains</span><span class="o">.</span><span class="n">diameter</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="n">grains</span><span class="o">.</span><span class="n">color</span><span class="p">,</span><span class="s1">'filled'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'cube root of volume (length units)'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'diameter (length units)'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_04.png" alt="" />
+
+</center>
+<p>The overall increase confirms that larger volumes usually have larger diameters. The vertical spread at a fixed cube-root volume records shape variation rather than a change of units.</p>
+<h2 id="17">Ellipsoid-based shape</h2>
+<p> <a href="grain3d.principalComponents.html"><code class="language-plaintext highlighter-rouge">principalComponents</code></a> computes three orthogonal vectors <code class="language-plaintext highlighter-rouge">a</code>, <code class="language-plaintext highlighter-rouge">b</code>, and <code class="language-plaintext highlighter-rouge">c</code> from the grain's volume moments. Their directions are the principal directions, and their lengths are the half-axes of an ellipsoid scaled to the same volume as the grain. <a href="plotEllipsoid.html"><code class="language-plaintext highlighter-rouge">plotEllipsoid</code></a> draws them.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">principalComponents</span><span class="p">(</span><span class="n">grains</span><span class="p">);</span>
+
+<span class="c1">% Compute one IPF colour for each ellipsoid.</span>
+<span class="n">cKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">CS</span><span class="p">);</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">cKey</span><span class="o">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="n">meanOrientation</span><span class="p">);</span>
+
+<span class="nb">figure</span>
+<span class="n">plotEllipsoid</span><span class="p">(</span><span class="n">grains</span><span class="o">.</span><span class="nb">centroid</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="s1">'faceColor'</span><span class="p">,</span><span class="n">color</span><span class="p">);</span>
+<span class="n">setCamera</span><span class="p">(</span><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default3D</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_05.png" alt="" />
+
+</center>
+<p>The ellipsoids preserve centroid, principal directions, and volume, while discarding individual facets. Long thin ellipsoids therefore identify anisotropic shape without reproducing every boundary face.</p>
+<h2 id="19">Is shape anisotropy associated with grain size?</h2>
+<p>The ratio of the longest to the shortest ellipsoid half-axis separates elongation from size. Colouring by sphericity adds a surface measure: grains can have similar aspect ratios yet differ in how faceted they are.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">axisLengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">norm</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">norm</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="nb">norm</span><span class="p">(</span><span class="n">c</span><span class="p">)];</span>
+<span class="n">aspectRatio</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">axisLengths</span><span class="p">,[],</span><span class="mi">2</span><span class="p">)</span> <span class="o">.</span><span class="p">/</span> <span class="nb">min</span><span class="p">(</span><span class="n">axisLengths</span><span class="p">,[],</span><span class="mi">2</span><span class="p">);</span>
+<span class="nb">figure</span>
+<span class="nb">scatter</span><span class="p">(</span><span class="n">equivalentDiameter</span><span class="p">,</span><span class="n">aspectRatio</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="n">sphericity</span><span class="p">,</span><span class="s1">'filled'</span><span class="p">)</span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s1">'equivalent-sphere diameter (length units)'</span><span class="p">)</span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s1">'longest / shortest principal half-axis'</span><span class="p">)</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="nb">colorbar</span><span class="p">;</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">Label</span><span class="o">.</span><span class="n">String</span> <span class="o">=</span> <span class="s1">'sphericity'</span><span class="p">;</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_06.png" alt="" />
+
+</center>
+<p>The ellipsoid reduces each grain to a few shape descriptors. It cannot resolve narrow necks or individual facets. For voxel reconstructions, <a href="Grains3DSmoothing.html">compare smoothing choices</a> before interpreting sphericity, because staircase surfaces inflate the denominator.</p>
+<h2 id="21">Vertices and three kinds of centre</h2>
+<p>
+<code class="language-plaintext highlighter-rouge">grain.V</code> contains the vertices used by the selected grain. Its <code class="language-plaintext highlighter-rouge">centroid</code> is the centre of the enclosed volume. Each entry of <code class="language-plaintext highlighter-rouge">grain.boundary</code> is one face, and <code class="language-plaintext highlighter-rouge">grain.boundary.centroid</code> contains one area centroid per face.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">grain</span> <span class="o">=</span> <span class="n">grains</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">grain</span><span class="p">,</span><span class="s1">'FaceAlpha'</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="s1">'edgeAlpha'</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grain</span><span class="o">.</span><span class="nb">centroid</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grain</span><span class="o">.</span><span class="n">V</span><span class="p">)</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">grain</span><span class="o">.</span><span class="nb">boundary</span><span class="o">.</span><span class="nb">centroid</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span>
+<span class="n">setCamera</span><span class="p">(</span><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default3D</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_07.png" alt="" />
+
+</center>
+<p>The single interior marker is the volume centroid. Vertex markers lie on polygon corners, while the face-centroid markers lie within the boundary faces. These point sets describe different levels of the same geometry.</p>
+<h2 id="23">Whole-grain property reference</h2>
+<p>The main whole-grain properties are</p>
+<p>
+   <table class="usertable">
+      <tr>
+         <td>
+               <p>Property</p>
+         </td>
+         <td>
+               <p>Purpose</p>
+         </td>
+         <td>
+               <p>Property</p>
+         </td>
+         <td>
+               <p>Purpose</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="grain3d.volume.html">
+                     <tt>volume</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>enclosed volume</p>
+         </td>
+         <td>
+               <p>
+                  <a href="grain3d.surface.html">
+                     <tt>surface</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>enclosing surface area</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="grain3d.diameter.html">
+                     <tt>diameter</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>largest vertex-to-vertex distance</p>
+         </td>
+         <td>
+               <p>
+                  <a href="grain3d.principalComponents.html">
+                     <tt>principalComponents</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>volume-matched ellipsoid half-axes</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="grain3d.centroid.html">
+                     <tt>centroid</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>volume centroid</p>
+         </td>
+         <td>
+               <p>
+                  <tt>V</tt>
+               </p>
+         </td>
+         <td>
+               <p>grain vertices</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <tt>numPixel</tt>
+               </p>
+         </td>
+         <td>
+               <p>voxel count after reconstruction</p>
+         </td>
+         <td>
+               <p>
+                  <tt>numFaces</tt>
+               </p>
+         </td>
+         <td>
+               <p>number of mesh faces</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="grain3d.numNeighbors.html">
+                     <tt>numNeighbors</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>number of neighbouring grains</p>
+         </td>
+         <td>
+               <p>
+                  <a href="grain3Boundary.grain3Boundary.html">
+                     <tt>boundary</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>enclosing boundary faces</p>
+         </td>
+      </tr>
+   </table>
+</p>
+<p>Several <a href="grain2d.grain2d.html">grain2d</a> shape properties do not yet have three-dimensional counterparts: <code class="language-plaintext highlighter-rouge">caliper</code>, <code class="language-plaintext highlighter-rouge">equivalentRadius</code>, <code class="language-plaintext highlighter-rouge">equivalentPerimeter</code>, <code class="language-plaintext highlighter-rouge">shapeFactor</code>, <code class="language-plaintext highlighter-rouge">isBoundary</code>, <code class="language-plaintext highlighter-rouge">hasHole</code>, and <code class="language-plaintext highlighter-rouge">isInclusion</code>.</p>
+<h2 id="24">Boundary-face properties</h2>
+<p>A three-dimensional grain boundary stores one entry per polygonal face. Its principal geometric and crystallographic properties are</p>
+<p>
+   <table class="usertable">
+      <tr>
+         <td>
+               <p>Property</p>
+         </td>
+         <td>
+               <p>Purpose</p>
+         </td>
+         <td>
+               <p>Property</p>
+         </td>
+         <td>
+               <p>Purpose</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="grain3Boundary.area.html">
+                     <tt>area</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>face area (length squared)</p>
+         </td>
+         <td>
+               <p>
+                  <tt>N</tt>
+               </p>
+         </td>
+         <td>
+               <p>stored normal direction</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="grain3Boundary.diameter.html">
+                     <tt>diameter</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>largest vertex-to-vertex distance</p>
+         </td>
+         <td>
+               <p>
+                  <a href="grain3Boundary.perimeter.html">
+                     <tt>perimeter</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>length around the face</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <a href="grain3Boundary.centroid.html">
+                     <tt>centroid</tt>
+                  </a>
+               </p>
+         </td>
+         <td>
+               <p>area centroid</p>
+         </td>
+         <td>
+               <p>
+                  <tt>grainId</tt>
+               </p>
+         </td>
+         <td>
+               <p>IDs of adjacent grains</p>
+         </td>
+      </tr>
+      <tr>
+         <td>
+               <p>
+                  <tt>misorientation</tt>
+               </p>
+         </td>
+         <td>
+               <p>orientation difference across the face</p>
+         </td>
+         <td>
+               <p>
+                  <tt>ebsdId</tt>
+               </p>
+         </td>
+         <td>
+               <p>adjacent voxel IDs after reconstruction</p>
+         </td>
+      </tr>
+   </table>
+</p>
+<p>The stored normal has one direction for a shared face. The <a href="Grains3D.html">outward-normal example</a> explains how <code class="language-plaintext highlighter-rouge">I_GF</code> changes that sign for one chosen grain. Here <code class="language-plaintext highlighter-rouge">'antipodal'</code> deliberately treats opposite normal directions as equivalent and emphasizes the boundary-plane axes.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">hold</span> <span class="n">on</span>
+<span class="nb">quiver</span><span class="p">(</span><span class="n">grain</span><span class="o">.</span><span class="nb">boundary</span><span class="p">,</span><span class="n">grain</span><span class="o">.</span><span class="nb">boundary</span><span class="o">.</span><span class="n">N</span><span class="p">,</span><span class="s1">'antipodal'</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">hold</span> <span class="n">off</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_08.png" alt="" />
+
+</center>
+<p>The arrows are normal to the faces on which they start. Because they are plotted antipodally, this figure does not claim that every arrow points outwards.</p>
+<h2 id="26">Misorientation across indexed faces</h2>
+<p>An indexed face separates two grains whose mean orientations are known. Filtering with <code class="language-plaintext highlighter-rouge">'indexed'</code> excludes faces for which that crystallographic comparison is unavailable. The colour below is the misorientation angle across each remaining face. In this tessellation it comes from grain mean orientations; a voxel reconstruction instead stores the difference between the neighbouring voxel orientations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">indexedBoundary</span> <span class="o">=</span> <span class="n">grains</span><span class="o">.</span><span class="nb">boundary</span><span class="p">(</span><span class="s1">'indexed'</span><span class="p">);</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">indexedBoundary</span><span class="p">,</span><span class="n">indexedBoundary</span><span class="o">.</span><span class="n">misorientation</span><span class="o">.</span><span class="nb">angle</span><span class="o">.</span><span class="p">/</span><span class="nb">degree</span><span class="p">,</span> <span class="k">...</span>
+  <span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">,</span><span class="s1">'edgeAlpha'</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">setCamera</span><span class="p">(</span><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default3D</span><span class="p">)</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="nb">colorbar</span><span class="p">(</span><span class="s1">'location'</span><span class="p">,</span><span class="s1">'southoutside'</span><span class="p">);</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">Label</span><span class="o">.</span><span class="n">String</span> <span class="o">=</span> <span class="s1">'misorientation angle (degrees)'</span><span class="p">;</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/Grains3DProperties_09.png" alt="" />
+
+</center>
+<p>Faces with similar colours separate grain pairs with similar misorientation angles. The colour does not encode face orientation or face area, which are the separate properties <code class="language-plaintext highlighter-rouge">N</code> and <code class="language-plaintext highlighter-rouge">area</code>.</p>
+<h2 id="28">References</h2>
+<div>
+<ul>
+<li>R. Quey, P. R. Dawson and F. Barbe, <a href="https://doi.org/10.1016/j.cma.2011.01.002">Large-scale 3D random polycrystals for the finite element method: Generation, meshing and remeshing</a>, <i>Computer Methods in Applied Mechanics and Engineering</i> 200 (2011), 1729--1745, describes the synthetic polycrystal generation behind the example tessellation.</li>
+</ul>
+</div>
+<h2 id="29">Next</h2>
+<p>Continue with <a href="Grains3DOperations.html">Operations with Three-Dimensional Grains</a> to cut, triangulate, and rotate the grains whose properties were measured here.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/Grains3DProperties.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

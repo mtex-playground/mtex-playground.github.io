@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Vector-Valued Orientation Functions | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A scalar orientation function assigns one number to each orientation. A vector-valued orientation function assigns an array of numbers instead:">
+<link rel="canonical" href="https://mtex-playground.github.io/SO3FunVectorValued.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/SO3FunVectorValued.html#page",
+      "name": "Vector-Valued Orientation Functions",
+      "headline": "Vector-Valued Orientation Functions",
+      "description": "A scalar orientation function assigns one number to each orientation. A vector-valued orientation function assigns an array of numbers instead:",
+      "url": "https://mtex-playground.github.io/SO3FunVectorValued.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/SO3FunVectorValued.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/SO3FunVectorValued.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Vector-Valued Orientation Functions</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Vector-Valued Orientation Functions</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_SO3FunVectorValued.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/SO3Functions/SO3FunVectorValued.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<p>A scalar orientation function assigns one number to each orientation. A vector-valued orientation function assigns an array of numbers instead:</p>
+<p>\[ f\colon \mathrm{SO}(3) \to \mathbb{R}^n. \]</p>
+<p>This is useful when several orientation-dependent quantities share the same nodes, symmetries and approximation method. MTEX stores the components together so that they can be interpolated and manipulated as one array of functions.</p>
+<!--/introduction-->
+<h2 id="1">How evaluations are arranged</h2>
+<p>The nodes are always interpreted as a column vector. The node index is the first dimension of an evaluated array. The dimensions of the vector-valued <a href="SO3Fun.SO3Fun.html">SO3Fun</a> begin with the second dimension.</p>
+<p>Consider four nodes \(R_1,\ldots,R_4\) and six scalar functions arranged as a \(3\mathbin{\times}2\) array. Evaluation returns a \(4\mathbin{\times}3\mathbin{\times}2\) numeric array \(F\):</p>
+<p>\[ F(:,:,1)=\begin{pmatrix} f_1(R_1)&amp;f_2(R_1)&amp;f_3(R_1)\\ f_1(R_2)&amp;f_2(R_2)&amp;f_3(R_2)\\ f_1(R_3)&amp;f_2(R_3)&amp;f_3(R_3)\\ f_1(R_4)&amp;f_2(R_4)&amp;f_3(R_4) \end{pmatrix}, \qquad F(:,:,2)=\begin{pmatrix} f_4(R_1)&amp;f_5(R_1)&amp;f_6(R_1)\\ f_4(R_2)&amp;f_5(R_2)&amp;f_6(R_2)\\ f_4(R_3)&amp;f_5(R_3)&amp;f_6(R_3)\\ f_4(R_4)&amp;f_5(R_4)&amp;f_6(R_4) \end{pmatrix}. \]</p>
+<p>The same convention applies to harmonic coefficients. The first dimension of the internal coefficient array stores all Fourier coefficients of one scalar function. If \(\widehat{\mathbf f}_j\) is the coefficient column for \(f_j\), the two slices are</p>
+<p>\[ \widehat F(:,:,1)= \begin{pmatrix}\widehat{\mathbf f}_1&amp;\widehat{\mathbf f}_2&amp; \widehat{\mathbf f}_3\end{pmatrix}, \qquad \widehat F(:,:,2)= \begin{pmatrix}\widehat{\mathbf f}_4&amp;\widehat{\mathbf f}_5&amp; \widehat{\mathbf f}_6\end{pmatrix}. \]</p>
+<p>This leading coefficient dimension is an implementation detail. Indexing and <code class="language-plaintext highlighter-rouge">size</code> report only the \(3\mathbin{\times}2\) function array seen by the user.</p>
+<h2 id="2">Interpolate several components from samples</h2>
+<p>First construct a column of approximately \(10^5\) orientations. The crystal and specimen symmetries determine the fundamental region sampled by the grid.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">nodes</span> <span class="o">=</span> <span class="n">equispacedSO3Grid</span><span class="p">(</span><span class="n">crystalSymmetry</span><span class="p">,</span><span class="n">specimenSymmetry</span><span class="p">,</span><span class="s1">'points'</span><span class="p">,</span><span class="mf">1e5</span><span class="p">);</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">(:);</span></code></pre></figure>
+<p>The first value column samples the Dubna model function. The second is a different scalar quantity evaluated at the same nodes. Assigning the Dubna crystal symmetry to the nodes makes their symmetry agree with the sampled model.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">SO3Fun</span><span class="o">.</span><span class="n">dubna</span><span class="p">(</span><span class="n">nodes</span><span class="p">),</span> <span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">a</span> <span class="o">.*</span> <span class="n">nodes</span><span class="o">.</span><span class="n">b</span><span class="p">)</span><span class="o">.^</span><span class="p">(</span><span class="mi">1</span><span class="p">/</span><span class="mi">4</span><span class="p">)];</span>
+<span class="n">nodes</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="n">SO3Fun</span><span class="o">.</span><span class="n">dubna</span><span class="o">.</span><span class="n">CS</span><span class="p">;</span></code></pre></figure>
+<p> <a href="SO3FunHarmonic.interpolate.html"><code class="language-plaintext highlighter-rouge">SO3FunHarmonic.interpolate</code></a> fits both columns in one call. The result is a \(2\mathbin{\times}1\) array of harmonic functions. Here the bandwidth is 48 and LSQR is limited to 10 iterations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F1</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">'maxit'</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="s1">'bandwidth'</span><span class="p">,</span><span class="mi">48</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Warning: Maximum number of iterations reached, result may not have converged to
+the optimum yet. 
+ 
+SO3F1 = SO3FunHarmonic (Quartz → y↑→x)
+  isReal: false
+  size: 2 × 1
+  bandwidth: 48
+  weights: [1 0.49]</code></pre></figure>
+<p>The deliberately short iteration limit can produce an LSQR warning that the optimum has not yet been reached. Increase <code class="language-plaintext highlighter-rouge">maxit</code> when convergence, rather than a compact teaching run, is required.</p>
+<p>Evaluating four orientations demonstrates the layout directly: four rows are nodes and two columns are components.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">size</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">SO3F1</span><span class="p">,</span><span class="n">nodes</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">)))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     4     2</code></pre></figure>
+<p>The generic <a href="rotation.interp.html"><code class="language-plaintext highlighter-rouge">interp</code></a> route can instead build an <a href="SO3FunRBF.SO3FunRBF.html"><code class="language-plaintext highlighter-rouge">SO3FunRBF</code></a> from one value column.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F2</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span><span class="n">y</span><span class="p">(:,</span><span class="mi">1</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Warning: Maximum number of iterations reached, result may not have converged to
+the optimum yet. 
+ 
+SO3F2 = SO3FunRBF (Quartz → y↑→x)
+ 
+  multimodal components
+  kernel: de la Vallee Poussin, halfwidth 5°
+  center: 19848 orientations, resolution: 5°
+  weight: 1</code></pre></figure>
+<p>This <code class="language-plaintext highlighter-rouge">interp</code> syntax is available only for a univariate, or scalar-valued, function. Use the explicit harmonic interpolation above when several sampled components should remain together.</p>
+<h2 id="9">Construct a function from a function handle</h2>
+<p>Quadrature provides a second route when values can be evaluated at any orientation. The handle below returns four columns for every input orientation.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">f</span> <span class="o">=</span> <span class="o">@</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span> <span class="p">[</span><span class="nb">exp</span><span class="p">(</span><span class="n">rot</span><span class="o">.</span><span class="n">a</span><span class="o">+</span><span class="n">rot</span><span class="o">.</span><span class="n">b</span><span class="o">+</span><span class="n">rot</span><span class="o">.</span><span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="k">...</span>
+  <span class="mi">50</span><span class="o">*</span><span class="p">(</span><span class="n">rot</span><span class="o">.</span><span class="n">b</span><span class="o">-</span><span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="p">/</span><span class="mi">3</span><span class="p">))</span><span class="o">.^</span><span class="mf">3.</span><span class="o">*</span><span class="p">(</span><span class="n">rot</span><span class="o">.</span><span class="n">b</span><span class="o">-</span><span class="nb">cos</span><span class="p">(</span><span class="nb">pi</span><span class="p">/</span><span class="mi">3</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">),</span> <span class="k">...</span>
+  <span class="n">rot</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">rot</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="n">rot</span><span class="o">.</span><span class="n">c</span><span class="p">];</span></code></pre></figure>
+<p> <a href="SO3FunHarmonic.quadrature.html"><code class="language-plaintext highlighter-rouge">SO3FunHarmonic.quadrature</code></a> evaluates the handle on a quadrature grid. It creates a \(4\mathbin{\times}1\) harmonic function with bandwidth 50 and the same crystal symmetry as <code class="language-plaintext highlighter-rouge">SO3F1</code>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F3</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="o">.</span><span class="n">quadrature</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s1">'bandwidth'</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">SO3F1</span><span class="o">.</span><span class="n">CS</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">SO3F3 = SO3FunHarmonic (Quartz → y↑→x)
+  isReal: false
+  size: 4 × 1
+  bandwidth: 50</code></pre></figure>
+<h2 id="11">Construct a function from Fourier coefficients</h2>
+<p>Known Fourier coefficients can be passed directly to the <a href="SO3FunHarmonic.SO3FunHarmonic.html"><code class="language-plaintext highlighter-rouge">SO3FunHarmonic</code></a> constructor. Each column of the coefficient matrix becomes one component.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F4</span> <span class="o">=</span> <span class="n">SO3FunHarmonic</span><span class="p">(</span><span class="nb">eye</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">SO3F4 = SO3FunHarmonic (y↑→x → y↑→x)
+  isReal: false
+  size: 10 × 1
+  bandwidth: 1</code></pre></figure>
+<p>This stores the first ten <a href="WignerFunctions.html">Wigner-D functions</a> as a \(10\mathbin{\times}1\) function array. The coefficient dimension is hidden from the reported array size.</p>
+<h2 id="13">Index and reshape components</h2>
+<p>Function arrays follow ordinary MATLAB array conventions. They can be concatenated, indexed and reshaped. Concatenating the two- and four-component arrays below produces six components, and indexing selects components two through four.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F5</span> <span class="o">=</span> <span class="p">[</span><span class="n">SO3F1</span><span class="p">;</span> <span class="n">SO3F3</span><span class="p">];</span>
+<span class="n">SO3F5</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3FunHarmonic (Quartz → y↑→x)
+  isReal: false
+  size: 3 × 1
+  bandwidth: 50
+  weights: [0.5 1.1 -0.2]</code></pre></figure>
+<p>Transpose and conjugation act on the function array and its Fourier coefficients. The nonconjugating transpose <code class="language-plaintext highlighter-rouge">.'</code> changes only the array shape, whereas <code class="language-plaintext highlighter-rouge">'</code> also conjugates complex coefficients.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">conj</span><span class="p">(</span><span class="n">SO3F1</span><span class="p">);</span>
+<span class="n">SO3F1</span><span class="o">.'</span><span class="p">;</span>
+<span class="n">SO3F1</span><span class="o">'</span><span class="p">;</span></code></pre></figure>
+<p>Standard array queries report the component array dimensions.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">length</span><span class="p">(</span><span class="n">SO3F1</span><span class="p">)</span>
+<span class="nb">size</span><span class="p">(</span><span class="n">SO3F3</span><span class="p">)</span>
+<span class="n">SO3F4</span> <span class="o">=</span> <span class="nb">reshape</span><span class="p">(</span><span class="n">SO3F4</span><span class="p">,</span><span class="mi">2</span><span class="p">,[])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     2
+ans =
+     4     1
+ 
+SO3F4 = SO3FunHarmonic (y↑→x → y↑→x)
+  isReal: false
+  size: 2 × 5
+  bandwidth: 1</code></pre></figure>
+<h2 id="16">Integrals and component-wise reductions</h2>
+<p>With no dimension argument, <code class="language-plaintext highlighter-rouge">sum</code> integrates every component over \(\mathrm{SO}(3)\) and <code class="language-plaintext highlighter-rouge">mean</code> returns its orientation-space mean. The result is a numeric array with the same component shape.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">sum</span><span class="p">(</span><span class="n">SO3F1</span><span class="p">)</span>
+<span class="nb">mean</span><span class="p">(</span><span class="n">SO3F4</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+   78.8886
+   38.6429
+ans =
+     1     0     0     0     0
+     0     0     0     0     0</code></pre></figure>
+<p>Passing a dimension changes the meaning to an ordinary pointwise reduction over the function array. The results below remain <a href="SO3FunHarmonic.SO3FunHarmonic.html">SO3FunHarmonic</a> objects.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">sum</span><span class="p">(</span><span class="n">SO3F1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">mean</span><span class="p">(</span><span class="n">SO3F4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3FunHarmonic (Quartz → y↑→x)
+  isReal: false
+  bandwidth: 48
+  weight: 1.49+0.2i
+ 
+ 
+ans = SO3FunHarmonic (y↑→x → y↑→x)
+  antipodal: true
+  size: 2 × 1
+  bandwidth: 1
+  weights: [0.2 0]</code></pre></figure>
+<h2 id="18">Minima and maxima</h2>
+<p>With a single argument, <code class="language-plaintext highlighter-rouge">min</code> and <code class="language-plaintext highlighter-rouge">max</code> find a global extremum of every component separately. They return numeric arrays and require real-valued functions. Marking <code class="language-plaintext highlighter-rouge">SO3F4</code> as real enforces the coefficient symmetry required by this search.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F4</span><span class="o">.</span><span class="n">isReal</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nb">min</span><span class="p">(</span><span class="n">SO3F4</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+  Columns 1 through 7
+    1.0000   -1.7320   -1.2247   -1.7320   -1.2247   -1.7321   -1.2247
+  Columns 8 through 10
+   -1.7320   -1.2247   -1.7320</code></pre></figure>
+<p>Passing a dimension as <code class="language-plaintext highlighter-rouge">min(SO3F,[],dim)</code> instead computes a pointwise minimum along that component dimension. The result is again a vector-valued <a href="SO3FunHarmonic.SO3FunHarmonic.html">SO3FunHarmonic</a>. Since <code class="language-plaintext highlighter-rouge">SO3F4</code> is \(2\mathbin{\times}5\), the following reduction leaves a \(1\mathbin{\times}5\) function.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">min</span><span class="p">(</span><span class="n">SO3F4</span><span class="p">,[],</span><span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3FunHarmonic (y↑→x → y↑→x)
+  size: 1 × 5
+  bandwidth: 1</code></pre></figure>
+<h2 id="20">Pointwise products</h2>
+<p>The element-wise product <code class="language-plaintext highlighter-rouge">.*</code> is evaluated pointwise in orientation space. It is not the usual matrix product between the two function arrays. Both operands must have compatible symmetries, so the symmetry of <code class="language-plaintext highlighter-rouge">SO3F1</code> is set explicitly before multiplication.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">SO3F1</span><span class="o">.</span><span class="n">CS</span> <span class="o">=</span> <span class="n">specimenSymmetry</span><span class="p">;</span>
+<span class="n">SO3F1</span> <span class="o">.*</span> <span class="n">SO3F4</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = SO3FunHarmonic (y↑→x → y↑→x)
+  isReal: false
+  size: 2 × 5
+  bandwidth: 49</code></pre></figure>
+<h2 id="21">Inspect all components</h2>
+<p> <a href="SO3Fun.plotSpektra.html"><code class="language-plaintext highlighter-rouge">plotSpektra</code></a> draws the harmonic power spectrum of every component. The four curves show that components of one function array may have different distributions over harmonic degree.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotSpektra</span><span class="p">(</span><span class="n">SO3F3</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">'figSize'</span><span class="p">,</span><span class="s1">'small'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorValued_01.png" alt="" />
+
+</center>
+<p>An orientation-space section plot displays only the first component of a vector-valued function. Since <code class="language-plaintext highlighter-rouge">SO3F3</code> is not marked as real, this command also warns that it displays the real part. Select and prepare a component explicitly when another component or its imaginary part is required.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">plot</span><span class="p">(</span><span class="n">SO3F3</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorValued_02.png" alt="" />
+
+</center>
+<p>The three-dimensional plot has the same first-component restriction. The shape therefore describes the real part of the first scalar function, not the magnitude of the four-component array.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plot3d</span><span class="p">(</span><span class="n">SO3F3</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/SO3FunVectorValued_03.png" alt="" />
+
+</center>
+<p>A fibre is a one-dimensional family of orientations. In contrast to the section and three-dimensional plots, <code class="language-plaintext highlighter-rouge">plotFibre</code> draws every component along the selected beta fibre. Here it draws the real parts, so the four curves can be compared at the same orientations.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plotFibre</span><span class="p">(</span><span class="n">SO3F3</span><span class="p">,</span><span class="n">fibre</span><span class="o">.</span><span class="nb">beta</span><span class="p">,</span><span class="s1">'linewidth'</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">close</span> <span class="nb">all</span></code></pre></figure>
+<h2 id="25">References</h2>
+<div>
+<ul>
+<li>P. J. Kostelec and D. N. Rockmore, <a href="https://doi.org/10.1007/s00041-008-9013-5">FFTs on the rotation group</a>, <i>Journal of Fourier Analysis and Applications</i> 14 (2008), 145--179, develops the Fourier representation on \(\mathrm{SO}(3)\) used for each component of an <a href="SO3FunHarmonic.SO3FunHarmonic.html">SO3FunHarmonic</a>.</li>
+</ul>
+</div>
+<h2 id="26">Next</h2>
+<p>Continue with <a href="SO3FunVectorField.html">Rotational Vector Fields</a> to attach three components to specimen or crystal coordinates and account for how those vectors transform with orientation.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/SO3FunVectorValued.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

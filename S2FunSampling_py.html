@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Sampling a Spherical Function | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/S2FunSampling_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/S2FunSampling_py.html#page",
+      "name": "Sampling a Spherical Function",
+      "headline": "Sampling a Spherical Function",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/S2FunSampling_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/S2FunSampling_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/S2FunSampling_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Sampling a Spherical Function</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/S2FunSampling.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/SphericalFunctions/S2FunSampling.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A spherical density is a nonnegative <code class="language-plaintext highlighter-rouge">S2Fun</code> whose values describe how mass is
+distributed over directions. Some computations need that density replaced by finitely many
+directions. Examples include simulation input, numerical integration, and a scatter plot of
+likely directions.</p>
+
+<p>MTEX can draw directions independently or optimize their placement. It can also attach a
+volume fraction to every optimized direction. This page compares those three choices and
+tests what each sample preserves.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="a-density-with-narrow-features">A density with narrow features</h2>
+
+<p>The example is the smiley function. Its underlying features are zero on most of the
+sphere and concentrated in the eyes and mouth. The constant background below makes the
+density strictly positive without hiding those narrow features.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sF</span> <span class="o">=</span> <span class="mf">0.02</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">S2Fun</span><span class="p">.</span><span class="n">smiley</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">contourf</span><span class="p">(</span><span class="n">sF</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S2FunSampling-3.png" /></center>
+
+<h2 id="random-sampling">Random sampling</h2>
+
+<p><a href="S2Fun.discreteSample.html">discreteSample</a> draws independent directions with probability
+proportional to the function value. It is fast and unbiased, but a finite random sample
+contains clusters and empty patches.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vRnd</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">sF</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">contourf</span><span class="p">(</span><span class="n">sF</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">vRnd</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S2FunSampling-4.png" /></center>
+
+<p>Notice the uneven gaps between points along the mouth. Those gaps are sampling noise
+rather than low-density parts of the original function.</p>
+
+<h2 id="optimizing-the-directions">Optimizing the directions</h2>
+
+<p><a href="S2Fun.optimalSample.html">optimalSample</a> moves the directions until their discrete
+measure is close to the density. This optimization costs more time than independent
+sampling. In return, the directions spread evenly along every feature and become denser
+where the function is large.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vOpt</span> <span class="o">=</span> <span class="n">optimalSample</span><span class="p">(</span><span class="n">sF</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+
+<span class="n">contourf</span><span class="p">(</span><span class="n">sF</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">vOpt</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S2FunSampling-5.png" /></center>
+
+<p>The optimized sample follows both eyes and the mouth without the random clusters seen
+above. Because this example has a positive background, a few directions also remain away
+from those features.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">bandwidth</code> sets the largest harmonic degree that the sample must reproduce. Choose it
+for the intended use of the points. A lower bandwidth asks the optimizer to preserve less
+detail and is faster.</p>
+
+<h2 id="optimizing-directions-and-weights">Optimizing directions and weights</h2>
+
+<p>The points do not have to carry equal mass. Asking <code class="language-plaintext highlighter-rouge">optimalSample</code> for the weights,
+<code class="language-plaintext highlighter-rouge">optimizeWeights=True</code>, optimizes them together with the directions. For \(M\) directions,
+this gives the discrete measure \(M\) additional variables.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vWgt</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">optimalSample</span><span class="p">(</span><span class="n">sF</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">optimizeWeights</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The weights are volume fractions. They are nonnegative and sum to one. The output below
+checks both properties for this sample.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">c</span><span class="p">)])</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.0056, 0.0189, 1.    ])
+</code></pre></div></div>
+
+<p>Marker area now follows the weight. A large marker represents a direction that carries a
+larger share of the density.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">contourf</span><span class="p">(</span><span class="n">sF</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">scatter</span><span class="p">(</span><span class="n">vWgt</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">40</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">markerFaceColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">,</span> <span class="n">markerEdgeColor</span><span class="o">=</span><span class="s">'k'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S2FunSampling-8.png" /></center>
+
+<p>Notice that the directions remain well distributed, but their shares are no longer equal.
+Directions with almost no mass can be discarded during the optimization by passing the
+<code class="language-plaintext highlighter-rouge">minWeight</code> option.</p>
+
+<p>We use 100 points and bandwidth 32 so that the weights have visible work to do. With 500
+points and bandwidth 128, the optimized directions already describe this density so well
+that the weights in a measured run ranged only from 0.0019605 to 0.0019609.</p>
+
+<h2 id="comparing-the-recovered-densities">Comparing the recovered densities</h2>
+
+<p>To compare equal point counts, we estimate a density from every sample with
+<a href="vector3d.calcDensity.html">calcDensity</a>. The weighted sample passes its volume fractions
+to the estimator. All three estimates use the same kernel halfwidth, so their smoothing is
+identical.</p>
+
+<p>A second error compares the spherical harmonic coefficients of the discrete measure
+directly through degree 32. No smoothing kernel enters this test. This is the coefficient
+discrepancy that <code class="language-plaintext highlighter-rouge">optimalSample</code> actually minimizes, although its restricted-distance
+objective assigns a degree-dependent weight to each coefficient. The unweighted relative
+norm below is easier to interpret when the sample will be used for integration.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hw</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span>
+<span class="n">sFn</span> <span class="o">=</span> <span class="n">sF</span> <span class="o">/</span> <span class="n">mean</span><span class="p">(</span><span class="n">sF</span><span class="p">)</span>
+<span class="n">sF32</span> <span class="o">=</span> <span class="n">S2FunHarmonic</span><span class="p">(</span><span class="n">sF</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">dens</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">calcDensity</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="n">hw</span><span class="p">)</span> <span class="o">-</span> <span class="n">sFn</span><span class="p">)</span>
+<span class="n">mom</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">sF</span><span class="p">)</span> <span class="o">*</span> <span class="n">S2FunHarmonic</span><span class="p">.</span><span class="n">adjointNFSFT</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span> <span class="o">-</span> <span class="n">sF32</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">sF32</span><span class="p">)</span>
+
+<span class="n">M</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">800</span><span class="p">]</span>
+<span class="n">densRnd</span><span class="p">,</span> <span class="n">densOpt</span><span class="p">,</span> <span class="n">densWgt</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
+<span class="n">momRnd</span><span class="p">,</span> <span class="n">momOpt</span><span class="p">,</span> <span class="n">momWgt</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+
+  <span class="c1"># average the random result over three independent draws
+</span>  <span class="n">d</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">discreteSample</span><span class="p">(</span><span class="n">sF</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">dens</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+    <span class="n">e</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">mom</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+  <span class="n">densRnd</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">momRnd</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+  <span class="n">v</span> <span class="o">=</span> <span class="n">optimalSample</span><span class="p">(</span><span class="n">sF</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+  <span class="n">densOpt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dens</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">))</span>
+  <span class="n">momOpt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">mom</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">))</span>
+
+  <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">optimalSample</span><span class="p">(</span><span class="n">sF</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">optimizeWeights</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="n">densWgt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">dens</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+  <span class="n">momWgt</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">mom</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">'points'</span><span class="p">,</span> <span class="s">'densityRandom'</span><span class="p">,</span> <span class="s">'densityOptimal'</span><span class="p">,</span> <span class="s">'densityWeighted'</span><span class="p">,</span> <span class="s">'momentRandom'</span><span class="p">,</span> <span class="s">'momentOptimal'</span><span class="p">,</span> <span class="s">'momentWeighted'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">17</span><span class="n">s</span><span class="si">}</span><span class="s">'</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">densRnd</span><span class="p">,</span> <span class="n">densOpt</span><span class="p">,</span> <span class="n">densWgt</span><span class="p">,</span> <span class="n">momRnd</span><span class="p">,</span> <span class="n">momOpt</span><span class="p">,</span> <span class="n">momWgt</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">17</span><span class="n">d</span><span class="si">}</span><span class="s">'</span> <span class="o">+</span> <span class="s">''</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="o">&gt;</span><span class="mf">17.4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>           points    densityRandom   densityOptimal  densityWeighted     momentRandom    momentOptimal   momentWeighted
+               50           1.8483           1.0790           1.0738           2.4475           2.0445           2.0861
+              100           1.4049           0.6570           0.5339           1.7759           0.9897           0.9171
+              200           1.0007           0.4387           0.3058           1.2691           0.5699           0.3510
+              400           0.7053           0.3017           0.2536           0.9066           0.3307           0.2280
+              800           0.5510           0.2450           0.2343           0.6215           0.1784           0.0909
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">densRnd</span><span class="p">,</span> <span class="s">'-o'</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">densOpt</span><span class="p">,</span> <span class="s">'-s'</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">densWgt</span><span class="p">,</span> <span class="s">'-d'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="s">'discreteSample'</span><span class="p">,</span> <span class="s">'optimalSample'</span><span class="p">,</span> <span class="s">'optimalSample, weighted'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'number of sampling points'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'L^2 error of the recovered density'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S2FunSampling-10.png" /></center>
+
+<p>At every equal point count, an optimized sample recovers the density more accurately than
+the random sample. Two hundred optimized points have an error of 0.44, less than the
+about 0.5 of 800 random points. At 100 points the weighted optimization reduces the error
+from about 0.66 to about 0.53.</p>
+
+<p>The optimized curves flatten near 0.24, while the random curve is still descending. Their
+flattening shows that the 5 degree kernel is becoming a limiting source of error for this
+sharp function.</p>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">momRnd</span><span class="p">,</span> <span class="s">'-o'</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">momOpt</span><span class="p">,</span> <span class="s">'-s'</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">momWgt</span><span class="p">,</span> <span class="s">'-d'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="s">'discreteSample'</span><span class="p">,</span> <span class="s">'optimalSample'</span><span class="p">,</span> <span class="s">'optimalSample, weighted'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'number of sampling points'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'error of the harmonic coefficients up to degree 32'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/S2FunSampling-11.png" /></center>
+
+<p>Without the smoothing kernel there is no common floor. The optimized samples converge
+more quickly, while random sampling has the familiar \(1/\sqrt{M}\) statistical rate. At 50
+points, changing the weights gives essentially no benefit because the directions use most
+of what this small sample can express.</p>
+
+<p>At 800 points, the weighted sample has a coefficient error of 0.09. This is about seven
+times more accurate than the random sample and twice as accurate as the unweighted
+optimized sample.</p>
+
+<h2 id="choosing-a-sampling-method">Choosing a sampling method</h2>
+
+<p>Use <a href="S2Fun.discreteSample.html">discreteSample</a> when you need many points quickly and
+their individual placement does not matter. Use <a href="S2Fun.optimalSample.html">optimalSample</a>
+when the number of points is limited. Ask for weights when the sample will be used for
+integration. For a kernel density estimate, optimized weights usually help less once the
+smoothing halfwidth becomes the main source of error.</p>
+
+<h2 id="the-maths-behind-the-optimized-sample">The maths behind the optimized sample</h2>
+
+<p>Directions \(\mathbf{v}_j\) and volume fractions \(c_j\) represent the density \(f\) by the
+discrete measure</p>
+
+\[\mu = \lambda \sum_{j=1}^{M} c_j\,\delta_{\mathbf{v}_j},
+\qquad \lambda = \int_{S^2} f(\mathbf{v})\,\mathrm{d}\mathbf{v}.\]
+
+<p>Here \(\delta_{\mathbf{v}_j}\) places mass at one direction. The weights satisfy
+\(c_j\geq 0\) and \(\sum_j c_j=1\). The optimizer moves the directions and, when requested,
+the weights to reduce harmonic discrepancies through the chosen bandwidth.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>M. Gräf, D. Potts and G. Steidl,
+<a href="https://doi.org/10.1137/100814731">Quadrature Errors, Discrepancies, and Their Relations to Halftoning on the Torus and the Sphere</a>,
+<em>SIAM Journal on Scientific Computing</em> 34 (2012), A2760–A2791, develops the discrepancy
+measure used to optimize discrete samples on the sphere.</li>
+  <li>M. Knezevic and N. W. Landry,
+<a href="https://doi.org/10.1016/j.mechmat.2015.04.014">Procedures for reducing large datasets of crystal orientations using generalized spherical harmonics</a>,
+<em>Mechanics of Materials</em> 88 (2015), 73–86, applies harmonic moment matching to compact
+directional datasets.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>Continue with <a href="S2FunHarmonicRepresentation_py.html">Harmonic Representation</a> to see how
+bandwidth and spherical harmonic coefficients describe the detail that these optimized
+samples are designed to preserve.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>MATLAB’s second output <code class="language-plaintext highlighter-rouge">[v, c] = optimalSample(...)</code> is <code class="language-plaintext highlighter-rouge">optimizeWeights=True</code> here.
+<code class="language-plaintext highlighter-rouge">norm</code> is that of the normalised measure, \(1/\sqrt{4\pi}\) times MATLAB’s, so the density
+errors are \(1/\sqrt{4\pi}\) of MATLAB’s (0.44 for MATLAB’s 1.51, 0.66 and 0.53 for its
+2.28 and 1.82); the coefficient errors are ratios and compare directly, 0.092, 0.181 and
+0.622 at 800 points for MATLAB’s 0.101, 0.185 and 0.617. The random columns differ from
+run to run. MATLAB’s page also compares its table with the numbers of an earlier run,
+which this page leaves out.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/S2FunSampling_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

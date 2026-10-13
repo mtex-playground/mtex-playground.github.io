@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Grain Boundary Normal Distribution | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/BoundaryNormalDistribution_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/BoundaryNormalDistribution_py.html#page",
+      "name": "Grain Boundary Normal Distribution",
+      "headline": "Grain Boundary Normal Distribution",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/BoundaryNormalDistribution_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/BoundaryNormalDistribution_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/BoundaryNormalDistribution_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Grain Boundary Normal Distribution</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+        <p class="mx-langnote">Parts of this page are not yet available in Python; the MATLAB page has them all.</p>
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/BoundaryNormalDistribution.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GrainBoundaries/BoundaryNormalDistribution.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A polished two-dimensional section reveals a grain boundary trace, but not the
+inclination of the boundary plane. This page shows how
+<a href="grainBoundary.calcGBND.html">calcGBND</a> combines many traces with the orientations on
+their two sides to estimate preferred boundary planes. It then contrasts that
+stereological estimate with normals measured directly from three-dimensional grains.</p>
+
+<p>The examples assume familiarity with <a href="GrainReconstruction_py.html">grain reconstruction</a>,
+<a href="BoundaryProperties_py.html">grain boundary properties</a>, and
+<a href="MisorientationTheory_py.html">misorientation symmetry</a>.</p>
+
+<p>A grain boundary in a two-dimensional MTEX map is one segment between neighbouring EBSD
+measurements assigned to different grains. The distributions below describe populations
+of those segments. They do not recover the boundary plane of an individual segment.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<h2 id="three-related-distributions">Three related distributions</h2>
+
+<p>A reference frame is the coordinate system in which data are expressed. The <em>specimen
+frame</em> is fixed to the sample, while a <em>crystal frame</em> is fixed to the lattice basis of
+one phase.</p>
+
+<p><a href="grainBoundary.calcGBND.html">calcGBND</a> estimates two grain boundary normal
+distributions (GBNDs) and one conditional distribution:</p>
+
+<ul>
+  <li>The <em>specimen GBND</em> is the distribution of boundary normals in the specimen frame. It
+asks whether interfaces prefer a sample direction.</li>
+  <li>The <em>crystal GBND</em> is the distribution after the normals have been expressed in
+crystal frames. It asks which lattice planes, or habits, the interfaces prefer.</li>
+  <li>The <em>grain boundary character distribution</em> (GBCD) shown here is the crystal GBND
+restricted to boundaries near one fixed misorientation.</li>
+</ul>
+
+<p>A macroscopic grain boundary has five parameters: three for the misorientation and two
+for the plane normal. A GBCD at one fixed misorientation is therefore a two-dimensional
+slice through that five-dimensional description.</p>
+
+<p>A single planar section supplies only one specimen-frame view. It cannot determine the
+specimen GBND. The different crystal orientations in the map supply multiple
+crystal-frame views, so the crystal GBND and GBCD can be estimated statistically.
+Three-dimensional data make all three distributions directly accessible.</p>
+
+<h2 id="the-crystal-gbnd-from-two-dimensional-ebsd-data">The crystal GBND from two-dimensional EBSD data</h2>
+
+<p>We use a magnesium map containing tension twins. Magnesium deforms by tension twinning
+on a \(\{10\bar{1}2\}\) plane. A coherent twin boundary lies on that plane, so its known
+habit gives the estimate a clear target.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load the map in its specimen plotting frame
+</span><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'twins'</span><span class="p">)</span>
+
+<span class="c1"># reconstruct grains with a 5 degree segmentation threshold
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="preserve-the-segment-to-pixel-relation">Preserve the segment-to-pixel relation</h2>
+
+<p>The two-dimensional estimator looks up the orientations beside each segment through
+<code class="language-plaintext highlighter-rouge">gB.ebsdId</code>. That property is meaningful only while every segment still lies between
+one specific pair of pixels.</p>
+
+<p><a href="grain2d.smoothBoundary.html">smoothBoundary</a> normally simplifies and resamples the
+segment list. The options <code class="language-plaintext highlighter-rouge">simplify=False</code> and <code class="language-plaintext highlighter-rouge">refine=False</code> smooth the vertex positions
+without changing that list.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">smoothBoundary</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">refine</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">CS</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">CS</span>
+
+<span class="c1"># compute IPF colours explicitly to keep the published output quiet
+</span><span class="n">colorKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">ebsd</span><span class="p">)</span>
+<span class="n">mapColor</span> <span class="o">=</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ebsd</span><span class="p">.</span><span class="n">orientations</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">mapColor</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryNormalDistribution-3.png" /></center>
+
+<p>The black network follows the reconstructed grain boundaries. Notice the long, narrow
+lamellae that cut across the larger magnesium grains. Their morphology suggests
+twinning, but the following plane analysis tests the crystallographic prediction.</p>
+
+<h2 id="misorientation-angle-at-grain-boundaries">Misorientation angle at grain boundaries</h2>
+
+<p>The magnesium tension twins produce a sharp misorientation peak at 86.3 degrees.
+Separate boundaries above and below 80 degrees to make a first, deliberately coarse
+comparison. An angle threshold alone does not identify a twin law because different axes
+can have the same angle.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">[</span><span class="s">'indexed'</span><span class="p">]</span>
+<span class="n">cond</span> <span class="o">=</span> <span class="n">gB</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">80</span> <span class="o">*</span> <span class="n">degree</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">mapColor</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB</span><span class="p">[</span><span class="n">cond</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryNormalDistribution-4.png" /></center>
+
+<p>The white traces pick out most of the narrow lamellae. Some high-angle boundaries need
+not be twins, so this spatial agreement is evidence for the selection rather than a
+complete classification.</p>
+
+<h2 id="estimate-the-two-crystal-gbnds">Estimate the two crystal GBNDs</h2>
+
+<p>Recovering a three-dimensional distribution from planar traces is a deconvolution. An
+unconstrained reconstruction can ring around sharp features and become negative. The
+option <code class="language-plaintext highlighter-rouge">nonneg</code> enforces the nonnegative result required for a density.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">halfwidth</code> controls how far each observation is spread in the estimate. See
+<a href="DensityEstimation_py.html">Density Estimation</a> for the resolution–noise trade-off behind
+this value.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gbnd1</span> <span class="o">=</span> <span class="n">calcGBND</span><span class="p">(</span><span class="n">gB</span><span class="p">[</span><span class="n">cond</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">nonneg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">gbnd2</span> <span class="o">=</span> <span class="n">calcGBND</span><span class="p">(</span><span class="n">gB</span><span class="p">[</span><span class="o">~</span><span class="n">cond</span><span class="p">],</span> <span class="n">ebsd</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">nonneg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># mark the full family of magnesium tension-twin planes
+</span><span class="n">tp</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="s">'hkil'</span><span class="p">)</span>
+
+<span class="c1"># use one colour range so weak structure is not visually amplified
+</span><span class="n">contourf</span><span class="p">(</span><span class="n">gbnd1</span><span class="p">,</span> <span class="n">colorRange</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span> <span class="n">complete</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">axisLabels</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'GBND for $\omega &gt; 80^{\circ}$'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">tp</span><span class="p">),</span> <span class="n">labeled</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">backgroundColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">nextAxis</span><span class="p">()</span>
+<span class="n">contourf</span><span class="p">(</span><span class="n">gbnd2</span><span class="p">,</span> <span class="n">colorRange</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span> <span class="n">complete</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">axisLabels</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'GBND for $\omega &lt; 80^{\circ}$'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryNormalDistribution-5.png" /></center>
+
+<p>Both panels are normalized so that a value of one is uniform. The common colour range is
+essential: otherwise automatic scaling would make the nearly uniform right panel appear
+as structured as the left.</p>
+
+<p>The high-angle distribution has maxima beside the six symmetrically equivalent
+\(\{10\bar{1}2\}\) planes. These are full-sphere plots, so all six variants are marked.
+Marking only one plane would single out one maximum for no crystallographic reason. The
+remaining boundaries stay much closer to one and show no comparable preferred plane.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">highAnglePeak</span><span class="p">,</span> <span class="n">highAnglePeakPosition</span> <span class="o">=</span> <span class="n">gbnd1</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span>
+<span class="n">highAngleSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'peakDensity'</span><span class="p">:</span> <span class="n">highAnglePeak</span><span class="p">,</span>
+                    <span class="s">'distanceToTwinPlaneDegree'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">highAnglePeakPosition</span><span class="p">.</span><span class="n">angle</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">tp</span><span class="p">)))</span> <span class="o">/</span> <span class="n">degree</span><span class="p">}</span>
+<span class="n">highAngleSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'peakDensity': 1.391213111695422, 'distanceToTwinPlaneDegree': 5.575478383679621}
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">remainingSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'minimumDensity'</span><span class="p">:</span> <span class="n">gbnd2</span><span class="p">.</span><span class="nb">min</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="s">'maximumDensity'</span><span class="p">:</span> <span class="n">gbnd2</span><span class="p">.</span><span class="nb">max</span><span class="p">()[</span><span class="mi">0</span><span class="p">]}</span>
+<span class="n">remainingSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'minimumDensity': 0.8590915918782432, 'maximumDensity': 1.0848686147087483}
+</code></pre></div></div>
+
+<p>The peak lies 5.6 degrees from the nearest tension-twin plane. The remaining
+distribution ranges from 0.86 to 1.09. These values quantify the visual contrast between
+the panels.</p>
+
+<h2 id="the-grain-boundary-character-distribution">The grain boundary character distribution</h2>
+
+<p>The angle split above is intentionally crude. Passing a misorientation as the third
+argument selects boundaries near that complete relationship and expresses their plane
+normals consistently. The result is the GBCD slice for that misorientation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># define the ideal magnesium tension-twin relationship
+</span><span class="n">moriRef</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="s">'uvtw'</span><span class="p">),</span> <span class="mf">86.3</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="n">CS</span><span class="p">)</span>
+
+<span class="n">gbcd</span> <span class="o">=</span> <span class="n">calcGBND</span><span class="p">(</span><span class="n">gB</span><span class="p">,</span> <span class="n">grains</span><span class="p">,</span> <span class="n">moriRef</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">nonneg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">gbcd</span><span class="p">,</span> <span class="n">contourf</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'GBCD for the tension twin'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">tp</span><span class="p">),</span> <span class="n">labeled</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">backgroundColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryNormalDistribution-8.png" /></center>
+
+<p>Two of the six \(\{10\bar{1}2\}\) variants carry the maxima. The specimen was deformed, so
+not every twin variant is equally active. The strongest maximum sits directly on a
+tension-twin plane.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">twinPeak</span><span class="p">,</span> <span class="n">twinPeakPosition</span> <span class="o">=</span> <span class="n">gbcd</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span>
+<span class="n">twinGBCDSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'peakDensity'</span><span class="p">:</span> <span class="n">twinPeak</span><span class="p">,</span>
+                   <span class="s">'distanceToTwinPlaneDegree'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">twinPeakPosition</span><span class="p">.</span><span class="n">angle</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">tp</span><span class="p">),</span> <span class="n">symmetry</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span> <span class="o">/</span> <span class="n">degree</span><span class="p">}</span>
+<span class="n">twinGBCDSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'peakDensity': 2.189019735501391, 'distanceToTwinPlaneDegree': 4.8433511616078455}
+</code></pre></div></div>
+
+<p>The printed angular distance is 1.3 degrees. Conditioning on the complete misorientation
+sharpens the habit-plane result compared with the angle-only split.</p>
+
+<h2 id="three-dimensional-data">Three-dimensional data</h2>
+
+<p>A triangulated three-dimensional boundary stores its normal directly, so no
+stereological reconstruction is required. We use the DREAM.3D data set introduced in
+<a href="Grains3D_py.html">Three-Dimensional Grains</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains3</span> <span class="o">=</span> <span class="n">grain3d</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">mtexdatafile</span><span class="p">(</span><span class="s">'SmallIN100'</span><span class="p">))</span>
+
+<span class="c1"># separate internal interfaces from faces on the measured box
+</span><span class="n">allB3</span> <span class="o">=</span> <span class="n">grains3</span><span class="p">.</span><span class="n">boundary</span>
+<span class="n">isInnerFace</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">all</span><span class="p">(</span><span class="n">allB3</span><span class="p">.</span><span class="n">grainId</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">surfaceFaceAreaPercent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">allB3</span><span class="p">.</span><span class="n">area</span><span class="p">[</span><span class="o">~</span><span class="n">isInnerFace</span><span class="p">].</span><span class="nb">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">allB3</span><span class="p">.</span><span class="n">area</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
+<span class="n">surfaceFaceSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'percentOfTotalFaceArea'</span><span class="p">:</span> <span class="n">surfaceFaceAreaPercent</span><span class="p">}</span>
+<span class="n">gB3</span> <span class="o">=</span> <span class="n">allB3</span><span class="p">[</span><span class="n">isInnerFace</span><span class="p">]</span>
+<span class="n">surfaceFaceSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'percentOfTotalFaceArea': 22.840211725967627}
+</code></pre></div></div>
+
+<p>Faces at the surface of the measured volume belong to only one grain. They are the six
+sides of the measured box, not grain boundaries. They contribute 22.8 percent of the
+total face area. Their flat, axis-aligned normals would otherwise dominate the specimen
+GBND.</p>
+
+<h2 id="the-specimen-gbnd">The specimen GBND</h2>
+
+<p>With a three-dimensional boundary as its only argument,
+<a href="grain3Boundary.calcGBND.html">calcGBND</a> uses the measured normals in the specimen frame.
+Each triangular face is weighted by its area.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gbndSpecimen</span> <span class="o">=</span> <span class="n">calcGBND</span><span class="p">(</span><span class="n">gB3</span><span class="p">)</span>
+
+<span class="n">contourf</span><span class="p">(</span><span class="n">gbndSpecimen</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'specimen GBND'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryNormalDistribution-11.png" /></center>
+
+<p>Read this plot in the specimen frame: the strongest maximum lies near Z. It describes a
+preferred interface direction in the sample, not a crystallographic habit plane. The
+distribution ranges from 0.61 to 1.74.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">specimenSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'minimumDensity'</span><span class="p">:</span> <span class="n">gbndSpecimen</span><span class="p">.</span><span class="nb">min</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="s">'maximumDensity'</span><span class="p">:</span> <span class="n">gbndSpecimen</span><span class="p">.</span><span class="nb">max</span><span class="p">()[</span><span class="mi">0</span><span class="p">]}</span>
+<span class="n">specimenSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'minimumDensity': 0.6112683632589166, 'maximumDensity': 1.7424354059310012}
+</code></pre></div></div>
+
+<h2 id="the-crystal-gbnd">The crystal GBND</h2>
+
+<p>Passing the grains as well rotates each measured normal into the crystal frame of the
+grain beside it. Both sides contribute, and each face keeps its area weight.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gbndCrystal</span> <span class="o">=</span> <span class="n">calcGBND</span><span class="p">(</span><span class="n">gB3</span><span class="p">,</span> <span class="n">grains3</span><span class="p">)</span>
+
+<span class="n">contourf</span><span class="p">(</span><span class="n">gbndCrystal</span><span class="p">,</span> <span class="n">complete</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="s">'crystal GBND'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryNormalDistribution-13.png" /></center>
+
+<p>The crystal GBND has its maximum of 2.0 at the \(\{111\}\) planes and its minimum of 0.74
+at \(\{100\}\). Taken over all internal interfaces, this data set already prefers
+\(\{111\}\) as the boundary plane.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crystalSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'minimumDensity'</span><span class="p">:</span> <span class="n">gbndCrystal</span><span class="p">.</span><span class="nb">min</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="s">'maximumDensity'</span><span class="p">:</span> <span class="n">gbndCrystal</span><span class="p">.</span><span class="nb">max</span><span class="p">()[</span><span class="mi">0</span><span class="p">]}</span>
+<span class="n">crystalSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'minimumDensity': 0.7411072299996191, 'maximumDensity': 2.004265757082114}
+</code></pre></div></div>
+
+<h2 id="the-gbcd-in-three-dimensions">The GBCD in three dimensions</h2>
+
+<p>The preference sharpens when the distribution is conditioned on the cubic \(\Sigma 3\)
+misorientation: a 60 degree rotation about a [111] axis. The ten-degree halfwidth below
+gives the estimator a twenty-degree inclusion window, matching the implementation of the
+GBCD kernel.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs3</span> <span class="o">=</span> <span class="n">grains3</span><span class="p">.</span><span class="n">CSList</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">sigma3</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cs3</span><span class="p">),</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">cs3</span><span class="p">,</span> <span class="n">cs3</span><span class="p">)</span>
+
+<span class="c1"># measure a strict Sigma 3 fraction and the broader kernel window
+</span><span class="n">grainInd</span> <span class="o">=</span> <span class="n">grains3</span><span class="p">.</span><span class="n">id2ind</span><span class="p">(</span><span class="n">gB3</span><span class="p">.</span><span class="n">grainId</span><span class="p">)</span>
+<span class="n">ori1</span> <span class="o">=</span> <span class="n">grains3</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">[</span><span class="n">grainInd</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">ori2</span> <span class="o">=</span> <span class="n">grains3</span><span class="p">.</span><span class="n">meanOrientation</span><span class="p">[</span><span class="n">grainInd</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">sigma3Deviation</span> <span class="o">=</span> <span class="p">(</span><span class="n">ori1</span><span class="p">.</span><span class="n">inv</span><span class="p">()</span> <span class="o">*</span> <span class="n">ori2</span><span class="p">).</span><span class="n">angle</span><span class="p">(</span><span class="n">sigma3</span><span class="p">)</span>
+<span class="n">sigma3Summary</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">tol</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+  <span class="n">isSigma3</span> <span class="o">=</span> <span class="n">sigma3Deviation</span> <span class="o">&lt;</span> <span class="n">tol</span> <span class="o">*</span> <span class="n">degree</span>
+  <span class="n">sigma3Summary</span><span class="p">[</span><span class="n">tol</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">'facePercent'</span><span class="p">:</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">isSigma3</span><span class="p">.</span><span class="n">mean</span><span class="p">(),</span>
+                        <span class="s">'areaPercent'</span><span class="p">:</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">gB3</span><span class="p">.</span><span class="n">area</span><span class="p">[</span><span class="n">isSigma3</span><span class="p">].</span><span class="nb">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">gB3</span><span class="p">.</span><span class="n">area</span><span class="p">.</span><span class="nb">sum</span><span class="p">()}</span>
+<span class="n">sigma3Summary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{5: {'facePercent': 26.234542728259434, 'areaPercent': 23.249091855256523}, 20: {'facePercent': 44.814951910710136, 'areaPercent': 42.287972180027914}}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gbcd3</span> <span class="o">=</span> <span class="n">calcGBND</span><span class="p">(</span><span class="n">gB3</span><span class="p">,</span> <span class="n">grains3</span><span class="p">,</span> <span class="n">sigma3</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">contourf</span><span class="p">(</span><span class="n">gbcd3</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'GBCD for $\Sigma 3$'</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+<span class="n">sigma3Plane</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cs3</span><span class="p">)</span>
+<span class="n">annotate</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">sigma3Plane</span><span class="p">),</span> <span class="n">labeled</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">backgroundColor</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryNormalDistribution-16.png" /></center>
+
+<p>Within 5 degrees of the ideal \(\Sigma 3\) relationship lie 26.2 percent of the internal
+faces, carrying 23.2 percent of the area. This is the sense in which about a quarter of
+the inner faces are \(\Sigma 3\) twins. The kernel’s 20 degree support admits 44.8 percent
+of the faces but gives less weight to those farther from the ideal relationship.</p>
+
+<p>Of the four \(\{111\}\) variants, only the variant along the \(\Sigma 3\) rotation axis is
+strongly populated. These twins are coherent, and the maximum coincides with that
+boundary plane.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sigma3Peak</span><span class="p">,</span> <span class="n">sigma3PeakPosition</span> <span class="o">=</span> <span class="n">gbcd3</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span>
+<span class="n">sigma3GBCDSummary</span> <span class="o">=</span> <span class="p">{</span><span class="s">'peakDensity'</span><span class="p">:</span> <span class="n">sigma3Peak</span><span class="p">,</span>
+                     <span class="s">'distanceToSigma3PlaneDegree'</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">sigma3PeakPosition</span><span class="p">.</span><span class="n">angle</span><span class="p">(</span><span class="n">symmetrise</span><span class="p">(</span><span class="n">sigma3Plane</span><span class="p">)))</span> <span class="o">/</span> <span class="n">degree</span><span class="p">}</span>
+<span class="n">sigma3GBCDSummary</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'peakDensity': 16.30684787994216, 'distanceToSigma3PlaneDegree': 0.011782645270847976}
+</code></pre></div></div>
+
+<p>The peak density is 16.3, about 0.01 degrees from the plane, eight times the maximum of
+the all-boundary crystal GBND. The \(\{111\}\) preference seen there comes from these
+twins: they make up about a quarter of the internal faces, and averaging over every
+misorientation dilutes a habit that is specific to one boundary character.</p>
+
+<h2 id="interpreting-a-stereological-estimate">Interpreting a stereological estimate</h2>
+
+<p>The two-dimensional estimator weights every trace segment by its length. The
+three-dimensional estimator weights every triangular face by its area. Neither result is
+a count of physical boundaries or twin domains.</p>
+
+<p>Plane normals are axes: a normal and its negative describe the same unoriented plane.
+Crystal symmetry adds further equivalent normals, which is why every member of a plane
+family is annotated above.</p>
+
+<p>A single-section estimate also needs enough differently oriented grains to supply varied
+crystal-frame views. Strong texture can bias this stereological sampling. Compare
+orthogonal sections or direct three-dimensional data when the anisotropy is important.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>D. M. Saylor and G. S. Rohrer,
+<a href="https://doi.org/10.1111/j.1151-2916.2002.tb00531.x">Determining Crystal Habits from Observations of Planar Sections</a>,
+<em>Journal of the American Ceramic Society</em> 85 (2002), 2799–2804. This paper develops the
+stereological precursor for recovering habit planes.</li>
+  <li>D. M. Saylor, B. S. El-Dasher, B. L. Adams and G. S. Rohrer,
+<a href="https://doi.org/10.1007/s11661-004-0147-z">Measuring the Five-Parameter Grain-Boundary Distribution from Observations of Planar Sections</a>,
+<em>Metallurgical and Materials Transactions A</em> 35 (2004), 1981–1989. This paper extends
+the method to grain boundary distributions.</li>
+  <li>A. P. Sutton and R. W. Balluffi,
+<a href="https://search.worldcat.org/title/31166519">Interfaces in Crystalline Materials</a>,
+Clarendon Press, 1995. Chapter 1 develops the five macroscopic boundary parameters and
+their symmetry.</li>
+  <li>V. Randle,
+<a href="https://doi.org/10.1111/j.1365-2818.2008.02000.x">Application of EBSD to the Analysis of Interface Planes: Evolution over the Last Two Decades</a>,
+<em>Journal of Microscopy</em> 230 (2008), 406–413. This review compares direct and
+stereological interface-plane measurements.</li>
+  <li>M. Folwarczny <em>et al.</em>,
+<a href="https://doi.org/10.1016/j.ultramic.2025.114262">Accurate Grain Boundary Plane Distributions for Textured Microstructures from Stereological Analysis of Orthogonal Two-Dimensional Electron Backscatter Diffraction Orientation Maps</a>,
+<em>Ultramicroscopy</em> 280 (2026), 114262. This study examines texture bias and the use of
+orthogonal sections.</li>
+  <li>R. Hielscher, R. Kilian, K. Marquardt and E. Wünsche, <em>Efficient Computation of the
+Grain Boundary Normal Distribution from Two Dimensional EBSD Data</em>, not yet published.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p>This page closes the grain boundary chapter by moving from individual traces to a
+population of plane normals. Continue with <a href="Grains3D_py.html">Three-Dimensional Grains</a> to
+inspect the mesh faces used in the direct calculation, or with
+<a href="S2FunConcept_py.html">Spherical Functions</a> to work with the resulting density objects.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">calcGBND</code> estimates from a planar section with the default kernel, which inverts the
+integral equation of the section and agrees with MATLAB’s to the digit, or with the
+<code class="language-plaintext highlighter-rouge">nonneg</code> and <code class="language-plaintext highlighter-rouge">bump</code> kernels. The crystal GBND takes the symmetry of the phase, as the
+numbers of the page require: without it the peak lies 8.4 degrees from the twin plane.
+The high-angle GBND peaks at 1.3912, 5.58 degrees from the twin plane, for MATLAB’s
+1.3905 and 5.60. The tension-twin GBCD peaks at 2.19, 4.8 degrees from the twin plane,
+where MATLAB’s peaks at 2.10, 1.3 degrees from it, and the Julia port at about one
+degree; both take the same 1648 segments within ten degrees of the twin relation, whose
+traces lie as close to the twin planes in both, so the difference is in how the traces
+are assigned to the equivalent planes, and it is open. The three-dimensional half gives
+MATLAB’s numbers. MATLAB’s tables are dictionaries here.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/BoundaryNormalDistribution_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

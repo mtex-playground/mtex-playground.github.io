@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Grain Boundary Properties | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/BoundaryProperties_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/BoundaryProperties_py.html#page",
+      "name": "Grain Boundary Properties",
+      "headline": "Grain Boundary Properties",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/BoundaryProperties_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/BoundaryProperties_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/BoundaryProperties_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Grain Boundary Properties</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/BoundaryProperties.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/GrainBoundaries/BoundaryProperties.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>A grain boundary is stored as short segments between neighbouring EBSD measurements that
+belong to different grains. Most properties come in pairs: two pixels, grains, phases,
+and the misorientation between them. The remaining properties describe the segment’s
+geometry and its place in the boundary network.</p>
+
+<p>This page assumes that the map has already been divided into grains as in
+<a href="GrainReconstruction_py.html">Grain Reconstruction</a>.
+<a href="BoundarySelect_py.html">Select Grain Boundaries</a> covers phase and grain selection.
+<a href="GrainBoundaries.html">Grain Boundaries</a> explains the physical meaning of a boundary
+trace in a two-dimensional section.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>property</th>
+      <th>meaning</th>
+      <th>property</th>
+      <th>meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ebsdId</code></td>
+      <td>neighbouring pixel IDs</td>
+      <td><code class="language-plaintext highlighter-rouge">grainId</code></td>
+      <td>neighbouring grain IDs</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">phaseId</code></td>
+      <td>neighbouring phase IDs</td>
+      <td><code class="language-plaintext highlighter-rouge">misorientation</code></td>
+      <td>rotation across the segment</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">F</code></td>
+      <td>endpoint vertex IDs</td>
+      <td><code class="language-plaintext highlighter-rouge">direction</code></td>
+      <td>segment direction</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">midPoint</code></td>
+      <td>segment midpoint</td>
+      <td><a href="grainBoundary.segLength.html">segLength</a></td>
+      <td>segment length</td>
+    </tr>
+    <tr>
+      <td><a href="grainBoundary.curvature.html">curvature</a></td>
+      <td>signed segment curvature</td>
+      <td><code class="language-plaintext highlighter-rouge">triplePoints</code></td>
+      <td>triple-point list</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">chainId</code></td>
+      <td>chain label</td>
+      <td><code class="language-plaintext highlighter-rouge">chainSize</code></td>
+      <td>number of segments in the chain</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">arcLength</code></td>
+      <td>distance along the chain</td>
+      <td><code class="language-plaintext highlighter-rouge">chainLength</code></td>
+      <td>total chain length</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">isClosed</code></td>
+      <td>whether the chain closes</td>
+      <td><code class="language-plaintext highlighter-rouge">junctionId</code></td>
+      <td>junction vertex IDs</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">componentId</code></td>
+      <td>connected-component label</td>
+      <td><code class="language-plaintext highlighter-rouge">componentSize</code></td>
+      <td>number of segments in the component</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load the example map in its specimen plotting frame
+</span><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'twins'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'error'</span><span class="p">,</span> <span class="s">'bands'</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">prop</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+<span class="c1"># reconstruct the grains
+</span><span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="preserve-the-segment-to-pixel-relation">Preserve the segment-to-pixel relation</h2>
+
+<p>This page uses <code class="language-plaintext highlighter-rouge">ebsdId</code> to inspect the pixel pair beside each segment. Boundary
+simplification and refinement change the segment count, and a resampled segment no
+longer lies between one specific pixel pair. The
+<a href="grain2d.smoothBoundary.html">smoothBoundary</a> options <code class="language-plaintext highlighter-rouge">simplify=False</code> and <code class="language-plaintext highlighter-rouge">refine=False</code>
+preserve that relation while smoothing.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grains</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">smoothBoundary</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">refine</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># draw the grains and overlay the complete boundary network
+</span><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">gB</span> <span class="o">=</span> <span class="n">grains</span><span class="p">.</span><span class="n">boundary</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-3.png" /></center>
+
+<p>The thick black lines show that the boundary is a network of individual segments. Each
+segment separates one pair of neighbouring measurements.</p>
+
+<h2 id="the-two-sides-of-a-segment">The two sides of a segment</h2>
+
+<p><code class="language-plaintext highlighter-rouge">ebsdId</code>, <code class="language-plaintext highlighter-rouge">grainId</code>, and <code class="language-plaintext highlighter-rouge">phaseId</code> are \(N \times 2\) matrices. Each row records what lies
+on the two sides of one segment. Consider the boundary of one small grain:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB4</span> <span class="o">=</span> <span class="n">grains</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="mi">9</span><span class="p">].</span><span class="n">boundary</span>
+<span class="n">gB4</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grainBoundary (y↑→x)
+  size: 8 segments, 1 chains
+  segments  length  mineral 1  mineral 2
+         8  1.3 µm  Magnesium  Magnesium
+</code></pre></div></div>
+
+<p>The object summary reports eight segments. Its <code class="language-plaintext highlighter-rouge">ebsdId</code> property is therefore an 8 by 2
+matrix.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB4</span><span class="p">.</span><span class="n">ebsdId</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 841,  842],
+       [1008, 1009],
+       [1176, 1009],
+       [1177, 1010],
+       [1011, 1010],
+       [ 843, 1010],
+       [ 843,  842],
+       [ 675,  842]], dtype=int32)
+</code></pre></div></div>
+
+<p>These values are measurement IDs, not positions in the current list. IDs and list
+positions differ as soon as measurements have been removed from the map. Indexing by ID
+must say so explicitly.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ebsd</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="n">gB4</span><span class="p">.</span><span class="n">ebsdId</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EBSD (y↑→x)
+  size: 8 × 2 grid
+  Phase  Orientations  Mineral    Color         Symmetry  Crystal reference frame
+  1      16 (100%)     Magnesium  LightSkyBlue  6/mmm     Magnesium
+    Id  Phase            orientation   bc   bs  grainId  mad
+   841      1    (4.9°,80.4°,195.2°)  167  170        1  0.5
+   842      1  (115.3°,15.6°,218.2°)  170  176        9  0.7
+  1008      1    (4.6°,80.7°,195.4°)  156  160        1  0.4
+  1009      1  (113.7°,15.5°,219.3°)  164  158        9  0.5
+  1176      1    (4.5°,80.7°,195.2°)  168  171        1  0.3
+  1009      1  (113.7°,15.5°,219.3°)  164  158        9  0.5
+  1177      1    (4.7°,80.8°,195.4°)  174  181        1  0.5
+  1010      1  (114.7°,15.7°,218.5°)  182  174        9  0.5
+  1011      1    (4.4°,80.5°,195.2°)  176  168        1  0.4
+  1010      1  (114.7°,15.7°,218.5°)  182  174        9  0.5
+   843      1    (4.4°,80.5°,195.1°)  174  197        1  0.3
+  1010      1  (114.7°,15.7°,218.5°)  182  174        9  0.5
+   843      1    (4.4°,80.5°,195.1°)  174  197        1  0.3
+   842      1  (115.3°,15.6°,218.2°)  170  176        9  0.7
+   675      1    (4.9°,80.4°,195.2°)  176  196        1  0.5
+   842      1  (115.3°,15.6°,218.2°)  170  176        9  0.7
+  scan unit     : um
+  X × Y         : [1.8 → 2.7] × [1.2 → 2.1]
+  square lattice: spacing 0.3
+</code></pre></div></div>
+
+<p>The grain IDs on the two sides reveal the local grain arrangement.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB4</span><span class="p">.</span><span class="n">grainId</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1, 9],
+       [1, 9],
+       [1, 9],
+       [1, 9],
+       [1, 9],
+       [1, 9],
+       [1, 9],
+       [1, 9]], dtype=int32)
+</code></pre></div></div>
+
+<p>Grain 9 has grain 1 on the far side of all eight segments. Grain 9 is therefore an
+inclusion: it is entirely surrounded by one other grain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="n">faceColor</span><span class="o">=</span><span class="s">'DarkBlue'</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">faceColor</span><span class="o">=</span><span class="s">'LightCoral'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-8.png" /></center>
+
+<p>The dark-blue inclusion sits wholly inside the coral grain. The plot is the spatial
+counterpart of the repeated pair <code class="language-plaintext highlighter-rouge">[1 9]</code> above.</p>
+
+<h2 id="from-segments-to-chains">From segments to chains</h2>
+
+<p>A <em>chain</em> is a maximal run of segments laid end to end. It runs from one junction to the
+next and never passes through a junction. Every segment belongs to exactly one chain.
+The same two grains lie on its two sides along the entire chain.</p>
+
+<p>A <em>junction</em> is a vertex where the number of meeting segments is not two. It need not be
+a triple point. For example, the end of a boundary at the map rim is a junction but not
+a point where three real grains meet.</p>
+
+<p>The inclusion boundary reaches no junction and closes onto itself. Its eight segments
+consequently form one closed chain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="s">"chainId"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">10</span><span class="n">s</span><span class="si">}{</span><span class="s">"chainSize"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">12</span><span class="n">s</span><span class="si">}{</span><span class="s">"isClosed"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">11</span><span class="n">s</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">gB4</span><span class="p">.</span><span class="n">chainId</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">10</span><span class="n">d</span><span class="si">}{</span><span class="n">gB4</span><span class="p">.</span><span class="n">chainSize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">12</span><span class="n">d</span><span class="si">}{</span><span class="nb">str</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">gB4</span><span class="p">.</span><span class="n">isClosed</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">11</span><span class="n">s</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   chainId   chainSize   isClosed
+         0           8       True
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">arcLength</code> is the cumulative length from the start of a chain to the end of each
+segment. <code class="language-plaintext highlighter-rouge">chainLength</code> repeats the total length on every segment, so either property
+remains aligned with the boundary list during indexing.</p>
+
+<h2 id="the-misorientation-across-a-segment">The misorientation across a segment</h2>
+
+<p>A segment’s misorientation is the rotation from the orientation of its second pixel to
+that of its first. It follows the column order of <code class="language-plaintext highlighter-rouge">ebsdId</code> and can be reproduced from
+the two pixel orientations.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB4</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">misorientation</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>misorientation (Magnesium → Magnesium)
+  antipodal: true
+  Bunge Euler angles in degree
+  phi1   Phi  phi2
+  29.6  86.1   210
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">inv</span><span class="p">(</span><span class="n">ebsd</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="n">gB4</span><span class="p">.</span><span class="n">ebsdId</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]].</span><span class="n">orientations</span><span class="p">)</span> <span class="o">*</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="n">gB4</span><span class="p">.</span><span class="n">ebsdId</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]].</span><span class="n">orientations</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>misorientation (Magnesium → Magnesium)
+  Bunge Euler angles in degree
+  phi1   Phi  phi2
+  29.6  86.1   210
+</code></pre></div></div>
+
+<p>The two rotations agree, but only the stored one has its <code class="language-plaintext highlighter-rouge">antipodal</code> flag set. A
+boundary has no preferred side, so MTEX treats that rotation and its inverse as the same
+boundary misorientation. The rotation computed directly from two ordered orientations
+retains its direction.</p>
+
+<p>A list of misorientations is meaningful only when every segment relates the same two
+phases. Select the phase pair before analysing angles or axes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gB_Mg</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="s">'Magnesium'</span><span class="p">,</span> <span class="s">'Magnesium'</span><span class="p">]</span>
+
+<span class="c1"># plot the misorientation angle on each magnesium boundary segment
+</span><span class="n">moriAngle</span> <span class="o">=</span> <span class="n">gB_Mg</span><span class="p">.</span><span class="n">misorientation</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">,</span> <span class="n">moriAngle</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'misorientation angle (°)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-12.png" /></center>
+
+<p>Long runs share nearly the same colour, as expected for segments along one twin
+boundary. Most non-twin boundaries form the contrasting shorter runs.</p>
+
+<p>The dominant magnesium twin has a misorientation angle of 86.3 degrees. In this map,
+52.8 percent of the magnesium segments are within 3 degrees of that angle, and the
+median angle is 84.3 degrees.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fractionNearTwin</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">moriAngle</span> <span class="o">-</span> <span class="mf">86.3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">medianMoriAngle</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">moriAngle</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'fraction near the twin angle </span><span class="si">{</span><span class="n">fractionNearTwin</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, median angle </span><span class="si">{</span><span class="n">medianMoriAngle</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fraction near the twin angle 0.5282, median angle 84.2556
+</code></pre></div></div>
+
+<p>The high fraction confirms that this specimen is dominated by twin boundaries.
+<a href="TwinningBoundaries_py.html">Twinning</a> develops that selection.</p>
+
+<h2 id="which-way-a-segment-runs">Which way a segment runs</h2>
+
+<p><code class="language-plaintext highlighter-rouge">direction</code> is the direction of the segment trace. Its angle to the misorientation axis
+is used when classifying tilt and twist boundaries. See
+<a href="TiltAndTwistBoundaries_py.html">Twist and Tilt</a>. Compute the axis in specimen coordinates
+from the two pixel orientations. The stored misorientation alone no longer retains that
+specimen-frame information.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># compute misorientation axes in specimen coordinates
+</span><span class="n">ori</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'id'</span><span class="p">,</span> <span class="n">gB_Mg</span><span class="p">.</span><span class="n">ebsdId</span><span class="p">].</span><span class="n">orientations</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axis</span><span class="p">(</span><span class="n">ori</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">ori</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">antipodal</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># plot the angle between each axis and its raw segment direction
+</span><span class="n">rawAxisTraceAngle</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">.</span><span class="n">direction</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">,</span> <span class="n">rawAxisTraceAngle</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'axis-to-trace angle (°)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-14.png" /></center>
+
+<p>The colour flickers along boundaries that are straight on the scale of several pixels.
+This is the pixel staircase: one segment has only a few possible grid directions,
+regardless of the direction of the underlying boundary.</p>
+
+<p><a href="grainBoundary.calcMeanDirection.html">calcMeanDirection</a> uses a window along each chain
+and never crosses a junction. An argument of 4 includes four neighbouring segments on
+each side of the segment.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">meanDirection</span> <span class="o">=</span> <span class="n">gB_Mg</span><span class="p">.</span><span class="n">calcMeanDirection</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">meanAxisTraceAngle</span> <span class="o">=</span> <span class="n">angle</span><span class="p">(</span><span class="n">meanDirection</span><span class="p">,</span> <span class="n">axes</span><span class="p">)</span> <span class="o">/</span> <span class="n">degree</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">,</span> <span class="n">meanAxisTraceAngle</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'axis-to-mean-trace angle (°)'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-15.png" /></center>
+
+<p>The flicker is suppressed, so nearby segments on one boundary now carry similar colours.
+The values differ from boundary to boundary, which is the information the flicker was
+hiding. The median angle is 43.2 degrees, and 10.5 percent of the segments lie below 20
+degrees. The misorientation axes are therefore mostly not aligned with the traces in
+this section.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'median axis-trace angle </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">meanAxisTraceAngle</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">, fraction below 20 degrees </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">meanAxisTraceAngle</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">4</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>median axis-trace angle 43.2195, fraction below 20 degrees 0.1054
+</code></pre></div></div>
+
+<p>Be careful with what follows from that comparison. A trace is not a plane. It is the one
+direction of the boundary plane revealed by the section, while the inclination remains
+unknown. An axis parallel to the trace lies in the boundary plane and identifies a tilt
+boundary. A large angle to the trace settles nothing on its own.
+<a href="TiltAndTwistBoundaries_py.html">Twist and Tilt</a> takes this further.</p>
+
+<h2 id="where-a-segment-is">Where a segment is</h2>
+
+<p><code class="language-plaintext highlighter-rouge">midPoint</code> gives the segment position as a <a href="vector3d.vector3d.html">vector3d</a>. It
+supplies the anchor for quantities drawn at a segment, such as the misorientation axes
+computed above.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">quiver</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">[::</span><span class="mi">3</span><span class="p">],</span> <span class="n">axes</span><span class="p">[::</span><span class="mi">3</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">'black'</span><span class="p">,</span> <span class="n">autoScaleFactor</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-17.png" /></center>
+
+<p>The black arrows are anchored at every third magnesium boundary midpoint. Their
+positions come from the boundary segments, while their directions come from the two
+neighbouring pixel orientations.</p>
+
+<p>The same midpoint property supports spatial selection.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pos</span> <span class="o">=</span> <span class="n">gB_Mg</span><span class="p">.</span><span class="n">midPoint</span>
+<span class="n">isTop</span> <span class="o">=</span> <span class="n">pos</span><span class="p">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">30</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">[</span><span class="n">isTop</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'red'</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">[</span><span class="o">~</span><span class="n">isTop</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lineColor</span><span class="o">=</span><span class="s">'blue'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-18.png" /></center>
+
+<p>Red marks segments above \(y = 30\) micrometres, and blue marks the rest.
+<a href="BoundarySelect_py.html">Select Grain Boundaries</a> develops this indexing pattern for other
+per-segment properties.</p>
+
+<p>Two lengths are easy to confuse. <code class="language-plaintext highlighter-rouge">len(gB_Mg)</code> is the number of segments, whereas
+<a href="grainBoundary.segLength.html">segLength</a> contains the length of each segment in µm.
+Their sum is the total length of the selected boundary list.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">totalBoundaryLength</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">gB_Mg</span><span class="p">.</span><span class="n">segLength</span><span class="p">)</span>
+<span class="n">totalBoundaryLength</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>721.7001
+</code></pre></div></div>
+
+<h2 id="chains-and-connected-components">Chains and connected components</h2>
+
+<p>A chain stops at a junction. A <em>connected component</em> does not: it contains every segment
+reachable through touching segments, including branches through junctions. One component
+can therefore contain several chains.</p>
+
+<p><code class="language-plaintext highlighter-rouge">componentId</code> labels each connected group. <code class="language-plaintext highlighter-rouge">componentSize</code> repeats the number of
+segments in that component on every row. It is a segment count, not a geometric length.</p>
+
+<p>The next example first selects segments close to the magnesium twin relation, then
+colours each segment by the size of its component.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CS</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">.</span><span class="n">CS</span>
+<span class="n">twinning</span> <span class="o">=</span> <span class="n">orientation</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">),</span>
+                           <span class="n">Miller</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">),</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">CS</span><span class="p">,</span> <span class="s">'uvw'</span><span class="p">))</span>
+
+<span class="n">gBTwin</span> <span class="o">=</span> <span class="n">gB</span><span class="p">[</span><span class="n">gB</span><span class="p">.</span><span class="n">isTwinning</span><span class="p">(</span><span class="n">twinning</span><span class="p">)]</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gBTwin</span><span class="p">,</span> <span class="n">gBTwin</span><span class="p">.</span><span class="n">componentSize</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'segments per component'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-20.png" /></center>
+
+<p>Long twin lamellae appear as large connected components. Short isolated matches appear
+in the low end of the colour scale and may be accidental.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">numTwinComponents</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">gBTwin</span><span class="p">.</span><span class="n">componentId</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'twin segments </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gBTwin</span><span class="p">)</span><span class="si">}</span><span class="s">, components </span><span class="si">{</span><span class="n">numTwinComponents</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>twin segments 1648, components 54
+</code></pre></div></div>
+
+<p>The 1648 selected segments form 54 components. A twin lamella crossing a grain is one
+long component. A few isolated segments that happen to meet the twin criterion form a
+short component, which is why component labels are useful.</p>
+
+<h2 id="a-component-scale-straightness-descriptor">A component-scale straightness descriptor</h2>
+
+<p>A simple straightness descriptor divides the maximum distance between two component
+midpoints by the component’s total segment length. Its value approaches 1 for one
+straight lamella. It decreases when a component meanders or branches. This is a
+user-defined descriptor, not a built-in MTEX property.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">componentId</span> <span class="o">=</span> <span class="n">gBTwin</span><span class="p">.</span><span class="n">componentId</span>
+<span class="n">numComponents</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">componentId</span><span class="p">))</span>
+<span class="n">span</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numComponents</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">numComponents</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">gBTwin</span><span class="p">.</span><span class="n">midPoint</span><span class="p">.</span><span class="n">x</span><span class="p">[</span><span class="n">componentId</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">gBTwin</span><span class="p">.</span><span class="n">midPoint</span><span class="p">.</span><span class="n">y</span><span class="p">[</span><span class="n">componentId</span> <span class="o">==</span> <span class="n">k</span><span class="p">]</span>
+  <span class="n">distanceSquared</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+  <span class="n">span</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">distanceSquared</span><span class="p">))</span>
+
+<span class="n">componentLength</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">componentId</span><span class="p">,</span> <span class="n">gBTwin</span><span class="p">.</span><span class="n">segLength</span><span class="p">,</span> <span class="n">numComponents</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">straightness</span> <span class="o">=</span> <span class="n">span</span> <span class="o">/</span> <span class="n">componentLength</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">,</span> <span class="n">faceColor</span><span class="o">=</span><span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="n">faceAlpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">micronbar</span><span class="o">=</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">gBTwin</span><span class="p">,</span> <span class="n">straightness</span><span class="p">[</span><span class="n">componentId</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'blue2red'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'component straightness'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BoundaryProperties-22.png" /></center>
+
+<p>Straight components are red, while meandering or branched components are blue. The
+values reach 0.97 and have a median of 0.66.</p>
+
+<p>Define a large component here as one containing more than 50 segments. The 13 large
+components have a median of 0.48, compared with 0.67 for the rest. A large component in
+this map is often several lamellae meeting inside one grain, rather than one long
+straight lamella.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">componentSegmentCount</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">componentId</span><span class="p">,</span> <span class="n">minlength</span><span class="o">=</span><span class="n">numComponents</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">isLarge</span> <span class="o">=</span> <span class="n">componentSegmentCount</span> <span class="o">&gt;</span> <span class="mi">50</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="s">"maximum"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">10</span><span class="n">s</span><span class="si">}{</span><span class="s">"median"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">10</span><span class="n">s</span><span class="si">}{</span><span class="s">"large"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">8</span><span class="n">s</span><span class="si">}{</span><span class="s">"largeMedian"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">14</span><span class="n">s</span><span class="si">}{</span><span class="s">"otherMedian"</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">14</span><span class="n">s</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">straightness</span><span class="p">)</span><span class="si">:</span><span class="o">&gt;</span><span class="mf">10.5</span><span class="n">f</span><span class="si">}{</span><span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">straightness</span><span class="p">)</span><span class="si">:</span><span class="o">&gt;</span><span class="mf">10.5</span><span class="n">f</span><span class="si">}{</span><span class="n">np</span><span class="p">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">isLarge</span><span class="p">)</span><span class="si">:</span><span class="o">&gt;</span><span class="mi">8</span><span class="n">d</span><span class="si">}</span><span class="s">'</span>
+      <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">straightness</span><span class="p">[</span><span class="n">isLarge</span><span class="p">])</span><span class="si">:</span><span class="o">&gt;</span><span class="mf">14.5</span><span class="n">f</span><span class="si">}{</span><span class="n">np</span><span class="p">.</span><span class="n">median</span><span class="p">(</span><span class="n">straightness</span><span class="p">[</span><span class="o">~</span><span class="n">isLarge</span><span class="p">])</span><span class="si">:</span><span class="o">&gt;</span><span class="mf">14.5</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   maximum    median   large   largeMedian   otherMedian
+   0.96667   0.65528      13       0.48004       0.66692
+</code></pre></div></div>
+
+<p>This descriptor separates single straight lamellae from branched networks, rather than
+twins from misindexing. It is still worth checking for the latter. A few segments
+selected by accident, for example because of pseudosymmetry, form neither a lamella nor
+a branched twin network.</p>
+
+<h2 id="next">Next</h2>
+
+<p><a href="BoundaryMisorientations_py.html">Misorientations at Grain Boundaries</a> develops the angle
+and axis on each side of a boundary. <a href="BoundaryCurvature_py.html">Curvature</a> uses chain
+order for signed curvature, and <a href="TriplePoints_py.html">Triple Points</a> develops the
+junctions where three real grains meet.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li>V. Randle,
+<a href="https://www.routledge.com/The-Measurement-of-Grain-Boundary-Geometry/Randle/p/book/9780367402358">The Measurement of Grain Boundary Geometry</a>,
+Institute of Physics, 1993. This monograph connects measurable interface geometry with
+material properties.</li>
+  <li>A. P. Sutton, E. P. Banks, and A. R. Warwick,
+<a href="https://doi.org/10.1098/rspa.2015.0442">The five-dimensional parameter space of grain boundaries</a>,
+<em>Proceedings of the Royal Society A</em> 471 (2015), 20150442. It formalises the three
+misorientation and two boundary-plane degrees of freedom.</li>
+  <li>G. S. Rohrer,
+<a href="https://doi.org/10.1111/j.1551-2916.2011.04384.x">Measuring and Interpreting the Structure of Grain-Boundary Networks</a>,
+<em>Journal of the American Ceramic Society</em> 94 (2011), 633-646. This review connects
+two-dimensional boundary maps with three-dimensional interface networks.</li>
+</ul>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">grains['id', 9]</code> addresses a grain by its id, MATLAB’s <code class="language-plaintext highlighter-rouge">grains('id', 9)</code>. The inclusion
+the page follows is grain 4 inside grain 42 in MATLAB’s reconstruction and grain 9 inside
+grain 1 here; the two segmentations number their grains differently. <code class="language-plaintext highlighter-rouge">ebsd['id', M]</code> returns one measurement per entry of the matrix <code class="language-plaintext highlighter-rouge">M</code>, in its
+shape, so the two columns of <code class="language-plaintext highlighter-rouge">ebsdId</code> are the two sides of every segment.
+The two sides of a segment are its grains in the order of their ids, so the misorientation
+of the first segment of the inclusion runs from the host to the inclusion here and is the
+inverse of MATLAB’s. <code class="language-plaintext highlighter-rouge">ebsd['id', M]</code> lists its rows in the shape of <code class="language-plaintext highlighter-rouge">M</code>, row by row,
+where MATLAB lists the first column and then the second.
+<code class="language-plaintext highlighter-rouge">componentId</code> counts from one, so a value indexes its component’s entry at
+<code class="language-plaintext highlighter-rouge">componentId - 1</code>. MATLAB’s <code class="language-plaintext highlighter-rouge">table</code> is a printed line.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/BoundaryProperties_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

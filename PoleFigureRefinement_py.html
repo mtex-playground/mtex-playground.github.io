@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Successive Refinement of Pole Figure Reconstructions | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/PoleFigureRefinement_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/PoleFigureRefinement_py.html#page",
+      "name": "Successive Refinement of Pole Figure Reconstructions",
+      "headline": "Successive Refinement of Pole Figure Reconstructions",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/PoleFigureRefinement_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/PoleFigureRefinement_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/PoleFigureRefinement_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Successive Refinement of Pole Figure Reconstructions</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/PoleFigureRefinement.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/PoleFigureAnalysis/PoleFigureRefinement.py">edit page</a></font>
+
+<!--introduction-->
+
+<p><a href="PoleFigure2ODF_py.html">ODF Estimation</a> reconstructs an orientation distribution function
+(ODF) on one orientation grid with one kernel width. A kernel is the smooth component
+placed at each grid orientation. Its width sets the smallest scale that the
+reconstruction can represent.</p>
+
+<p>This page refines two different parts of that workflow. First,
+<a href="PoleFigure.calcODFIterative.html">calcODFIterative</a> keeps the measurements fixed while
+it successively narrows the kernel. Second, a simulation keeps the reconstruction method
+fixed while it adds measurements where the current ODF predicts high pole density.</p>
+
+<p>Successive kernel refinement is not the same as asking <code class="language-plaintext highlighter-rouge">calcODF</code> for more solver
+iterations. It changes the representation scale and uses each coarser solution to
+initialise the next one. Neither kind of refinement removes the non-uniqueness of pole
+figure inversion; see <a href="PoleFigure2ODFAmbiguity_py.html">The Ghost Effect</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<h2 id="adapting-the-kernel">Adapting the kernel</h2>
+
+<p>The seven measured Dubna pole figures provide a reference case. The ordinary
+reconstruction solves directly at its target resolution.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">pf</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'dubna'</span><span class="p">)</span>
+<span class="n">odf_naive</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+
+<span class="n">calcError</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odf_naive</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.3912, 0.3243, 0.237 , 0.2872, 0.2895, 0.3601, 0.3229])
+</code></pre></div></div>
+
+<p>The seven values are the fit errors for the seven measured pole figures. Their
+recalculated pole figures are the visual baseline for the iterative result below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">odf_naive</span><span class="p">,</span> <span class="n">pf</span><span class="p">.</span><span class="n">allH</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-3.png" /></center>
+
+<p>The iterative reconstruction starts from a uniform ODF. It solves first with a wide
+kernel, transfers those weights to a finer grid, narrows the kernel, and solves again.
+The coarse stages suppress fine-scale variation and provide informed starting weights
+for the finer stages.</p>
+
+<p>This scale progression acts as a regularisation strategy for irregularly sampled data.
+It does not replace ghost correction. The <code class="language-plaintext highlighter-rouge">thinning=False</code> flag retains low-weight grid
+nodes so that this comparison isolates the effect of the changing scale.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf_iter</span> <span class="o">=</span> <span class="n">calcODFIterative</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">thinning</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">calcError</span><span class="p">(</span><span class="n">pf</span><span class="p">,</span> <span class="n">odf_iter</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   0 | 0.91  0.93  0.74  0.79  0.93  0.85  0.77
+   1 | 0.89  0.89  0.74  0.71  0.89  0.84  0.76
+   2 | 0.88  0.88  0.74  0.68  0.88  0.83  0.75
+   3 | 0.87  0.86  0.73  0.66  0.87  0.82  0.75
+   4 | 0.87  0.86  0.73  0.65  0.86  0.82  0.74
+   5 | 0.87  0.85  0.73  0.64  0.85  0.81  0.74
+   6 | 0.86  0.85  0.73  0.64  0.85  0.81  0.74
+   1 :      46 | 0.56  0.50  0.43  0.48  0.48  0.53  0.49
+   0 | 0.88  0.87  0.74  0.67  0.87  0.82  0.75
+   1 | 0.86  0.84  0.70  0.63  0.84  0.80  0.72
+   2 | 0.85  0.81  0.68  0.59  0.81  0.79  0.69
+   3 | 0.84  0.79  0.66  0.57  0.79  0.77  0.67
+   4 | 0.83  0.77  0.65  0.56  0.77  0.76  0.66
+   5 | 0.82  0.77  0.64  0.55  0.76  0.76  0.65
+   6 | 0.81  0.76  0.64  0.55  0.76  0.75  0.65
+⋮
+   4 :    4635 | 0.29  0.19  0.23  0.18  0.17  0.27  0.28
+   0 | 0.60  0.57  0.39  0.23  0.46  0.49  0.39
+   1 | 0.56  0.57  0.40  0.17  0.40  0.46  0.36
+   2 | 0.57  0.55  0.37  0.18  0.41  0.46  0.36
+   3 | 0.55  0.55  0.38  0.16  0.39  0.45  0.35
+   4 | 0.57  0.55  0.36  0.18  0.40  0.45  0.36
+   5 | 0.55  0.55  0.37  0.16  0.39  0.44  0.35
+   6 | 0.56  0.54  0.36  0.17  0.40  0.45  0.35
+   5 :   20040 | 0.29  0.19  0.22  0.18  0.17  0.27  0.28
+array([0.2924, 0.1908, 0.2215, 0.1801, 0.1667, 0.2699, 0.2779])
+</code></pre></div></div>
+
+<p>One fit error is reported per pole figure. All seven are smaller than those from the
+ordinary reconstruction, in places by nearly a factor of two.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plotPF</span><span class="p">(</span><span class="n">odf_iter</span><span class="p">,</span> <span class="n">pf</span><span class="p">.</span><span class="n">allH</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-5.png" /></center>
+
+<p>The peak positions in the two galleries are similar. The error values show that their
+intensities are not, so a visual match alone is not enough to compare reconstructions.
+Their L1 difference measures how much ODF volume is distributed differently.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">calcError</span><span class="p">(</span><span class="n">odf_iter</span><span class="p">,</span> <span class="n">odf_naive</span><span class="p">,</span> <span class="s">'l1'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.1484
+</code></pre></div></div>
+
+<p>Fifteen percent of the volume sits in different places in the two reconstructions.
+Recalculating pole figures from their signed difference shows where that volume moved.
+The printed values give the minimum, mean, and maximum difference over all seven pole
+figures.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pf_difference</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf_naive</span> <span class="o">-</span> <span class="n">odf_iter</span><span class="p">,</span> <span class="n">pf</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">pf_difference</span><span class="p">)</span>
+<span class="n">differenceIntensity</span> <span class="o">=</span> <span class="n">pf_difference</span><span class="p">.</span><span class="n">intensities</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'pole figure difference min / mean / max : </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nb">min</span><span class="p">(</span><span class="n">differenceIntensity</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> / </span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">differenceIntensity</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> / '</span>
+      <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">differenceIntensity</span><span class="p">)</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pole figure difference min / mean / max : -0.90 / 0.00 / 0.55
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-7.png" /></center>
+
+<p>The range from -0.92 to 0.58 is centred at 0.00. Broad, smooth differences extend across
+the sphere instead of concentrating at the texture maxima. Compare the centre of each
+pole figure with its rim.</p>
+
+<p>This is the appearance of a differently distributed uniform portion. It is the part of
+an ODF that pole figures constrain least, which is why a smaller fit error does not
+prove that the reconstructed ODF is closer to the unknown true ODF.</p>
+
+<h2 id="adapting-the-measurement">Adapting the measurement</h2>
+
+<p>The rest of the page uses a simulation so that the true ODF is known.
+<a href="PoleFigureSimulation_py.html">Simulating Pole Figure Data</a> develops this validation
+strategy. Here the model has two sharp components, and pole figures can be evaluated at
+whichever specimen directions are selected.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">crystalFrame</span><span class="p">(</span><span class="s">'cubic'</span><span class="p">)</span>
+<span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="n">specimenFrame</span><span class="p">()</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="s">'ABG'</span><span class="p">)</span>
+<span class="n">q2</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byEuler</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="s">'ABG'</span><span class="p">)</span>
+
+<span class="n">odf_true</span> <span class="o">=</span> <span class="p">.</span><span class="mi">6</span> <span class="o">*</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span> <span class="o">+</span> <span class="p">.</span><span class="mi">4</span> <span class="o">*</span> <span class="n">unimodalODF</span><span class="p">(</span><span class="n">q2</span><span class="p">,</span> <span class="n">cs</span><span class="p">,</span> <span class="n">ss</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Three lattice planes will be measured.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">h</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">cs</span><span class="p">)</span>
+
+<span class="n">plotPF</span><span class="p">(</span><span class="n">odf_true</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-9.png" /></center>
+
+<p>The compact maxima reflect the 4 and 5 degree component halfwidths. They are the
+features that a coarse measurement must first locate and then sample more densely.</p>
+
+<h2 id="the-initial-measurement-grid">The initial measurement grid</h2>
+
+<p>The first scan uses a nearly equispaced 15 degree grid out to a specimen tilt of 80
+degrees.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span> <span class="o">=</span> <span class="n">equispacedS2Grid</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">15</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">maxTheta</span><span class="o">=</span><span class="mi">80</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">markerSize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-10.png" /></center>
+
+<p>The points cover the accessible cap uniformly. The gaps between them are deliberately
+much wider than the sharp model components.</p>
+
+<h2 id="the-refinement-loop">The refinement loop</h2>
+
+<p>Each round measures the current directions and merges them with all earlier
+measurements. An ordinary reconstruction then predicts the pole density at the
+directions inserted by <a href="vector3d.refine.html">refine</a>. Only the quarter with the highest
+predicted intensity is measured in the next round. Five rounds are used here.</p>
+
+<p>This highest-intensity rule is deliberately naive. It exploits the current estimate but
+does not account for uncertainty, counting noise, acquisition cost, or the possibility
+that the current estimate missed a component. It demonstrates adaptive sampling, not a
+general experimental design prescription.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">equispacedS2Grid</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">15</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">maxTheta</span><span class="o">=</span><span class="mi">80</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)]</span> <span class="o">*</span> <span class="n">h</span><span class="p">.</span><span class="n">size</span>
+<span class="n">pf_measured</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">nsteps</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsteps</span><span class="p">):</span>
+
+  <span class="c1"># simulate the new measurements
+</span>  <span class="n">pf_simulated</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf_true</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+
+  <span class="c1"># merge new and previous measurements
+</span>  <span class="n">pf_measured</span> <span class="o">=</span> <span class="n">union</span><span class="p">(</span><span class="n">pf_simulated</span><span class="p">,</span> <span class="n">pf_measured</span><span class="p">)</span>
+  <span class="n">plot</span><span class="p">(</span><span class="n">pf_measured</span><span class="p">)</span>
+
+  <span class="n">meanResolution</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">mean</span><span class="p">([</span><span class="n">x</span><span class="p">.</span><span class="n">resolution</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pf_measured</span><span class="p">.</span><span class="n">allR</span><span class="p">])</span>
+  <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'- mean sampling resolution : </span><span class="si">{</span><span class="n">meanResolution</span> <span class="o">/</span> <span class="n">degree</span><span class="si">:</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">nsteps</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="c1"># reconstruct from all measurements collected so far
+</span>    <span class="n">odf_recalc</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf_measured</span><span class="p">,</span> <span class="n">zeroRange</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'  error true -- estimated odf   : </span><span class="si">{</span><span class="n">calcError</span><span class="p">(</span><span class="n">odf_true</span><span class="p">,</span> <span class="n">odf_recalc</span><span class="p">)</span><span class="si">:</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+    <span class="c1"># select high-intensity directions from the refined grids
+</span>    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="p">.</span><span class="n">size</span><span class="p">):</span>
+      <span class="n">r_old</span> <span class="o">=</span> <span class="n">pf_measured</span><span class="p">[</span><span class="n">l</span><span class="p">].</span><span class="n">r</span>
+      <span class="n">_</span><span class="p">,</span> <span class="n">r_new</span> <span class="o">=</span> <span class="n">refine</span><span class="p">(</span><span class="n">r_old</span><span class="p">)</span>
+      <span class="n">pf_predicted</span> <span class="o">=</span> <span class="n">calcPoleFigure</span><span class="p">(</span><span class="n">odf_recalc</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">r_new</span><span class="p">)</span>
+      <span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">nanquantile</span><span class="p">(</span><span class="n">pf_predicted</span><span class="p">.</span><span class="n">intensities</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
+      <span class="n">r</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">pf_predicted</span><span class="p">.</span><span class="n">r</span><span class="p">[</span><span class="n">pf_predicted</span><span class="p">.</span><span class="n">intensities</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- mean sampling resolution : 15.270088
+  error true -- estimated odf   : 0.816625
+- mean sampling resolution : 13.540635
+  error true -- estimated odf   : 1.004866
+- mean sampling resolution : 9.755493
+  error true -- estimated odf   : 0.657554
+- mean sampling resolution : 7.548409
+  error true -- estimated odf   : 0.384405
+- mean sampling resolution : 4.166612
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-11-1.png" /></center>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-11-2.png" /></center>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-11-3.png" /></center>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-11-4.png" /></center>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-11-5.png" /></center>
+
+<p>Every round prints the mean resolution of the three accumulated direction sets. This
+single value summarises an irregular sampling pattern; it does not mean that
+neighbouring points are that far apart everywhere.</p>
+
+<p>The mean resolution falls from 15.3 to 4.3 degrees. The four interim ODF errors are
+0.82, 1.01, 0.66, and 0.47. They do not fall monotonically: the second round concentrates
+the new directions on the predicted maxima before the reconstruction has located them
+accurately. A real experiment could not compute these errors because its true ODF is
+unknown.</p>
+
+<p>That non-monotonicity is the point of the demonstration. The measurement is now dense
+where the texture is strong and coarse everywhere else. An ordinary fine-grid
+reconstruction then puts ODF components at orientations that the sparse regions do not
+constrain.</p>
+
+<h2 id="what-was-measured">What was measured</h2>
+
+<p>The object summary gives the number of accumulated directions for each pole figure. The
+sampling pattern is no longer a regular grid.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pf_measured</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PoleFigure (m3̅m → y↑→x)
+  h = {111}, r = 327 points
+  h = {100}, r = 327 points
+  h = {110}, r = 327 points
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">pf_measured</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/PoleFigureRefinement-13.png" /></center>
+
+<p>Dense clusters surround the predicted poles of the two components. The original coarse
+coverage remains between them. This uneven coverage is exactly the case for which
+successive kernel refinement is useful. Within each cluster, the colours rise towards a
+predicted pole-density maximum.</p>
+
+<h2 id="reconstructing-from-the-irregular-measurement">Reconstructing from the irregular measurement</h2>
+
+<p>First use an ordinary reconstruction at the 2.5 degree resolution that the dense regions
+can support.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf_recalc</span> <span class="o">=</span> <span class="n">calcODF</span><span class="p">(</span><span class="n">pf_measured</span><span class="p">,</span> <span class="n">zeroRange</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'  error true -- estimated odf   : </span><span class="si">{</span><span class="n">calcError</span><span class="p">(</span><span class="n">odf_true</span><span class="p">,</span> <span class="n">odf_recalc</span><span class="p">)</span><span class="si">:</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  error true -- estimated odf   : 0.239274
+</code></pre></div></div>
+
+<p>The iterative reconstruction reaches the same target scale through a sequence of wider
+kernels. Sparse regions inherit the broad distribution established at coarse scale
+instead of being determined only at the finest scale.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">odf_recalc_iterative</span> <span class="o">=</span> <span class="n">calcODFIterative</span><span class="p">(</span><span class="n">pf_measured</span><span class="p">,</span> <span class="n">halfwidth</span><span class="o">=</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'  error true -- iter. est. odf  : </span><span class="si">{</span><span class="n">calcError</span><span class="p">(</span><span class="n">odf_true</span><span class="p">,</span> <span class="n">odf_recalc_iterative</span><span class="p">)</span><span class="si">:</span><span class="n">f</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  error true -- iter. est. odf  : 0.115130
+</code></pre></div></div>
+
+<p>The errors are 0.22 for the direct reconstruction and 0.12 for the iterative one. The
+iterative error is about half the direct error from the same measurements. The L1
+distance below shows how much the two estimated ODFs distribute differently.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">calcError</span><span class="p">(</span><span class="n">odf_recalc</span><span class="p">,</span> <span class="n">odf_recalc_iterative</span><span class="p">,</span> <span class="s">'l1'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.1708
+</code></pre></div></div>
+
+<p>About a sixth of the volume is placed differently. On an unevenly sampled measurement,
+the choice between a direct fine-scale solve and successive refinement is therefore part
+of the model, not an implementation detail.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li>R. Hielscher and H. Schaeben,
+<a href="https://doi.org/10.1107/S0021889808030112">A Novel Pole Figure Inversion Method: Specification of the MTEX Algorithm</a>,
+<em>Journal of Applied Crystallography</em> 41 (2008), 1024-1037. This paper derives the
+component method used by <code class="language-plaintext highlighter-rouge">calcODF</code> for sharp textures and irregular specimen
+directions.</li>
+  <li>F. Bachmann,
+<a href="https://doi.org/10.1007/978-3-658-14941-3_4">Texturbestimmung aus Beugungsbildern</a>,
+in <em>Optimierung der Goniometrie zur Texturbestimmung aus Röntgenbeugungsbildern</em>,
+Springer Spektrum, 2016, pp. 79-106. This chapter describes the reconstruction
+strategy behind <code class="language-plaintext highlighter-rouge">calcODFIterative</code>.</li>
+  <li>ASTM International,
+<a href="https://doi.org/10.1520/E0081-96R24">ASTM E81-96(2024): Standard Test Method for Preparing Quantitative Pole Figures</a>.
+This standard covers X-ray acquisition procedures. It does not prescribe an inversion
+method or the adaptive sampling rule demonstrated here.</li>
+</ul>
+
+<h2 id="next">Next</h2>
+
+<p><a href="PoleFigureSimulation_py.html">Simulating Pole Figure Data</a> adds counting noise and asks
+how many pole figures a reconstruction needs. Then return to
+<a href="PoleFigure2ODFAmbiguity_py.html">The Ghost Effect</a> for the information that no refinement
+of measurement density can recover.</p>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p><code class="language-plaintext highlighter-rouge">union</code> takes <code class="language-plaintext highlighter-rouge">None</code> for the empty data set MATLAB starts from, and <code class="language-plaintext highlighter-rouge">pf_measured[l]</code> is
+MATLAB’s <code class="language-plaintext highlighter-rouge">pf_measured{l}</code>. <code class="language-plaintext highlighter-rouge">calcODFIterative</code> prints its ladder of grids and fit errors
+with <code class="language-plaintext highlighter-rouge">silent=False</code>.</p>
+
+<p>Two things make the refinement loop take a different path from MATLAB’s. A pole figure
+derives the resolution of its specimen directions from the points, as the square root of
+the median area of their Voronoi cells, where MATLAB remembers the spacing the grid was
+built with, so the first round reports 15.3 degrees rather than 14.5. And <code class="language-plaintext highlighter-rouge">refine</code> keeps
+a cap a cap: it returns the centroids of the Delaunay triangles of the points, none below
+the lowest one, where MATLAB closes the hull with the south pole and keeps the centroids
+of the skirt triangles as well. The accumulated measurement therefore ends at 327
+directions per pole figure rather than 367, all of them inside the measured cap.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/PoleFigureRefinement_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

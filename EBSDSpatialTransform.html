@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Spatial Transforms | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="A spatial transform maps positions in one coordinate system to positions in another. It can describe the distortion between an EBSD map and an SEM image, stage drift during a scan, or the foreshortening of a tilted surface.">
+<link rel="canonical" href="https://mtex-playground.github.io/EBSDSpatialTransform.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/EBSDSpatialTransform.html#page",
+      "name": "Spatial Transforms",
+      "headline": "Spatial Transforms",
+      "description": "A spatial transform maps positions in one coordinate system to positions in another. It can describe the distortion between an EBSD map and an SEM image, stage drift during a scan, or the foreshortening of a tilted surface.",
+      "url": "https://mtex-playground.github.io/EBSDSpatialTransform.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/EBSDSpatialTransform.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/EBSDSpatialTransform.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Spatial Transforms</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+    -->
+<title>Spatial Transforms</title>
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.source" content="script_EBSDSpatialTransform.m">
+</head>
+<body>
+<font size="2"><a href="https://github.com/mtex-toolbox/mtex/blob/develop/doc/EBSDAnalysis/EBSDSpatialTransform.m">
+    edit page</a></font>
+<div>
+<!--introduction-->
+<!--/introduction-->
+<p>A spatial transform maps positions in one coordinate system to positions in another. It can describe the distortion between an EBSD map and an SEM image, stage drift during a scan, or the foreshortening of a tilted surface.</p>
+<p>This is different from a <b>reference frame</b>, the coordinate system in which specimen or crystal data are expressed. A spatial transform moves map positions but does not correct the orientations stored at those positions. Use <a href="EBSDReferenceFrame.html">Reference Frame Alignment</a> when the map coordinates and Euler angles do not refer to the same specimen frame.</p>
+<p>A function handle can move positions too. A <a href="spatialTransform.html"><code class="language-plaintext highlighter-rouge">spatialTransform</code></a> also composes, inverts, displays itself, fits measured point pairs, and can be stored for another data set. <a href="EBSDMapsAndImages.html">Maps and Images</a> explains how two images first come to share a specimen coordinate system and array layout.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">plottingConvention</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="s1">'y↑→x'</span><span class="p">);</span>
+<span class="n">mtexdata</span> <span class="n">twins</span> <span class="n">silent</span></code></pre></figure>
+<h2 id="2">Direction Is the Contract</h2>
+<p>One rule fixes everything else: <code class="language-plaintext highlighter-rouge">T</code> maps a position in coordinate system A to the position of the same physical point in coordinate system B.</p>
+<p>The product <code class="language-plaintext highlighter-rouge">T2 * T1</code> reads in matrix order, so <code class="language-plaintext highlighter-rouge">T1</code> is applied first. Filling a regular output grid uses <code class="language-plaintext highlighter-rouge">inv(T)</code> rather than <code class="language-plaintext highlighter-rouge">T</code>. For each target pixel, the resampler has to ask where it came from, not where it goes.</p>
+<p>Spatial transforms are two dimensional. They act on \(x\) and \(y\) and leave \(z\) unchanged.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">T</span> <span class="o">=</span> <span class="n">spatialTransformRigid</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">T = spatialTransformRigid
+ 
+ model  stage  parameters  
+ rigid  ·      move (5, -2)</code></pre></figure>
+<p>Apply a transform to positions with <code class="language-plaintext highlighter-rouge">*</code>, or call <code class="language-plaintext highlighter-rouge">eval</code> explicitly.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">pos</span> <span class="o">=</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">pos</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">posMoved</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="n">pos</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">(:),</span> <span class="n">posMoved</span><span class="o">.</span><span class="n">x</span><span class="p">(:)]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+         0    5.0000
+    0.3000    5.3000
+    0.6000    5.6000</code></pre></figure>
+<h2 id="4">Choose the Smallest Model That Describes the Distortion</h2>
+<p>Each class represents a different amount and pattern of spatial freedom. The names are historical, so read their meanings rather than guessing from them:</p>
+<div>
+<ul>
+<li> <a href="spatialTransformId.html"><code class="language-plaintext highlighter-rouge">spatialTransformId</code></a> means that nothing separates the two coordinate systems.</li>
+<li> <a href="spatialTransformRigid.html"><code class="language-plaintext highlighter-rouge">spatialTransformRigid</code></a> is one translation, the same everywhere. It does not include a rotation.</li>
+<li> <a href="spatialTransformShift.html"><code class="language-plaintext highlighter-rouge">spatialTransformShift</code></a> is a full 2D affine map: translation, rotation, scale, and shear in one homogeneous matrix.</li>
+<li> <a href="spatialTransformProjective.html"><code class="language-plaintext highlighter-rouge">spatialTransformProjective</code></a> is a homography. It keeps lines straight, but parallel lines need not remain parallel, as in a perspective view of a tilted plane.</li>
+<li> <a href="spatialTransformTilt.html"><code class="language-plaintext highlighter-rouge">spatialTransformTilt</code></a> is the staged model used to recover specimen tilt from repeatedly correlated image pairs.</li>
+<li> <a href="spatialTransformPoly.html"><code class="language-plaintext highlighter-rouge">spatialTransformPoly</code></a> describes a displacement that varies polynomially across the coordinate system.</li>
+<li> <a href="spatialTransformDrift.html"><code class="language-plaintext highlighter-rouge">spatialTransformDrift</code></a> varies only along the slow scan direction. It models rolling-shutter-like scan drift rather than an arbitrary smooth field.</li>
+<li> <a href="spatialTransformField.html"><code class="language-plaintext highlighter-rouge">spatialTransformField</code></a> stores measured displacements and interpolates between their positions without imposing a parametric model.</li>
+<li> <a href="spatialTransformHandle.html"><code class="language-plaintext highlighter-rouge">spatialTransformHandle</code></a> wraps a function handle when none of the fitted models applies.</li>
+</ul>
+</div>
+<p>Start with the least flexible model that has a physical reason to be present. A flexible model can follow noise and may extrapolate badly beyond the point pairs. Correspondences should span the area that will be transformed, and residuals should also be checked at withheld landmarks.</p>
+<p>Differently modelled hops can be stored in one heterogeneous array rather than a cell array. Such an array is an ordered sequence of hops, not a set of alternatives. It is primarily a container: combine the required hops or process them one at a time before calling methods such as <code class="language-plaintext highlighter-rouge">inv</code> on them.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">spatialTransformRigid</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="k">...</span>
+  <span class="n">spatialTransformPoly</span><span class="p">(</span><span class="nb">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="p">)]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = spatialTransform
+ size: 1 × 2
+ 
+    model   stage  parameters 
+ 1  rigid   ·      move (1, 0)
+ 2  poly11  ·      |c| = 0</code></pre></figure>
+<h2 id="5">Fit a Transform From Two Point Sets</h2>
+<p>A transform is usually measured rather than written down. Locate the same features in both coordinate systems, then ask the chosen class for the member of its family that maps the first set onto the second. The two sets must use the same length unit and point order.</p>
+<p>The geometric minimum is not enough for a reliable fit. An affine needs at least three non-collinear pairs, a homography at least four well-spread pairs, and a degree-two polynomial at least six. More pairs let a fit expose noise and mismatches.</p>
+<p>For an example with a known answer, apply a projective distortion to map positions and fit the homography back from the resulting pairs.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">T0</span> <span class="o">=</span> <span class="n">spatialTransformProjective</span><span class="p">([</span><span class="mi">1</span> <span class="mf">0.02</span> <span class="mi">3</span><span class="p">;</span> <span class="o">-</span><span class="mf">0.01</span> <span class="mf">1.05</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="mf">1e-4</span> <span class="mf">2e-4</span> <span class="mi">1</span><span class="p">]);</span>
+
+<span class="n">posA</span> <span class="o">=</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">pos</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="k">end</span><span class="p">);</span>
+<span class="n">posB</span> <span class="o">=</span> <span class="n">T0</span> <span class="o">*</span> <span class="n">posA</span><span class="p">;</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">spatialTransformProjective</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">posA</span><span class="p">,</span><span class="n">posB</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">T = spatialTransformProjective
+ 
+ model       stage  parameters                  
+ projective  ·      perspective (0.0001, 0.0002)</code></pre></figure>
+<p>The maximum error is at rounding level.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">max</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">posA</span> <span class="o">-</span> <span class="n">posB</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+   2.8422e-14</code></pre></figure>
+<p>Real correspondences are not this clean. Projective and polynomial fits use Tukey bisquare reweighting, so points that disagree with the consensus lose influence. Here every tenth target point is moved somewhere else.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">posBad</span> <span class="o">=</span> <span class="n">posB</span><span class="p">;</span>
+<span class="n">posBad</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">=</span> <span class="n">posBad</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="k">end</span><span class="p">)</span> <span class="o">+</span> <span class="n">vector3d</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="n">TBad</span> <span class="o">=</span> <span class="n">spatialTransformProjective</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">posA</span><span class="p">,</span><span class="n">posBad</span><span class="p">);</span>
+
+<span class="nb">max</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="n">TBad</span><span class="o">*</span><span class="n">posA</span> <span class="o">-</span> <span class="n">posB</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+   2.1335e-14</code></pre></figure>
+<p>Other classes match their physical model: a rigid fit takes a weighted mean displacement, an affine uses weighted least squares, drift uses a median displacement per scan line, and a field keeps the samples exactly.</p>
+<p>Where a confidence per pair is available, pass it with <code class="language-plaintext highlighter-rouge">'weights'</code> instead of asking the fit to infer every bad match. Cross-correlation supplies such weights; see <a href="xcfShift.html"><code class="language-plaintext highlighter-rouge">xcfShift</code></a>.</p>
+<h2 id="9">Declare a Model With + and Compose Fitted Transforms With *</h2>
+<p>There are two ways to put transforms together, and they are not the same operation.</p>
+<p>
+<code class="language-plaintext highlighter-rouge">*</code> composes fitted transforms and simplifies where it can. It decides by value, so an operand that reports <code class="language-plaintext highlighter-rouge">isid</code> disappears. An unfitted prototype has zero coefficients and therefore reports itself as the identity. In the product below, the shift silently disappears and only the drift remains.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">spatialTransformShift</span> <span class="o">*</span> <span class="n">spatialTransformDrift</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = spatialTransformDrift
+ 
+ model  stage  parameters
+ drift  ·      (no knots)</code></pre></figure>
+<p>
+<code class="language-plaintext highlighter-rouge">+</code> declares a model. It reads left to right in the order the stages are applied and keeps both. Only a literal <code class="language-plaintext highlighter-rouge">spatialTransformId</code> is dropped, because that class means that nothing separates the two coordinate systems.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">spatialTransformShift</span> <span class="o">+</span> <span class="n">spatialTransformDrift</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = spatialTransformComposite
+ 
+ model        stage  parameters                                   
+ shift-drift  shift  scale 1 × 1, rotate 0°, shear 0°, move (0, 0)
+              drift  (no knots)</code></pre></figure>
+<p>Use <code class="language-plaintext highlighter-rouge">+</code> for a distortion model that is about to be fitted, and <code class="language-plaintext highlighter-rouge">*</code> for transforms whose coefficients are already known. Here <code class="language-plaintext highlighter-rouge">+</code> chains maps; it does not add displacements as <code class="language-plaintext highlighter-rouge">+</code> on a <a href="vector3d.vector3d.html"><code class="language-plaintext highlighter-rouge">vector3d</code></a> would.</p>
+<p>Both operations flatten composites rather than nesting them, and their application order is consistent.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">R</span> <span class="o">=</span> <span class="n">spatialTransformRigid</span><span class="p">(</span><span class="n">vector3d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">spatialTransformShift</span><span class="p">([</span><span class="mi">1</span> <span class="mf">0.1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">]);</span>
+
+<span class="nb">max</span><span class="p">(</span><span class="nb">norm</span><span class="p">((</span><span class="n">R</span> <span class="o">+</span> <span class="n">S</span><span class="p">)</span><span class="o">*</span><span class="n">posA</span> <span class="o">-</span> <span class="n">S</span><span class="o">*</span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="n">posA</span><span class="p">)))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     0</code></pre></figure>
+<h2 id="12">Inverting</h2>
+<p>Rigid, affine, projective, and degree-one polynomial transforms have exact inverses. Their <code class="language-plaintext highlighter-rouge">inv</code> returns another closed-form transform.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">inv</span><span class="p">(</span><span class="n">T</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans = spatialTransformProjective
+ 
+ model       stage  parameters                        
+ projective  ·      perspective (-0.000102, -0.000189)</code></pre></figure>
+<p>A degree-two polynomial, drift spline, or scattered field has no general closed-form inverse. Its inverse is a <a href="spatialTransformInverse.html"><code class="language-plaintext highlighter-rouge">spatialTransformInverse</code></a>, which solves for each source position iteratively.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">P</span> <span class="o">=</span> <span class="n">spatialTransformPoly</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">posA</span><span class="p">,</span><span class="n">posB</span><span class="p">,</span><span class="s1">'degree'</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="n">Pinv</span> <span class="o">=</span> <span class="nb">inv</span><span class="p">(</span><span class="n">P</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">Pinv = spatialTransformInverse
+ 
+ model       stage  parameters 
+ inv-poly22  ·      |c| = 3.606</code></pre></figure>
+<p>The round trip returns the sampled positions to rounding level.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">max</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">Pinv</span><span class="p">,</span><span class="n">P</span><span class="o">*</span><span class="n">posA</span><span class="p">)</span> <span class="o">-</span> <span class="n">posA</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+   6.5286e-11</code></pre></figure>
+<p>Iteration converges while the displacement gradient remains below one in the queried region. A field that folds has no unique inverse. Asking far outside the region used for fitting can also fail, and the inverse reports either failure rather than returning a wrong position.</p>
+<h2 id="16">Collapse a Chain at Chosen Positions</h2>
+<p>Evaluating every stage repeatedly is wasted work when the chain will be applied to many pixels. <a href="spatialTransform.html"><code class="language-plaintext highlighter-rouge">discretize</code></a> samples a chain at chosen positions and returns one <a href="spatialTransformField.html"><code class="language-plaintext highlighter-rouge">spatialTransformField</code></a>.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">F</span> <span class="o">=</span> <span class="nb">discretize</span><span class="p">(</span><span class="n">R</span> <span class="o">+</span> <span class="n">S</span><span class="p">,</span> <span class="n">posA</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">F = spatialTransformField
+ 
+ model  stage  parameters              
+ field  ·      458 points, |u| &lt;= 5.274</code></pre></figure>
+<p>The field agrees with the chain at the sample positions. Between them it uses scattered interpolation, so the sampling density controls fidelity.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="nb">max</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="n">F</span><span class="o">*</span><span class="n">posA</span> <span class="o">-</span> <span class="p">(</span><span class="n">R</span> <span class="o">+</span> <span class="n">S</span><span class="p">)</span><span class="o">*</span><span class="n">posA</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+     0</code></pre></figure>
+<h2 id="18">Apply a Transform to an EBSD Map</h2>
+<p> <a href="EBSD.transform.html"><code class="language-plaintext highlighter-rouge">EBSD/transform</code></a> moves every pixel and carries its unit cell with it. Orientations, phase labels, and all per-pixel properties remain untouched. A spatial transform therefore corrects map geometry, not an orientation or specimen-reference-frame error.</p>
+<p>Carrying the unit cell is exact for an affine transform. For a nonlinear transform, one global unit cell can only represent the local transform at the map centre. The second argument may be a <code class="language-plaintext highlighter-rouge">spatialTransform</code> or a plain function handle.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsdT</span> <span class="o">=</span> <span class="nb">transform</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">S</span><span class="p">);</span>
+
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span><span class="n">ebsd</span><span class="o">.</span><span class="n">bc</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">,</span><span class="s1">'layout'</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">mtexColorMap</span> <span class="nb">gray</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'as imported'</span><span class="p">)</span>
+<span class="n">nextAxis</span>
+<span class="nb">plot</span><span class="p">(</span><span class="n">ebsdT</span><span class="p">,</span><span class="n">ebsdT</span><span class="o">.</span><span class="n">bc</span><span class="p">,</span><span class="s1">'micronbar'</span><span class="p">,</span><span class="s1">'off'</span><span class="p">),</span> <span class="n">mtexColorMap</span> <span class="nb">gray</span>
+<span class="nb">title</span><span class="p">(</span><span class="s1">'sheared'</span><span class="p">)</span></code></pre></figure>
+<center class="mtex-figure">
+<img class="inline" src="figures/EBSDSpatialTransform_01.png" alt="" />
+
+</center>
+<p>The right map has a sheared footprint, while the band-contrast values keep the same spatial order. The transform changed geometry, not the property.</p>
+<p> <a href="grain2d.transform.html"><code class="language-plaintext highlighter-rouge">grain2d/transform</code></a> applies the same idea to a grain map by moving its vertices. This lets a map and grains reconstructed from it pass through the same known distortion.</p>
+<p>Because this affine transform has an exact inverse, the original pixel positions are recovered.</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="n">ebsdBack</span> <span class="o">=</span> <span class="nb">transform</span><span class="p">(</span><span class="n">ebsdT</span><span class="p">,</span><span class="nb">inv</span><span class="p">(</span><span class="n">S</span><span class="p">));</span>
+
+<span class="nb">max</span><span class="p">(</span><span class="nb">norm</span><span class="p">(</span><span class="n">ebsdBack</span><span class="o">.</span><span class="n">pos</span> <span class="o">-</span> <span class="n">ebsd</span><span class="o">.</span><span class="n">pos</span><span class="p">),[],</span><span class="s1">'all'</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-plaintext" data-lang="plaintext">ans =
+   7.1054e-15</code></pre></figure>
+<h2 id="20">Where the Point Pairs Come From</h2>
+<p>Nothing above measured a distortion: <code class="language-plaintext highlighter-rouge">posA</code> and <code class="language-plaintext highlighter-rouge">posB</code> were manufactured. In practice, pairs often come from correlating two images of the same area. <a href="xcfShift.html"><code class="language-plaintext highlighter-rouge">xcfShift</code></a> divides their shared region into tiles, phase correlates each tile with its counterpart, and returns a displacement and correlation-peak height for every tile.</p>
+<p>The images must first share a pixel grid, and their stored order must refer to the same specimen directions. With <code class="language-plaintext highlighter-rouge">mapImage</code> inputs, <code class="language-plaintext highlighter-rouge">xcfShift</code> returns positions and displacements in specimen units rather than pixels.</p>
+<p>The peak height is a fit weight, not a registration diagnostic. A tile on featureless background must not receive an equal vote:</p>
+<figure class="highlight"><pre><code class="language-matlab" data-lang="matlab"><span class="p">[</span><span class="n">u</span><span class="p">,</span><span class="n">peak</span><span class="p">,</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">xcfShift</span><span class="p">(</span><span class="n">imRef</span><span class="p">,</span><span class="n">imTest</span><span class="p">);</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">spatialTransformShift</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">pos</span> <span class="o">+</span> <span class="n">u</span><span class="p">,</span> <span class="s1">'weights'</span><span class="p">,</span> <span class="n">peak</span><span class="p">);</span></code></pre></figure>
+<p>
+<a href="EBSDMapsAndImages.html">Maps and Images</a> prepares that common geometry. <a href="example_WCCoSmall_2.html">The TrueEBSD example</a> runs the complete chain on real data and checks the residual after correction.</p>
+<h2 id="21">References</h2>
+<div>
+<ul>
+<li>G. Nolze, <a href="https://doi.org/10.1016/j.ultramic.2006.07.003">Image distortions in SEM and their influences on EBSD measurements</a>, <i>Ultramicroscopy</i> 107, 172--183, 2007, relates specimen tilt, scan geometry, and orientation error.</li>
+<li>V. S. Tong and T. B. Britton, <a href="https://doi.org/10.1016/j.ultramic.2020.113130">TrueEBSD: Correcting spatial distortions in electron backscatter diffraction maps</a>, <i>Ultramicroscopy</i> 221, 113130, 2021, develops the physically staged correction used by TrueEBSD.</li>
+<li>M. Guizar-Sicairos, S. T. Thurman, and J. R. Fienup, <a href="https://doi.org/10.1364/OL.33.000156">Efficient subpixel image registration algorithms</a>, <i>Optics Letters</i> 33, 156--158, 2008, gives the Fourier-domain subpixel registration method used by <code class="language-plaintext highlighter-rouge">xcfShift</code>.</li>
+<li>B. Zitova and J. Flusser, <a href="https://doi.org/10.1016/S0262-8856(03)00137-9">Image registration methods: a survey</a>, <i>Image and Vision Computing</i> 21, 977--1000, 2003, organizes registration into feature detection, matching, transform choice, and resampling.</li>
+<li>R. Hartley and A. Zisserman, <a href="https://www.robots.ox.ac.uk/~vgg/hzbook/">Multiple View Geometry in Computer Vision</a>, second edition, Cambridge University Press, 2004, develops homogeneous coordinates, homographies, and the direct linear transform.</li>
+</ul>
+</div>
+<h2 id="22">Next</h2>
+<p>Continue with <a href="EBSDTrueEbsd.html">TrueEBSD Distortion Correction</a> to fit a sequence of physical distortion models to real EBSD and SEM images. See <a href="EBSDGrid.html">Square and Hex Grids</a> when the transformed map must recover or preserve its lattice structure.</p>
+<p>Correct the geometry before <a href="GrainReconstruction.html">grain reconstruction</a> when grain shape, boundary length, or correlative overlap matters. If grains already exist, transform both the map and its grain map.</p>
+</div>
+</body>
+</html>
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/EBSDSpatialTransform.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>

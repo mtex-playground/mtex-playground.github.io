@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="keywords" content="">
+
+
+<title>Birefringence | MTEX</title>
+
+<!-- canonical URL, description, licence and JSON-LD provenance; also emits the
+     <meta name="description"> that used to sit at the top of this file, because
+     it is derived from the same page abstract as the JSON-LD description. -->
+<meta name="description" content="MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.">
+<link rel="canonical" href="https://mtex-playground.github.io/BirefringenceDemo_py.html">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta name="author" content="The MTEX Developers">
+<meta name="dcterms.rightsHolder" content="The MTEX Developers">
+<meta name="dcterms.license" content="https://creativecommons.org/licenses/by/4.0/">
+<meta name="dcterms.bibliographicCitation" content="F. Bachmann, R. Hielscher, H. Schaeben, Texture Analysis with MTEX - Free and Open Source Software Toolbox, Solid State Phenomena 160 (2010), 63-68. doi:10.4028/www.scientific.net/SSP.160.63">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://mtex-playground.github.io/#developers",
+      "name": "The MTEX Developers",
+      "url": "https://mtex-playground.github.io/",
+      "sameAs": ["https://github.com/mtex-toolbox/mtex"]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": "https://mtex-playground.github.io/#citation",
+      "name": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "headline": "Texture Analysis with MTEX - Free and Open Source Software Toolbox",
+      "author": [
+        { "@type": "Person", "name": "F. Bachmann" },
+        { "@type": "Person", "name": "R. Hielscher" },
+        { "@type": "Person", "name": "H. Schaeben" }
+      ],
+      "isPartOf": {
+        "@type": "PublicationVolume",
+        "volumeNumber": 160,
+        "isPartOf": { "@type": "Periodical", "name": "Solid State Phenomena" }
+      },
+      "pagination": "63-68",
+      "datePublished": 2010,
+      "identifier": "doi:10.4028/www.scientific.net/SSP.160.63",
+      "sameAs": "https://doi.org/10.4028/www.scientific.net/SSP.160.63",
+      "url": "https://doi.org/10.4028/www.scientific.net/SSP.160.63"
+    },
+    {
+      "@type": ["SoftwareApplication", "SoftwareSourceCode"],
+      "@id": "https://mtex-playground.github.io/#mtex",
+      "name": "MTEX",
+      "alternateName": "MTEX Toolbox",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/",
+      "applicationCategory": "ScientificApplication",
+      "operatingSystem": "Windows, macOS, Linux",
+      "programmingLanguage": ["MATLAB", "Python"],
+      "codeRepository": "https://github.com/mtex-toolbox/mtex",
+      "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://mtex-playground.github.io/#website",
+      "name": "MTEX",
+      "url": "https://mtex-playground.github.io/",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://mtex-playground.github.io/BirefringenceDemo_py.html#page",
+      "name": "Birefringence",
+      "headline": "Birefringence",
+      "description": "MTEX is a free toolbox for analysing crystallographic textures and microstructures from EBSD, pole figures and orientation data in MATLAB and Python.",
+      "url": "https://mtex-playground.github.io/BirefringenceDemo_py.html",
+      "mainEntityOfPage": "https://mtex-playground.github.io/BirefringenceDemo_py.html",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://mtex-playground.github.io/#website" },
+      "about": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "author": { "@id": "https://mtex-playground.github.io/#developers" },
+      "publisher": { "@id": "https://mtex-playground.github.io/#developers" },
+      "copyrightHolder": { "@id": "https://mtex-playground.github.io/#developers" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creditText": "MTEX documentation, https://mtex-playground.github.io/BirefringenceDemo_py.html -- cite F. Bachmann, R. Hielscher, H. Schaeben (2010), doi:10.4028/www.scientific.net/SSP.160.63",
+      "citation": { "@id": "https://mtex-playground.github.io/#citation" },
+      "isBasedOn": { "@id": "https://mtex-playground.github.io/#mtex" },
+      "proficiencyLevel": "Expert"
+    }
+  ]
+}
+</script>
+
+
+<link rel="stylesheet" href="css/syntax.css">
+
+<!--<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<!--<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">-->
+<link rel="stylesheet" href="css/modern-business.css">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="css/customstyles.css">
+<link rel="stylesheet" href="css/boxshadowproperties.css">
+
+<!-- most color styles are extracted out to here -->
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/theme-mtex.css">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/mtex-site.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="js/jquery.navgoco.min.js"></script>
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<!-- Anchor.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/2.0.0/anchor.min.js"></script>
+<script src="js/toc.js"></script>
+<script src="js/customscripts.js"></script>
+<!-- Site search. ~7 KB; the search index itself is fetched only on first use. -->
+<script src="js/mtex-search.js" defer></script>
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="icon" type="image/png" sizes="100x100" href="images/favicons/favicon.png">
+<link rel="manifest" href="images/favicons/manifest.json">
+<meta name="msapplication-TileColor" content="#149983">
+<meta name="msapplication-TileImage" size="100x100" type="image/png" content="images/favicons/favicon.png">
+<meta name="theme-color" content="#149983">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="" href="https://mtex-playground.github.io/feed.xml">
+
+
+
+<script id="MathJax-script" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js"
+        integrity="sha512-dYOCdOl06012DI+59NDm+JDwE5nfEOHU3OSwP1ydeLK5/dUcUohVx2Ojd7kNqw711V8++78udRAZMOGoKYJgvw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        // Called by sidebar.html once the sidebar tree has been fetched and
+        // injected. It cannot run on document.ready any more: the tree is no
+        // longer part of the page, so at that point #mysidebar is still empty
+        // and navgoco would have nothing to attach to.
+        function initSidebarAccordion() {
+            // Initialize navgoco with default options
+            $("#mysidebar").navgoco({
+                caretHtml: '',
+                accordion: true,
+                openClass: 'active', // open
+                save: false, // leave false or nav highlighting doesn't work right
+                cookie: {
+                    name: 'navgoco',
+                    expires: false,
+                    path: '/'
+                },
+                slide: {
+                    duration: 400,
+                    easing: 'swing'
+                }
+            });
+
+            $("#collapseAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', false);
+            });
+
+            $("#expandAll").click(function(e) {
+                e.preventDefault();
+                $("#mysidebar").navgoco('toggle', true);
+            });
+        }
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#tg-sb-link").click(function() {
+                $("#tg-sb-sidebar").toggle();
+                $("#tg-sb-content").toggleClass('col-md-9');
+                $("#tg-sb-content").toggleClass('col-md-12');
+                $("#tg-sb-icon").toggleClass('fa-toggle-on');
+                $("#tg-sb-icon").toggleClass('fa-toggle-off');
+            });
+        });
+    </script>
+    
+</head>
+<body class="mx-body mx-docpage">
+
+<script>window.MX_PY = ["AngleDistributionFunction","AnisotropicTheory","Annotations","AxesAlignment","AxisDistributionFunction","BinghamODFs","BirefringenceDemo","BoundaryCurvature","BoundaryIntersections","BoundaryMisorientations","BoundaryNormalDistribution","BoundaryPlots","BoundaryProperties","BoundarySelect","BoundaryTutorial","CPOSeismicProperties","CSLBoundaries","ClusterDemo","ColorMaps","CombinedPlots","ContourPlots","Contribute2Doc","CrystalDirections","CrystalOperations","CrystalReferenceSystem","CrystalShapeSmorf","CrystalShapes","CrystalSymmetries","DefinitionAsCoordinateTransform","DensityEstimation","DetectionOfSampleSymmetry","DislocationSystems","Dream3dGrains","EBSD2ODF","EBSD3Analysis","EBSD3Plotting","EBSDAdvancedMaps","EBSDDenoising","EBSDExport","EBSDFilling","EBSDGROD","EBSDGrid","EBSDIPFMap","EBSDImport","EBSDIndex","EBSDInter","EBSDInterfaceHDF5","EBSDKAM","EBSDMapsAndImages","EBSDOrientationAnalysis","EBSDOrientationPlots","EBSDPerceptualKey","EBSDPlotting","EBSDProfile","EBSDPseudoSymmetry","EBSDReferenceFrame","EBSDSelect","EBSDSharpPlot","EBSDSimulation","EBSDSpatialTransform","EBSDTrueEbsd","EBSDTutorial","EllipseBasedParameters","EulerAngleSections","FibreODFs","FundamentalSector","GND","GeneralConceptsConfiguration","GeneralConceptsOptions","Glossary","GrainExport","GrainGraphBasedReconstruction","GrainMerge","GrainNeighbours","GrainOrientationParameters","GrainReconstruction","GrainReconstructionAdvanced","GrainReconstructionMCL","GrainSmoothing","GrainSmoothingAdvanced","GrainSpatialPlots","GrainTutorial","Grain_dispersion_axes","Grains3D","Grains3DBoundaries","Grains3DOperations","Grains3DProperties","Grains3DReconstruction","Grains3DSmoothing","HarmonicApproximationTheory","HullBasedParameters","Installation","IsotropicTheory","Lankford","LatticeMetric","Legends","ListsAndIndexing","LowLevelParentGrainReconstruction","MATLABtoPython","MTEXScripts","MTEXvsBungeConvention","MaParentGrainReconstruction","MaParentGrainReconstructionAdvanced","MagneticAnisotropy","MartensiteVariants","MisorientationDistributionFunction","MisorientationGrainExchangeSym","MisorientationTheory","Multiplot","NeperInterface","NotationAndConventions","ODFCharacteristics","ODFComponents","ODFExport","ODFImport","ODFInversePoleFigure","ODFModeling","ODFPlot","ODFPoleFigure","ODFShapes","ODFTheory","ODFTutorial","OptimalKernel","OrientationDefinition","OrientationEmbeddings","OrientationExport","OrientationFibre","OrientationFundamentalRegion","OrientationGrid","OrientationImport","OrientationInversePoleFigure","OrientationPoleFigure","OrientationRelationshipFit","OrientationStandard","OrientationSymmetry","OrientationVisualization3d","OrientationVisualizationSections","ParentChildVariants","PhaseTransitions","PiezoElectricity","PlotTypes","PlottingExport","PoleFigure2ODF","PoleFigure2ODFAmbiguity","PoleFigure2ODFGhostCorrection","PoleFigureCorrection","PoleFigureDubna","PoleFigureExport","PoleFigureImport","PoleFigurePlot","PoleFigureRefinement","PoleFigureSantaFe","PoleFigureSimulation","PoleFigureTutorial","ProjectionBasedParameters","Properties","PythonDevelopers","QuadruplePoints","QuasiCrystals","RBFApproximationTheory","RadialODFs","RandomSampling","RotationDefinition","RotationFibre","RotationImproper","RotationOperations","RotationPlotting","RotationRepresentations","RotationSpinTensor","RotationTangentSpace","S1FunHarmonics","S2Bingham","S2FunApproximationInterpolation","S2FunAxisField","S2FunConcept","S2FunHarmonicRepresentation","S2FunOperations","S2FunPlotting","S2FunQuadrature","S2FunRadon","S2FunSampling","S2FunSym","S2FunVectorField","S2FunVectorValued","S2Kernels","SO3FunApproximationTheory","SO3FunConcept","SO3FunConvolution","SO3FunDefinition","SO3FunHarmonicRepresentation","SO3FunOperations","SO3FunQuadrature","SO3FunSymmetricFunctions","SO3FunVectorField","SO3FunVectorValued","SO3Kernels","SachsModel","SchmidFactor","SelectingGrains","ShapeParameters","SigmaSections","SingleSlipModel","SlipSystems","SlipTransmission","SpecimenSymmetry","SphericalHarmonics","SphericalProjections","SubGrainBoundaries","SymmetryAlignment","TaylorHex","TaylorModel","TensorArithmetics","TensorAverage","TensorDefinition","TensorImport","TensorVisualisation","TextureEvolution","TiBetaReconstruction","TiltAndTwistBoundaries","TransformationTexture","TransparencyDemo","TriplePointBasedReconstruction","TriplePoints","Twinning","TwinningBoundaries","TwinningTutorial","VPSCImport","VectorDefinition","VectorGrids","VectorsAxes","VectorsDensityEstimation","VectorsExport","VectorsImport","VectorsOperations","WBV","WaveVelocities","WignerFunctions","changelog"];</script>
+<script src="js/mx-lang.js"></script>
+
+
+<div class="mx-announce" id="mx-announce" data-id="workshop-2027">
+  <div class="mx-wrap">
+    <span class="mx-announce-date">March 2027 · Freiberg</span>
+    <span class="mx-announce-text"><b>Workshop on Quantitative Microstructure Analysis</b>, new this year: AI-assisted analysis and MTEX for Python</span>
+    <a class="mx-announce-go" href="workshop27">Programme →</a>
+    <button type="button" class="mx-announce-x" aria-label="Hide this announcement">×</button>
+  </div>
+</div>
+<script>
+(function () {
+  var bar = document.getElementById('mx-announce'), key = 'mx-announce-hidden';
+  try { if (localStorage.getItem(key) === bar.getAttribute('data-id')) { bar.hidden = true; } } catch (e) {}
+  bar.querySelector('.mx-announce-x').addEventListener('click', function () {
+    bar.hidden = true;
+    try { localStorage.setItem(key, bar.getAttribute('data-id')); } catch (e) {}
+  });
+})();
+</script>
+
+<header class="mx-top">
+  <div class="mx-wrap mx-top-row">
+    <a class="mx-brand" href="index" aria-label="MTEX home"><img src="images/icons/MTEX_100x67px.png" alt="MTEX"></a>
+    <nav aria-label="Site">
+      <ul class="mx-links" id="mx-nav-links">
+        
+          
+          
+          
+          
+          
+          <li><a href="get-started">Get started</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="docs" class="mx-current" aria-current="page">Documentation</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="gallery">Gallery</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="community">Community</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="publications.html">Publications</a></li>
+        
+          
+          
+          
+          
+          
+          <li><a href="workshop27" class="mx-pill">Workshop 2027</a></li>
+        
+      </ul>
+      <button type="button" class="mx-scroll-next" data-scroll-target="mx-nav-links" aria-label="More navigation links" hidden>›</button>
+    </nav>
+    <div class="mx-lang-switch" role="group" aria-label="Language of code and pages">
+      <button type="button" data-lang="matlab" aria-pressed="true">MATLAB</button>
+      <button type="button" data-lang="python" aria-pressed="false">Python</button>
+    </div>
+    <div class="mx-search">
+<div class="ms-nav">
+	<form class="ms-form" method="get" action="search.html" role="search">
+		<input type="text" name="q" id="ms-nav-input" class="ms-nav-input"
+		       placeholder="search..."
+		       aria-label="Search MTEX documentation">
+		<ul id="ms-nav-results" class="ms-dropdown" role="listbox" aria-label="Search results"></ul>
+	</form>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var input = document.getElementById('ms-nav-input');
+	if (!input || !window.MtexSearch) { return; }
+	MtexSearch.attach(input, {
+		container: document.getElementById('ms-nav-results'),
+		mode: 'dropdown',
+		limit: 8,
+		noResultsText: 'No results found.'
+	});
+});
+</script>
+</div>
+  </div>
+</header>
+
+<script src="js/mx-scroll.js" defer></script>
+
+
+
+
+
+<div class="mx-wrap mx-doc">
+    
+    <aside class="mx-side" id="mx-side" aria-label="Documentation navigation"
+           data-sidebar-url="sidebars/documentation_sidebar.html"
+           data-sidebar="documentation_sidebar">
+        <button type="button" class="mx-side-toggle" aria-expanded="false">Contents</button>
+        <div class="mx-side-body">
+            
+            <div class="mx-side-tabs" role="tablist" aria-label="Documentation">
+                <button type="button" role="tab" data-tab="documentation_sidebar" aria-selected="true">Guide</button>
+                <button type="button" role="tab" data-tab="function_reference_sidebar" aria-selected="false">Function reference</button>
+            </div>
+            
+            <input type="search" class="mx-side-filter" id="mx-side-filter" placeholder="Filter this section" aria-label="Filter this section" autocomplete="off">
+            <div class="mx-side-tree" id="mx-side-tree"></div>
+        </div>
+    </aside>
+    
+    <article class="mx-article" id="mx-article">
+        
+    <div class="post-header">
+        <h1 class="post-title-main">Birefringence</h1>
+    </div>
+
+    
+
+  
+<div class="post-content">
+
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    
+<font size="2"><a href="python_scripts/BirefringenceDemo.py" download="">download as script</a> · <a href="https://github.com/mtex-toolbox/pymtex/blob/main/docs/pages/Tensors/BirefringenceDemo.py">edit page</a></font>
+
+<!--introduction-->
+
+<p>An anisotropic crystal has two permitted polarization directions for most
+light-propagation directions. The two waves travel at different speeds. Their
+refractive-index difference is the <em>directional birefringence</em>.</p>
+
+<p>Between crossed polarizers, this speed difference becomes a phase lag. Some wavelengths
+are then transmitted more strongly than others, producing the interference colours seen
+in a petrographic microscope.</p>
+
+<p>This page builds a rank-two refractive-index tensor for olivine. It then predicts
+birefringence, optical axes, and interference colours from EBSD orientations. The tensor
+and orientation conventions are introduced in <a href="TensorDefinition_py.html">Tensor Definition</a>
+and <a href="OrientationDefinition_py.html">Orientations</a>. The distinction between crystal symmetry
+and its frame is explained in <a href="CrystalReferenceSystem_py.html">Crystal Reference Systems</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">mtex</span> <span class="kn">import</span> <span class="o">*</span>
+</code></pre></div></div>
+
+<h2 id="load-an-orientation-map">Load an orientation map</h2>
+
+<p>The olivine data uses transverse direction (TD) upward and rolling direction (RD) to the
+right. The explicit plotting convention states that specimen frame rather than
+inheriting the session default.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plottingConvention</span><span class="p">.</span><span class="n">default</span><span class="p">(</span><span class="s">'y↑→x'</span><span class="p">)</span>
+<span class="n">ebsd</span> <span class="o">=</span> <span class="n">mtexdata</span><span class="p">(</span><span class="s">'olivine'</span><span class="p">)</span>
+
+<span class="n">grains</span> <span class="o">=</span> <span class="n">calcGrains</span><span class="p">(</span><span class="n">ebsd</span><span class="p">,</span> <span class="n">minPixel</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">olivine</span> <span class="o">=</span> <span class="n">ebsd</span><span class="p">[</span><span class="s">'olivine'</span><span class="p">]</span>
+
+<span class="n">ipfKey</span> <span class="o">=</span> <span class="n">ipfColorKey</span><span class="p">(</span><span class="n">olivine</span><span class="p">)</span>
+<span class="n">ipfColors</span> <span class="o">=</span> <span class="n">ipfKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">olivine</span><span class="p">.</span><span class="n">orientations</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">olivine</span><span class="p">,</span> <span class="n">ipfColors</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">grains</span><span class="p">.</span><span class="n">boundary</span><span class="p">,</span> <span class="n">lineWidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-3.png" /></center>
+
+<p>This inverse pole figure (IPF) map is the orientation reference for the optical maps
+below. Neighbouring grains have different colours because their crystal frames have
+different orientations in the specimen frame. These IPF colours do not represent an
+optical response.</p>
+
+<h2 id="build-the-refractive-index-tensor">Build the refractive-index tensor</h2>
+
+<p>The refractive index is \(n=c/v\), so a larger index means a slower wave. A symmetric
+rank-two tensor stores its directional dependence.
+<a href="refractiveIndexTensor.refractiveIndexTensor.html">refractiveIndexTensor</a> attaches that
+tensor to the crystal frame.</p>
+
+<p>Orthorhombic olivine is optically biaxial. Its three principal indices are
+\(n_{\alpha}&lt;n_{\beta}&lt;n_{\gamma}\), with \(n_{\alpha}\) parallel to b, \(n_{\beta}\) parallel
+to c, and \(n_{\gamma}\) parallel to a. The order in the diagonal matrix is therefore a,
+b, c.</p>
+
+<p>The mmm point group forces the off-diagonal components to zero in this symmetry-aligned
+crystal frame. Symmetry constrains the property, while the frame states which axes its
+components refer to. MTEX carries both with the tensor.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cs</span> <span class="o">=</span> <span class="n">olivine</span><span class="p">.</span><span class="n">CS</span>
+
+<span class="n">nAlphaFo</span> <span class="o">=</span> <span class="mf">1.635</span>
+<span class="n">nBetaFo</span> <span class="o">=</span> <span class="mf">1.651</span>
+<span class="n">nGammaFo</span> <span class="o">=</span> <span class="mf">1.670</span>
+<span class="n">rIFo</span> <span class="o">=</span> <span class="n">refractiveIndexTensor</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">([</span><span class="n">nGammaFo</span><span class="p">,</span> <span class="n">nAlphaFo</span><span class="p">,</span> <span class="n">nBetaFo</span><span class="p">]),</span> <span class="n">cs</span><span class="p">)</span>
+
+<span class="n">nAlphaFa</span> <span class="o">=</span> <span class="mf">1.827</span>
+<span class="n">nBetaFa</span> <span class="o">=</span> <span class="mf">1.869</span>
+<span class="n">nGammaFa</span> <span class="o">=</span> <span class="mf">1.879</span>
+<span class="n">rIFa</span> <span class="o">=</span> <span class="n">refractiveIndexTensor</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">([</span><span class="n">nGammaFa</span><span class="p">,</span> <span class="n">nAlphaFa</span><span class="p">,</span> <span class="n">nBetaFa</span><span class="p">]),</span> <span class="n">cs</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="an-illustrative-solid-solution-model">An illustrative solid-solution model</h2>
+
+<p>Olivine forms a solid solution between forsterite and fayalite. For this example, the
+forsterite mole fraction is fixed at 0.86 and the two end-member tensors are
+interpolated linearly. This is a modelling assumption, not a composition inferred from
+the EBSD map.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xFo</span> <span class="o">=</span> <span class="mf">0.86</span>
+<span class="n">rI</span> <span class="o">=</span> <span class="n">xFo</span> <span class="o">*</span> <span class="n">rIFo</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">xFo</span><span class="p">)</span> <span class="o">*</span> <span class="n">rIFa</span>
+
+<span class="c1"># rows: forsterite, fayalite, the Fo86 model, columns: n_a, n_b, n_c
+</span><span class="n">principalIndices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">rIFo</span><span class="p">.</span><span class="n">M</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">rIFa</span><span class="p">.</span><span class="n">M</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">rI</span><span class="p">.</span><span class="n">M</span><span class="p">)])</span>
+<span class="n">principalIndices</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1.67  , 1.635 , 1.651 ],
+       [1.879 , 1.827 , 1.869 ],
+       [1.6993, 1.6619, 1.6815]])
+</code></pre></div></div>
+
+<p>The rows show why the axis assignment matters. Sorting the three values and placing
+them on a, b, c in that order would describe a different material. The tensor must also
+remain attached to the same crystal frame as the orientations that will rotate it.</p>
+
+<h2 id="directional-birefringence">Directional birefringence</h2>
+
+<p>For a propagation direction <code class="language-plaintext highlighter-rouge">vProp</code>, MTEX restricts the optical response to the plane
+perpendicular to that direction. The two eigenvectors in this plane are <code class="language-plaintext highlighter-rouge">pMin</code> and
+<code class="language-plaintext highlighter-rouge">pMax</code>. The former has the lower index and is the fast polarization direction; the
+latter is the slow direction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vProp</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">deltaN</span><span class="p">,</span> <span class="n">pMin</span><span class="p">,</span> <span class="n">pMax</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">birefringence</span><span class="p">(</span><span class="n">vProp</span><span class="p">)</span>
+<span class="n">deltaN</span><span class="p">,</span> <span class="n">pMin</span><span class="p">,</span> <span class="n">pMax</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(array(0.0237), vector3d (olivine)
+  antipodal: true
+      x       y     z
+  0.188  -0.932  0.31, vector3d (olivine)
+  antipodal: true
+       x      y     z
+  -0.651  0.118  0.75)
+</code></pre></div></div>
+
+<p>The printed scalar is \(\Delta n=n_{\mathrm{slow}}-n_{\mathrm{fast}}\) for the (111)
+plane normal. The two printed vectors are perpendicular to that direction and to each
+other. They are polarization directions, not two different propagation rays.</p>
+
+<h2 id="birefringence-over-every-propagation-direction">Birefringence over every propagation direction</h2>
+
+<p>Omitting <code class="language-plaintext highlighter-rouge">vProp</code> makes <a href="refractiveIndexTensor.birefringence.html">birefringence</a> return
+a spherical function and two spherical axis fields.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">deltaNSphere</span><span class="p">,</span> <span class="n">pMinField</span><span class="p">,</span> <span class="n">pMaxField</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">birefringence</span><span class="p">()</span>
+
+<span class="n">plot3d</span><span class="p">(</span><span class="n">deltaNSphere</span><span class="p">,</span> <span class="n">complete</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">mtexColorMap</span><span class="p">(</span><span class="s">'parula'</span><span class="p">)</span>
+<span class="n">mtexColorbar</span><span class="p">()</span>
+
+<span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">quiver3d</span><span class="p">(</span><span class="n">pMinField</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'white'</span><span class="p">)</span>
+<span class="n">quiver3d</span><span class="p">(</span><span class="n">pMaxField</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-7.png" /></center>
+
+<p>Colour encodes \(\Delta n\) on the unit sphere. The white and black line fields show the
+fast and slow polarization directions. The response is antipodal: reversing the
+propagation direction does not change the birefringence.</p>
+
+<h2 id="optical-axes">Optical axes</h2>
+
+<p>An optical axis is a propagation direction for which the perpendicular section has
+equal indices and hence zero birefringence. A biaxial crystal has two such axes. Each
+axis is a line, so its positive and negative senses are physically equivalent.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vOptical</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">opticalAxis</span><span class="p">()</span>
+<span class="n">opticalAxisResidual</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">birefringence</span><span class="p">(</span><span class="n">vOptical</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">vOptical</span><span class="p">,</span> <span class="n">opticalAxisResidual</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(vector3d (olivine)
+  size     : 2
+  antipodal: true
+       x      y  z
+  -0.689  0.725  0
+   0.689  0.725  0, array([0., 0.]))
+</code></pre></div></div>
+
+<hr />
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hold</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">vOptical</span><span class="p">.</span><span class="n">antipodal</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">arrow3d</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="n">vOptical</span><span class="p">,</span> <span class="o">-</span><span class="n">vOptical</span><span class="p">),</span> <span class="n">faceColor</span><span class="o">=</span><span class="s">'red'</span><span class="p">)</span>
+<span class="n">hold</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-9.png" /></center>
+
+<p>The residual is numerical roundoff rather than physical birefringence. Red arrows mark
+both senses of both optical axes on the preceding surface. They point at the dark blue
+minima where \(\Delta n\) falls to zero.</p>
+
+<h2 id="interference-colour-between-polarizers">Interference colour between polarizers</h2>
+
+<p>An ideal isotropic crystal remains dark between crossed polarizers because it does not
+change the state of polarization. An anisotropic crystal splits the incident
+polarization into fast and slow components. Their retardation depends on \(\Delta n\),
+thickness, and wavelength.</p>
+
+<p><a href="refractiveIndexTensor.spectralTransmission.html">spectralTransmission</a> integrates the
+transmitted visible spectrum into an RGB triplet. Thickness is specified in nanometres,
+so 30000 corresponds to 30 micrometres.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vProp</span> <span class="o">=</span> <span class="n">Miller</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
+<span class="n">thickness</span> <span class="o">=</span> <span class="mi">30000</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">pFast</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">birefringence</span><span class="p">(</span><span class="n">vProp</span><span class="p">)</span>
+<span class="n">polarizer</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vProp</span><span class="p">,</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span> <span class="o">*</span> <span class="n">pFast</span>
+
+<span class="n">rgbFromDirection</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">vProp</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">polarizationDirection</span><span class="o">=</span><span class="n">polarizer</span><span class="p">)</span>
+<span class="n">rgbFromDirection</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.2061, 0.5346, 0.6825])
+</code></pre></div></div>
+
+<p>The polarizer above is 30 degrees from the fast direction in the plane perpendicular to
+<code class="language-plaintext highlighter-rouge">vProp</code>. The same calculation can therefore use <code class="language-plaintext highlighter-rouge">tau</code>, the angle between the polarizer
+and <code class="language-plaintext highlighter-rouge">pMin</code>. The RGB values are fractions on the display colour scale, not measured
+intensities.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rgbFromTau</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">vProp</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span>
+<span class="n">rgbFromTau</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([0.2061, 0.5346, 0.6825])
+</code></pre></div></div>
+
+<h2 id="vary-the-polarizer-angle">Vary the polarizer angle</h2>
+
+<p>With crossed polarizers, the two components have equal magnitude when \(\tau=45\)
+degrees. The three spherical maps show how the colour and intensity change as the input
+polarization turns away from the fast axis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">newMtexFigure</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">15</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="s">'rgb'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'$\tau = 15^{\circ}$'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="s">'rgb'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'$\tau = 30^{\circ}$'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">45</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="s">'rgb'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'$\tau = 45^{\circ}$'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-12.png" /></center>
+
+<p>The 45-degree panel is brightest because both permitted waves are excited equally.
+Directions near an optical axis remain dark in every panel because their retardation
+is zero.</p>
+
+<h2 id="vary-the-analyser-angle">Vary the analyser angle</h2>
+
+<p>The option <code class="language-plaintext highlighter-rouge">phi</code> is the angle from the polarizer to the analyser. Crossed polarizers
+correspond to \(\phi=90\) degrees. Here <code class="language-plaintext highlighter-rouge">tau</code> stays fixed at 45 degrees while the
+analyser changes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">newMtexFigure</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">45</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mi">30</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="s">'rgb'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'$\phi = 30^{\circ}$'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">45</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mi">60</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="s">'rgb'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'$\phi = 60^{\circ}$'</span><span class="p">)</span>
+
+<span class="n">nextAxis</span><span class="p">()</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">thickness</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">45</span> <span class="o">*</span> <span class="n">degree</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mi">90</span> <span class="o">*</span> <span class="n">degree</span><span class="p">),</span> <span class="s">'rgb'</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">r</span><span class="s">'$\phi = 90^{\circ}$'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-13.png" /></center>
+
+<p>The non-crossed panels retain a bright background that would pass without a crystal. At
+90 degrees that background is extinguished, leaving only the wavelength-dependent
+signal produced by birefringence.</p>
+
+<h2 id="from-the-crystal-frame-to-the-specimen-frame">From the crystal frame to the specimen frame</h2>
+
+<p>Microscope directions are given in the specimen frame, whereas <code class="language-plaintext highlighter-rouge">rI</code> is expressed in the
+crystal frame. There are two equivalent calculations. One can rotate the tensor into
+every measured crystal orientation, or map the specimen directions back into every
+crystal frame.</p>
+
+<p>The simulated section below is 22800 nm thick. Its light propagates along specimen z
+and its polarizer points along specimen x.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vPropSpecimen</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">Z</span>
+<span class="n">polarizerSpecimen</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">X</span>
+<span class="n">thickness</span> <span class="o">=</span> <span class="mi">22800</span>
+<span class="n">ori</span> <span class="o">=</span> <span class="n">olivine</span><span class="p">.</span><span class="n">orientations</span>
+
+<span class="c1"># rotate one crystal tensor into every measured orientation
+</span><span class="n">rISpecimen</span> <span class="o">=</span> <span class="n">ori</span> <span class="o">*</span> <span class="n">rI</span>
+<span class="n">rgbTensorRoute</span> <span class="o">=</span> <span class="n">rISpecimen</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">vPropSpecimen</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">polarizationDirection</span><span class="o">=</span><span class="n">polarizerSpecimen</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">olivine</span><span class="p">,</span> <span class="n">rgbTensorRoute</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-14.png" /></center>
+
+<p>Grains that were merely different IPF colours now acquire colours from the optical
+model. Within-grain variation follows the measured pixel orientations. The EBSD data
+supplies orientation only; thickness and composition remain explicit model inputs.</p>
+
+<h2 id="verify-the-equivalent-direction-route">Verify the equivalent direction route</h2>
+
+<p>An <a href="orientation.orientation.html">orientation</a> maps crystal coordinates into specimen
+coordinates. Its inverse therefore maps each specimen direction into the corresponding
+crystal frame before applying the original tensor.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vPropCrystal</span> <span class="o">=</span> <span class="n">inv</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span> <span class="o">*</span> <span class="n">vPropSpecimen</span>
+<span class="n">polarizerCrystal</span> <span class="o">=</span> <span class="n">inv</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span> <span class="o">*</span> <span class="n">polarizerSpecimen</span>
+
+<span class="n">rgbDirectionRoute</span> <span class="o">=</span> <span class="n">rI</span><span class="p">.</span><span class="n">spectralTransmission</span><span class="p">(</span><span class="n">vPropCrystal</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">polarizationDirection</span><span class="o">=</span><span class="n">polarizerCrystal</span><span class="p">)</span>
+
+<span class="c1"># the notIndexed pixels calcGrains gave to olivine grains have no orientation
+</span><span class="n">maxRouteDifference</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">rgbTensorRoute</span> <span class="o">-</span> <span class="n">rgbDirectionRoute</span><span class="p">))</span>
+<span class="n">maxRouteDifference</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3.4217e-13
+</code></pre></div></div>
+
+<p>The notIndexed pixels inside olivine grains, which <code class="language-plaintext highlighter-rouge">calcGrains</code> gave the phase of their
+grain but no orientation, have no colour and are left out. The maximum channel difference
+is at floating-point roundoff. This check is important because plausible colours do not
+reveal a reference-frame mistake.</p>
+
+<h2 id="package-the-model-as-a-colour-key">Package the model as a colour key</h2>
+
+<p>A <a href="spectralTransmissionColorKey.html">spectralTransmissionColorKey</a> stores the tensor,
+thickness, propagation direction, polarizer, and analyser angle. Its defaults reproduce
+the specimen-frame setup above.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colorKey</span> <span class="o">=</span> <span class="n">spectralTransmissionColorKey</span><span class="p">(</span><span class="n">rI</span><span class="p">,</span> <span class="n">thickness</span><span class="p">)</span>
+<span class="n">colorKey</span><span class="p">.</span><span class="n">propagationDirection</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">Z</span>
+<span class="n">colorKey</span><span class="p">.</span><span class="n">polarizer</span> <span class="o">=</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">X</span>
+<span class="n">colorKey</span><span class="p">.</span><span class="n">phi</span> <span class="o">=</span> <span class="mi">90</span> <span class="o">*</span> <span class="n">degree</span>
+
+<span class="n">rgbKey</span> <span class="o">=</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span>
+<span class="n">maxKeyDifference</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">rgbKey</span> <span class="o">-</span> <span class="n">rgbDirectionRoute</span><span class="p">))</span>
+<span class="n">maxKeyDifference</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0
+</code></pre></div></div>
+
+<h2 id="visualize-the-colour-key">Visualize the colour key</h2>
+
+<p>The sigma sections show the colour assigned to orientations throughout orientation
+space. They are the legend for a map made with this key.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">colorKey</span><span class="p">,</span> <span class="s">'sigma'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-17.png" /></center>
+
+<p>Nearby orientations usually have nearby colours. Rapid changes occur where a small
+orientation change moves a wavelength through an interference minimum or maximum, so
+this key is not an IPF key with a different palette.</p>
+
+<h2 id="circular-input-polarization">Circular input polarization</h2>
+
+<p>Setting <code class="language-plaintext highlighter-rouge">polarizer</code> to <code class="language-plaintext highlighter-rouge">None</code> selects the circular-polarization branch of the colour
+key. The response then depends on retardation without selecting one linear input
+direction in the specimen plane.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colorKey</span><span class="p">.</span><span class="n">polarizer</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="n">rgbCircular</span> <span class="o">=</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ori</span><span class="p">)</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">olivine</span><span class="p">,</span> <span class="n">rgbCircular</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-18.png" /></center>
+
+<p>Compared with the linearly polarized map, the circular-input map removes extinction
+caused only by alignment with a particular polarizer. No grain in this map is fully
+dark, because none is viewed close enough to an optical axis for its retardation to
+vanish.</p>
+
+<h2 id="rotate-polarizer-and-analyser-together">Rotate polarizer and analyser together</h2>
+
+<p>Rotating both elements preserves their 90-degree separation while changing their
+orientation in the specimen plane. Run in a loop over <code class="language-plaintext highlighter-rouge">omega</code> from 0 to 90 degrees, the
+map sweeps through a quarter turn. Each grain reaches extinction when a fast or slow
+direction aligns with the polarizer. The page draws the frame halfway between
+extinction positions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">omega</span> <span class="o">=</span> <span class="mi">45</span>
+<span class="n">colorKey</span><span class="p">.</span><span class="n">polarizer</span> <span class="o">=</span> <span class="n">rotation</span><span class="p">.</span><span class="n">byAxisAngle</span><span class="p">(</span><span class="n">vector3d</span><span class="p">.</span><span class="n">Z</span><span class="p">,</span> <span class="n">omega</span> <span class="o">*</span> <span class="n">degree</span><span class="p">)</span> <span class="o">*</span> <span class="n">vector3d</span><span class="p">.</span><span class="n">X</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">olivine</span><span class="p">,</span> <span class="n">colorKey</span><span class="p">.</span><span class="n">orientation2color</span><span class="p">(</span><span class="n">ori</span><span class="p">),</span> <span class="n">micronbar</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">mtexTitle</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">omega</span><span class="si">:</span><span class="p">.</span><span class="mi">1</span><span class="n">f</span><span class="si">}</span><span class="s">°'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<center class="mtex-figure"><img class="inline" src="figures/python/BirefringenceDemo-19.png" /></center>
+
+<p>The published frame is left at 45 degrees so the spatial colour variation remains
+visible. The animation, rather than this final frame alone, shows that different
+grains reach extinction at different rotation angles.</p>
+
+<h2 id="what-the-colour-model-leaves-out">What the colour model leaves out</h2>
+
+<p>This calculation is a qualitative optical simulation. It uses one
+wavelength-independent refractive-index tensor, a linear Fo-Fa mixture, ideal
+polarizers, and a CIE colour conversion. It omits dispersion of the principal indices,
+absorption, scattering, surface effects, illumination, and camera calibration.</p>
+
+<p>Consequently, a matching RGB colour does not by itself validate composition, thickness,
+or orientation. Those quantities need independent measurements before the result can
+be compared quantitatively with a microscope image.</p>
+
+<h2 id="the-maths-behind-the-interference-colour">The maths behind the interference colour</h2>
+
+<p>For a unit propagation direction \(\vec v\), the relevant refractive indices are the two
+eigenvalues of the tensor section perpendicular to \(\vec v\). Their difference is</p>
+
+\[\Delta n(\vec v)=n_{\mathrm{slow}}(\vec v) -n_{\mathrm{fast}}(\vec v).\]
+
+<p>A section of thickness \(t\) produces retardation \(\Gamma=t\Delta n\). At wavelength
+\(\lambda\), the phase lag is \(2\pi\Gamma/\lambda\). For ideal crossed polarizers the
+transmitted intensity is proportional to</p>
+
+\[\sin^2(2\tau)\, \sin^2\left(\frac{\pi t\Delta n}{\lambda}\right).\]
+
+<p>This explains all three zeros seen above: \(\Delta n=0\) along an optical axis, \(t=0\) for
+no crystal, and \(\tau=0\) or 90 degrees at extinction.</p>
+
+<h2 id="next">Next</h2>
+
+<p><a href="MagneticAnisotropy_py.html">Magnetic Anisotropy</a> is the next worked physical property in
+this chapter. <a href="TensorAverage_py.html">Tensor Averages</a> combines rotated single-crystal
+tensors into aggregate properties. For orientation maps without an optical model,
+continue with <a href="EBSDIPFMap_py.html">IPF Maps</a>.</p>
+
+<h2 id="further-reading">Further reading</h2>
+
+<ul>
+  <li>J.F. Nye, <a href="https://search.worldcat.org/title/11114089">Physical Properties of Crystals: Their Representation by Tensors and Matrices</a>,
+Oxford University Press, 1985, develops tensor symmetry and optical properties.</li>
+  <li>W.D. Nesse, <a href="https://search.worldcat.org/search?q=bn%3A9780199846276">Introduction to Optical Mineralogy</a>,
+4th ed., Oxford University Press, 2013, develops indicatrices, biaxial optics,
+extinction, and interference colours.</li>
+  <li>A. Echalier, R.L. Glazer, V. Fülöp, and M.A. Geday,
+<a href="https://doi.org/10.1107/S0907444904003154">Assessing crystallization droplets using birefringence</a>,
+<em>Acta Crystallographica D</em> 60 (2004), 696-702, relates directional birefringence,
+retardation, optical axes, and crossed polarizers.</li>
+  <li>L. Casas, <a href="https://doi.org/10.1107/S1600576718003709">Three-dimensional-printing aids in visualizing the optical properties of crystals</a>,
+<em>Journal of Applied Crystallography</em> 51 (2018), 901-908, explains uniaxial and biaxial
+indicatrices and their optical axes.</li>
+  <li><a href="https://www.handbookofmineralogy.org/pdfs/forsterite.pdf">Forsterite</a> and
+<a href="https://www.handbookofmineralogy.org/pdfs/fayalite.pdf">Fayalite</a>, <em>Handbook of
+Mineralogy</em>, Mineral Data Publishing, 2001, give the principal indices and the
+assignments \(X=b\), \(Y=c\), and \(Z=a\) used above.</li>
+  <li><a href="https://doi.org/10.25039/CIE.DS.xvudnb9b">CIE 1931 colour-matching functions, 2 degree observer</a>,
+International Commission on Illumination, is the standard-observer dataset underlying
+spectral-to-colour conversion.</li>
+</ul>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>The spherical colour maps carry the crystal frame of the tensor, so the port draws them
+on the fundamental sector of mmm, a quarter of the disc MATLAB shows; the colours are
+the same. The sigma sections of the key are drawn without the arrows MATLAB lays over
+them, and the arrows of the optical axes show through the sphere, matplotlib having no
+occlusion. The animation of the rotating polarizer is a loop over <code class="language-plaintext highlighter-rouge">omega</code> updating the
+map; the page draws its last frame.</p>
+
+
+    
+
+    
+
+    
+    
+    
+        <div class="mtex-attribution">
+  <p>
+    <b>Citing this page.</b>
+    This page is part of the documentation of
+    <a href="index.html" class="">MTEX</a>, a free and open
+    source MATLAB toolbox for analyzing and modeling crystallographic textures.
+    It was written by The MTEX Developers and is published at
+    <code>https://mtex-playground.github.io/BirefringenceDemo_py.html</code>.
+    If you use MTEX, or reuse text or figures from this page, in your research,
+    please cite
+  </p>
+  <p class="mtex-attribution-ref">
+    F. Bachmann, R. Hielscher, H. Schaeben:
+    <i>Texture Analysis with MTEX - Free and Open Source Software Toolbox</i>,
+    Solid State Phenomena <b>160</b> (2010), 63-68.
+    <a href="https://doi.org/10.4028/www.scientific.net/SSP.160.63" target="_blank" class="">10.4028/www.scientific.net/SSP.160.63</a>
+  </p><details class="mtex-attribution-bib">
+    <summary>BibTeX</summary>
+<pre><code>@article{bachmann2010mtex,
+  author  = {F. Bachmann and R. Hielscher and H. Schaeben},
+  title   = {Texture Analysis with MTEX - Free and Open Source Software Toolbox},
+  journal = {Solid State Phenomena},
+  volume  = {160},
+  pages   = {63-68},
+  year    = {2010},
+  doi     = {10.4028/www.scientific.net/SSP.160.63},
+  url     = {https://doi.org/10.4028/www.scientific.net/SSP.160.63}
+}</code></pre>
+  </details>
+  <p class="mtex-attribution-fine">
+    Other papers describing specific MTEX methods are listed under
+    <a href="publications.html" class="">Publications</a> —
+    please cite the one that best fits your application.
+    The MTEX source code is licensed under the
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" class="">GNU General Public License v2.0</a>;
+    the text and figures of this documentation are licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" class="">CC BY 4.0</a>,
+    which permits reuse — including by automated systems — provided
+    The MTEX Developers and this page are credited.
+  </p>
+</div>
+
+    
+
+    <div class="tags">
+        
+    </div>
+
+    
+
+
+</div>
+
+
+    </article>
+    <aside class="mx-rail" id="mx-rail" aria-label="On this page" hidden></aside>
+</div>
+<footer class="mx-footer">
+  <div class="mx-wrap">
+    <p>MTEX is developed by its <a href="people.html">team</a> and contributors worldwide · code GPL-2.0 · documentation CC BY 4.0</p>
+    <ul>
+      <li><a href="download">Download</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="videos.html">Videos</a></li>
+      <li><a href="addons.html">Add-ons</a></li>
+      <li><a href="community">Support</a></li>
+      <li><a href="https://github.com/mtex-toolbox/mtex">GitHub</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>window.MX_CASES = {"GrainShape":[{"page":"ExIceSphericity","title":"Deformed Ice"}],"CorrelatingMaps":[{"page":"example_WCCoSmall","title":"TrueEBSD in Under a Minute"},{"page":"example_WCCo","title":"TrueEBSD on a WC-Co Composite"},{"page":"example_WCCoFrames","title":"TrueEBSD with Disagreeing Reference Frames"}],"PoleFigureAnalysis":[{"page":"ExAlODFReconstruction","title":"Aluminium XRD Data"},{"page":"TOF2PoleFigure","title":"Quartz TOF Data"},{"page":"PoleFigureSantaFe","title":"Santa Fe Example"},{"page":"PoleFigureDubna","title":"Dubna Example"},{"page":"ExperimentalPFs","title":"Experimental Pole Figures of TRIP Steels"},{"page":"CalculatedTexturesPlots","title":"Calculated Model Textures"},{"page":"CalculatedTexturesHWrange","title":"Calculated Model Textures over a Halfwidth Range"}],"Tensors":[{"page":"ExSeismicVelocitySingleCrystalDemo2d","title":"Single Crystal Wave Velocities"},{"page":"ExSeismicPlots","title":"Seismic Wave Velocity Plot"},{"page":"CPOSeismicProperties","title":"Seismic Properties of a Multiphase CPO"}],"Plasticity":[{"page":"ExSlipSystemAlumina","title":"Nanoidentation"},{"page":"TaylorHex","title":"Texture evolution in rolled magnesium during uniaxial tension"},{"page":"Lankford","title":"Lankford parameter"}],"OrientationSpread":[{"page":"SynEBSD","title":"Synthetic EBSD and Dislocation Density"}],"PhaseTransitions":[{"page":"ParameterOptimization","title":"Parameter Optimization"},{"page":"Forsterite_to_WadsleyiteMainprice","title":"Forsterite to Wadsleyite"}]};</script>
+<script src="js/mx-doc.js" defer></script>
+<script src="js/mx-copy.js" defer></script>
+</body>
+
+<!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83346204-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+</html>
